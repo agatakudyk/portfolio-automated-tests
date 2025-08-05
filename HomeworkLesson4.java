@@ -1,13 +1,24 @@
 public class HomeworkLesson4 {
     public static void main(String[] args) {
-        zad1Ocena(73);
+        // Zadanie 1 - obliczenie oceny
+        zad1Ocena(93);
+        zad1Ocena(87);
+        zad1Ocena(71);
+        zad1Ocena(65);
+        zad1Ocena(22);
+        zad1Ocena(222);
         // Zadanie 3 - liczba parzysta i nieparzysta
-//        zad3Parzysta(50);
-//        zad3Parzysta(72);
-//        zad3Parzysta(35);
-//        zad3Parzysta(27);
-//        zad3Parzysta(-5);
-        zad2Temperatura(30, 'C');
+        zad3Parzysta(20);
+        zad3Parzysta(34);
+        zad3Parzysta(15);
+        zad3Parzysta(19);
+        zad3Parzysta(-10);
+        zad3Parzysta(-9);
+        // Zadanie 2 - konwerter temperatury
+        zad2Temperatura(40, 'C');
+        zad2Temperatura(-10, 'C');
+        zad2Temperatura(100, 'F');
+        zad2Temperatura(0, 'F');
     }
 
     public static void zad1Ocena(int number) {
@@ -23,7 +34,7 @@ public class HomeworkLesson4 {
         } else if (number <= 59 && number >= 0) {
             System.out.println("Ocena F");
         } else {
-            System.out.println("Wpisałeś nieprawidłowa liczbę. Spróbuj jeszcze raz.");
+            System.out.println("Wpisałeś nieprawidłową liczbę. Spróbuj jeszcze raz.");
         }
     }
 
