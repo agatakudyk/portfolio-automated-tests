@@ -5,7 +5,7 @@ Wszystkie zadania mogą znajdować się w jednej klasie.
 Pamiętajcie żeby utworzyć oddzielny branch dla zadania i wystawić Pull Request
 
 1)
-Napisz program w ktorym w zmiennej podasz liczbę (liczbę całkowitą między 0 a 100)
+Napisz program, w ktorym w zmiennej podasz liczbę (liczbę całkowitą między 0 a 100)
 i na jej podstawie obliczysz ocene w postaci litery według następującej skali ocen:
 A: 90-100
 B: 80-89
