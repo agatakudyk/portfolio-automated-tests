@@ -48,7 +48,6 @@ public class HomeworkLesson4 {
             } else {
                 System.out.println(liczba + " - jest liczbą parzystą, ale nie wielokrotnością 5.");
             }
-
         } else {
             if (liczba % 5 == 0) {
                 System.out.println(liczba + " - jest liczbą nieparzystą i wielokrotnością 5.");
