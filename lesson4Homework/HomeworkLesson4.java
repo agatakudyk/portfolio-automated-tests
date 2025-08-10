@@ -44,25 +44,26 @@ public class HomeworkLesson4 {
 
         if (liczba % 2 == 0 && liczba % 5 == 0) {
             System.out.println(liczba + " - jest liczbą parzystą i wielokrotnością 5.");
-        } else if (liczba % 2 == 0 && liczba % 5 != 0) {
+        } else if (liczba % 2 == 0) {
             System.out.println(liczba + " - jest liczbą parzystą, ale nie wielokrotnością 5.");
-        } else if (liczba % 2 != 0 && liczba % 5 == 0) {
+        } else if (liczba % 5 == 0) {
             System.out.println(liczba + " - jest liczbą nieparzystą i wielokrotnością 5.");
         } else {
             System.out.println(liczba + " - jest liczbą nieparzystą, ale nie wielokrotnością 5.");
         }
     }
-}
+    public static void showTemperature(int temperatura, char typ) {
 
-public static void showTemperature(int temperatura, char typ) {
-
-    if (typ == 'F') {
-        System.out.println((temperatura - 32) * 5 / 9 + "C");
-    } else if (typ == 'C') {
-        System.out.println((temperatura * 9 / 5) + 32 + "F");
-    } else {
-        System.out.println("Nierozpoznany typ temperatury");
+        if (typ == 'F') {
+            System.out.println((temperatura - 32) * 5 / 9 + "C");
+        } else if (typ == 'C') {
+            System.out.println((temperatura * 9 / 5) + 32 + "F");
+        } else {
+            System.out.println("Nierozpoznany typ temperatury");
+        }
     }
 }
-}
+
+
+
 
