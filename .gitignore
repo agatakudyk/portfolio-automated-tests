@@ -3,3 +3,6 @@ out
 out/
 /out
 /out/
+/build/
+/build
+.gradle
