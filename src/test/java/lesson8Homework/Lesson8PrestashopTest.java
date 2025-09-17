@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,7 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class AcceptNewsLetterTest {
+public class Lesson8PrestashopTest {
 
     private WebDriver driver;
     private WebDriverWait wait;   //czekanie aż strona się załaduje
@@ -27,7 +28,24 @@ public class AcceptNewsLetterTest {
     }
 
     @Test
-    public void Prestashop() {
+    public void addToCart() {
+
+        driver.get("https://demo.prestashop.com/#/en/front");
+
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.cssSelector("iframe[id^='framelive']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@aria-label='Search']")));
+
+        driver.findElement(By.xpath("//input[@aria-label=\"Search\"]"))
+                .sendKeys("Mug The adventure begins" + Keys.ENTER);
+
+        driver.findElement(By.xpath("//button[@data-button-action=\"add-to-cart\"]")).click();
+
+        String addTocartMessage = driver.findElement(By.cssSelector("modal-title h6 text-sm-center")).getText();
+        Assertions.assertEquals("modal-title h6 text-sm-center", addTocartMessage);
+    }
+    
+    //@Test
+    public void acceptNewsletter() {
 
         driver.get("https://demo.prestashop.com/#/en/front");
 
@@ -40,17 +58,16 @@ public class AcceptNewsLetterTest {
 
         driver.findElement(By.xpath("//input[@placeholder='Your email address']"))
                 .sendKeys("test142@wp.pl");
+
         driver.findElement(By.xpath("//input[@name='submitNewsletter']")).click();
 
         String newsletterMessage = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".alert-success"))
         ).getText();
-
-
         Assertions.assertEquals("You have successfully subscribed to this newsletter.", newsletterMessage);
     }
 
-    @AfterEach
+    //@AfterEach
     public void teardown() {
         if (driver != null) {
             driver.quit();
