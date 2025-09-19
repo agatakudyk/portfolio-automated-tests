@@ -1,49 +1,73 @@
 package lesson8Homework;
 
+import com.codeborne.selenide.Driver;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Lesson8PrestashopTest {
 
     private WebDriver driver;
-    private WebDriverWait wait;   //czekanie aż strona się załaduje
+    private WebDriverWait wait;
+
+    FluentWait<WebDriver> fluentWait;
 
     @BeforeEach
     public void setup() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-        driver.manage().window().maximize();  //powiększenie okna
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+       wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
     }
 
     @Test
-    public void addToCart() {
+    public void addToCart() throws InterruptedException {
 
         driver.get("https://demo.prestashop.com/#/en/front");
 
-        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.cssSelector("iframe[id^='framelive']")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@aria-label='Search']")));
+       wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.cssSelector("iframe[id^='framelive']")));
+       wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@aria-label='Search']")));
 
         driver.findElement(By.xpath("//input[@aria-label=\"Search\"]"))
                 .sendKeys("Mug The adventure begins" + Keys.ENTER);
 
+        driver.findElement(By.xpath("//a[contains(text(),'Mug The adventure begins')]")).click();
         driver.findElement(By.xpath("//button[@data-button-action=\"add-to-cart\"]")).click();
 
-        String addTocartMessage = driver.findElement(By.cssSelector("modal-title h6 text-sm-center")).getText();
-        Assertions.assertEquals("modal-title h6 text-sm-center", addTocartMessage);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h4[@id=\"myModalLabel\"]")));
+        WebElement addTocartElement = driver.findElement(By.xpath("//h4[contains(text(),\"Product successfully added to your shopping cart\")]"));
+//////        String addTocartMessage = driver.findElement(By.cssSelector("modal-title h6 text-sm-center")).getText();
+        //Assertions.assertEquals("modal-title h6 text-sm-center", addTocartMessage);
+        String addToCartMessage = getDisplayedText(addTocartElement);
+        assertTrue(addToCartMessage.contains("Product successfully added to your shopping cart"));
     }
-    
+
+    private String getDisplayedText(WebElement addTocartElement) {
+        String text =addTocartElement.getText();
+        List<WebElement> elements = addTocartElement.findElements(By.xpath("./*"));
+        for(WebElement el : elements){
+            text = text.replaceFirst(el.getText(),"");
+        }
+
+        return text;
+    }
+
     //@Test
     public void acceptNewsletter() {
 
