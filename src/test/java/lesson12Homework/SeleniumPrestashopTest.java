@@ -17,10 +17,23 @@ public class SeleniumPrestashopTest {
         driver.get("http://localhost:8080/pl/");
     }
 
-
-
-    //@Test  //1.	Rejestracja: kliknięcie ‘Save’ przy pustym formularzu + walidacja
+    @Test   //zmiana języka z polskiego na angielski
     @Order(1)
+    public void languageSwitchIntoEnglish() {
+
+        By languageSwitchLocator = By.xpath("//button[@data-toggle=\"dropdown\"]");
+        WebElement languageSwitchClick = driver.findElement(languageSwitchLocator);
+        languageSwitchClick.click();
+
+        //wybór języka English
+        By englishLanguageLocator = By.xpath("//a[@data-iso-code=\"en\"]");
+        WebElement englishLanguageSelection = driver.findElement(englishLanguageLocator);
+        englishLanguageSelection.click();
+    }
+
+
+    //@Test  //Rejestracja: kliknięcie ‘Save’ przy pustym formularzu + walidacja
+    @Order(2)
     public void failSignupWithEmptyFieldsTest() {
 
         //kliknięcie w przycisk logowania
@@ -49,8 +62,8 @@ public class SeleniumPrestashopTest {
 
 
 
-    //@Test  //2.	Rejestracja: uzupełnienie formularza poprawnymi danymi + walidacja
-    @Order(2)
+    //@Test  //Rejestracja: uzupełnienie formularza poprawnymi danymi + walidacja
+    @Order(3)
     public void userSuccessSignupTest() {
 
         //uzupełnienie pola imię
@@ -94,8 +107,8 @@ public class SeleniumPrestashopTest {
         Assertions.assertTrue(logoutButton.isDisplayed());
     }
 
-    //@Test    //3.Wylogowanie użytkownika + walidacja
-    @Order(3)
+    //@Test    //Wylogowanie użytkownika + walidacja
+    @Order(4)
     public void userSuccessLogout() {
 
         //kliknięcie buttona wyloguj
@@ -109,8 +122,8 @@ public class SeleniumPrestashopTest {
         Assertions.assertTrue(signInButton.isDisplayed());
     }
 
-    @Test
-    @Order(4)    //4.Logowanie z użyciem błędnych danych + walidacja
+    //@Test
+    @Order(5)    //Logowanie z użyciem błędnych danych + walidacja
     public void failLoginWithIncorrectData() {
 
         //kliknięcie w przycisk logowania
@@ -128,14 +141,16 @@ public class SeleniumPrestashopTest {
         WebElement passwordLoginInputField = driver.findElement(passwordLoginLocator);
         passwordLoginInputField.sendKeys("blepassword");
 
+        //TODO dodac klikcienie w zaloguj sie
+
         //sprawdzenie komunikatu o błędnym logowaniu
-        By failMsgLocator = By.xpath("//li[@class=\"alert-danger\"]");
+        By failMsgLocator = By.xpath("//li[@class=\"alert alert-danger\"]");
         WebElement failMessage = driver.findElement(failMsgLocator);
         Assertions.assertTrue(failMessage.isDisplayed());
     }
 
-    @Test  //5.	Logowanie / funkcja odzyskiwania hasła + walidacja
-    @Order(5)
+    //@Test  //Logowanie / funkcja odzyskiwania hasła + walidacja
+    @Order(6)
     public void loginPasswordRecovery() {
 
         //kliknięcie w link przywracania hasła
@@ -159,8 +174,8 @@ public class SeleniumPrestashopTest {
         Assertions.assertTrue(sentMessage.isDisplayed());
     }
 
-    @Test     //6. Poprawne zalogowanie + walidacja
-    @Order(6)
+    //@Test     //Poprawne zalogowanie + walidacja
+    @Order(7)
     public void userSuccesLogin() {
 
         //przejście na stronę logowania
@@ -189,8 +204,8 @@ public class SeleniumPrestashopTest {
         Assertions.assertTrue(logoutButton.isDisplayed());
     }
 
-    @Test //8.	Podstrona ART/filtrowanie: Home Accessories + Ceramic + wyczyść wszystko + walidacja
-    @Order(7)
+    @Test //Podstrona ART/filtrowanie: Home Accessories + Ceramic + wyczyść wszystko + walidacja
+    @Order(8)
     public void artProductsFiltering() {
 
         //wejdź w podstronę ACCESSORIES
@@ -199,17 +214,27 @@ public class SeleniumPrestashopTest {
         accessoriesPageLink.click();
 
         //Filtr - Composition / Ceramic
-        By ceramicFilterLocator = By.id("facet_input_11998_0");
-        WebElement ceramicFilterCheckbox = driver.findElement(ceramicFilterLocator);
-        ceramicFilterCheckbox.click();
+        By ceramicCompositionFilterLocator = By.xpath("//a[contains(text(),\"Ceramic\")]");
+        WebElement ceramicCompositionFilterCheckbox = driver.findElement(ceramicCompositionFilterLocator);
+        ceramicCompositionFilterCheckbox.click();
+
+        //Filtr - Availability
+        By availableFilterLocator = By.xpath("//a[contains(text(),\"Available\")]");
+        WebElement availableFilterCheckbox = driver.findElement(availableFilterLocator);
+        availableFilterCheckbox.click();
 
         //Wyczyszczenie wybranych filtrów
+        By clearAllFilterLocator = By.xpath("//button[@class=\"btn btn-tertiary js-search-filters-clear-all\"]");
+        WebElement clearAllFilterClick = driver.findElement(clearAllFilterLocator);
+        clearAllFilterClick.click();
 
-
-
-
+        //TODO: potwiedzenie wyczyszczenia filtrów
     }
 
+//        @Test    //9.	Podstrona ART/filtrowanie: Black + walidacja
+//        @Order(8)
+//
+//        //przejście na podstronę ART
 
 
     //@AfterAll
