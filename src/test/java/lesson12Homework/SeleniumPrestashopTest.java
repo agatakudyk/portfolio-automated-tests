@@ -19,7 +19,7 @@ public class SeleniumPrestashopTest {
 
 
 
-    @Test  //1.	Rejestracja: kliknięcie ‘Save’ przy pustym formularzu + walidacja
+    //@Test  //1.	Rejestracja: kliknięcie ‘Save’ przy pustym formularzu + walidacja
     @Order(1)
     public void failSignupWithEmptyFieldsTest() {
 
@@ -49,7 +49,7 @@ public class SeleniumPrestashopTest {
 
 
 
-    @Test  //2.	Rejestracja: uzupełnienie formularza poprawnymi danymi + walidacja
+    //@Test  //2.	Rejestracja: uzupełnienie formularza poprawnymi danymi + walidacja
     @Order(2)
     public void userSuccessSignupTest() {
 
@@ -94,7 +94,7 @@ public class SeleniumPrestashopTest {
         Assertions.assertTrue(logoutButton.isDisplayed());
     }
 
-    @Test    //3.Wylogowanie użytkownika + walidacja
+    //@Test    //3.Wylogowanie użytkownika + walidacja
     @Order(3)
     public void userSuccessLogout() {
 
@@ -129,26 +129,44 @@ public class SeleniumPrestashopTest {
         passwordLoginInputField.sendKeys("blepassword");
 
         //sprawdzenie komunikatu o błędnym logowaniu
-        By failMsgLocator = By.xpath("//li[@class=\"alert alert-danger\"]");
+        By failMsgLocator = By.xpath("//li[@class=\"alert-danger\"]");
         WebElement failMessage = driver.findElement(failMsgLocator);
         Assertions.assertTrue(failMessage.isDisplayed());
     }
 
-    @Test  //5.	Logowanie ‘Forgot password’ + walidacja
+    @Test  //5.	Logowanie / funkcja odzyskiwania hasła + walidacja
     @Order(5)
     public void loginPasswordRecovery() {
 
         //kliknięcie w link przywracania hasła
+        By passwordRecoveryLocator = By.xpath(" //div[@class=\"forgot-password\"]/a");
+        WebElement passwordRecoveryLink = driver.findElement(passwordRecoveryLocator);
+      passwordRecoveryLink.click();
 
+        //wpisanie maila do odzyskania hasła
+        By recoveryMailLocator = By.xpath("//input[@class=\"form-control\"]");
+        WebElement recoveryEmailInputField = driver.findElement(recoveryMailLocator);
+        recoveryEmailInputField.sendKeys("abc1.mail@wp.pl");
+
+        //przycisk wyślij
+        By passwordRecoveryButtonLocator = By.id("send-reset-link");
+        WebElement passwordRecoveryButtonClick = driver.findElement(passwordRecoveryButtonLocator);
+        passwordRecoveryButtonClick.click();
+
+        //Potwierdzenie wysłania maila
+        By sentMsgLocator = By.xpath("//li[@class=\"item\"]/p");
+        WebElement sentMessage = driver.findElement(sentMsgLocator);
+        Assertions.assertTrue(sentMessage.isDisplayed());
     }
 
-
-
-    @Test
-    @Order(6)    //6. Poprawne zalogowanie + walidacja
+    @Test     //6. Poprawne zalogowanie + walidacja
+    @Order(6)
     public void userSuccesLogin() {
 
-
+        //przejście na stronę logowania
+        By backToLoginPageLocator = By.xpath("//i[@class=\"material-icons\"]");
+        WebElement backToLoginPageLink = driver.findElement(backToLoginPageLocator);
+        backToLoginPageLink.click();
 
         //uzupełnienie pola email
         By emailLoginLocator = By.id("field-email");
@@ -158,9 +176,39 @@ public class SeleniumPrestashopTest {
         //uzupełnienie hasła
         By passwordLoginLocator = By.id("field-password");
         WebElement passwordLoginInputField = driver.findElement(passwordLoginLocator);
-        passwordLoginInputField.sendKeys("prestashop");
+        passwordLoginInputField.sendKeys("password123");
+
+        //kliknięcie buttona zaloguj
+        By loginButtonLocator = By.id("submit-login");
+        WebElement loginButtonClick = driver.findElement(loginButtonLocator);
+        loginButtonClick.click();
+
+        //sprawdzenie poprawności logowania
+        By logoutLocator = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
+        WebElement logoutButton = driver.findElement(logoutLocator);
+        Assertions.assertTrue(logoutButton.isDisplayed());
     }
 
+    @Test //8.	Podstrona ART/filtrowanie: Home Accessories + Ceramic + wyczyść wszystko + walidacja
+    @Order(7)
+    public void artProductsFiltering() {
+
+        //wejdź w podstronę ACCESSORIES
+        By accessoriesPageLocator = By.id("category-6");
+        WebElement accessoriesPageLink = driver.findElement(accessoriesPageLocator);
+        accessoriesPageLink.click();
+
+        //Filtr - Composition / Ceramic
+        By ceramicFilterLocator = By.id("facet_input_11998_0");
+        WebElement ceramicFilterCheckbox = driver.findElement(ceramicFilterLocator);
+        ceramicFilterCheckbox.click();
+
+        //Wyczyszczenie wybranych filtrów
+
+
+
+
+    }
 
 
 
