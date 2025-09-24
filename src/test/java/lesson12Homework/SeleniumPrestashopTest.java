@@ -5,15 +5,21 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SeleniumPrestashopTest {
 
     static ChromeDriver driver;  // sterownik przeglądarki
+    static WebDriverWait wait;
 
     @BeforeAll
     public static void beforeAll() {
         driver = new ChromeDriver();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         driver.get("http://localhost:8080/pl/");
     }
 
@@ -56,10 +62,9 @@ public class SeleniumPrestashopTest {
         WebElement nameInput = driver.findElement(nameInputLocator);
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        String msg = (String)js.executeScript("return arguments[0].validationMessage", nameInput);
+        String msg = (String) js.executeScript("return arguments[0].validationMessage", nameInput);
         Assertions.assertEquals("Wypełnij to pole.", msg);
     }
-
 
 
     //@Test  //Rejestracja: uzupełnienie formularza poprawnymi danymi + walidacja
@@ -156,7 +161,7 @@ public class SeleniumPrestashopTest {
         //kliknięcie w link przywracania hasła
         By passwordRecoveryLocator = By.xpath(" //div[@class=\"forgot-password\"]/a");
         WebElement passwordRecoveryLink = driver.findElement(passwordRecoveryLocator);
-      passwordRecoveryLink.click();
+        passwordRecoveryLink.click();
 
         //wpisanie maila do odzyskania hasła
         By recoveryMailLocator = By.xpath("//input[@class=\"form-control\"]");
@@ -204,9 +209,9 @@ public class SeleniumPrestashopTest {
         Assertions.assertTrue(logoutButton.isDisplayed());
     }
 
-    @Test //Podstrona ART/filtrowanie: Home Accessories + Ceramic + wyczyść wszystko + walidacja
+    //@Test //Podstrona Accessories/filtrowanie: Home Accessories + Ceramic + wyczyść wszystko + walidacja
     @Order(8)
-    public void artProductsFiltering() {
+    public void clearAccessoriesProductsFiltering() throws InterruptedException {
 
         //wejdź w podstronę ACCESSORIES
         By accessoriesPageLocator = By.id("category-6");
@@ -231,11 +236,36 @@ public class SeleniumPrestashopTest {
         //TODO: potwiedzenie wyczyszczenia filtrów
     }
 
-//        @Test    //9.	Podstrona ART/filtrowanie: Black + walidacja
-//        @Order(8)
-//
-//        //przejście na podstronę ART
+    @Test    //Podstrona ART/filtrowanie: Black + walidacja
+    @Order(8)
+    public void filterArtProducts() {
 
+        //wejdź w podstronę Art
+        By artPageLocator = By.id("category-9");
+        WebElement artPageLink = driver.findElement(artPageLocator);
+        artPageLink.click();
+
+        //wybranie 40x60cm w Dimension
+        By graphicDimensionLocator = By.xpath("//a[contains(text(),\"40x60cm\")]");
+        WebElement graphicDimensionCheckbox = driver.findElement(graphicDimensionLocator);
+        graphicDimensionCheckbox.click();
+
+        //TODO: sprawdzenie działania filtra
+    }
+
+    @Test   //Wybranie ‘The best is yet to come' Framed poster’ + dodanie opinii + walidacja
+    @Order(9)
+    public void addPosterCustomerReview() {
+
+        //wybranie produktu 'The Best Is Yet...' poster
+        By theBestPosterLocator = By.xpath("//div[@class=\"highlighted-informations no-variants\"]");
+        //By theBestPosterClick = driver.findElement(theBestPosterLocator);
+        //theBestPosterClick.click();
+
+        //dodanie opinii o produkcie
+        //By writeCommentButtonLocator = B
+
+    }
 
     //@AfterAll
     public static void afterAll() {
