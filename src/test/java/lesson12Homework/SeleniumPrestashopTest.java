@@ -237,7 +237,7 @@ public class SeleniumPrestashopTest {
     }
 
     @Test    //Podstrona ART/filtrowanie: Black + walidacja
-    @Order(8)
+    @Order(9)
     public void filterArtProducts() {
 
         //wejdź w podstronę Art
@@ -255,7 +255,7 @@ public class SeleniumPrestashopTest {
 
 
     @Test   //Wybranie produktu ‘The best is yet to come' + dodanie opinii + walidacja
-    @Order(9)
+    @Order(10)
     public void successAddPosterReview() {
 
         //wybranie produktu poster 'The Best Is Yet...'
@@ -297,7 +297,7 @@ public class SeleniumPrestashopTest {
     }
 
     @Test    //Dodanie 3x produktu do koszyka  + walidacja
-    @Order(10)
+    @Order(11)
     public void addProductsToCart() {
 
         //Wybór 3 produktów
@@ -316,13 +316,57 @@ public class SeleniumPrestashopTest {
         By addProductPopupLocator = By.id("myModalLabel");
         WebElement addProductPopup = driver.findElement(addProductPopupLocator);
         Assertions.assertTrue(addProductPopup.isDisplayed());
+    }
 
-        //zamknięcie ona popup potwierdzającego dodanie do koszyka
+    @Test  //Koszyk + walidacja ilości produktów i ceny całkowitejV
+    @Order(12)
+    public void cartContentValidation() {
+
+        //zamknięcie popup dodania produktu i przejście do koszyka
         By closeAddToCartPopupLocator = By.xpath("//a[@class=\"btn btn-primary\"]/i");
         WebElement closeAddToCartPopupClick = driver.findElement(closeAddToCartPopupLocator);
         closeAddToCartPopupClick.click();
 
+        //sprawdzenie nazwy produktów
+        By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]");
+        WebElement productNameInCart = driver.findElement(productNameInCartLocator);
+        //TODO Assertions
+
+        //porównanie ilości produktu z sekcji produktu i sekcji podsumowania zakupów
+        //pobranie ilości z sekcji produktu
+        By numberInItemsSectionLocator = By.xpath("//input[@class=\"js-cart-line-product-quantity form-control\"]");
+        WebElement numberInItemSection = driver.findElement(numberInItemsSectionLocator);
+        //pobranie ilości z sekcji podsumowania
+        By numberInPurchaseSummarySection = By.xpath("//span[@class=\"label js-subtotal\"]");
+        Assertions.assertEquals(numberInItemSection,numberInPurchaseSummarySection);
+
+        //sprawdzenie wartości całkowitej
+        //pobranie wartości całkowitej
+        By totalItemsValueLocator = By.xpath("//div[@id=\"cart-subtotal-products\"]/span[@class=\"value\"]");
+        WebElement totalItemsValue = driver.findElement(totalItemsValueLocator);
+        //pobranie ceny jednostkowej
+        By itemUnitPriceLocator = By.xpath("//span[@class=\"price\"]");
+        WebElement itemUnitPrice = driver.findElement(itemUnitPriceLocator);
+        //obliczenie
+         double expectedTotalPrice = numberInItemSection * itemUnitPrice;
+        //sprawdzenie wartości całkowitej
+        Assertions.assertEquals(expectedTotalPrice,totalItemsValue);
     }
+
+        @Test   //Koszyk + zwiększenie ilości + walidacja ilości produktów i ceny całkowitej
+        @Order(13)
+        public void increasingNumberOfItems() {
+
+        //zwiększenie liczby produktu w koszyku
+            By selectQuantityLocator = By.xpath("//i[@class=\"material-icons touchspin-up\"]");
+            WebElement selectQuantityClick = driver.findElement(selectQuantityLocator);
+            selectQuantityClick.click();
+            selectQuantityClick.click();
+            selectQuantityClick.click();
+
+
+
+        }
 
     //@AfterAll
     public static void afterAll() {
