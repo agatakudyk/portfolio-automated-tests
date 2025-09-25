@@ -256,9 +256,9 @@ public class SeleniumPrestashopTest {
 
     @Test   //Wybranie produktu ‘The best is yet to come' + dodanie opinii + walidacja
     @Order(9)
-    public void posterReviewSuccessAdd() {
+    public void successAddPosterReview() {
 
-        //wybranie produktu 'The Best Is Yet...' poster
+        //wybranie produktu poster 'The Best Is Yet...'
         By theBestPosterLocator = By.xpath("//div[@class=\"highlighted-informations no-variants\"]");
         //By theBestPosterClick = driver.findElement(theBestPosterLocator);
         //theBestPosterClick.click();
@@ -289,14 +289,40 @@ public class SeleniumPrestashopTest {
         By addCommentPopupLocator = By.id("product-comment-posted-modal-message");
         WebElement addCommentPopup = driver.findElement(addCommentPopupLocator);
         Assertions.assertTrue(addCommentPopup.isDisplayed());
+
+        //zamknięcie popup
+        By okCommentButtonLocator = By.xpath("//div[@class=\"post-comment-buttons\"]/button[@class=\"btn btn-comment-inverse btn-comment-huge refuse-button\"]");
+        WebElement okCommentButtonClick = driver.findElement(okCommentButtonLocator);
+        okCommentButtonClick.click();
     }
 
-//    @Test
-//    @Order(10)
-//    public void addProductToCart() {
-//
-//
- //   }
+    @Test    //Dodanie 3x produktu do koszyka  + walidacja
+    @Order(10)
+    public void addProductsToCart() {
+
+        //Wybór 3 produktów
+        By selectQuantityLocator = By.xpath("//i[@class=\"material-icons touchspin-up\"]");
+        WebElement selectQuantityClick = driver.findElement(selectQuantityLocator);
+        selectQuantityClick.click();
+        selectQuantityClick.click();
+        selectQuantityClick.click();
+
+        //Kliknij button dodaj do koszyka
+        By addToCartButtonLocator = By.xpath("//button[@class=\"btn btn-primary add-to-cart\"]");
+        WebElement addTocartButtonClick = driver.findElement(addToCartButtonLocator);
+        addTocartButtonClick.click();
+
+        //potwierdzenie dodania do koszyka
+        By addProductPopupLocator = By.id("myModalLabel");
+        WebElement addProductPopup = driver.findElement(addProductPopupLocator);
+        Assertions.assertTrue(addProductPopup.isDisplayed());
+
+        //zamknięcie ona popup potwierdzającego dodanie do koszyka
+        By closeAddToCartPopupLocator = By.xpath("//a[@class=\"btn btn-primary\"]/i");
+        WebElement closeAddToCartPopupClick = driver.findElement(closeAddToCartPopupLocator);
+        closeAddToCartPopupClick.click();
+
+    }
 
     //@AfterAll
     public static void afterAll() {
