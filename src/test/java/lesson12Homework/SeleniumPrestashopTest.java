@@ -253,9 +253,10 @@ public class SeleniumPrestashopTest {
         //TODO: sprawdzenie działania filtra
     }
 
-    @Test   //Wybranie ‘The best is yet to come' Framed poster’ + dodanie opinii + walidacja
+
+    @Test   //Wybranie produktu ‘The best is yet to come' + dodanie opinii + walidacja
     @Order(9)
-    public void addPosterCustomerReview() {
+    public void posterReviewSuccessAdd() {
 
         //wybranie produktu 'The Best Is Yet...' poster
         By theBestPosterLocator = By.xpath("//div[@class=\"highlighted-informations no-variants\"]");
@@ -263,9 +264,39 @@ public class SeleniumPrestashopTest {
         //theBestPosterClick.click();
 
         //dodanie opinii o produkcie
-        //By writeCommentButtonLocator = B
+        By commentButtonLocator = By.xpath("//button[@class=\"btn btn-comment btn-comment-big post-product-comment\"]");
+        WebElement commentButtonClick = driver.findElement(commentButtonLocator);
+        commentButtonClick.click();
 
+        //TODO - zaznacz gwiazdkę
+
+        //dodaj tytuł opinii
+        By commentTitleLocator = By.id("comment_title");
+        WebElement commentTitleFillIn = driver.findElement(commentTitleLocator);
+        commentTitleFillIn.sendKeys("A positive comment");
+
+        //dodaj treść komentarza
+        By commentTextLocator = By.id("comment_content");
+        WebElement commentTextFillIn = driver.findElement(commentTextLocator);
+        commentTextFillIn.sendKeys("Cute home decor to suit any room or home.");
+
+        //przycisk send
+        By sendButtonLocator = By.xpath("//button[@class=\"btn btn-comment btn-comment-big\"]");
+        WebElement sendButtonClick = driver.findElement(sendButtonLocator);
+        sendButtonClick.click();
+
+        //potwierdzenie dodania komentarza
+        By addCommentPopupLocator = By.id("product-comment-posted-modal-message");
+        WebElement addCommentPopup = driver.findElement(addCommentPopupLocator);
+        Assertions.assertTrue(addCommentPopup.isDisplayed());
     }
+
+//    @Test
+//    @Order(10)
+//    public void addProductToCart() {
+//
+//
+ //   }
 
     //@AfterAll
     public static void afterAll() {
