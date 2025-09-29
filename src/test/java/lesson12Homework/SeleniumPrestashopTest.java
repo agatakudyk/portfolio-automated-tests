@@ -23,123 +23,11 @@ public class SeleniumPrestashopTest {
         driver.get("http://localhost:8080/pl/");
     }
 
-    @Test   //Strona główna/Footer -  sprawdzenie działania linków w stopce
+
+
+
+    //@Test   //zmiana języka z polskiego na angielski
     @Order(1)
-    public void checkFooterLinksClickable() {
-
-        //Kliknięcie w link 'Prices drop'
-        By pricesDropLinkLocator = By.id("link-product-page-prices-drop-1");
-        WebElement pricesDropLink = driver.findElement(pricesDropLinkLocator);
-        pricesDropLink.click();
-        //potwierdzenie otwarcia podstrony
-        By pricesDropPageNameLocator = By.id("js-product-list-header");
-        WebElement pricesDropPageName = driver.findElement(pricesDropPageNameLocator);
-        Assertions.assertTrue(pricesDropPageName.isDisplayed());
-
-        //Kliknięcie w link 'New products'
-        By newProductsLinkLocator = By.id("link-product-page-new-products-1");
-        WebElement newProductsLink = driver.findElement(newProductsLinkLocator);
-        newProductsLink.click();
-        //potwierdzenie wejścia na podstronę
-        By newProductsPageNameLocator = By.id("js-product-list-header");
-        WebElement newProductsPageName = driver.findElement(newProductsPageNameLocator);
-        Assertions.assertTrue(newProductsPageName.isDisplayed());
-
-        //Kliknięcie w link 'Best sales'
-        By bestSalesLinkLocator = By.id("link-product-page-best-sales-1");
-        WebElement bestSalesLink = driver.findElement(bestSalesLinkLocator);
-        bestSalesLink.click();
-        //potwierdzenie wejścia na podstronę
-        By bestSellersPageNameLocator = By.id("js-product-list-header");
-        WebElement bestSellersPageName = driver.findElement(bestSellersPageNameLocator);
-        Assertions.assertTrue(bestSellersPageName.isDisplayed());
-
-        //Kliknięcie w link 'Delivery'
-        By deliveryLinkLocator = By.id("link-cms-page-1-2");
-        WebElement deliveryLink = driver.findElement(deliveryLinkLocator);
-        deliveryLink.click();
-        //ToDo potwierdzenie wejścia na podstronę
-
-        //Kliknięcie w link 'Legal Notice'
-        By legalNoticeLinkLocator = By.id("link-cms-page-2-2");
-        WebElement legalNoticeLink = driver.findElement(legalNoticeLinkLocator);
-        legalNoticeLink.click();
-        //ToDo potwierdzenie wejścia na podstronę
-
-        //Kliknięcie w link 'Terms and conditions of use'
-        By termsAndConditionsOfUseLinkLocator = By.id("link-cms-page-3-2");
-        WebElement termsAndConditionsOfUseLink = driver.findElement(termsAndConditionsOfUseLinkLocator);
-        termsAndConditionsOfUseLink.click();
-        //ToDo potwierdzenie wejścia na podstronę
-
-        //Kliknięcie w link 'About us'
-        By aboutUsLinkLocator = By.id("link-cms-page-4-2");
-        WebElement aboutUsLink = driver.findElement(aboutUsLinkLocator);
-        aboutUsLink.click();
-        //ToDo potwierdzenie wejścia na podstronę
-
-        //Kliknięcie w link 'Secure payment'
-        By securePaymentLinkLocator = By.id("link-cms-page-5-2");
-        WebElement securePaymentLink = driver.findElement(securePaymentLinkLocator);
-        securePaymentLink.click();
-        //ToDo potwierdzenie wejścia na podstronę
-
-        //Kliknięcie w link 'Contact us'
-        By contactUsLinkLocator = By.id("link-static-page-contact-2");
-        WebElement contactUsLink = driver.findElement(contactUsLinkLocator);
-        contactUsLink.click();
-        //ToDo potwierdzenie wejścia na podstronę
-
-        //Kliknięcie w link 'Sitemap'
-        By sitemapLinkLocator = By.id("link-static-page-sitemap-2");
-        WebElement sitemapLink = driver.findElement(sitemapLinkLocator);
-        sitemapLink.click();
-        //ToDo potwierdzenie wejścia na podstronę
-
-        //Kliknięcie w link 'Stores'
-        By storesLinkLocator = By.id("link-static-page-stores-2");
-        WebElement storesLink = driver.findElement(storesLinkLocator);
-        storesLink.click();
-        //potwierdzenia wejscie na podstronę
-        By ourStoresPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1");
-        WebElement ourStoresPageName = driver.findElement();
-        Assertions.assertTrue(ourStoresPageName.isDisplayed());
-
-        //Kliknięcie w link 'Personal info'
-        By personalInfoLinkLocator = By.xpath("//a[@title=\"Personal info\"]");
-        WebElement personalInfoLink = driver.findElement(personalInfoLinkLocator);
-        personalInfoLink.click();
-        //ToDo potwierdzenie wejścia na podstronę
-
-        //Kliknięcie w link 'Orders'
-        By ordersLinkLocator = By.xpath("//a[@title=\"Orders\"]");
-        WebElement ordersLink = driver.findElement(ordersLinkLocator);
-        ordersLink.click();
-        //ToDo potwierdzenie wejścia na podstronę
-
-        //Kliknięcie w link 'Credit slips'
-        By creditSlipsLinkLocator = By.xpath("//a[@title=\"Credit slips\"]");
-        WebElement creditSlipsLink = driver.findElement(creditSlipsLinkLocator);
-        creditSlipsLink.click();
-        //ToDo potwierdzenie wejścia na podstronę
-
-        //Kliknięcie w link 'Addresses'
-        By addressesLinkLocator = By.xpath("//a[@title=\"Addresses\"]");
-        WebElement addressesLink = driver.findElement(addressesLinkLocator);
-        addressesLink.click();
-        //ToDo potwierdzenie wejścia na podstronę
-
-        //Kliknięcie w maila kontaktowego
-        By mailLinkLocator = By.xpath("//a[contains(text(),\"prestashop@123.pl\")]");
-        WebElement mailLink = driver.findElement(mailLinkLocator);
-        mailLink.click();
-        //ToDo potwierdzenie wejścia na podstronę
-    }
-
-
-
-    @Test   //zmiana języka z polskiego na angielski
-    @Order(2)
     public void languageSwitchIntoEnglish() {
 
         By languageSwitchLocator = By.xpath("//button[@data-toggle=\"dropdown\"]");
@@ -486,50 +374,164 @@ public class SeleniumPrestashopTest {
 
     }
 
-   // @Test    //Formularz adresu – zapisanie poprawnie uzupełnionego formularza
-    @Order(15)
-    public void addressFormSuccessSend() {
+    @Test   //Strona główna/Footer -  sprawdzenie działania linków w stopce
+    @Order(27)
+    public void checkFooterLinksClickable() {
 
+        //Kliknięcie w link 'Prices drop'
+        By pricesDropLinkLocator = By.id("link-product-page-prices-drop-1");
+        WebElement pricesDropLink = driver.findElement(pricesDropLinkLocator);
+        pricesDropLink.click();
+        //potwierdzenie otwarcia podstrony
+        By pricesDropPageNameLocator = By.id("js-product-list-header");
+        WebElement pricesDropPageName = driver.findElement(pricesDropPageNameLocator);
+        Assertions.assertTrue(pricesDropPageName.isDisplayed());
+
+        //Kliknięcie w link 'New products'
+        By newProductsLinkLocator = By.id("link-product-page-new-products-1");
+        WebElement newProductsLink = driver.findElement(newProductsLinkLocator);
+        newProductsLink.click();
+        //potwierdzenie wejścia na podstronę
+        By newProductsPageNameLocator = By.id("js-product-list-header");
+        WebElement newProductsPageName = driver.findElement(newProductsPageNameLocator);
+        Assertions.assertTrue(newProductsPageName.isDisplayed());
+
+        //Kliknięcie w link 'Best sales'
+        By bestSalesLinkLocator = By.id("link-product-page-best-sales-1");
+        WebElement bestSalesLink = driver.findElement(bestSalesLinkLocator);
+        bestSalesLink.click();
+        //potwierdzenie wejścia na podstronę
+        By bestSellersPageNameLocator = By.id("js-product-list-header");
+        WebElement bestSellersPageName = driver.findElement(bestSellersPageNameLocator);
+        Assertions.assertTrue(bestSellersPageName.isDisplayed());
+
+        //Kliknięcie w link 'Delivery'
+        By deliveryLinkLocator = By.id("link-cms-page-1-2");
+        WebElement deliveryLink = driver.findElement(deliveryLinkLocator);
+        deliveryLink.click();
+        //potwierdzenie wejścia na podstronę
+        By deliveryPageNameLink = By.xpath("//h1[contains(text(),\"Delivery\")]");
+        WebElement deliveryPageName = driver.findElement(deliveryPageNameLink);
+        Assertions.assertTrue(deliveryPageName.isDisplayed());
+
+        //Kliknięcie w link 'Legal Notice'
+        By legalNoticeLinkLocator = By.id("link-cms-page-2-2");
+        WebElement legalNoticeLink = driver.findElement(legalNoticeLinkLocator);
+        legalNoticeLink.click();
+        //Potwierdzenie wejścia na podstronę
+        By legalNoticePageNameLocator = By.xpath("//h1[contains(text(),\"Legal Notice\")]");
+        WebElement legalNoticePageName = driver.findElement(legalNoticePageNameLocator);
+        Assertions.assertTrue(legalNoticePageName.isDisplayed());
+
+        //Kliknięcie w link 'Terms and conditions of use'
+        By termsAndConditionsOfUseLinkLocator = By.id("link-cms-page-3-2");
+        WebElement termsAndConditionsOfUseLink = driver.findElement(termsAndConditionsOfUseLinkLocator);
+        termsAndConditionsOfUseLink.click();
+        //potwierdzenie wejścia na podstronę
+        By termsAndConditionsOfUsePageNameLocator = By.xpath(
+                "//header[@class=\"page-header\"]/h1[contains(text(), " +
+                        "\"Terms and conditions of use\")]");
+        WebElement termsAndConditionsOfUsePageName = driver.findElement(termsAndConditionsOfUsePageNameLocator);
+        Assertions.assertTrue(termsAndConditionsOfUsePageName.isDisplayed());
+
+        //Kliknięcie w link 'About us'
+        By aboutUsLinkLocator = By.id("link-cms-page-4-2");
+        WebElement aboutUsLink = driver.findElement(aboutUsLinkLocator);
+        aboutUsLink.click();
+        //potwierdzenie wejścia na podstronę
+        By aboutUsPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text(), " +
+                "\"About us\")]");
+        WebElement aboutUsPageName = driver.findElement(aboutUsPageNameLocator);
+        Assertions.assertTrue(aboutUsPageName.isDisplayed());
+
+        //Kliknięcie w link 'Secure payment'
+        By securePaymentLinkLocator = By.id("link-cms-page-5-2");
+        WebElement securePaymentLink = driver.findElement(securePaymentLinkLocator);
+        securePaymentLink.click();
+        //potwierdzenie wejścia na podstronę
+        By securePaymentPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text(), " +
+                "\"Secure payment\")]");
+        WebElement securePaymentPageName = driver.findElement(securePaymentPageNameLocator);
+        Assertions.assertTrue(securePaymentPageName.isDisplayed());
+
+        //Kliknięcie w link 'Contact us'
+        By contactUsLinkLocator = By.id("link-static-page-contact-2");
+        WebElement contactUsLink = driver.findElement(contactUsLinkLocator);
+        contactUsLink.click();
+        //potwierdzenie wejścia na podstronę
+        By contactUsPageNameLocator = By.xpath(
+                "//div[@class=\"col-md-9 col-md-offset-3\"]/h3[contains(text(),\"Contact us\")]");
+        WebElement contactUsPageName = driver.findElement(contactUsPageNameLocator);
+        Assertions.assertTrue(contactUsPageName.isDisplayed());
+
+        //Kliknięcie w link 'Sitemap'
+        By sitemapLinkLocator = By.id("link-static-page-sitemap-2");
+        WebElement sitemapLink = driver.findElement(sitemapLinkLocator);
+        sitemapLink.click();
+        //potwierdzenie wejścia na podstronę
+        By sitemapPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1/span[contains(text(), " +
+                "\"Sitemap\")]");
+        WebElement sitemapPageName = driver.findElement(sitemapPageNameLocator);
+        Assertions.assertTrue(sitemapPageName.isDisplayed());
+
+        //Kliknięcie w link 'Stores'
+        By storesLinkLocator = By.id("link-static-page-stores-2");
+        WebElement storesLink = driver.findElement(storesLinkLocator);
+        storesLink.click();
+        //potwierdzenia wejscie na podstronę
+        By ourStoresPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1");
+        WebElement ourStoresPageName = driver.findElement(aboutUsLinkLocator);
+        Assertions.assertTrue(ourStoresPageName.isDisplayed());
+
+        //Kliknięcie w link 'Personal info'
+        By personalInfoLinkLocator = By.xpath("//a[@title=\"Personal info\"]");
+        WebElement personalInfoLink = driver.findElement(personalInfoLinkLocator);
+        personalInfoLink.click();
+        //potwierdzenie wejścia na podstronę
+        By personalInfoPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text()," +
+                "\"Your personal information\")]");
+        WebElement personalInfoPageName = driver.findElement(personalInfoPageNameLocator);
+        Assertions.assertTrue(personalInfoPageName.isDisplayed());
+
+        //Kliknięcie w link 'Orders'
+        By ordersLinkLocator = By.xpath("//a[@title=\"Orders\"]");
+        WebElement ordersLink = driver.findElement(ordersLinkLocator);
+        ordersLink.click();
+        //potwierdzenie wejścia na podstronę
+        By orderHistoryPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text()," +
+                "\"Order history\")]");
+        WebElement orderHistoryPageName = driver.findElement(orderHistoryPageNameLocator);
+        Assertions.assertTrue(orderHistoryPageName.isDisplayed());
+
+        //Kliknięcie w link 'Credit slips'
+        By creditSlipsLinkLocator = By.xpath("//a[@title=\"Credit slips\"]");
+        WebElement creditSlipsLink = driver.findElement(creditSlipsLinkLocator);
+        creditSlipsLink.click();
+        //potwierdzenie wejścia na podstronę
+        By creditSlipsPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text()," +
+                "\"Credit slips\")]");
+        WebElement creditSlipsPageName = driver.findElement(creditSlipsPageNameLocator);
+        Assertions.assertTrue(creditSlipsPageName.isDisplayed());
+
+        //Kliknięcie w link 'Addresses'
+        By addressesLinkLocator = By.xpath("//a[@title=\"Addresses\"]");
+        WebElement addressesLink = driver.findElement(addressesLinkLocator);
+        addressesLink.click();
+        //potwierdzenie wejścia na podstronę
+        By yourAddressesPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text()," +
+                "\"Your addresses\")]");
+        WebElement yourAddressesPageName = driver.findElement(yourAddressesPageNameLocator);
+        Assertions.assertTrue(yourAddressesPageName.isDisplayed());
+
+        //Kliknięcie w link 'Wishlist'
+        By wishlistLinkLocator = By.xpath("//a[@title=\"My wishlists\"]");
+        WebElement wishlistLink = driver.findElement(wishlistLinkLocator);
+        wishlistLink.click();
+        //potwierdzenie wejścia na podstronę
+        By myWishlistsPageNameLocator = By.xpath("//h1[contains(text(),\"My wishlists\")]");
+        WebElement myWishlistsPageName = driver.findElement(myWishlistsPageNameLocator);
+        Assertions.assertTrue(myWishlistsPageName.isDisplayed());
     }
-
-//    @Test       //Wybór dostawy ‘My carrier’ + dodanie komentarza
-    @Order(16)
-    public void selectDeliveryMethod() {
-
-    }
-
-//    @Test    //wybór formy płatności + walidacja
-    @Order(17)
-    public void selectPaymentOption() {
-
-    }
-
-//    @Test    //Dokończenie zamówienia
-    @Order(18)
-    public void successProceedCheckout() {
-
-    }
-
-//    @Test   //Order history + sprawdzenie czy jest dokonane zamówienie
-    @Order(19)
-    public void viewItemsInOrderHistory() {
-
-    }
-
-    //@Test    //Order history + sprawdzenie szczegółów zamówienia
-    @Order(20)
-    public void viewOrderDetailsInOrderHistory() {
-
-    }
-
-    //@Test    //Order history + dodanie wiadomości
-    @Order(21)
-    public void addOrderMessageInOrderHistory() {
-
-    }
-
-    //@Test     //Reorder – edycja adresu + walidacja
-   // @Order(22)
 
     //@AfterAll
     public static void afterAll() {
