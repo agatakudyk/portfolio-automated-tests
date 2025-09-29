@@ -28,19 +28,24 @@ public class SeleniumPrestashopTest {
     @Order(1)
     public void languageSwitchIntoEnglish() {
 
-        By languageSwitchLocator = By.xpath("//button[@data-toggle=\"dropdown\"]");
-        WebElement languageSwitchClick = driver.findElement(languageSwitchLocator);
+        By languageDropdownLocator = By.xpath("//button[@data-toggle=\"dropdown\"]");
+        WebElement languageSwitchClick = driver.findElement(languageDropdownLocator);
         languageSwitchClick.click();
 
         //wybór języka English
-        By englishLanguageLocator = By.xpath("//a[@data-iso-code=\"en\"]");
-        WebElement englishLanguageSelection = driver.findElement(englishLanguageLocator);
-        englishLanguageSelection.click();
+        By englishLanguageSwitchLocator = By.xpath("//a[@data-iso-code=\"en\"]");
+        WebElement englishLanguageSwitch = driver.findElement(englishLanguageSwitchLocator);
+        englishLanguageSwitch.click();
+
+        //potwierdzenie ustawienia języka angielskiego
+        By englishLanguageCheckLocator = By.xpath("//button[@data-toggle=\"dropdown\"]" +
+                "/span[contains(text(),\"English\")]");
+        WebElement englishLanguageCheck = driver.findElement(englishLanguageCheckLocator);
+        Assertions.assertTrue(englishLanguageCheck.isDisplayed());
     }
 
-
-    //@Test  //Rejestracja: kliknięcie ‘Save’ przy pustym formularzu + walidacja
-    @Order(3)
+    //@Test  //Niepoprawna rejestracja przy pomocy pustego formularza
+    @Order(2)
     public void failSignupWithEmptyFields() {
 
         //kliknięcie w przycisk logowania
@@ -68,7 +73,7 @@ public class SeleniumPrestashopTest {
     }
 
 
-    //@Test  //Rejestracja: uzupełnienie formularza poprawnymi danymi + walidacja
+    //@Test  //Poprawna rejestracja użytkownika + wylogowanie
     @Order(3)
     public void userSuccessSignup() {
 
@@ -116,6 +121,7 @@ public class SeleniumPrestashopTest {
         userSuccessLogout();
     }
 
+    //TODO - GOTOWE!
     private void userSuccessLogout(){
 
         //kliknięcie buttona wyloguj
