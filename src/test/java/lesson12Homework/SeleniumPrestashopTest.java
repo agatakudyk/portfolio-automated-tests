@@ -23,10 +23,8 @@ public class SeleniumPrestashopTest {
         driver.get("http://localhost:8080/pl/");
     }
 
-
-
-
-    //@Test   //zmiana języka z polskiego na angielski
+    //TODO - GOTOWE!
+    @Test   //zmiana języka z polskiego na angielski
     @Order(1)
     public void languageSwitchIntoEnglish() {
 
@@ -113,11 +111,12 @@ public class SeleniumPrestashopTest {
         By logoutLocator = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
         WebElement logoutButton = driver.findElement(logoutLocator);
         Assertions.assertTrue(logoutButton.isDisplayed());
+
+        //Wylogowanie użytkownika z potwierdzeniem poprawności wylogowania
+        userSuccessLogout();
     }
 
-    //@Test    //Wylogowanie użytkownika + walidacja
-    @Order(4)
-    public void userSuccessLogout() {
+    private void userSuccessLogout(){
 
         //kliknięcie buttona wyloguj
         By logoutLocator = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
@@ -182,7 +181,8 @@ public class SeleniumPrestashopTest {
         Assertions.assertTrue(sentMessage.isDisplayed());
     }
 
-    //@Test     //Poprawne zalogowanie + walidacja
+    //TODO - GOTOWE!
+    @Test     //Poprawne zalogowanie + walidacja
     @Order(7)
     public void userSuccessLogin() {
 
@@ -199,7 +199,7 @@ public class SeleniumPrestashopTest {
         //uzupełnienie hasła
         By passwordLoginLocator = By.id("field-password");
         WebElement passwordLoginInputField = driver.findElement(passwordLoginLocator);
-        passwordLoginInputField.sendKeys("password123");
+        passwordLoginInputField.sendKeys("Testowo123");
 
         //kliknięcie buttona zaloguj
         By loginButtonLocator = By.id("submit-login");
@@ -373,7 +373,7 @@ public class SeleniumPrestashopTest {
     public void addressFormFailSendWithEmptyFields() {
 
     }
-
+//TODO - GOTOWE!
     @Test   //Strona główna/Footer -  sprawdzenie działania linków w stopce
     @Order(27)
     public void checkFooterLinksClickable() {
@@ -531,7 +531,11 @@ public class SeleniumPrestashopTest {
         By myWishlistsPageNameLocator = By.xpath("//h1[contains(text(),\"My wishlists\")]");
         WebElement myWishlistsPageName = driver.findElement(myWishlistsPageNameLocator);
         Assertions.assertTrue(myWishlistsPageName.isDisplayed());
+
+        //Wylogowanie użytkownika z potwierdzeniem poprawności wylogowania
+        userSuccessLogout();
     }
+
 
     //@AfterAll
     public static void afterAll() {
