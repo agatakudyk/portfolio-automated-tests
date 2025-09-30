@@ -448,14 +448,13 @@ public class SeleniumPrestashopTest {
         WebElement unitPriceOfItem = driver.findElement(unitPriceOfItemLocator);
         String unitPriceText = unitPriceOfItem.getText().replace("zł", "").replace(",", ".").trim();
         double unitPrice = Double.parseDouble(unitPriceText);
-        // --- wartość całkowita z podsumowania ---
+        //wartość całkowita z podsumowania
         By totalPriceLocator = By.xpath("//div[@class='cart-summary-line cart-total']/span[@class='value']");
         WebElement totalPriceElement = driver.findElement(totalPriceLocator);
         String totalPriceText = totalPriceElement.getText().replace("zł", "").replace(",", ".").trim();
         double totalPrice = Double.parseDouble(totalPriceText);
-        //oczekiwana wartość ---
+        //oczekiwana wartość
         double expectedTotal = unitPrice * productQuantity;
-        //sercja z tolerancją 0.01 ---
         //todo zrobić asercję
     }
 
@@ -463,12 +462,22 @@ public class SeleniumPrestashopTest {
     @Order(12)
     public void increasingNumberOfItems() {
 
-        //zwiększenie liczby produktu w koszyku
+        //wstawienie ilości produktu
+        By putProductQuantityInCartLocator = By.xpath("//input[@class=\"js-cart-line-product-quantity form-control\"]");
+        WebElement putProductQuantityInCart = driver.findElement(putProductQuantityInCartLocator);
+        putProductQuantityInCart.sendKeys(Keys.DELETE);
+        putProductQuantityInCart.sendKeys("22");
+
+        //todo asercja
+
+        //zwiększenie liczby produktu klikając w strzałki
         By selectQuantityLocator = By.xpath("//i[@class=\"material-icons touchspin-up\"]");
         WebElement selectQuantityClick = driver.findElement(selectQuantityLocator);
         selectQuantityClick.click();
         selectQuantityClick.click();
         selectQuantityClick.click();
+
+        //todo asercja
     }
 
     //@Test    //Formularz adresu – zapisanie pustego formularza + walidacja
