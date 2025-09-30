@@ -480,11 +480,32 @@ public class SeleniumPrestashopTest {
         //todo asercja
     }
 
-    //@Test    //Formularz adresu – zapisanie pustego formularza + walidacja
+    //TODO - GOTOWE!
+    @Test    //Formularz adresu – próba zapisania pustego formularza
     @Order(13)
-    public void addressFormFailSendWithEmptyFields() {
+    public void addressFormFailSaveWithEmptyFields() {
 
+        //przejście dalej z koszyka do adresu klikając button 'Proceed To Checkout'
+        By proceedToCheckoutButtonInCartLocator = By.xpath("//a[@class=\"btn btn-primary\" and text()=\"Proceed to checkout\"]");
+        WebElement proceedToCheckoutButtonInCart = driver.findElement(proceedToCheckoutButtonInCartLocator);
+        proceedToCheckoutButtonInCart.click();
+
+        //kliknięcie w button 'Continue'
+        By continueButtonInAddressesFormLocator = By.xpath("//button[@name=\"confirm-addresses\" and contains(., \"Continue\")]");
+        WebElement continueButtonInAddressesForm = driver.findElement(continueButtonInAddressesFormLocator);
+        continueButtonInAddressesForm.click();
+
+        //potwierdzenie pojawienia się dymka z komunikatem walidacyjnym - tooltip dynamiczny
+        By addressesInputLocator = By.id("field-address1");
+        WebElement addressesInput = driver.findElement(addressesInputLocator);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String msg = (String) js.executeScript("return arguments[0].validationMessage", addressesInput);
+        //Assertions.assertEquals("Wypełnij to pole.", msg);
     }
+
+    @Test
+    @Order(14)
+    public void
 
     //TODO - GOTOWE!
     //@Test   //Strona główna/Footer -  sprawdzenie działania linków w stopce
