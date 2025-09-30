@@ -3,6 +3,7 @@ package lesson12Homework;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.safari.AddHasDebugger;
@@ -309,6 +310,7 @@ public class SeleniumPrestashopTest {
     public WebElement waitForElementToBeRefreshedAndClickable(ChromeDriver driver, By by) {
         return new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(by)));
     }
+
     //todo - trudne
     @Test    //Podstrona ART - sortowanie
     @Order(8)
@@ -338,7 +340,7 @@ public class SeleniumPrestashopTest {
 //        //asercja
     }
 
-
+    //TODO - GOTOWE!
     @Test   //Wybranie produktu ‘The best is yet to come' + dodanie opinii
     @Order(9)
     public void successAddPosterReview() {
@@ -382,11 +384,19 @@ public class SeleniumPrestashopTest {
         okCommentButtonClick.click();
     }
 
-    //@Test    //Dodanie 3x produktu do koszyka  + walidacja
+    //TODO - GOTOWE!
+    @Test    //Dodanie kilku sztuk produktu do koszyka
     @Order(10)
     public void addProductsToCart() {
 
-        //Wybór 3 produktów
+        //Zmiana ilości produktu poprzez wpisanie liczby (wyczyść i wpisz wartość)
+        By putProductQuantityLocator = By.id("quantity_wanted");
+        WebElement putProductQuantity = driver.findElement(putProductQuantityLocator);
+        putProductQuantity.sendKeys(Keys.CONTROL + "a");
+        putProductQuantity.sendKeys(Keys.DELETE);
+        putProductQuantity.sendKeys("4");
+
+        //Zmiana ilości produktu poprzez kliknięcie w strzałki
         By selectQuantityLocator = By.xpath("//i[@class=\"material-icons touchspin-up\"]");
         WebElement selectQuantityClick = driver.findElement(selectQuantityLocator);
         selectQuantityClick.click();
@@ -395,16 +405,17 @@ public class SeleniumPrestashopTest {
 
         //Kliknij button dodaj do koszyka
         By addToCartButtonLocator = By.xpath("//button[@class=\"btn btn-primary add-to-cart\"]");
-        WebElement addTocartButtonClick = driver.findElement(addToCartButtonLocator);
-        addTocartButtonClick.click();
+        WebElement addToCartButton = driver.findElement(addToCartButtonLocator);
+        addToCartButton.click();
 
         //potwierdzenie dodania do koszyka
-        By addProductPopupLocator = By.id("myModalLabel");
+        By addProductPopupLocator = By.xpath("//h4[contains(text(),\"Product successfully added to your shopping cart\")]");
+        wait.until(ExpectedConditions.elementToBeClickable(addProductPopupLocator));
         WebElement addProductPopup = driver.findElement(addProductPopupLocator);
         Assertions.assertTrue(addProductPopup.isDisplayed());
     }
 
-    // @Test  //Koszyk + walidacja ilości produktów i ceny całkowitej
+    @Test  //Koszyk
     @Order(11)
     public void cartContentValidation() {
 
@@ -413,34 +424,34 @@ public class SeleniumPrestashopTest {
         WebElement closeAddToCartPopupClick = driver.findElement(closeAddToCartPopupLocator);
         closeAddToCartPopupClick.click();
 
-        //sprawdzenie nazwy produktów
-        By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]");
-        WebElement productNameInCart = driver.findElement(productNameInCartLocator);
-        //TODO Assertions
+//        //sprawdzenie nazwy produktów
+//        By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]");
+//        WebElement productNameInCart = driver.findElement(productNameInCartLocator);
+//        //TODO Assertions
 
-        //porównanie ilości produktu z sekcji produktu i sekcji podsumowania zakupów
-        //pobranie ilości z sekcji produktu
-        By numberInItemsSectionLocator = By.xpath("//input[@class=\"js-cart-line-product-quantity form-control\"]");
+        // porównanie ilości z sekcji produktu i sekcji podsumowania
+        // ilość w sekcji produktu
+        By numberInItemsSectionLocator = By.xpath("//input[@class='js-cart-line-product-quantity form-control']");
         WebElement numberInItemSection = driver.findElement(numberInItemsSectionLocator);
-        //pobranie ilości z sekcji podsumowania
-        By numberInPurchaseSummarySection = By.xpath("//span[@class=\"label js-subtotal\"]");
-        Assertions.assertEquals(numberInItemSection, numberInPurchaseSummarySection);
+        int productQuantity = Integer.parseInt(numberInItemSection.getAttribute("value"));
+        // ilość w sekcji podsumowania
+        By numberInPurchaseSummarySectionLocator = By.xpath("//span[@class='label js-subtotal']");
+        WebElement numberInPurchaseSummarySection = driver.findElement(numberInPurchaseSummarySectionLocator);
+        String summaryQuantityText = numberInPurchaseSummarySection.getText();
+        int summaryQuantity = Integer.parseInt(summaryQuantityText.replaceAll("\\D+", ""));
+        // porównanie ilości z sekcji produktu i sekcji podsumowania
+        Assertions.assertEquals(productQuantity, summaryQuantity);
 
-        //sprawdzenie wartości całkowitej
-        //pobranie wartości całkowitej
-        By totalItemsValueLocator = By.xpath("//div[@id=\"cart-subtotal-products\"]/span[@class=\"value\"]");
-        WebElement totalItemsValue = driver.findElement(totalItemsValueLocator);
-        //pobranie ceny jednostkowej
-        By itemUnitPriceLocator = By.xpath("//span[@class=\"price\"]");
-        WebElement itemUnitPrice = driver.findElement(itemUnitPriceLocator);
-        //obliczenie
-        //double expectedTotalPrice = numberInItemSection * itemUnitPrice;
-        //sprawdzenie wartości całkowitej
-        //Assertions.assertEquals(expectedTotalPrice,totalItemsValue);
+//        //sprawdzenie wartości całkowitej
+//        //cena jednostkowa
+//        By unitPriceOfItemLocator = By.xpath("//div[@class=\"product-line-info product-price h5 \"]/div[@class=\"current-price\"]");
+//        WebElement unitPriceOfItem = driver.findElement(unitPriceOfItemLocator);
+//        String unitPriceText = unitPriceOfItem.getText().replace("zł", "").replace(",", ".").trim();
+//        double unitPrice = Double.parseDouble(unitPriceText);
     }
 
     //@Test   //Koszyk + zwiększenie ilości + walidacja ilości produktów i ceny całkowitej
-    @Order(13)
+    @Order(12)
     public void increasingNumberOfItems() {
 
         //zwiększenie liczby produktu w koszyku
@@ -452,7 +463,7 @@ public class SeleniumPrestashopTest {
     }
 
     //@Test    //Formularz adresu – zapisanie pustego formularza + walidacja
-    @Order(14)
+    @Order(13)
     public void addressFormFailSendWithEmptyFields() {
 
     }
