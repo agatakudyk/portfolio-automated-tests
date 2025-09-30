@@ -442,15 +442,24 @@ public class SeleniumPrestashopTest {
         // porównanie ilości z sekcji produktu i sekcji podsumowania
         Assertions.assertEquals(productQuantity, summaryQuantity);
 
-//        //sprawdzenie wartości całkowitej
-//        //cena jednostkowa
-//        By unitPriceOfItemLocator = By.xpath("//div[@class=\"product-line-info product-price h5 \"]/div[@class=\"current-price\"]");
-//        WebElement unitPriceOfItem = driver.findElement(unitPriceOfItemLocator);
-//        String unitPriceText = unitPriceOfItem.getText().replace("zł", "").replace(",", ".").trim();
-//        double unitPrice = Double.parseDouble(unitPriceText);
+        //sprawdzenie wartości całkowitej
+        //cena jednostkowa
+        By unitPriceOfItemLocator = By.xpath("//div[@class=\"product-line-info product-price h5 \"]/div[@class=\"current-price\"]");
+        WebElement unitPriceOfItem = driver.findElement(unitPriceOfItemLocator);
+        String unitPriceText = unitPriceOfItem.getText().replace("zł", "").replace(",", ".").trim();
+        double unitPrice = Double.parseDouble(unitPriceText);
+        // --- wartość całkowita z podsumowania ---
+        By totalPriceLocator = By.xpath("//div[@class='cart-summary-line cart-total']/span[@class='value']");
+        WebElement totalPriceElement = driver.findElement(totalPriceLocator);
+        String totalPriceText = totalPriceElement.getText().replace("zł", "").replace(",", ".").trim();
+        double totalPrice = Double.parseDouble(totalPriceText);
+        //oczekiwana wartość ---
+        double expectedTotal = unitPrice * productQuantity;
+        //sercja z tolerancją 0.01 ---
+        //todo zrobić asercję
     }
 
-    //@Test   //Koszyk + zwiększenie ilości + walidacja ilości produktów i ceny całkowitej
+    @Test   //Koszyk - zwiększenie ilości produktu
     @Order(12)
     public void increasingNumberOfItems() {
 
