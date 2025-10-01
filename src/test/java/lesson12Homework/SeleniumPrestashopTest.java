@@ -621,11 +621,91 @@ public class SeleniumPrestashopTest {
         Assertions.assertTrue(successMsgInContactUsSection.isDisplayed());
     }
 
+    @Test    //Panel użytkownika/Order history - sprawdzenie szczegółów zamówienia
+    @Order(18)
+    public void checkOrderDetails() {
+
+        //Wejście w panel zalogowanego uzytkownika
+        By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
+        WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
+        userProfileLink.click();
+
+        //Wejście w sekcję 'Order history and details'
+        By orderHistoryAndDetailsLinkLocator = By.id("history-link");
+        WebElement orderHistoryAndDetailsLink = driver.findElement(orderHistoryAndDetailsLinkLocator);
+        orderHistoryAndDetailsLink.click();
+
+        //todo - sprawdzenie
+
+    }
+
+
+    @Test    //Panel użytkownika/Details - dodanie wiadomości i potwierdzenie widoczności
+    @Order(19)
+    public void addMsgInOrderDetailsPage() {
+
+        //Wejście w panel zalogowanego uzytkownika
+        By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
+        WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
+        userProfileLink.click();
+
+        //Wejście w sekcję 'Order history and details'
+        By orderHistoryAndDetailsLinkLocator = By.id("history-link");
+        WebElement orderHistoryAndDetailsLink = driver.findElement(orderHistoryAndDetailsLinkLocator);
+        orderHistoryAndDetailsLink.click();
+
+        //Wejście w pierwsze lepsze 'Details'
+        By orderDetailsLinkLocator = By.xpath("//a[@data-link-action=\"view-order-details\"]/i");
+        WebElement orderDetailsLink = driver.findElement(orderDetailsLinkLocator);
+        orderDetailsLink.click();
+
+        //Kliknięcie 'Send' - wysłanie nieuzupełnionej wiadomości
+        By sendButtonInDetailsPageLocator = By.xpath("//*[@name=\"submitMessage\"]");
+        WebElement sendButtonInDetailsPage = driver.findElement(sendButtonInDetailsPageLocator);
+        sendButtonInDetailsPage.click();
+
+        //Potwierdzenie pojawienia się komunikatu walidacji
+        By validationMsgInDetailsPageLocator = By.xpath("//li[contains(text(),\"The message cannot be blank.\")]");
+        WebElement validationMsgInDetailsPage = driver.findElement(validationMsgInDetailsPageLocator);
+        Assertions.assertTrue(validationMsgInDetailsPage.isDisplayed());
+
+        //Poprawne dodanie wiadomości - wybór produktu
+        By chooseProductInMsgFormLocator = By.xpath("//li[contains(text(),\"The message cannot be blank.\")]");
+        WebElement chooseProductField = driver.findElement(chooseProductInMsgFormLocator);
+        //todo - wybór opcji
+
+        //Uzupełnienie treści wiadomości
+        By fillInMsgTextInFormLocator = By.xpath("//textarea[@name=\"msgText\"]");
+        WebElement fillInMsgTextInField = driver.findElement(fillInMsgTextInFormLocator);
+        fillInMsgTextInField.sendKeys("Proszę o wysyłkę możliwie najszybciej. Dziękuję.");
+
+        //Kliknięcie 'Send'
+        sendButtonInDetailsPage.click();
+
+        //potwierdzenie wysłania wiadomości
+        By sendConfirmationMsgLocator = By.xpath("//li[contains(text(),\"Message successfully sent\")]");
+        WebElement sendConfirmationMsg = driver.findElement(sendConfirmationMsgLocator);
+        Assertions.assertTrue(sendConfirmationMsg.isDisplayed());
+    }
+
+
+
+
+    @Test     //Panel użytkownika/Reorder - edycja adresu
+    @Order(20)
+
+
+    @Test     //Wishlists - dodanie produktów do wishlists
+    @Order(21)
+
+    @Test    //Wishlists - utworzenie nowej wishlisty i dodanie produktu
+    @Order(22)
+
 
 
     //TODO - GOTOWE!
     //@Test   //Strona główna/Footer -  sprawdzenie działania linków w stopce
-    @Order(27)
+    @Order(23)
     public void checkFooterLinksClickable() {
 
         //Kliknięcie w link 'Prices drop'
