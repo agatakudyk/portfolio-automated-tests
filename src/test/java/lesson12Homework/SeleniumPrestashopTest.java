@@ -483,7 +483,7 @@ public class SeleniumPrestashopTest {
     //TODO - GOTOWE!
     @Test    //Formularz adresu – próba zapisania pustego formularza
     @Order(13)
-    public void addressFormFailSaveWithEmptyFields() {
+    public void addressesFormFailSaveWithEmptyFields() {
 
         //przejście dalej z koszyka do adresu klikając button 'Proceed To Checkout'
         By proceedToCheckoutButtonInCartLocator = By.xpath("//a[@class=\"btn btn-primary\" and text()=\"Proceed to checkout\"]");
@@ -496,16 +496,132 @@ public class SeleniumPrestashopTest {
         continueButtonInAddressesForm.click();
 
         //potwierdzenie pojawienia się dymka z komunikatem walidacyjnym - tooltip dynamiczny
-        By addressesInputLocator = By.id("field-address1");
+        By addressesInputLocator = By.xpath("//input[@name=\"address1\"]");
         WebElement addressesInput = driver.findElement(addressesInputLocator);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         String msg = (String) js.executeScript("return arguments[0].validationMessage", addressesInput);
         //Assertions.assertEquals("Wypełnij to pole.", msg);
     }
 
-    @Test
+    @Test   //Formularz adresu - zapisanie poprawnie uzupełnionego formularza
     @Order(14)
-    public void
+    public void addressesFormSuccessSave() {
+
+        //uzupełnienie adresu
+        By addressFieldLocator = By.id("field-address1");
+        WebElement addressField = driver.findElement(addressFieldLocator);
+        addressField.sendKeys("ul. Prosta 11");
+
+        //uzupełnienie kodu pocztowego
+        By postalCodeFieldLocator = By.id("field-postcode");
+        WebElement postalCodeField = driver.findElement(postalCodeFieldLocator);
+        postalCodeField.sendKeys("11-234");
+
+        //uzupełnienie miasta
+        By cityFieldLocal = By.id("field-city");
+        WebElement cityField = driver.findElement(cityFieldLocal);
+        cityField.sendKeys("Warszawa");
+
+        //kliknięcie w button 'Continue'
+        By continueButtonInAddressesFormLocator = By.xpath("//button[@name=\"confirm-addresses\" and contains(., \"Continue\")]");
+        WebElement continueButtonInAddressesForm = driver.findElement(continueButtonInAddressesFormLocator);
+        continueButtonInAddressesForm.click();
+
+        //todo - jak zrobić asercję? powrót do sekcji i sprawdzenie wyborów?
+    }
+
+    @Test
+    @Order(15)
+    public void shippingMethodSuccessSelection() {
+
+        //zmiana z 'PrestaShop' na 'My carrier'
+        By prestaShopRadioButtonLocator = By.id("delivery_option_2");
+        WebElement prestaShopRadioButton = driver.findElement(prestaShopRadioButtonLocator);
+        prestaShopRadioButton.click();
+
+        //zmiana z 'My carrier' na 'Prestashop'
+        By myCarrierRadioButtonLocator = By.id("delivery_option_1");
+        WebElement myCarrierRadioButton = driver.findElement(myCarrierRadioButtonLocator);
+        myCarrierRadioButton.click();
+
+        //Dodanie komentarza do zamówienia
+        By commentToOrderFieldLocator = By.id("delivery_message");
+        WebElement commentToOrderField = driver.findElement(commentToOrderFieldLocator);
+        commentToOrderField.sendKeys("Proszę o zostawienie paczki pod drzwiami.");
+
+        //kliknięcie w button 'Continue'
+        By continueButtonInShippingMethodFormLocator = By.xpath("//button[@name=\"confirmDeliveryOption\"]");
+        WebElement continueButtonInShippingMethodForm = driver.findElement(continueButtonInShippingMethodFormLocator);
+        continueButtonInShippingMethodForm.click();
+
+        //todo - jak zrobić asercję? powrót do sekcji i sprawdzenie wyborów?
+    }
+
+    @Test
+    @Order(16)
+    public void paymentMethodSelection() {
+
+        //Wybór opcji 'Pay by bank wire'
+        By payByBankWireRadioButtonLocator = By.id("payment-option-2");
+        WebElement payByBankWireRadioButton = driver.findElement(payByBankWireRadioButtonLocator);
+        payByBankWireRadioButton.click();
+
+        //Zmiana z 'Pay by bank wire' na 'Pay by Check'
+        By payByCheckRadioButtonLocator = By.id("payment-option-1");
+        WebElement payByCheckRadioButton = driver.findElement(payByCheckRadioButtonLocator);
+        payByCheckRadioButton.click();
+
+        //todo - uzupełnij dane czeku
+//        //uzupełnienie danych przy płatności czekiem
+//        By payeeFieldFillInLocator =
+//        WebElement payeeFieldFillIn = driver.findElement();
+//        payeeFieldFillIn.
+
+        //Wybór checkboxa zgody
+        By agreeToTermsCheckboxLocator = By.xpath("//input[@name=\"conditions_to_approve[terms-and-conditions]\"]");
+        WebElement agreeToTermsCheckbox = driver.findElement(agreeToTermsCheckboxLocator);
+        agreeToTermsCheckbox.click();
+
+        //kliknięcie w button 'Place Order'
+        By placeOrderButtonInPaymentSectionLocator = By.xpath("//div[@class=\"ps-shown-by-js\"]/button");
+        WebElement placeOrderButtonInPaymentSection = driver.findElement(placeOrderButtonInPaymentSectionLocator);
+        placeOrderButtonInPaymentSection.click();
+    }
+
+    @Test
+    @Order(17)
+    public void contactCustomerServiceDepartment() {
+
+        //kliknięcie w link formularza kontaktowego
+        By customerServiceDepartmentContactLocator = By.xpath("//a[contains(text(),\"customer service department.\")]");
+        WebElement customerServiceDepartmentContact = driver.findElement(customerServiceDepartmentContactLocator);
+        customerServiceDepartmentContact.click();
+
+        //kliknięcie w button 'Send' - próba przesłania niewypełnionego formularza
+        By sendButtonInContactUsSectionLocator = By.xpath("//input[@class=\"btn btn-primary\"]");
+        WebElement sendButtonInContactUsSection = driver.findElement(sendButtonInContactUsSectionLocator);
+        sendButtonInContactUsSection.click();
+
+        //Potwierdzenie pojawienia się komunikatu walidacyjnego
+        By validationMsgInContactUsSectionLocator = By.xpath("//li[contains(text(),\"The message cannot be blank.\")]");
+        WebElement validationMsgInContactUsSection = driver.findElement(validationMsgInContactUsSectionLocator);
+        Assertions.assertTrue(validationMsgInContactUsSection.isDisplayed());
+
+        //uzupełnienie treści wiadomości
+        By msgFieldInContactUsSectionLocator = By.id("contactform-message");
+        WebElement msgFieldInContactUsSection = driver.findElement(msgFieldInContactUsSectionLocator);
+        msgFieldInContactUsSection.sendKeys("Chcę otrzymać FV za zamówienie.");
+
+        //kliknięcie w button 'Send' - próba przesłania niewypełnionego formularza
+        sendButtonInContactUsSection.click();
+
+        //potwierdzenie pojawienia się komunikatu informacyjnego
+        By successMsgInContactUsSectionLocator = By.xpath("//li[contains(text(),\"Your message has been successfully sent to our team.\")]");
+        WebElement successMsgInContactUsSection = driver.findElement(successMsgInContactUsSectionLocator);
+        Assertions.assertTrue(successMsgInContactUsSection.isDisplayed());
+    }
+
+
 
     //TODO - GOTOWE!
     //@Test   //Strona główna/Footer -  sprawdzenie działania linków w stopce
