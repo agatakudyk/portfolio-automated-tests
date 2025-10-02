@@ -819,8 +819,36 @@ public class SeleniumPrestashopTest {
         wishlistNameField.sendKeys("Ulubione");
 
         //Kliknięcie w button 'Create wishlist'
-        By createWishlistLocator = By.xpath("//button[contains(text(),\"Create wishlist\")]");
+        By createNewWishListLocator = By.xpath("//button[contains(text(),\"Create wishlist\")]");
+        WebElement createNewWishList = driver.findElement(createNewWishListLocator);
+        createNewWishList.click();
 
+        //Popup - wybranie nowo utworzonej listy
+        By ulubioneNewWishlistLector = By.xpath("//li[@class=\"wishlist-list-item\"]/p[contains(text(),\"Ulubione\")]");
+        WebElement ulubioneNewWishlist = driver.findElement(ulubioneNewWishlistLector);
+        ulubioneNewWishlist.click();
+
+        // TOAST - potwierdzenie pojawienia się komunikatu potwierdzającego
+        By productAddedToWishlistMsgLocator = By.xpath("//div[@class=\"wishlist-toast success\"]/p[@class=\"wishlist-toast-text\"]");
+        WebElement productAddedToWishlistMsg = driver.findElement(productAddedToWishlistMsgLocator);
+        Assertions.assertTrue(productAddedToWishlistMsg.isDisplayed());
+
+        //Wejście w panel zalogowanego użytkownika
+        By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
+        WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
+        userProfileLink.click();
+
+        //Wejście na podstronę 'My wishlists'
+        By myWishlistsPageLocator = By.xpath("//a[@id=\"wishlist-link\"]/span/i");
+        WebElement myWishlistsPage = driver.findElement(myWishlistsPageLocator);
+        myWishlistsPage.click();
+
+        //Wejście na link listy 'Ulubione'
+        By ulubioneWishlistLinkLocator = By.xpath("//a[@class=\"wishlist-list-item-link\"]/p[contains(text(),\"Ulubione\")]");
+        WebElement ulubioneWishlistLink = driver.findElement(ulubioneWishlistLinkLocator);
+        ulubioneNewWishlist.click();
+
+        //todo - potwierdzenie, że produkt jest
 
     }
 
