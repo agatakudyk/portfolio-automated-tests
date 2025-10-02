@@ -694,8 +694,6 @@ public class SeleniumPrestashopTest {
     }
 
 
-
-
     @Test     //Panel użytkownika/Reorder - ponowne złożenie zamówienia
     @Order(20)
     public void reorderPreviousOrder() {
@@ -750,15 +748,66 @@ public class SeleniumPrestashopTest {
         By confirmationMsgLocator = By.xpath("//h3[@class=\"h1 card-title\"]/i");
         WebElement confirmationMsg = driver.findElement(confirmationMsgLocator);
         Assertions.assertTrue(confirmationMsg.isDisplayed());
-
     }
-
 
     @Test     //Wishlists - dodanie produktów do wishlists
     @Order(21)
+    public void addItemsToStaticWishlists() {
+
+        //Przejcie na stronę główną
+        By homepageLinkLocator = By.id("_desktop_logo");
+        WebElement homepageLink = driver.findElement(homepageLinkLocator);
+        homepageLink.click();
+
+        //Kliknięcie w serduszko dodające do wishlist
+        By heartButtonOfHummingbirdLocator = By.xpath("\t//a[contains(text(),\"Hummingbird printed t-shirt\")]/../../../button[@class=\"wishlist-button-add\"]");
+        WebElement heartButtonOfHummingbird = driver.findElement(heartButtonOfHummingbirdLocator);
+        heartButtonOfHummingbird.click();
+
+        //Popup - kliknięcie w automatycznie utworzony 'My wishlist'
+        By myWishlistPopupLocator = By.xpath("//div[@class=\"modal-body\"]/div/ul/li[@class=\"wishlist-list-item\"]");
+        WebElement myWishlistPopup = driver.findElement(myWishlistPopupLocator);
+        myWishlistPopup.click();
+
+        // TOAST - potwierdzenie pojawienia się komunikatu potwierdzającego
+        By productAddedToWishlistMsgLocator = By.xpath("//div[@class=\"wishlist-toast success\"]/p[@class=\"wishlist-toast-text\"]");
+        WebElement productAddedToWishlistMsg = driver.findElement(productAddedToWishlistMsgLocator);
+        Assertions.assertTrue(productAddedToWishlistMsg.isDisplayed());
+
+        //Wejście w panel zalogowanego użytkownika
+        By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
+        WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
+        userProfileLink.click();
+
+        //Wejście na podstronę 'My wishlists'
+        By myWishlistsPageLocator = By.xpath("//a[@id=\"wishlist-link\"]/span/i");
+        WebElement myWishlistsPage = driver.findElement(myWishlistsPageLocator);
+        myWishlistsPage.click();
+
+        //Wejście na link listy 'My wishlist'
+        By myWishlistLinkLocator = By.xpath("//p[@class=\"wishlist-list-item-title\"]");
+        WebElement myWishlistLink = driver.findElement(myWishlistLinkLocator);
+        myWishlistLink.click();
+
+        //todo - potwierdzenie, że produkt jest
+    }
+
 
     @Test    //Wishlists - utworzenie nowej wishlisty i dodanie produktu
     @Order(22)
+    public void addItemsToNewWishlists() {
+
+
+        //Przejcie na stronę główną
+        By homepageLinkLocator = By.id("_desktop_logo");
+        WebElement homepageLink = driver.findElement(homepageLinkLocator);
+        homepageLink.click();
+
+        //Kliknięcie w serduszko dodające do wishlist
+        By heartButtonOfMugLocator = By.xpath("//a[contains(text(),\"Mug The adventure begins\")]/../../../button[@class=\"wishlist-button-add\"]");
+        WebElement heartButtonOfMug = driver.findElement(heartButtonOfMugLocator);
+
+    }
 
 
 
