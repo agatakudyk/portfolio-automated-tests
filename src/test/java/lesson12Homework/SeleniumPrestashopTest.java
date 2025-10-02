@@ -804,8 +804,23 @@ public class SeleniumPrestashopTest {
         homepageLink.click();
 
         //Kliknięcie w serduszko dodające do wishlist
-        By heartButtonOfMugLocator = By.xpath("//a[contains(text(),\"Mug The adventure begins\")]/../../../button[@class=\"wishlist-button-add\"]");
-        WebElement heartButtonOfMug = driver.findElement(heartButtonOfMugLocator);
+        By heartButtonOfMugTheAdventureLocator = By.xpath("//a[contains(text(),\"Mug The adventure begins\")]/../../../button[@class=\"wishlist-button-add\"]");
+        WebElement heartButtonOfMugTheAdventure = driver.findElement(heartButtonOfMugTheAdventureLocator);
+        heartButtonOfMugTheAdventure.click();
+
+        //Popup - kliknięcie 'Create new list'
+        By newWishlistPopupLocator = By.xpath("//a[@class=\"wishlist-add-to-new text-primary\"]");
+        WebElement newWishlistPopup = driver.findElement(newWishlistPopupLocator);
+        newWishlistPopup.click();
+
+        //Wpisanie nazwy nowej listy
+        By wishlistNameLocator = By.xpath("//input[@id=\"input2\"]");
+        WebElement wishlistNameField = driver.findElement(wishlistNameLocator);
+        wishlistNameField.sendKeys("Ulubione");
+
+        //Kliknięcie w button 'Create wishlist'
+        By createWishlistLocator = By.xpath("//button[contains(text(),\"Create wishlist\")]");
+
 
     }
 
