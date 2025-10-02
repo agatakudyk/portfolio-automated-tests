@@ -10,11 +10,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SeleniumPrestashopTest {
 
-    String emailCreateName ="testowianka17@wp.pl";
+    String emailCreateName ="testowianka19@wp.pl";
     static ChromeDriver driver;
     static WebDriverWait wait;
 
@@ -71,7 +73,7 @@ public class SeleniumPrestashopTest {
         Assertions.assertEquals("Wypełnij to pole.", msg);
     }
 
-    @Test  //Poprawna rejestracja użytkownika + wylogowanie
+    @Test  //Poprawna rejestracja użytkownika
     @Order(3)
     public void userSuccessSignup() {
 
@@ -216,11 +218,6 @@ public class SeleniumPrestashopTest {
         WebElement logoutButton = driver.findElement(logoutLocator);
         Assertions.assertTrue(logoutButton.isDisplayed());
 
-        //Zmiana hasła - wejście w panel zalogowanego uzytkownika
-//        By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
-//        WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
-//        userProfileLink.click();
-
         //Zmiana hasła - wejście na podstronę 'Information'
         By informationPageLocator = By.xpath("//a[@id=\"identity-link\"]");
         WebElement informationPage = driver.findElement(informationPageLocator);
@@ -344,12 +341,18 @@ public class SeleniumPrestashopTest {
         availableFilterCheckbox.click();
         By availableFilterCheckboxLocator = By.xpath("//a[contains(text(),\"Available\")]/../span/input");
         wait.until(ExpectedConditions.elementToBeSelected(availableFilterCheckboxLocator));
+
         //Wyczyszczenie wybranych filtrów
         By clearAllFilterLocator = By.xpath("//button[@class=\"btn btn-tertiary js-search-filters-clear-all\"]");
         WebElement clearAllFilterClick = driver.findElement(clearAllFilterLocator);
         clearAllFilterClick.click();
+        wait.until(ExpectedConditions.invisibilityOf(clearAllFilterClick));
 
-        //TODO: potwiedzenie wyczyszczenia filtrów
+        //potwiedzenie wyczyszczenia filtrów
+        By activeFiltersLocator = By.xpath("//p[contains(text(),\"Active filters\")]");
+        WebElement activeFilters = driver.findElement(activeFiltersLocator);
+        Assertions.assertFalse(activeFilters.isDisplayed());
+
     }
 
 
@@ -361,24 +364,54 @@ public class SeleniumPrestashopTest {
         By artPageLocator = By.id("category-9");
         WebElement artPageLink = driver.findElement(artPageLocator);
         artPageLink.click();
+        Thread.sleep(1000);
+        By sortByListLocator = By.xpath("//button[@aria-label=\"Sort by selection\"]");
+        driver.findElement(sortByListLocator).click();
+        //Sortowanie - Name, A to Z
+        By sortByNameAZLocator = By.xpath("//div[@class=\"dropdown-menu\"]/a[contains(text(),\"Name, A to Z\")]");
+        WebElement sortByNameAZ = driver.findElement(sortByNameAZLocator);
+        sortByNameAZ.click();
 
-//        //Sortowanie - Name, A to Z
-//        By sortByNameAZLocator = By.xpath("//div[@class=\"dropdown-menu\"]/a[contains(text(),\"Name, A to Z\")]");
-//        WebElement sortByNameAZ = driver.findElement(sortByNameAZLocator);
-//        sortByNameAZ.click();
-//
-//        Thread.sleep(2000);
-//
-//        //asercja
-//
-//        //Sortowanie - Name, A to Z
-//        By sortByPriceAscLocator = By.xpath("//div[@class=\"dropdown-menu\"]/a[contains(text(),\"Price, low to high\")]");
-//        WebElement sortByPriceAsc = driver.findElement(sortByPriceAscLocator);
-//        sortByPriceAsc.click();
-//
-//        Thread.sleep(2000);
-//
-//        //asercja
+        Thread.sleep(1000);
+
+        By productsListLocator = By.xpath("//div[@class=\"product-description\"]/h2/a");
+        List<WebElement> productsLists = driver.findElements(productsListLocator);
+
+        List<String>productsNames = new ArrayList<>();
+        for(WebElement product : productsLists){
+            productsNames.add(product.getText());
+        }
+        List<String>productsAlphabeticalOrder = productsNames.stream().sorted().toList();
+
+        for(int i=0; i < productsNames.size(); i++){
+            Assertions.assertEquals(productsNames.get(i), productsAlphabeticalOrder.get(i));
+        }
+
+        //asercja
+
+        driver.findElement(sortByListLocator).click();
+
+        Thread.sleep(1000);
+        //Sortowanie - cena od najniższej
+        By sortByPriceAscLocator = By.xpath("//div[@class=\"dropdown-menu\"]/a[contains(text(),\"Price, low to high\")]");
+        WebElement sortByPriceAsc = driver.findElement(sortByPriceAscLocator);
+        sortByPriceAsc.click();
+
+        Thread.sleep(1000);
+
+        By productsListLocator2 = By.xpath("//div[@class=\"product-price-and-shipping\"]/span");
+        List<WebElement> productsLists2 = driver.findElements(productsListLocator2);
+
+        List<String>productsPrices = new ArrayList<>();
+        for(WebElement product : productsLists2){
+            productsPrices.add(product.getText());
+        }
+        List<String>productsAlphabeticalOrder2 = productsPrices.stream().sorted().toList();
+
+        for(int i=0; i < productsPrices.size(); i++){
+            Assertions.assertEquals(productsPrices.get(i), productsAlphabeticalOrder2.get(i));
+        }
+        //asercja
     }
 
     @Test   //Wybranie produktu ‘The best is yet to come' + dodanie opinii
