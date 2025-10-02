@@ -6,7 +6,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.safari.AddHasDebugger;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -15,6 +14,7 @@ import java.time.Duration;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SeleniumPrestashopTest {
 
+    String emailCreateName ="testowianka17@wp.pl";
     static ChromeDriver driver;
     static WebDriverWait wait;
 
@@ -25,7 +25,6 @@ public class SeleniumPrestashopTest {
         driver.get("http://localhost:8080/pl/");
     }
 
-    //TODO - GOTOWE!
     @Test   //zmiana języka z polskiego na angielski
     @Order(1)
     public void languageSwitchIntoEnglish() {
@@ -45,8 +44,7 @@ public class SeleniumPrestashopTest {
         Assertions.assertTrue(englishLanguageCheck.isDisplayed());
     }
 
-    //TODO - GOTOWE!
-    //@Test  //Niepoprawna rejestracja przy pomocy pustego formularza
+    @Test  //Niepoprawna rejestracja przy pomocy pustego formularza
     @Order(2)
     public void failSignupWithEmptyFields() {
 
@@ -73,8 +71,7 @@ public class SeleniumPrestashopTest {
         Assertions.assertEquals("Wypełnij to pole.", msg);
     }
 
-    //TODO - GOTOWE!
-    //@Test  //Poprawna rejestracja użytkownika + wylogowanie
+    @Test  //Poprawna rejestracja użytkownika + wylogowanie
     @Order(3)
     public void userSuccessSignup() {
 
@@ -91,7 +88,7 @@ public class SeleniumPrestashopTest {
         //uzupełnienie pola e-mail
         By mailLocator = By.id("field-email");
         WebElement mailInputField = driver.findElement(mailLocator);
-        mailInputField.sendKeys("testowianka95@wp.pl");
+        mailInputField.sendKeys(emailCreateName);
 
         //uzupełnienie pola hasło
         By passwordLocator = By.id("field-password");
@@ -122,7 +119,6 @@ public class SeleniumPrestashopTest {
         userSuccessLogout();
     }
 
-    //TODO - GOTOWE!
     private void userSuccessLogout() {
 
         //kliknięcie buttona wyloguj
@@ -136,8 +132,7 @@ public class SeleniumPrestashopTest {
         Assertions.assertTrue(signInButton.isDisplayed());
     }
 
-    //TODO - GOTOWE!
-    //@Test
+    @Test
     @Order(4)    //Logowanie z użyciem błędnych danych
     public void failLoginWithIncorrectData() {
 
@@ -167,8 +162,7 @@ public class SeleniumPrestashopTest {
         Assertions.assertTrue(failMessage.isDisplayed());
     }
 
-    //TODO - GOTOWE!
-    //@Test  //Logowanie/zresetowanie zapomnianego hasła + walidacja
+    @Test  //Logowanie/zresetowanie zapomnianego hasła + walidacja
     @Order(5)
     public void loginPasswordRecovery() {
 
@@ -193,7 +187,6 @@ public class SeleniumPrestashopTest {
         Assertions.assertTrue(sentMessage.isDisplayed());
     }
 
-    //TODO
     @Test     //Poprawne zalogowanie  + zmiana hasła + wylogowanie +  zalogowanie nowym hasłem
     @Order(6)
     public void userSuccessLogin() {
@@ -206,7 +199,7 @@ public class SeleniumPrestashopTest {
         //uzupełnienie pola email
         By emailLoginLocator = By.id("field-email");
         WebElement emailLoginInputField = driver.findElement(emailLoginLocator);
-        emailLoginInputField.sendKeys("testowianka95@wp.pl");
+        emailLoginInputField.sendKeys(emailCreateName);
 
         //uzupełnienie hasła
         By passwordLoginLocator = By.id("field-password");
@@ -224,9 +217,9 @@ public class SeleniumPrestashopTest {
         Assertions.assertTrue(logoutButton.isDisplayed());
 
         //Zmiana hasła - wejście w panel zalogowanego uzytkownika
-        By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
-        WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
-        userProfileLink.click();
+//        By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
+//        WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
+//        userProfileLink.click();
 
         //Zmiana hasła - wejście na podstronę 'Information'
         By informationPageLocator = By.xpath("//a[@id=\"identity-link\"]");
@@ -267,22 +260,30 @@ public class SeleniumPrestashopTest {
         userSuccessLogout();
 
         //uzupełnienie pola email
-        emailLoginInputField.sendKeys("testowianka95@wp.pl");
+        By emailLoginLocatorNew = By.id("field-email");
+        WebElement emailLoginInputFieldNew = driver.findElement(emailLoginLocatorNew);
+        emailLoginInputFieldNew.sendKeys(emailCreateName);
 
-        //uzupełnienie nowego hasła
-        passwordLoginInputField.sendKeys("TestTest123");
+        //uzupełnienie hasła
+        By passwordLoginLocatorNew = By.id("field-password");
+        WebElement passwordLoginInputFieldNew = driver.findElement(passwordLoginLocatorNew);
+        passwordLoginInputFieldNew.sendKeys("TestTest123");
 
         //kliknięcie w button 'Sign In'
-        loginButtonClick.click();
+        By loginButtonLocatorNew = By.id("submit-login");
+        WebElement loginButtonClickNew = driver.findElement(loginButtonLocatorNew);
+        loginButtonClickNew.click();
 
-        //sprawdzenie poprawności logowania
-        Assertions.assertTrue(logoutButton.isDisplayed());
+        //sprawdzenie poprawności zalogowania użytkownika
+        By logoutLocatorNew = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
+        WebElement logoutButtonNew = driver.findElement(logoutLocatorNew);
+        Assertions.assertTrue(logoutButtonNew.isDisplayed());
 
         //przywrócenie starego hasła
         backToPreviousPassword();
     }
-
     private void backToPreviousPassword() {
+
         //Wjście w panel zalogowanego uzytkownika
         By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
         WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
@@ -320,8 +321,7 @@ public class SeleniumPrestashopTest {
 
     }
 
-    //todo - trudne
-    //@Test //Podstrona Accessories - filtrowanie
+    @Test //Podstrona Accessories - filtrowanie
     @Order(7)
     public void clearAccessoriesProductsFiltering() {
 
@@ -335,11 +335,15 @@ public class SeleniumPrestashopTest {
         WebElement ceramicCompositionFilterCheckbox = driver.findElement(ceramicCompositionFilterLocator);
         ceramicCompositionFilterCheckbox.click();
 
+        By ceramicCompositionFilterCheckboxLocator = By.xpath("//a[contains(text(),\"Ceramic\")]/../span/input");
+        wait.until(ExpectedConditions.elementToBeSelected(ceramicCompositionFilterCheckboxLocator));
+
         //Filtr - Availability
         By availableFilterLocator = By.xpath("//a[contains(text(),\"Available\")]");
         WebElement availableFilterCheckbox = driver.findElement(availableFilterLocator);
         availableFilterCheckbox.click();
-
+        By availableFilterCheckboxLocator = By.xpath("//a[contains(text(),\"Available\")]/../span/input");
+        wait.until(ExpectedConditions.elementToBeSelected(availableFilterCheckboxLocator));
         //Wyczyszczenie wybranych filtrów
         By clearAllFilterLocator = By.xpath("//button[@class=\"btn btn-tertiary js-search-filters-clear-all\"]");
         WebElement clearAllFilterClick = driver.findElement(clearAllFilterLocator);
@@ -348,11 +352,7 @@ public class SeleniumPrestashopTest {
         //TODO: potwiedzenie wyczyszczenia filtrów
     }
 
-    public WebElement waitForElementToBeRefreshedAndClickable(ChromeDriver driver, By by) {
-        return new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(by)));
-    }
 
-    //todo - trudne
     @Test    //Podstrona ART - sortowanie
     @Order(8)
     public void filterArtProducts() throws InterruptedException {
@@ -381,7 +381,6 @@ public class SeleniumPrestashopTest {
 //        //asercja
     }
 
-    //TODO - GOTOWE!
     @Test   //Wybranie produktu ‘The best is yet to come' + dodanie opinii
     @Order(9)
     public void successAddPosterReview() {
@@ -425,7 +424,6 @@ public class SeleniumPrestashopTest {
         okCommentButtonClick.click();
     }
 
-    //TODO - GOTOWE!
     @Test    //Dodanie kilku sztuk produktu do koszyka
     @Order(10)
     public void addProductsToCart() {
@@ -465,16 +463,16 @@ public class SeleniumPrestashopTest {
         WebElement closeAddToCartPopupClick = driver.findElement(closeAddToCartPopupLocator);
         closeAddToCartPopupClick.click();
 
-//        //sprawdzenie nazwy produktów
-//        By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]");
-//        WebElement productNameInCart = driver.findElement(productNameInCartLocator);
-//        //TODO Assertions
+        //sprawdzenie nazwy produktów
+        By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]");
+        WebElement productNameInCart = driver.findElement(productNameInCartLocator);
+        //TODO Assertions
 
         // porównanie ilości z sekcji produktu i sekcji podsumowania
         // ilość w sekcji produktu
         By numberInItemsSectionLocator = By.xpath("//input[@class='js-cart-line-product-quantity form-control']");
         WebElement numberInItemSection = driver.findElement(numberInItemsSectionLocator);
-        int productQuantity = Integer.parseInt(numberInItemSection.getAttribute("value"));
+        int productQuantity = Integer.parseInt(numberInItemSection.getDomAttribute("value"));
         // ilość w sekcji podsumowania
         By numberInPurchaseSummarySectionLocator = By.xpath("//span[@class='label js-subtotal']");
         WebElement numberInPurchaseSummarySection = driver.findElement(numberInPurchaseSummarySectionLocator);
@@ -521,7 +519,6 @@ public class SeleniumPrestashopTest {
         //todo asercja
     }
 
-    //TODO - GOTOWE!
     @Test    //Formularz adresu – próba zapisania pustego formularza
     @Order(13)
     public void addressesFormFailSaveWithEmptyFields() {
@@ -613,7 +610,7 @@ public class SeleniumPrestashopTest {
         payByCheckRadioButton.click();
 
         //todo - uzupełnij dane czeku
-//        //uzupełnienie danych przy płatności czekiem
+        //uzupełnienie danych przy płatności czekiem
 //        By payeeFieldFillInLocator =
 //        WebElement payeeFieldFillIn = driver.findElement();
 //        payeeFieldFillIn.
@@ -659,7 +656,9 @@ public class SeleniumPrestashopTest {
         msgFieldInContactUsSection.sendKeys("Chcę otrzymać FV za zamówienie.");
 
         //kliknięcie w button 'Send' - próba przesłania niewypełnionego formularza
-        sendButtonInContactUsSection.click();
+        //kliknięcie w button 'Send' - próba przesłania niewypełnionego formularza
+        WebElement sendButtonInContactUsSectionNew = driver.findElement(sendButtonInContactUsSectionLocator);
+        sendButtonInContactUsSectionNew.click();
 
         //potwierdzenie pojawienia się komunikatu informacyjnego
         By successMsgInContactUsSectionLocator = By.xpath("//li[contains(text(),\"Your message has been successfully sent to our team.\")]");
@@ -701,7 +700,7 @@ public class SeleniumPrestashopTest {
         orderHistoryAndDetailsLink.click();
 
         //Wejście w pierwsze lepsze 'Details'
-        By orderDetailsLinkLocator = By.xpath("//a[@data-link-action=\"view-order-details\"]/i");
+        By orderDetailsLinkLocator = By.xpath("//a[@data-link-action=\"view-order-details\"]");
         WebElement orderDetailsLink = driver.findElement(orderDetailsLinkLocator);
         orderDetailsLink.click();
 
@@ -726,14 +725,14 @@ public class SeleniumPrestashopTest {
         fillInMsgTextInField.sendKeys("Proszę o wysyłkę możliwie najszybciej. Dziękuję.");
 
         //Kliknięcie 'Send'
-        sendButtonInDetailsPage.click();
+        WebElement sendButtonInDetailsPageNew = driver.findElement(sendButtonInDetailsPageLocator);
+        sendButtonInDetailsPageNew.click();
 
         //potwierdzenie wysłania wiadomości
         By sendConfirmationMsgLocator = By.xpath("//li[contains(text(),\"Message successfully sent\")]");
         WebElement sendConfirmationMsg = driver.findElement(sendConfirmationMsgLocator);
         Assertions.assertTrue(sendConfirmationMsg.isDisplayed());
     }
-
 
     @Test     //Panel użytkownika/Reorder - ponowne złożenie zamówienia
     @Order(20)
@@ -750,7 +749,7 @@ public class SeleniumPrestashopTest {
         editAddressesLink.click();
 
         //Zmiana miasta
-        By cityInAddressFieldLocator = By.id("#field-city");
+        By cityInAddressFieldLocator = By.id("field-city");
         WebElement cityInAddressField = driver.findElement(cityInAddressFieldLocator);
         cityInAddressField.clear();
         cityInAddressField.sendKeys("Opole");
@@ -801,17 +800,19 @@ public class SeleniumPrestashopTest {
         homepageLink.click();
 
         //Kliknięcie w serduszko dodające do wishlist
-        By heartButtonOfHummingbirdLocator = By.xpath("\t//a[contains(text(),\"Hummingbird printed t-shirt\")]/../../../button[@class=\"wishlist-button-add\"]");
+        By heartButtonOfHummingbirdLocator = By.xpath("//a[contains(text(),\"Hummingbird printed t-shirt\")]/../../../button[@class=\"wishlist-button-add\"]");
         WebElement heartButtonOfHummingbird = driver.findElement(heartButtonOfHummingbirdLocator);
         heartButtonOfHummingbird.click();
 
         //Popup - kliknięcie w automatycznie utworzony 'My wishlist'
         By myWishlistPopupLocator = By.xpath("//div[@class=\"modal-body\"]/div/ul/li[@class=\"wishlist-list-item\"]");
+        wait.until(ExpectedConditions.elementToBeClickable(myWishlistPopupLocator));
         WebElement myWishlistPopup = driver.findElement(myWishlistPopupLocator);
         myWishlistPopup.click();
 
         // TOAST - potwierdzenie pojawienia się komunikatu potwierdzającego
         By productAddedToWishlistMsgLocator = By.xpath("//div[@class=\"wishlist-toast success\"]/p[@class=\"wishlist-toast-text\"]");
+        wait.until(ExpectedConditions.elementToBeClickable(productAddedToWishlistMsgLocator));
         WebElement productAddedToWishlistMsg = driver.findElement(productAddedToWishlistMsgLocator);
         Assertions.assertTrue(productAddedToWishlistMsg.isDisplayed());
 
@@ -827,12 +828,12 @@ public class SeleniumPrestashopTest {
 
         //Wejście na link listy 'My wishlist'
         By myWishlistLinkLocator = By.xpath("//p[@class=\"wishlist-list-item-title\"]");
+        wait.until(ExpectedConditions.elementToBeClickable(myWishlistLinkLocator));
         WebElement myWishlistLink = driver.findElement(myWishlistLinkLocator);
         myWishlistLink.click();
 
         //todo - potwierdzenie, że produkt jest
     }
-
 
     @Test    //Wishlists - utworzenie nowej wishlisty i dodanie produktu
     @Order(22)
@@ -851,6 +852,7 @@ public class SeleniumPrestashopTest {
 
         //Popup - kliknięcie 'Create new list'
         By newWishlistPopupLocator = By.xpath("//a[@class=\"wishlist-add-to-new text-primary\"]");
+        wait.until(ExpectedConditions.elementToBeClickable(newWishlistPopupLocator));
         WebElement newWishlistPopup = driver.findElement(newWishlistPopupLocator);
         newWishlistPopup.click();
 
@@ -866,11 +868,13 @@ public class SeleniumPrestashopTest {
 
         //Popup - wybranie nowo utworzonej listy
         By ulubioneNewWishlistLector = By.xpath("//li[@class=\"wishlist-list-item\"]/p[contains(text(),\"Ulubione\")]");
+        wait.until(ExpectedConditions.elementToBeClickable(ulubioneNewWishlistLector));
         WebElement ulubioneNewWishlist = driver.findElement(ulubioneNewWishlistLector);
         ulubioneNewWishlist.click();
 
         // TOAST - potwierdzenie pojawienia się komunikatu potwierdzającego
         By productAddedToWishlistMsgLocator = By.xpath("//div[@class=\"wishlist-toast success\"]/p[@class=\"wishlist-toast-text\"]");
+        wait.until(ExpectedConditions.elementToBeClickable(productAddedToWishlistMsgLocator));
         WebElement productAddedToWishlistMsg = driver.findElement(productAddedToWishlistMsgLocator);
         Assertions.assertTrue(productAddedToWishlistMsg.isDisplayed());
 
@@ -886,17 +890,15 @@ public class SeleniumPrestashopTest {
 
         //Wejście na link listy 'Ulubione'
         By ulubioneWishlistLinkLocator = By.xpath("//a[@class=\"wishlist-list-item-link\"]/p[contains(text(),\"Ulubione\")]");
+        wait.until(ExpectedConditions.elementToBeClickable(ulubioneWishlistLinkLocator));
         WebElement ulubioneWishlistLink = driver.findElement(ulubioneWishlistLinkLocator);
-        ulubioneNewWishlist.click();
+        ulubioneWishlistLink.click();
 
         //todo - potwierdzenie, że produkt jest
 
     }
 
-
-
-    //TODO - GOTOWE!
-    //@Test   //Strona główna/Footer -  sprawdzenie działania linków w stopce
+    @Test   //Strona główna/Footer -  sprawdzenie działania linków w stopce
     @Order(23)
     public void checkFooterLinksClickable() {
 
@@ -1048,8 +1050,7 @@ public class SeleniumPrestashopTest {
         userSuccessLogout();
     }
 
-
-    //@AfterAll
+    @AfterAll
     public static void afterAll() {
         driver.quit();
     }
