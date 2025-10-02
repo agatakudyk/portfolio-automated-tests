@@ -217,66 +217,107 @@ public class SeleniumPrestashopTest {
         By loginButtonLocator = By.id("submit-login");
         WebElement loginButtonClick = driver.findElement(loginButtonLocator);
         loginButtonClick.click();
-//
-//        //sprawdzenie poprawności zalogowania użytkownika
-//        By logoutLocator = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
-//        WebElement logoutButton = driver.findElement(logoutLocator);
-//        Assertions.assertTrue(logoutButton.isDisplayed());
-//
-//        //Zmiana hasła - wejście w panel zalogowanego uzytkownika
-//        By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
-//        WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
-//        userProfileLink.click();
-//
-//        //Zmiana hasła - wejście na podstronę 'Information'
-//        By informationPageLocator = By.xpath("//a[@id=\"identity-link\"]");
-//        WebElement informationPage = driver.findElement(informationPageLocator);
-//        informationPage.click();
-//
-//        //wpisanie aktualnego hasła logowania
-//        By currentPasswordFieldLocator = By.id("field-password");
-//        WebElement currentPasswordField = driver.findElement(currentPasswordFieldLocator);
-//        currentPasswordField.sendKeys("Password123");
-//
-//        //wpisanie nowego hasła logowania
-//        By newPasswordFieldLocator = By.xpath("//input[@name=\"new_password\"]");
-//        WebElement newPasswordField = driver.findElement(newPasswordFieldLocator);
-//        newPasswordField.sendKeys("TestTest123");
-//
-//        //checkbox akceptacji polityki prywatności
-//        By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
-//        WebElement privacyPolicyCheckbox = driver.findElement(privacyPolicyLocator);
-//        privacyPolicyCheckbox.click();
-//
-//        //checkbox informacji o przetwarzaniu danych osobowych
-//        By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
-//        WebElement policyInfoCheckbox = driver.findElement(policyInfoLocator);
-//        policyInfoCheckbox.click();
-//
-//        //kliknięcie buttona 'Save'
-//        By informationSaveButtonLocator = By.xpath("//button[@class=\"btn btn-primary form-control-submit " + "float-xs-right\"]");
-//        WebElement informationSaveButton = driver.findElement(informationSaveButtonLocator);
-//        informationSaveButton.click();
-//
-//        //potwierdzenie pojawienia się komunikatu
-//        By updatedInformationTextLocator = By.xpath("//ul/li[contains(text()," + "\"Information successfully updated.\")]");
-//        WebElement updatedInformationText = driver.findElement(updatedInformationTextLocator);
-//        Assertions.assertTrue(updatedInformationText.isDisplayed());
-//
-//        //Wylogowanie użytkownika z potwierdzeniem poprawności wylogowania
-//        userSuccessLogout();
-//
-//        //uzupełnienie pola email
-//        emailLoginInputField.sendKeys("testowianka95@wp.pl");
-//
-//        //uzupełnienie nowego hasła
-//        passwordLoginInputField.sendKeys("Testunio123");
-//
-//        //kliknięcie w button 'Sign In'
-//        loginButtonClick.click();
-//
-//        //sprawdzenie poprawności logowania
-//        Assertions.assertTrue(logoutButton.isDisplayed());
+
+        //sprawdzenie poprawności zalogowania użytkownika
+        By logoutLocator = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
+        WebElement logoutButton = driver.findElement(logoutLocator);
+        Assertions.assertTrue(logoutButton.isDisplayed());
+
+        //Zmiana hasła - wejście w panel zalogowanego uzytkownika
+        By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
+        WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
+        userProfileLink.click();
+
+        //Zmiana hasła - wejście na podstronę 'Information'
+        By informationPageLocator = By.xpath("//a[@id=\"identity-link\"]");
+        WebElement informationPage = driver.findElement(informationPageLocator);
+        informationPage.click();
+
+        //wpisanie aktualnego hasła logowania
+        By currentPasswordFieldLocator = By.id("field-password");
+        WebElement currentPasswordField = driver.findElement(currentPasswordFieldLocator);
+        currentPasswordField.sendKeys("Password123");
+
+        //wpisanie nowego hasła logowania
+        By newPasswordFieldLocator = By.xpath("//input[@name=\"new_password\"]");
+        WebElement newPasswordField = driver.findElement(newPasswordFieldLocator);
+        newPasswordField.sendKeys("TestTest123");
+
+        //checkbox akceptacji polityki prywatności
+        By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
+        WebElement privacyPolicyCheckbox = driver.findElement(privacyPolicyLocator);
+        privacyPolicyCheckbox.click();
+
+        //checkbox informacji o przetwarzaniu danych osobowych
+        By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
+        WebElement policyInfoCheckbox = driver.findElement(policyInfoLocator);
+        policyInfoCheckbox.click();
+
+        //kliknięcie buttona 'Save'
+        By informationSaveButtonLocator = By.xpath("//button[@class=\"btn btn-primary form-control-submit " + "float-xs-right\"]");
+        WebElement informationSaveButton = driver.findElement(informationSaveButtonLocator);
+        informationSaveButton.click();
+
+        //potwierdzenie pojawienia się komunikatu
+        By updatedInformationTextLocator = By.xpath("//ul/li[contains(text()," + "\"Information successfully updated.\")]");
+        WebElement updatedInformationText = driver.findElement(updatedInformationTextLocator);
+        Assertions.assertTrue(updatedInformationText.isDisplayed());
+
+        //Wylogowanie użytkownika z potwierdzeniem poprawności wylogowania
+        userSuccessLogout();
+
+        //uzupełnienie pola email
+        emailLoginInputField.sendKeys("testowianka95@wp.pl");
+
+        //uzupełnienie nowego hasła
+        passwordLoginInputField.sendKeys("TestTest123");
+
+        //kliknięcie w button 'Sign In'
+        loginButtonClick.click();
+
+        //sprawdzenie poprawności logowania
+        Assertions.assertTrue(logoutButton.isDisplayed());
+
+        //przywrócenie starego hasła
+        backToPreviousPassword();
+    }
+
+    private void backToPreviousPassword() {
+        //Wjście w panel zalogowanego uzytkownika
+        By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
+        WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
+        userProfileLink.click();
+
+        //Wejście na podstronę 'Information'
+        By informationPageLocator = By.xpath("//a[@id=\"identity-link\"]");
+        WebElement informationPage = driver.findElement(informationPageLocator);
+        informationPage.click();
+
+        //wpisanie aktualnego hasła logowania
+        By currentPasswordFieldLocator = By.id("field-password");
+        WebElement currentPasswordField = driver.findElement(currentPasswordFieldLocator);
+        currentPasswordField.sendKeys("TestTest123");
+
+        //wpisanie nowego hasła logowania
+        By newPasswordFieldLocator = By.xpath("//input[@name=\"new_password\"]");
+        WebElement newPasswordField = driver.findElement(newPasswordFieldLocator);
+        newPasswordField.sendKeys("Password123");
+
+        //checkbox akceptacji polityki prywatności
+        By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
+        WebElement privacyPolicyCheckbox = driver.findElement(privacyPolicyLocator);
+        privacyPolicyCheckbox.click();
+
+        //checkbox informacji o przetwarzaniu danych osobowych
+        By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
+        WebElement policyInfoCheckbox = driver.findElement(policyInfoLocator);
+        policyInfoCheckbox.click();
+
+        //kliknięcie buttona 'Save'
+        By informationSaveButtonLocator = By.xpath("//button[@class=\"btn btn-primary form-control-submit " + "float-xs-right\"]");
+        WebElement informationSaveButton = driver.findElement(informationSaveButtonLocator);
+        informationSaveButton.click();
+
     }
 
     //todo - trudne
