@@ -1,5 +1,6 @@
 package lesson12Homework;
 
+import com.codeborne.selenide.As;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -16,7 +17,7 @@ import java.util.List;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SeleniumPrestashopTest {
 
-    String emailCreateName ="testowianka198@wp.pl";
+    String emailCreateName ="testowianka233@wp.pl";
     static ChromeDriver driver;
     static WebDriverWait wait;
 
@@ -507,9 +508,9 @@ public class SeleniumPrestashopTest {
         closeAddToCartPopupClick.click();
 
         //sprawdzenie nazwy produktów
-        By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]");
-        WebElement productNameInCart = driver.findElement(productNameInCartLocator);
-        //TODO Assertions
+        By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]/a");
+        String productNameInCart = driver.findElement(productNameInCartLocator).getText();
+        Assertions.assertEquals("The best is yet to come' Framed poster", productNameInCart);
 
         // porównanie ilości z sekcji produktu i sekcji podsumowania
         // ilość w sekcji produktu
@@ -558,7 +559,7 @@ public class SeleniumPrestashopTest {
         WebElement addressesInput = driver.findElement(addressesInputLocator);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         String msg = (String) js.executeScript("return arguments[0].validationMessage", addressesInput);
-        //Assertions.assertEquals("Wypełnij to pole.", msg);
+        Assertions.assertEquals("Wypełnij to pole.", msg);
 
         //uzupełnienie adresu
         By addressFieldLocator = By.id("field-address1");
@@ -578,7 +579,6 @@ public class SeleniumPrestashopTest {
         //kliknięcie w button 'Continue'
         continueButtonInAddressesForm.click();
 
-        //todo - jak zrobić asercję? powrót do sekcji i sprawdzenie wyborów?
     }
 
     @Test
@@ -605,7 +605,6 @@ public class SeleniumPrestashopTest {
         WebElement continueButtonInShippingMethodForm = driver.findElement(continueButtonInShippingMethodFormLocator);
         continueButtonInShippingMethodForm.click();
 
-        //todo - jak zrobić asercję? powrót do sekcji i sprawdzenie wyborów?
     }
 
     @Test
@@ -621,12 +620,6 @@ public class SeleniumPrestashopTest {
         By payByCheckRadioButtonLocator = By.id("payment-option-1");
         WebElement payByCheckRadioButton = driver.findElement(payByCheckRadioButtonLocator);
         payByCheckRadioButton.click();
-
-        //todo - uzupełnij dane czeku
-        //uzupełnienie danych przy płatności czekiem
-//        By payeeFieldFillInLocator =
-//        WebElement payeeFieldFillIn = driver.findElement();
-//        payeeFieldFillIn.
 
         //Wybór checkboxa zgody
         By agreeToTermsCheckboxLocator = By.xpath("//input[@name=\"conditions_to_approve[terms-and-conditions]\"]");
@@ -678,23 +671,23 @@ public class SeleniumPrestashopTest {
         Assertions.assertTrue(successMsgInContactUsSection.isDisplayed());
     }
 
-    @Test    //Panel użytkownika/Order history - sprawdzenie szczegółów zamówienia
-    @Order(16)
-    public void checkOrderDetails() {
-
-        //Wejście w panel zalogowanego uzytkownika
-        By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
-        WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
-        userProfileLink.click();
-
-        //Wejście w sekcję 'Order history and details'
-        By orderHistoryAndDetailsLinkLocator = By.id("history-link");
-        WebElement orderHistoryAndDetailsLink = driver.findElement(orderHistoryAndDetailsLinkLocator);
-        orderHistoryAndDetailsLink.click();
-
-        //todo - sprawdzenie
-
-    }
+//    @Test    //Panel użytkownika/Order history - sprawdzenie szczegółów zamówienia
+//    @Order(16)
+//    public void checkOrderDetails() {
+//
+//        //Wejście w panel zalogowanego uzytkownika
+//        By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
+//        WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
+//        userProfileLink.click();
+//
+//        //Wejście w sekcję 'Order history and details'
+//        By orderHistoryAndDetailsLinkLocator = By.id("history-link");
+//        WebElement orderHistoryAndDetailsLink = driver.findElement(orderHistoryAndDetailsLinkLocator);
+//        orderHistoryAndDetailsLink.click();
+//
+//        //todo - sprawdzenie
+//
+//    }
 
 
     @Test    //Panel użytkownika/Details - dodanie wiadomości i potwierdzenie widoczności
@@ -726,10 +719,6 @@ public class SeleniumPrestashopTest {
         WebElement validationMsgInDetailsPage = driver.findElement(validationMsgInDetailsPageLocator);
         Assertions.assertTrue(validationMsgInDetailsPage.isDisplayed());
 
-        //Poprawne dodanie wiadomości - wybór produktu
-        By chooseProductInMsgFormLocator = By.xpath("//li[contains(text(),\"The message cannot be blank.\")]");
-        WebElement chooseProductField = driver.findElement(chooseProductInMsgFormLocator);
-        //todo - wybór opcji
 
         //Uzupełnienie treści wiadomości
         By fillInMsgTextInFormLocator = By.xpath("//textarea[@name=\"msgText\"]");
@@ -844,7 +833,12 @@ public class SeleniumPrestashopTest {
         WebElement myWishlistLink = driver.findElement(myWishlistLinkLocator);
         myWishlistLink.click();
 
-        //todo - potwierdzenie, że produkt jest
+        By wishListElementsLocator = By.xpath("//p[@class=\"wishlist-product-title\"]");
+        wait.until(ExpectedConditions.elementToBeClickable(wishListElementsLocator));
+        List<WebElement> wishListsElements = driver.findElements(wishListElementsLocator);
+        List<String> wishListsElementsNames = wishListsElements.stream().map(WebElement::getText).toList();
+        Assertions.assertTrue(wishListsElementsNames.size()==1 && wishListsElementsNames.getFirst().equals("Hummingbird printed t-shirt"));
+
     }
 
     @Test    //Wishlists - utworzenie nowej wishlisty i dodanie produktu
@@ -884,8 +878,8 @@ public class SeleniumPrestashopTest {
         WebElement ulubioneNewWishlist = driver.findElement(ulubioneNewWishlistLector);
         ulubioneNewWishlist.click();
 
-        // TOAST - potwierdzenie pojawienia się komunikatu potwierdzającego
-        By productAddedToWishlistMsgLocator = By.xpath("//div[@class=\"wishlist-toast success\"]/p[@class=\"wishlist-toast-text\"]");
+        // TOAST - potwierdzenie pojawienia się komunikatu potwierdzającego Product added
+        By productAddedToWishlistMsgLocator = By.xpath("//p[contains(text(),\"Product added\")]");
         wait.until(ExpectedConditions.elementToBeClickable(productAddedToWishlistMsgLocator));
         WebElement productAddedToWishlistMsg = driver.findElement(productAddedToWishlistMsgLocator);
         Assertions.assertTrue(productAddedToWishlistMsg.isDisplayed());
@@ -906,7 +900,12 @@ public class SeleniumPrestashopTest {
         WebElement ulubioneWishlistLink = driver.findElement(ulubioneWishlistLinkLocator);
         ulubioneWishlistLink.click();
 
-        //todo - potwierdzenie, że produkt jest
+        By wishListElementsLocator = By.xpath("//p[@class=\"wishlist-product-title\"]");
+        wait.until(ExpectedConditions.elementToBeClickable(wishListElementsLocator));
+        List<WebElement> wishListsElements = driver.findElements(wishListElementsLocator);
+        List<String> wishListsElementsNames = wishListsElements.stream().map(WebElement::getText).toList();
+        Assertions.assertTrue(wishListsElementsNames.size()==1 && wishListsElementsNames.getFirst().equals("Mug The adventure begins"));
+
     }
 
     @Test    //Wishlists - utworzenie listy na podstronie ‘My wishlists’, zmiana nazwy i usunięcie
@@ -919,12 +918,14 @@ public class SeleniumPrestashopTest {
         myWishlistsLink.click();
 
         //utworzenie nowej listy życzeń
-        By createNewListWishlistLinkLocator = By.xpath("//section[@class=\"page-content card card-block\"]/../i[@class=\"material-icons\"]");
+        By createNewListWishlistLinkLocator = By.xpath("//div[@class=\"wishlist-container-header\"]/a[contains(text(),\"Create new list\")]");
+        wait.until(ExpectedConditions.elementToBeClickable(createNewListWishlistLinkLocator));
         WebElement createNewListWishlistLink = driver.findElement(createNewListWishlistLinkLocator);
         createNewListWishlistLink.click();
 
         //wpisanie nazwy nowej listy życzeń
-        By createNameOfNewListWishlistLocator = By.id("input2");
+        By createNameOfNewListWishlistLocator = By.xpath("//input[@placeholder=\"Add name\"]");
+        wait.until(ExpectedConditions.elementToBeClickable(createNameOfNewListWishlistLocator));
         WebElement createNameOfNewListWishlist = driver.findElement(createNameOfNewListWishlistLocator);
         createNameOfNewListWishlist.sendKeys("Super lista");
 
@@ -935,6 +936,7 @@ public class SeleniumPrestashopTest {
 
         //TOAST - potwierdzenie pojawienia się komunikatu
         By wishlistSuccessCreatedMsgLocator = By.xpath("//p[contains(text(),\"The list has been properly created\")]");
+        wait.until(ExpectedConditions.elementToBeClickable(wishlistSuccessCreatedMsgLocator));
         WebElement wishlistSuccessCreatedMsg = driver.findElement(wishlistSuccessCreatedMsgLocator);
         Assertions.assertTrue(wishlistSuccessCreatedMsg.isDisplayed());
 
@@ -943,6 +945,7 @@ public class SeleniumPrestashopTest {
         WebElement createdNewWishlistName = driver.findElement(createdNewWishlistNameLocator);
         Assertions.assertTrue(createdNewWishlistName.isDisplayed());
 
+        //trzy kropki
         By moreActionLocator = By.xpath("//p[contains(text(),\"Super lista\")]/../div[@class=\"wishlist-list-item-right\"]/button[@class=\"wishlist-list-item-actions\"]");
         driver.findElement(moreActionLocator).click();
 
@@ -951,9 +954,12 @@ public class SeleniumPrestashopTest {
         WebElement renameWishList = driver.findElement(renameNewCreatedWishlistLocator);
         renameWishList.click();
 
+        By changeNameOfListWishlistLocator = By.xpath("//h5[contains(text(),\"Rename wishlist\")]/../..//div/div/input");
+        wait.until(ExpectedConditions.elementToBeClickable(changeNameOfListWishlistLocator));
+        WebElement changeNameOfListWishList = driver.findElement(changeNameOfListWishlistLocator);
         //zmiana nazwy listy - wyczyszczenie i wpisanie nowej
-        createNameOfNewListWishlist.clear();
-        createNameOfNewListWishlist.sendKeys("Lista życzeń");
+        changeNameOfListWishList.clear();
+        changeNameOfListWishList.sendKeys("Lista życzeń");
 
         //kliknięcie w button 'Rename'
         By renameWishlistButtonLocator = By.xpath("//button[contains(text(),\"Rename wishlist\")]");
@@ -962,8 +968,14 @@ public class SeleniumPrestashopTest {
 
         //TOAST - potwierdzenie pojawienia się komunikatu
         By successRenamedNewWishlistLocator = By.xpath("//p[@class=\"wishlist-toast-text\"]");
+        wait.until(ExpectedConditions.elementToBeClickable(successRenamedNewWishlistLocator));
         WebElement successRenamedNewWishlist = driver.findElement(successRenamedNewWishlistLocator);
         Assertions.assertTrue(successRenamedNewWishlist.isDisplayed());
+
+        //trzy kropki
+        moreActionLocator = By.xpath("//p[contains(text(),\"Lista życzeń\")]/../div[@class=\"wishlist-list-item-right\"]/button[@class=\"wishlist-list-item-actions\"]");
+        wait.until(ExpectedConditions.elementToBeClickable(moreActionLocator));
+        driver.findElement(moreActionLocator).click();
 
         //Udostępnienie listy - kliknięcie w button 'Share'
         By shareButtonWishlistLocator = By.xpath("//button[contains(text(),\"Share\")]");
@@ -981,9 +993,20 @@ public class SeleniumPrestashopTest {
         Assertions.assertTrue(shareLinkCopiedMsg.isDisplayed());
 
         //Usunięcie listy
-        By deleteWishlistButtonLocator = By.xpath();
+        By deleteWishlistButtonLocator = By.xpath("//p[contains(text(),\"Lista życzeń\")]/../div[@class=\"wishlist-list-item-right\"]/button/i[contains(text(),\"delete\")]");
         WebElement deleteWishlistButton = driver.findElement(deleteWishlistButtonLocator);
         deleteWishlistButton.click();
+
+        By deleteConfirmLocator = By.xpath("//div[@class=\"modal-footer\"]/button[contains(text(),\"Delete\")]");
+        WebElement deleteConfirm = driver.findElement(deleteConfirmLocator);
+        deleteConfirm.click();
+
+        //TOAST - potwierdzenie pojawienia się komunikatu
+        By listRemovedComfirmLocator = By.xpath("//p[contains(text(),\"List has been removed\")]");
+        wait.until(ExpectedConditions.elementToBeClickable(listRemovedComfirmLocator));
+        WebElement listRemovedComfirm = driver.findElement(listRemovedComfirmLocator);
+
+        Assertions.assertTrue(listRemovedComfirm.isDisplayed());
     }
 
     @Test   //Strona główna/Footer -  sprawdzenie działania linków w stopce
