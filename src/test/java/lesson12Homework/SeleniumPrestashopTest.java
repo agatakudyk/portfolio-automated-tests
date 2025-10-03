@@ -138,15 +138,25 @@ public class SeleniumPrestashopTest {
     @Order(4)    //Logowanie z użyciem błędnych danych
     public void failLoginWithIncorrectData() {
 
-        //kliknięcie w przycisk logowania
+        //kliknięcie w przycisk 'Sign In' (header)
         By signInLocator = By.cssSelector(".user-info a");
         WebElement signInButton = driver.findElement(signInLocator);
         signInButton.click();
 
+        //Strona logowania - kliknięcie w button 'Sign In' - próba zalogowania przy użyciu pustych pól
+        By loginButtonLocator = By.id("submit-login");
+        WebElement loginButtonClick = driver.findElement(loginButtonLocator);
+        loginButtonClick.click();
+
+        //potwierdzenie pojawienia się tooltipa z komunikatem walidacyjnym (tooltip dynamiczny)
+        By emailInputLocator = By.id("field-email");
+        WebElement emailInput = driver.findElement(emailInputLocator);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String msg = (String) js.executeScript("return arguments[0].validationMessage", emailInput);
+        Assertions.assertEquals("Wypełnij to pole.", msg);
+
         //uzupełnienie pola email
-        By emailLoginLocator = By.id("field-email");
-        WebElement emailLoginInputField = driver.findElement(emailLoginLocator);
-        emailLoginInputField.sendKeys("blablabla@wp.pl");
+        emailInput.sendKeys("blablabla@wp.pl");
 
         //uzupełnienie hasła
         By passwordLoginLocator = By.id("field-password");
@@ -154,8 +164,6 @@ public class SeleniumPrestashopTest {
         passwordLoginInputField.sendKeys("blepassword");
 
         //kliknięcie w button 'Sign In'
-        By loginButtonLocator = By.id("submit-login");
-        WebElement loginButtonClick = driver.findElement(loginButtonLocator);
         loginButtonClick.click();
 
         //sprawdzenie komunikatu o błędnym logowaniu
@@ -281,7 +289,7 @@ public class SeleniumPrestashopTest {
     }
     private void backToPreviousPassword() {
 
-        //Wjście w panel zalogowanego uzytkownika
+        //Wejście w panel zalogowanego uzytkownika
         By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
         WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
         userProfileLink.click();
@@ -687,8 +695,7 @@ public class SeleniumPrestashopTest {
         By msgFieldInContactUsSectionLocator = By.id("contactform-message");
         WebElement msgFieldInContactUsSection = driver.findElement(msgFieldInContactUsSectionLocator);
         msgFieldInContactUsSection.sendKeys("Chcę otrzymać FV za zamówienie.");
-
-        //kliknięcie w button 'Send' - próba przesłania niewypełnionego formularza
+        
         //kliknięcie w button 'Send' - próba przesłania niewypełnionego formularza
         WebElement sendButtonInContactUsSectionNew = driver.findElement(sendButtonInContactUsSectionLocator);
         sendButtonInContactUsSectionNew.click();
