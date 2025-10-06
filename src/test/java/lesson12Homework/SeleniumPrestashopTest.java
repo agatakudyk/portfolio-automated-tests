@@ -47,8 +47,207 @@ public class SeleniumPrestashopTest {
         Assertions.assertTrue(englishLanguageCheck.isDisplayed());
     }
 
-    @Test  //Niepoprawna rejestracja przy pomocy pustego formularza
+    @Test     //Użytkownik niezarejestrowany - dodanie i usunięcie produktu z koszyka
     @Order(2)
+    public void addToCartAndDeleteProductByUnregisteredUser() {
+
+        //UnregisteredUser - próba dodania produktu do whishlist - produkt 'Today is a good day Framed Poster'
+        By heartButtonOfTodayIsAGoodDayFramedPosterLocator = By.xpath("//a[contains(text(),\"Today is a good day Framed\")]/../../../button[@class=\"wishlist-button-add\"]");
+        WebElement heartButtonOfTodayIsAGoodDayFramedPoster = driver.findElement(heartButtonOfTodayIsAGoodDayFramedPosterLocator);
+        heartButtonOfTodayIsAGoodDayFramedPoster.click();
+
+        //potwierdzenie pojawienia się komunikatu
+        By loginRequiredMsgLocator = By.xpath("//p[contains(text(),\"You need to be logged in to save products in your wishlist.\")]");
+        WebElement loginRequiredMsg = driver.findElement(loginRequiredMsgLocator);
+        Assertions.assertTrue(loginRequiredMsg.isDisplayed());
+
+        //Zamknięcie okna - kliknięcie buttona 'Cancel'
+        By cancelPopupButtonLocator = By.xpath("//a[contains(text(),\"Sign in\")]");
+        WebElement cancelPopupButton = driver.findElement(cancelPopupButtonLocator);
+        cancelPopupButton.click();
+
+        //wejście w produkt 'Today is a good day Framed Poster'
+        By openTodayIsaGoodDayFramedPosterLocator = By.xpath("//img[@alt=\"Today is a good day Framed poster\"]");
+        WebElement openTodayIsaGoodDayFramedPoster = driver.findElement(openTodayIsaGoodDayFramedPosterLocator);
+        openTodayIsaGoodDayFramedPoster.click();
+
+        //Kliknij button 'Add to cart'
+        By addToCartButtonLocator = By.xpath("//button[@data-button-action=\"add-to-cart\"]");
+        WebElement addToCartButton = driver.findElement(addToCartButtonLocator);
+        addToCartButton.click();
+
+        //potwierdzenie dodania do koszyka
+        By addProductPopupLocator = By.xpath("//h4[contains(text(),\"Product successfully added to your shopping cart\")]");
+        wait.until(ExpectedConditions.elementToBeClickable(addProductPopupLocator));
+        WebElement addProductPopup = driver.findElement(addProductPopupLocator);
+        Assertions.assertTrue(addProductPopup.isDisplayed());
+
+        //zamknięcie popup dodania produktu i przejście do koszyka
+        By closeAddToCartPopupLocator = By.xpath("//a[@class=\"btn btn-primary\"]/i");
+        WebElement closeAddToCartPopupClick = driver.findElement(closeAddToCartPopupLocator);
+        closeAddToCartPopupClick.click();
+
+        //sprawdzenie nazwy produktów
+        By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]/a[contains(text(),\"Today is a good day Framed poster\")]");
+        String productNameInCart = driver.findElement(productNameInCartLocator).getText();
+        Assertions.assertEquals("Today is a good day Framed Poster", productNameInCart);
+
+        //Usunięcie produktu z koszyka
+        By trashIconLocator = By.xpath("//a[@class=\"remove-from-cart\"]/i[contains(text(),\"delete\")]");
+        WebElement trashIcon = driver.findElement(trashIconLocator);
+        trashIcon.click();
+
+        //potwierdzenie usunięcia
+        By emptyCartMsgLocator = By.xpath("//span[contains(text(),\"There are no more items in your cart\")]");
+        WebElement emptyCartMsg = driver.findElement(emptyCartMsgLocator);
+        Assertions.assertTrue(emptyCartMsg.isDisplayed());
+    }
+
+    @Test     //Użytkownik niezarejestrowany - dodanie do koszyka i finalizacja zakupu
+    @Order(3)
+    public void addProductToCartAndCheckoutByUnregisteredUser() {
+
+        //Przejcie na stronę główną
+        By homepageLinkLocator = By.id("_desktop_logo");
+        WebElement homepageLink = driver.findElement(homepageLinkLocator);
+        homepageLink.click();
+
+        //wejście w produkt 'Today is a good day Framed Poster'
+        By openTodayIsaGoodDayFramedPosterLocator = By.xpath("//img[@alt=\"Today is a good day Framed poster\"]");
+        WebElement openTodayIsaGoodDayFramedPoster = driver.findElement(openTodayIsaGoodDayFramedPosterLocator);
+        openTodayIsaGoodDayFramedPoster.click();
+
+        //Kliknij button 'Add to cart'
+        By addToCartButtonLocator = By.xpath("//button[@data-button-action=\"add-to-cart\"]");
+        WebElement addToCartButton = driver.findElement(addToCartButtonLocator);
+        addToCartButton.click();
+
+        //Kliknięcie w button 'Proceed To Checkout' i przejście do koszyka
+        By closeAddToCartPopupLocator = By.xpath("//a[@class=\"btn btn-primary\"]/i");
+        WebElement closeAddToCartPopupClick = driver.findElement(closeAddToCartPopupLocator);
+        closeAddToCartPopupClick.click();
+
+        //Cart - kliknięcie w button 'Proceed To Checkout'
+        By proceedToCheckoutButtonLocator = By.xpath("//a[contains(text(),\"Proceed to checkout\")]");
+        WebElement proceedToCheckoutButton = driver.findElement(proceedToCheckoutButtonLocator);
+        proceedToCheckoutButton.click();
+
+        //Personal Information - uzupełnienie pola 'First name'
+        By firstNameFieldLocator = By.id("field-firstname");
+        WebElement firstNameField = driver.findElement(firstNameFieldLocator);
+        firstNameField.sendKeys("Tomasz");
+
+        //Personal Information - uzupełnienie pola 'Last name'
+        By lastNameFieldLocator = By.id("field-lastname");
+        WebElement lastNameField = driver.findElement(lastNameFieldLocator);
+        lastNameField.sendKeys("Kot");
+
+        //Personal Information - uzupełnienie pola
+        By emailFieldLocator = By.id("field-email");
+        WebElement emailField = driver.findElement(emailFieldLocator);
+        emailField.sendKeys("kot123@wp.pl");
+
+        //Personal Information - checkbox informacji o przetwarzaniu danych osobowych
+        By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
+        WebElement policyInfoCheckbox = driver.findElement(policyInfoLocator);
+        policyInfoCheckbox.click();
+
+        //Personal Information - checkbox akceptacji polityki prywatności
+        By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
+        WebElement privacyPolicyCheckbox = driver.findElement(privacyPolicyLocator);
+        privacyPolicyCheckbox.click();
+
+        //Personal Information - kliknięcie w button 'Continue'
+       By continueButtonLocator = By.xpath("//footer[@class=\"form-footer clearfix\"]//button");
+       WebElement continueButton = driver.findElement(continueButtonLocator);
+       continueButton.click();
+
+       //Addresses - wpisanie adresu użytkownika
+        By addressFieldLocator = By.id("field-address1");
+        WebElement addressField = driver.findElement(addressFieldLocator);
+        addressField.sendKeys("ul. Jaskrawa 23");
+
+        //Addresses - wpisanie Zip/Postal Code
+        By postalCodeFieldLocator = By.id("field-postcode");
+        WebElement postalCodeField = driver.findElement(postalCodeFieldLocator);
+        postalCodeField.sendKeys("11-788");
+
+        //Addresses - uzupełnienie pola 'City'
+        By cityFieldLocator = By.id("field-city");
+        WebElement cityField = driver.findElement(cityFieldLocator);
+        cityField.sendKeys("Koszalin");
+
+        //Addresses - kliknięcie w button 'Continue'
+        continueButton.click();
+
+        //Shipping Method - kliknięcie w button 'Continue'
+        By continueButtonShippingMethodLocator = By.xpath("//button[@name=\"confirmDeliveryOption\"]");
+        WebElement continueButtonShippingMethod = driver.findElement(continueButtonShippingMethodLocator);
+        continueButtonShippingMethod.click();
+
+        //Wybór opcji 'Pay by bank wire'
+        By payByBankWireRadioButtonLocator = By.id("payment-option-2");
+        WebElement payByBankWireRadioButton = driver.findElement(payByBankWireRadioButtonLocator);
+        payByBankWireRadioButton.click();
+
+        //Wybór checkboxa zgody
+        By agreeToTermsCheckboxLocator = By.xpath("//input[@name=\"conditions_to_approve[terms-and-conditions]\"]");
+        WebElement agreeToTermsCheckbox = driver.findElement(agreeToTermsCheckboxLocator);
+        agreeToTermsCheckbox.click();
+
+        //kliknięcie w button 'Place Order'
+        By placeOrderButtonInPaymentSectionLocator = By.xpath("//div[@class=\"ps-shown-by-js\"]/button");
+        WebElement placeOrderButtonInPaymentSection = driver.findElement(placeOrderButtonInPaymentSectionLocator);
+        placeOrderButtonInPaymentSection.click();
+
+        //potwierdzenie pojawienia się komunikatu
+        By confirmationMsgLocator = By.xpath("//h3[@class=\"h1 card-title\"]/i");
+        WebElement confirmationMsg = driver.findElement(confirmationMsgLocator);
+        Assertions.assertTrue(confirmationMsg.isDisplayed());
+    }
+
+    @Test     //Uzupełnienie formularza ‘Save time on your next order, sign up now’
+    @Order(4)
+    public void signUpNowFillInFormByUnregisteredUser() {
+
+        //Uzupełnij pole 'First name'
+        By firstNameFieldLocator = By.id("field-firstname");
+        WebElement firstNmaeField = driver.findElement(firstNameFieldLocator);
+        firstNmaeField.sendKeys("Tomasz");
+
+        //Uzupełnij pole 'Last name'
+        By lastNameFieldLocator = By.id("field-lastname");
+        WebElement lastNameField = driver.findElement(lastNameFieldLocator);
+        lastNameField.sendKeys("Kot");
+
+        //Uzupełnij pole 'Email'
+        By emailFieldLocator = By.id("field-email");
+        WebElement mailField = driver.findElement(emailFieldLocator);
+        mailField.sendKeys("kot123@wp.pl");
+
+        //Uzupełnij pole 'Password'
+        By passwordFieldLocator = By.id("field-password");
+        WebElement passwordField = driver.findElement(passwordFieldLocator);
+        passwordField.sendKeys("Mojehaslo123");
+
+//checkbox informacji o przetwarzaniu danych osobowych
+        By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
+        WebElement policyInfoCheckbox = driver.findElement(policyInfoLocator);
+        policyInfoCheckbox.click();
+
+        //checkbox akceptacji polityki prywatności
+        By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
+        WebElement privacyPolicyCheckbox = driver.findElement(privacyPolicyLocator);
+        privacyPolicyCheckbox.click();
+
+        //Kliknij w button 'Save'
+        By saveButtonLocator = By.xpath("//button[contains(text(),\"Save\")]");
+        WebElement saveButton = driver.findElement(saveButtonLocator);
+        saveButton.click();
+    }
+
+    @Test  //Niepoprawna rejestracja przy pomocy pustego formularza
+    @Order(5)
     public void failSignupWithEmptyFields() {
 
         //kliknięcie w przycisk logowania
@@ -75,7 +274,7 @@ public class SeleniumPrestashopTest {
     }
 
     @Test  //Poprawna rejestracja użytkownika
-    @Order(3)
+    @Order(6)
     public void userSuccessSignup() {
 
         //uzupełnienie pola imię
@@ -136,7 +335,7 @@ public class SeleniumPrestashopTest {
     }
 
     @Test
-    @Order(4)    //Logowanie z użyciem błędnych danych
+    @Order(7)    //Logowanie z użyciem błędnych danych
     public void failLoginWithIncorrectData() {
 
         //kliknięcie w przycisk 'Sign In' (header)
@@ -174,7 +373,7 @@ public class SeleniumPrestashopTest {
     }
 
     @Test  //Logowanie/zresetowanie zapomnianego hasła + walidacja
-    @Order(5)
+    @Order(8)
     public void loginPasswordRecovery() {
 
         //kliknięcie w link resetu hasła
@@ -199,7 +398,7 @@ public class SeleniumPrestashopTest {
     }
 
     @Test     //Poprawne zalogowanie  + zmiana hasła + wylogowanie +  zalogowanie nowym hasłem
-    @Order(6)
+    @Order(9)
     public void userSuccessLogin() {
 
         //przejście na stronę logowania
@@ -329,7 +528,7 @@ public class SeleniumPrestashopTest {
     }
 
     @Test //Podstrona Accessories - filtrowanie
-    @Order(7)
+    @Order(10)
     public void clearAccessoriesProductsFiltering() {
 
         //wejdź w podstronę ACCESSORIES
@@ -366,7 +565,7 @@ public class SeleniumPrestashopTest {
 
 
     @Test    //Podstrona ART - sortowanie
-    @Order(8)
+    @Order(11)
     public void filterArtProducts() throws InterruptedException {
 
         //wejdź w podstronę Art
@@ -426,7 +625,7 @@ public class SeleniumPrestashopTest {
     }
 
     @Test   //Wybranie produktu + dodanie opinii o produkcie
-    @Order(9)
+    @Order(12)
     public void successAddPosterReview() {
 
         //wybranie produktu poster 'The Best Is Yet...'
@@ -469,7 +668,7 @@ public class SeleniumPrestashopTest {
     }
 
     @Test    //Dodanie kilku sztuk produktu do koszyka
-    @Order(10)
+    @Order(13)
     public void addProductsToCart() {
 
         //Zmiana ilości produktu poprzez wpisanie liczby (wyczyść i wpisz wartość)
@@ -499,7 +698,7 @@ public class SeleniumPrestashopTest {
     }
 
     @Test  //Koszyk
-    @Order(11)
+    @Order(14)
     public void cartContentValidation() {
 
         //zamknięcie popup dodania produktu i przejście do koszyka
@@ -541,7 +740,7 @@ public class SeleniumPrestashopTest {
     }
 
     @Test    //Formularz adresu – próba zapisania pustego formularza
-    @Order(12)
+    @Order(15)
     public void addressesFormFailSaveWithEmptyFields() {
 
         //przejście dalej z koszyka do adresu klikając button 'Proceed To Checkout'
@@ -578,11 +777,10 @@ public class SeleniumPrestashopTest {
 
         //kliknięcie w button 'Continue'
         continueButtonInAddressesForm.click();
-
     }
 
     @Test
-    @Order(13)
+    @Order(16)
     public void shippingMethodSuccessSelection() {
 
         //zmiana z 'PrestaShop' na 'My carrier'
@@ -608,7 +806,7 @@ public class SeleniumPrestashopTest {
     }
 
     @Test
-    @Order(14)
+    @Order(17)
     public void paymentMethodSuccessSelection() {
 
         //Wybór opcji 'Pay by bank wire'
@@ -638,7 +836,7 @@ public class SeleniumPrestashopTest {
     }
 
     @Test
-    @Order(15)
+    @Order(18)
     public void contactCustomerServiceDepartment() {
 
         //kliknięcie w link formularza kontaktowego
@@ -671,27 +869,9 @@ public class SeleniumPrestashopTest {
         Assertions.assertTrue(successMsgInContactUsSection.isDisplayed());
     }
 
-//    @Test    //Panel użytkownika/Order history - sprawdzenie szczegółów zamówienia
-//    @Order(16)
-//    public void checkOrderDetails() {
-//
-//        //Wejście w panel zalogowanego uzytkownika
-//        By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
-//        WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
-//        userProfileLink.click();
-//
-//        //Wejście w sekcję 'Order history and details'
-//        By orderHistoryAndDetailsLinkLocator = By.id("history-link");
-//        WebElement orderHistoryAndDetailsLink = driver.findElement(orderHistoryAndDetailsLinkLocator);
-//        orderHistoryAndDetailsLink.click();
-//
-//        //todo - sprawdzenie
-//
-//    }
-
 
     @Test    //Panel użytkownika/Details - dodanie wiadomości i potwierdzenie widoczności
-    @Order(17)
+    @Order(19)
     public void addMsgInOrderDetailsPage() {
 
         //Wejście w panel zalogowanego użytkownika
@@ -736,7 +916,7 @@ public class SeleniumPrestashopTest {
     }
 
     @Test     //Panel użytkownika/Reorder - ponowne złożenie zamówienia
-    @Order(18)
+    @Order(20)
     public void reorderPreviousOrder() {
 
         //przejście na stronę 'Reorder'
@@ -792,7 +972,7 @@ public class SeleniumPrestashopTest {
     }
 
     @Test
-    @Order(19)
+    @Order(21)
     public void addUserAddress() {
 
         //Wejście w panel zalogowanego użytkownika
@@ -867,7 +1047,7 @@ public class SeleniumPrestashopTest {
 
 
     @Test     //Wishlists - dodanie produktów do istniejącej wishlist
-    @Order(20)
+    @Order(22)
     public void addItemsToStaticWishlists() {
 
         //Przejcie na stronę główną
@@ -917,7 +1097,7 @@ public class SeleniumPrestashopTest {
     }
 
     @Test    //Wishlists - utworzenie nowej wishlisty i dodanie produktu
-    @Order(21)
+    @Order(23)
     public void addItemsToNewWishlists() {
 
 
@@ -984,7 +1164,7 @@ public class SeleniumPrestashopTest {
     }
 
     @Test    //Wishlists - utworzenie listy na podstronie ‘My wishlists’, zmiana nazwy i usunięcie
-    @Order(22)
+    @Order(24)
     public void createNewWishlists() {
 
         //przejście na podstronę 'My wishlist'
@@ -1085,7 +1265,7 @@ public class SeleniumPrestashopTest {
     }
 
     @Test   //Strona główna/Footer -  sprawdzenie działania linków w stopce
-    @Order(23)
+    @Order(25)
     public void checkFooterLinksClickable() {
 
         //Kliknięcie w link 'Prices drop'
