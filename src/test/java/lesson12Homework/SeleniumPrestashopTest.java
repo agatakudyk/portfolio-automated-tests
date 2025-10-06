@@ -17,7 +17,7 @@ import java.util.List;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SeleniumPrestashopTest {
 
-    String emailCreateName ="testowianka240@wp.pl";
+    String emailCreateName ="testowianka254@wp.pl";
     static ChromeDriver driver;
     static WebDriverWait wait;
 
@@ -62,14 +62,14 @@ public class SeleniumPrestashopTest {
         Assertions.assertTrue(loginRequiredMsg.isDisplayed());
 
         //Zamknięcie okna - kliknięcie buttona 'Cancel'
-        By cancelPopupButtonLocator = By.xpath("//a[contains(text(),\"Sign in\")]");
+        By cancelPopupButtonLocator = By.xpath("//a[contains(text(),\"Sign in\")]/../button[contains(text(),\"Cancel\")]");
         WebElement cancelPopupButton = driver.findElement(cancelPopupButtonLocator);
         cancelPopupButton.click();
 
         //wejście w produkt 'Today is a good day Framed Poster'
-        By openTodayIsaGoodDayFramedPosterLocator = By.xpath("//img[@alt=\"Today is a good day Framed poster\"]");
-        WebElement openTodayIsaGoodDayFramedPoster = driver.findElement(openTodayIsaGoodDayFramedPosterLocator);
-        openTodayIsaGoodDayFramedPoster.click();
+        By openTodayIsAGoodDayFramedPosterLocator = By.xpath("//a[@class=\"thumbnail product-thumbnail\"]/img[@alt=\"Today is a good day Framed poster\"]");
+        WebElement openTodayIsAGoodDayFramedPoster = driver.findElement(openTodayIsAGoodDayFramedPosterLocator);
+        openTodayIsAGoodDayFramedPoster.click();
 
         //Kliknij button 'Add to cart'
         By addToCartButtonLocator = By.xpath("//button[@data-button-action=\"add-to-cart\"]");
@@ -90,7 +90,7 @@ public class SeleniumPrestashopTest {
         //sprawdzenie nazwy produktów
         By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]/a[contains(text(),\"Today is a good day Framed poster\")]");
         String productNameInCart = driver.findElement(productNameInCartLocator).getText();
-        Assertions.assertEquals("Today is a good day Framed Poster", productNameInCart);
+        Assertions.assertEquals("Today is a good day Framed poster", productNameInCart);
 
         //Usunięcie produktu z koszyka
         By trashIconLocator = By.xpath("//a[@class=\"remove-from-cart\"]/i[contains(text(),\"delete\")]");
@@ -99,6 +99,7 @@ public class SeleniumPrestashopTest {
 
         //potwierdzenie usunięcia
         By emptyCartMsgLocator = By.xpath("//span[contains(text(),\"There are no more items in your cart\")]");
+        wait.until(ExpectedConditions.elementToBeClickable(emptyCartMsgLocator));//TODO zaaczekac az strona sie przeladuje
         WebElement emptyCartMsg = driver.findElement(emptyCartMsgLocator);
         Assertions.assertTrue(emptyCartMsg.isDisplayed());
     }
@@ -123,7 +124,8 @@ public class SeleniumPrestashopTest {
         addToCartButton.click();
 
         //Kliknięcie w button 'Proceed To Checkout' i przejście do koszyka
-        By closeAddToCartPopupLocator = By.xpath("//a[@class=\"btn btn-primary\"]/i");
+        By closeAddToCartPopupLocator = By.xpath("//a[@class=\"btn btn-primary\"]//i[@class=\"material-icons rtl-no-flip\"]");
+        wait.until(ExpectedConditions.elementToBeClickable(closeAddToCartPopupLocator));
         WebElement closeAddToCartPopupClick = driver.findElement(closeAddToCartPopupLocator);
         closeAddToCartPopupClick.click();
 
@@ -158,9 +160,9 @@ public class SeleniumPrestashopTest {
         privacyPolicyCheckbox.click();
 
         //Personal Information - kliknięcie w button 'Continue'
-       By continueButtonLocator = By.xpath("//footer[@class=\"form-footer clearfix\"]//button");
-       WebElement continueButton = driver.findElement(continueButtonLocator);
-       continueButton.click();
+        By continueButtonLocator = By.xpath("//section[@id=\"checkout-personal-information-step\"]//button[@type=\"submit\"]");
+        WebElement continueButton = driver.findElement(continueButtonLocator);
+        continueButton.click();
 
        //Addresses - wpisanie adresu użytkownika
         By addressFieldLocator = By.id("field-address1");
@@ -178,7 +180,9 @@ public class SeleniumPrestashopTest {
         cityField.sendKeys("Koszalin");
 
         //Addresses - kliknięcie w button 'Continue'
-        continueButton.click();
+        By adreessContinuseLocator = By.xpath("//section[@id=\"checkout-addresses-step\"]//button[@type=\"submit\"]");
+        WebElement adreessContinuse = driver.findElement(adreessContinuseLocator);
+        adreessContinuse.click();
 
         //Shipping Method - kliknięcie w button 'Continue'
         By continueButtonShippingMethodLocator = By.xpath("//button[@name=\"confirmDeliveryOption\"]");
