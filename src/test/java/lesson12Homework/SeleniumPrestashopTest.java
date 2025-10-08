@@ -14,10 +14,12 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+import static io.qameta.allure.Allure.step;
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SeleniumPrestashopTest {
 
-    String emailCreateName ="testowianka254@wp.pl";
+    String emailCreateName = "testowianka254@wp.pl";
     static ChromeDriver driver;
     static WebDriverWait wait;
 
@@ -28,90 +30,94 @@ public class SeleniumPrestashopTest {
         driver.get("http://localhost:8080/pl/");
     }
 
-    @Test   //zmiana języka z polskiego na angielski
+    @Test   //Zmiana języka strony z polskiego na angielski
     @Order(1)
     public void languageSwitchIntoEnglish() {
 
-        By languageDropdownLocator = By.xpath("//button[@data-toggle=\"dropdown\"]");
-        WebElement languageSwitchClick = driver.findElement(languageDropdownLocator);
-        languageSwitchClick.click();
+        step("Kliknięcie w dropdown-button, by rozwinąć listę z językami", ()->{
+            By languageDropdownButtonLocator = By.xpath("//button[@data-toggle=\"dropdown\"]");
+            WebElement languageSwitchClick = driver.findElement(languageDropdownButtonLocator);
+            languageSwitchClick.click();});
 
-        //wybór języka English
-        By englishLanguageSwitchLocator = By.xpath("//a[@data-iso-code=\"en\"]");
-        WebElement englishLanguageSwitch = driver.findElement(englishLanguageSwitchLocator);
-        englishLanguageSwitch.click();
+        step("Kliknięcie opcji 'English' na rozwijanej liście języków", ()->{
+            By englishLanguageSwitchLocator = By.xpath("//a[@data-iso-code=\"en\"]");
+            WebElement englishLanguageSwitch = driver.findElement(englishLanguageSwitchLocator);
+            englishLanguageSwitch.click();});
 
-        //potwierdzenie ustawienia języka angielskiego
-        By englishLanguageCheckLocator = By.xpath("//button[@data-toggle=\"dropdown\"]" + "/span[contains(text(),\"English\")]");
-        WebElement englishLanguageCheck = driver.findElement(englishLanguageCheckLocator);
-        Assertions.assertTrue(englishLanguageCheck.isDisplayed());
+        step("Potwierdzenie ustawienia języka angielskiego", ()->{
+            By englishLanguageCheckLocator = By.xpath("//button[@data-toggle=\"dropdown\"]" + "/span[contains(text(),\"English\")]");
+            WebElement englishLanguageCheck = driver.findElement(englishLanguageCheckLocator);
+            Assertions.assertTrue(englishLanguageCheck.isDisplayed());});
     }
 
-    @Test     //Użytkownik niezarejestrowany - dodanie i usunięcie produktu z koszyka
+    @Test     //Użytkownik niezarejestrowany - dodanie produktu do wishlist, dodanie i usunięcie z koszyka
     @Order(2)
     public void addToCartAndDeleteProductByUnregisteredUser() {
 
-        //UnregisteredUser - próba dodania produktu do whishlist - produkt 'Today is a good day Framed Poster'
-        By heartButtonOfTodayIsAGoodDayFramedPosterLocator = By.xpath("//a[contains(text(),\"Today is a good day Framed\")]/../../../button[@class=\"wishlist-button-add\"]");
-        WebElement heartButtonOfTodayIsAGoodDayFramedPoster = driver.findElement(heartButtonOfTodayIsAGoodDayFramedPosterLocator);
-        heartButtonOfTodayIsAGoodDayFramedPoster.click();
+        step("Unregistered user - kliknięcie w wishlist-button produktu 'Today is a good day Framed Poster'", ()->{
+            By heartButtonOfTodayIsAGoodDayFramedPosterLocator = By.xpath("//a[contains(text(),\"Today is a good day Framed\")]/../../../button[@class=\"wishlist-button-add\"]");
+            WebElement heartButtonOfTodayIsAGoodDayFramedPoster = driver.findElement(heartButtonOfTodayIsAGoodDayFramedPosterLocator);
+            heartButtonOfTodayIsAGoodDayFramedPoster.click();});
 
-        //potwierdzenie pojawienia się komunikatu
-        By loginRequiredMsgLocator = By.xpath("//p[contains(text(),\"You need to be logged in to save products in your wishlist.\")]");
-        WebElement loginRequiredMsg = driver.findElement(loginRequiredMsgLocator);
-        Assertions.assertTrue(loginRequiredMsg.isDisplayed());
+        step("Potwierdzenie pojawienia się komunikatu walidacyjnego", ()->{
+            By loginRequiredMsgLocator = By.xpath("//p[contains(text(),\"You need to be logged in to save products in your wishlist.\")]");
+            WebElement loginRequiredMsg = driver.findElement(loginRequiredMsgLocator);
+            Assertions.assertTrue(loginRequiredMsg.isDisplayed());});
 
-        //Zamknięcie okna - kliknięcie buttona 'Cancel'
-        By cancelPopupButtonLocator = By.xpath("//a[contains(text(),\"Sign in\")]/../button[contains(text(),\"Cancel\")]");
-        WebElement cancelPopupButton = driver.findElement(cancelPopupButtonLocator);
-        cancelPopupButton.click();
+        step("Zamknięcie okna popup - kliknięcie w button 'Cancel'", ()->{
+            By cancelPopupButtonLocator = By.xpath("//a[contains(text(),\"Sign in\")]/../button[contains(text(),\"Cancel\")]");
+            WebElement cancelPopupButton = driver.findElement(cancelPopupButtonLocator);
+            cancelPopupButton.click();});
 
-        //wejście w produkt 'Today is a good day Framed Poster'
-        By openTodayIsAGoodDayFramedPosterLocator = By.xpath("//a[@class=\"thumbnail product-thumbnail\"]/img[@alt=\"Today is a good day Framed poster\"]");
-        WebElement openTodayIsAGoodDayFramedPoster = driver.findElement(openTodayIsAGoodDayFramedPosterLocator);
-        openTodayIsAGoodDayFramedPoster.click();
+        step("Wejście w okno produktu 'Today is a good day Framed Poster'", ()->{
+            By openTodayIsAGoodDayFramedPosterLocator = By.xpath("//a[@class=\"thumbnail product-thumbnail\"]/img[@alt=\"Today is a good day Framed poster\"]");
+            WebElement openTodayIsAGoodDayFramedPoster = driver.findElement(openTodayIsAGoodDayFramedPosterLocator);
+            openTodayIsAGoodDayFramedPoster.click();});
 
-        //Kliknij button 'Add to cart'
-        By addToCartButtonLocator = By.xpath("//button[@data-button-action=\"add-to-cart\"]");
-        WebElement addToCartButton = driver.findElement(addToCartButtonLocator);
-        addToCartButton.click();
+        step("Dodanie do koszyka - kliknięcie w button 'Add to cart'", ()->{
+            By addToCartButtonLocator = By.xpath("//button[@data-button-action=\"add-to-cart\"]");
+            WebElement addToCartButton = driver.findElement(addToCartButtonLocator);
+            addToCartButton.click();});
 
-        //potwierdzenie dodania do koszyka
-        By addProductPopupLocator = By.xpath("//h4[contains(text(),\"Product successfully added to your shopping cart\")]");
-        wait.until(ExpectedConditions.elementToBeClickable(addProductPopupLocator));
-        WebElement addProductPopup = driver.findElement(addProductPopupLocator);
-        Assertions.assertTrue(addProductPopup.isDisplayed());
+        step("Potwierdzenie pojawienia się komunikatu informacyjnego", ()->{
+            By addProductPopupLocator = By.xpath("//h4[contains(text(),\"Product successfully added to your shopping cart\")]");
+            wait.until(ExpectedConditions.elementToBeClickable(addProductPopupLocator));
+            WebElement addProductPopup = driver.findElement(addProductPopupLocator);
+            Assertions.assertTrue(addProductPopup.isDisplayed());});
 
-        //zamknięcie popup dodania produktu i przejście do koszyka
-        By closeAddToCartPopupLocator = By.xpath("//a[@class=\"btn btn-primary\"]/i");
-        WebElement closeAddToCartPopupClick = driver.findElement(closeAddToCartPopupLocator);
-        closeAddToCartPopupClick.click();
+        step("Zamknięcie okna popup - kliknięcie w button 'Proceed to checkout'", ()->{
+            By closeAddToCartPopupLocator = By.xpath("//a[@class=\"btn btn-primary\"]/i");
+            WebElement closeAddToCartPopupClick = driver.findElement(closeAddToCartPopupLocator);
+            closeAddToCartPopupClick.click();});
 
-        //sprawdzenie nazwy produktów
-        By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]/a[contains(text(),\"Today is a good day Framed poster\")]");
-        String productNameInCart = driver.findElement(productNameInCartLocator).getText();
-        Assertions.assertEquals("Today is a good day Framed poster", productNameInCart);
+        step("Sprawdzenie zgodności nazwy produktu w koszyku", ()->{
+            By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]/a[contains(text(),\"Today is a good day Framed poster\")]");
+            String productNameInCart = driver.findElement(productNameInCartLocator).getText();
+            Assertions.assertEquals("Today is a good day Framed poster", productNameInCart);});
 
-        //Usunięcie produktu z koszyka
-        By trashIconLocator = By.xpath("//a[@class=\"remove-from-cart\"]/i[contains(text(),\"delete\")]");
-        WebElement trashIcon = driver.findElement(trashIconLocator);
-        trashIcon.click();
+        step("Usunięcie produktu z koszyka", ()->{
+            By trashIconLocator = By.xpath("//a[@class=\"remove-from-cart\"]/i[contains(text(),\"delete\")]");
+            WebElement trashIcon = driver.findElement(trashIconLocator);
+            trashIcon.click();});
 
-        //potwierdzenie usunięcia
-        By emptyCartMsgLocator = By.xpath("//span[contains(text(),\"There are no more items in your cart\")]");
-        wait.until(ExpectedConditions.elementToBeClickable(emptyCartMsgLocator));//TODO zaaczekac az strona sie przeladuje
-        WebElement emptyCartMsg = driver.findElement(emptyCartMsgLocator);
-        Assertions.assertTrue(emptyCartMsg.isDisplayed());
+        step("Potwierdzenie pojawienia się komunikatu potwierdzającego usunięcie", ()->{
+            By emptyCartMsgLocator = By.xpath("//span[contains(text(),\"There are no more items in your cart\")]");
+            wait.until(ExpectedConditions.elementToBeClickable(emptyCartMsgLocator));//TODO zaaczekac az strona sie przeladuje
+            WebElement emptyCartMsg = driver.findElement(emptyCartMsgLocator);
+            Assertions.assertTrue(emptyCartMsg.isDisplayed());});
+
     }
 
     @Test     //Użytkownik niezarejestrowany - dodanie do koszyka i finalizacja zakupu
     @Order(3)
     public void addProductToCartAndCheckoutByUnregisteredUser() {
 
-        //Przejcie na stronę główną
-        By homepageLinkLocator = By.id("_desktop_logo");
-        WebElement homepageLink = driver.findElement(homepageLinkLocator);
-        homepageLink.click();
+        step("Przejcie na stronę główną", ()->{
+            By homepageLinkLocator = By.id("_desktop_logo");
+            WebElement homepageLink = driver.findElement(homepageLinkLocator);
+            homepageLink.click();});
+
+        step("", ()->{});
 
         //wejście w produkt 'Today is a good day Framed Poster'
         By openTodayIsaGoodDayFramedPosterLocator = By.xpath("//img[@alt=\"Today is a good day Framed poster\"]");
@@ -213,6 +219,8 @@ public class SeleniumPrestashopTest {
     @Test     //Uzupełnienie formularza ‘Save time on your next order, sign up now’
     @Order(4)
     public void signUpNowFillInFormByUnregisteredUser() {
+
+        step("", ()->{});
 
         //Uzupełnij pole 'First name'
         By firstNameFieldLocator = By.id("field-firstname");
@@ -1425,3 +1433,6 @@ public class SeleniumPrestashopTest {
         driver.quit();
     }
 }
+
+
+
