@@ -908,47 +908,44 @@ public class SeleniumPrestashopTest {
     @Order(19)
     public void addMsgInOrderDetailsPage() {
 
-        step("", ()->{});
+        step("Wejście w panel zalogowanego użytkownika", ()->{
+            By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
+            WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
+            userProfileLink.click();});
 
-        //Wejście w panel zalogowanego użytkownika
-        By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
-        WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
-        userProfileLink.click();
+        step("Wejście w sekcję 'Order history and details'", ()->{
+            By orderHistoryAndDetailsLinkLocator = By.id("history-link");
+            WebElement orderHistoryAndDetailsLink = driver.findElement(orderHistoryAndDetailsLinkLocator);
+            orderHistoryAndDetailsLink.click();});
 
-        //Wejście w sekcję 'Order history and details'
-        By orderHistoryAndDetailsLinkLocator = By.id("history-link");
-        WebElement orderHistoryAndDetailsLink = driver.findElement(orderHistoryAndDetailsLinkLocator);
-        orderHistoryAndDetailsLink.click();
+        step("Wejście w 'Details'", ()->{
+            By orderDetailsLinkLocator = By.xpath("//a[@data-link-action=\"view-order-details\"]");
+            WebElement orderDetailsLink = driver.findElement(orderDetailsLinkLocator);
+            orderDetailsLink.click();});
 
-        //Wejście w 'Details'
-        By orderDetailsLinkLocator = By.xpath("//a[@data-link-action=\"view-order-details\"]");
-        WebElement orderDetailsLink = driver.findElement(orderDetailsLinkLocator);
-        orderDetailsLink.click();
+        step("Kliknięcie 'Send' - wysłanie nieuzupełnionej wiadomości", ()->{
+            By sendButtonInDetailsPageLocator = By.xpath("//*[@name=\"submitMessage\"]");
+            WebElement sendButtonInDetailsPage = driver.findElement(sendButtonInDetailsPageLocator);
+            sendButtonInDetailsPage.click();});
 
-        //Kliknięcie 'Send' - wysłanie nieuzupełnionej wiadomości
-        By sendButtonInDetailsPageLocator = By.xpath("//*[@name=\"submitMessage\"]");
-        WebElement sendButtonInDetailsPage = driver.findElement(sendButtonInDetailsPageLocator);
-        sendButtonInDetailsPage.click();
+        step("Potwierdzenie pojawienia się komunikatu walidacji", ()->{
+            By validationMsgInDetailsPageLocator = By.xpath("//li[contains(text(),\"The message cannot be blank.\")]");
+            WebElement validationMsgInDetailsPage = driver.findElement(validationMsgInDetailsPageLocator);
+            Assertions.assertTrue(validationMsgInDetailsPage.isDisplayed());});
 
-        //Potwierdzenie pojawienia się komunikatu walidacji
-        By validationMsgInDetailsPageLocator = By.xpath("//li[contains(text(),\"The message cannot be blank.\")]");
-        WebElement validationMsgInDetailsPage = driver.findElement(validationMsgInDetailsPageLocator);
-        Assertions.assertTrue(validationMsgInDetailsPage.isDisplayed());
+        step("Uzupełnienie treści wiadomości", ()->{
+            By fillInMsgTextInFormLocator = By.xpath("//textarea[@name=\"msgText\"]");
+            WebElement fillInMsgTextInField = driver.findElement(fillInMsgTextInFormLocator);
+            fillInMsgTextInField.sendKeys("Proszę o wysyłkę możliwie najszybciej. Dziękuję.");});
 
+        step("Kliknięcie 'Send'", ()->{
+            WebElement sendButtonInDetailsPageNew = driver.findElement(sendButtonInDetailsPageLocator);
+            sendButtonInDetailsPageNew.click();});
 
-        //Uzupełnienie treści wiadomości
-        By fillInMsgTextInFormLocator = By.xpath("//textarea[@name=\"msgText\"]");
-        WebElement fillInMsgTextInField = driver.findElement(fillInMsgTextInFormLocator);
-        fillInMsgTextInField.sendKeys("Proszę o wysyłkę możliwie najszybciej. Dziękuję.");
-
-        //Kliknięcie 'Send'
-        WebElement sendButtonInDetailsPageNew = driver.findElement(sendButtonInDetailsPageLocator);
-        sendButtonInDetailsPageNew.click();
-
-        //potwierdzenie wysłania wiadomości
-        By sendConfirmationMsgLocator = By.xpath("//li[contains(text(),\"Message successfully sent\")]");
-        WebElement sendConfirmationMsg = driver.findElement(sendConfirmationMsgLocator);
-        Assertions.assertTrue(sendConfirmationMsg.isDisplayed());
+        step("potwierdzenie wysłania wiadomości", ()->{
+            By sendConfirmationMsgLocator = By.xpath("//li[contains(text(),\"Message successfully sent\")]");
+            WebElement sendConfirmationMsg = driver.findElement(sendConfirmationMsgLocator);
+            Assertions.assertTrue(sendConfirmationMsg.isDisplayed());});
     }
 
     @Test     //Panel użytkownika/Reorder - ponowne złożenie zamówienia
