@@ -112,108 +112,106 @@ public class SeleniumPrestashopTest {
     @Order(3)
     public void addProductToCartAndCheckoutByUnregisteredUser() {
 
-        step("Przejcie na stronę główną", ()->{
+        step("Przejcie z koszyka na stronę główną", ()->{
             By homepageLinkLocator = By.id("_desktop_logo");
             WebElement homepageLink = driver.findElement(homepageLinkLocator);
             homepageLink.click();});
 
-        step("", ()->{});
+        step("Wejście w okno produktu 'Today is a good day Framed Poster'", ()->{
+            By openTodayIsaGoodDayFramedPosterLocator = By.xpath("//img[@alt=\"Today is a good day Framed poster\"]");
+            WebElement openTodayIsaGoodDayFramedPoster = driver.findElement(openTodayIsaGoodDayFramedPosterLocator);
+            openTodayIsaGoodDayFramedPoster.click();});
 
-        //wejście w produkt 'Today is a good day Framed Poster'
-        By openTodayIsaGoodDayFramedPosterLocator = By.xpath("//img[@alt=\"Today is a good day Framed poster\"]");
-        WebElement openTodayIsaGoodDayFramedPoster = driver.findElement(openTodayIsaGoodDayFramedPosterLocator);
-        openTodayIsaGoodDayFramedPoster.click();
+        step("Dodanie do koszyka - kliknięcie w button 'Add to cart'", ()->{
+            By addToCartButtonLocator = By.xpath("//button[@data-button-action=\"add-to-cart\"]");
+            WebElement addToCartButton = driver.findElement(addToCartButtonLocator);
+            addToCartButton.click();});
 
-        //Kliknij button 'Add to cart'
-        By addToCartButtonLocator = By.xpath("//button[@data-button-action=\"add-to-cart\"]");
-        WebElement addToCartButton = driver.findElement(addToCartButtonLocator);
-        addToCartButton.click();
+        step("Zamknięcie okna popup - kliknięcie w button 'Proceed to checkout'", ()->{
+            By closeAddToCartPopupLocator = By.xpath("//a[@class=\"btn btn-primary\"]//i[@class=\"material-icons rtl-no-flip\"]");
+            wait.until(ExpectedConditions.elementToBeClickable(closeAddToCartPopupLocator));
+            WebElement closeAddToCartPopupClick = driver.findElement(closeAddToCartPopupLocator);
+            closeAddToCartPopupClick.click();});
 
-        //Kliknięcie w button 'Proceed To Checkout' i przejście do koszyka
-        By closeAddToCartPopupLocator = By.xpath("//a[@class=\"btn btn-primary\"]//i[@class=\"material-icons rtl-no-flip\"]");
-        wait.until(ExpectedConditions.elementToBeClickable(closeAddToCartPopupLocator));
-        WebElement closeAddToCartPopupClick = driver.findElement(closeAddToCartPopupLocator);
-        closeAddToCartPopupClick.click();
+        step("Cart - kliknięcie w button 'Proceed To Checkout'", ()->{
+            By proceedToCheckoutButtonLocator = By.xpath("//a[contains(text(),\"Proceed to checkout\")]");
+            WebElement proceedToCheckoutButton = driver.findElement(proceedToCheckoutButtonLocator);
+            proceedToCheckoutButton.click();});
 
-        //Cart - kliknięcie w button 'Proceed To Checkout'
-        By proceedToCheckoutButtonLocator = By.xpath("//a[contains(text(),\"Proceed to checkout\")]");
-        WebElement proceedToCheckoutButton = driver.findElement(proceedToCheckoutButtonLocator);
-        proceedToCheckoutButton.click();
+        step("Personal Information - uzupełnienie pola 'First name'", ()->{
+            By firstNameFieldLocator = By.id("field-firstname");
+            WebElement firstNameField = driver.findElement(firstNameFieldLocator);
+            firstNameField.sendKeys("Tomasz");});
 
-        //Personal Information - uzupełnienie pola 'First name'
-        By firstNameFieldLocator = By.id("field-firstname");
-        WebElement firstNameField = driver.findElement(firstNameFieldLocator);
-        firstNameField.sendKeys("Tomasz");
+        step("Personal Information - uzupełnienie pola 'Last name'", ()->{
+            By lastNameFieldLocator = By.id("field-lastname");
+            WebElement lastNameField = driver.findElement(lastNameFieldLocator);
+            lastNameField.sendKeys("Kot");});
 
-        //Personal Information - uzupełnienie pola 'Last name'
-        By lastNameFieldLocator = By.id("field-lastname");
-        WebElement lastNameField = driver.findElement(lastNameFieldLocator);
-        lastNameField.sendKeys("Kot");
+        step("Personal Information - uzupełnienie pola 'Email'", ()->{
+            By emailFieldLocator = By.id("field-email");
+            WebElement emailField = driver.findElement(emailFieldLocator);
+            emailField.sendKeys("kot123@wp.pl");});
 
-        //Personal Information - uzupełnienie pola
-        By emailFieldLocator = By.id("field-email");
-        WebElement emailField = driver.findElement(emailFieldLocator);
-        emailField.sendKeys("kot123@wp.pl");
+        step("Personal Information - checkbox zgody na przetwarzanie danych osobowych", ()->{
+            By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
+            WebElement policyInfoCheckbox = driver.findElement(policyInfoLocator);
+            policyInfoCheckbox.click();});
 
-        //Personal Information - checkbox informacji o przetwarzaniu danych osobowych
-        By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
-        WebElement policyInfoCheckbox = driver.findElement(policyInfoLocator);
-        policyInfoCheckbox.click();
+        step("Personal Information - checkbox akceptacji regulaminu i polityki prywatności", ()->{
+            By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
+            WebElement privacyPolicyCheckbox = driver.findElement(privacyPolicyLocator);
+            privacyPolicyCheckbox.click();});
 
-        //Personal Information - checkbox akceptacji polityki prywatności
-        By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
-        WebElement privacyPolicyCheckbox = driver.findElement(privacyPolicyLocator);
-        privacyPolicyCheckbox.click();
+        step("Personal Information - kliknięcie w button 'Continue'", ()->{
+            By continueButtonLocator = By.xpath("//section[@id=\"checkout-personal-information-step\"]//button[@type=\"submit\"]");
+            WebElement continueButton = driver.findElement(continueButtonLocator);
+            continueButton.click();});
 
-        //Personal Information - kliknięcie w button 'Continue'
-        By continueButtonLocator = By.xpath("//section[@id=\"checkout-personal-information-step\"]//button[@type=\"submit\"]");
-        WebElement continueButton = driver.findElement(continueButtonLocator);
-        continueButton.click();
+        step("Addresses - uzupełnienie pola 'Address'", ()->{
+            By addressFieldLocator = By.id("field-address1");
+            WebElement addressField = driver.findElement(addressFieldLocator);
+            addressField.sendKeys("ul. Jaskrawa 23");});
 
-       //Addresses - wpisanie adresu użytkownika
-        By addressFieldLocator = By.id("field-address1");
-        WebElement addressField = driver.findElement(addressFieldLocator);
-        addressField.sendKeys("ul. Jaskrawa 23");
+        step("Addresses - uzupełnienie pola 'Zip/Postal Code'", ()->{
+            By postalCodeFieldLocator = By.id("field-postcode");
+            WebElement postalCodeField = driver.findElement(postalCodeFieldLocator);
+            postalCodeField.sendKeys("11-788");});
 
-        //Addresses - wpisanie Zip/Postal Code
-        By postalCodeFieldLocator = By.id("field-postcode");
-        WebElement postalCodeField = driver.findElement(postalCodeFieldLocator);
-        postalCodeField.sendKeys("11-788");
+        step("Addresses - uzupełnienie pola 'City'", ()->{
+            By cityFieldLocator = By.id("field-city");
+            WebElement cityField = driver.findElement(cityFieldLocator);
+            cityField.sendKeys("Koszalin");});
 
-        //Addresses - uzupełnienie pola 'City'
-        By cityFieldLocator = By.id("field-city");
-        WebElement cityField = driver.findElement(cityFieldLocator);
-        cityField.sendKeys("Koszalin");
+        step("Addresses - kliknięcie w button 'Continue'", ()->{
+            By adreessContinuseLocator = By.xpath("//section[@id=\"checkout-addresses-step\"]//button[@type=\"submit\"]");
+            WebElement adreessContinuse = driver.findElement(adreessContinuseLocator);
+            adreessContinuse.click();});
 
-        //Addresses - kliknięcie w button 'Continue'
-        By adreessContinuseLocator = By.xpath("//section[@id=\"checkout-addresses-step\"]//button[@type=\"submit\"]");
-        WebElement adreessContinuse = driver.findElement(adreessContinuseLocator);
-        adreessContinuse.click();
+        step("Shipping Method - kliknięcie w button 'Continue'", ()->{
+            By continueButtonShippingMethodLocator = By.xpath("//button[@name=\"confirmDeliveryOption\"]");
+            WebElement continueButtonShippingMethod = driver.findElement(continueButtonShippingMethodLocator);
+            continueButtonShippingMethod.click();});
 
-        //Shipping Method - kliknięcie w button 'Continue'
-        By continueButtonShippingMethodLocator = By.xpath("//button[@name=\"confirmDeliveryOption\"]");
-        WebElement continueButtonShippingMethod = driver.findElement(continueButtonShippingMethodLocator);
-        continueButtonShippingMethod.click();
+        step("Payment - wybór opcji 'Pay by bank wire'", ()->{
+            By payByBankWireRadioButtonLocator = By.id("payment-option-2");
+            WebElement payByBankWireRadioButton = driver.findElement(payByBankWireRadioButtonLocator);
+            payByBankWireRadioButton.click();});
 
-        //Wybór opcji 'Pay by bank wire'
-        By payByBankWireRadioButtonLocator = By.id("payment-option-2");
-        WebElement payByBankWireRadioButton = driver.findElement(payByBankWireRadioButtonLocator);
-        payByBankWireRadioButton.click();
+        step("Payment -  wybór checkboxa zgody", ()->{
+            By agreeToTermsCheckboxLocator = By.xpath("//input[@name=\"conditions_to_approve[terms-and-conditions]\"]");
+            WebElement agreeToTermsCheckbox = driver.findElement(agreeToTermsCheckboxLocator);
+            agreeToTermsCheckbox.click();});
 
-        //Wybór checkboxa zgody
-        By agreeToTermsCheckboxLocator = By.xpath("//input[@name=\"conditions_to_approve[terms-and-conditions]\"]");
-        WebElement agreeToTermsCheckbox = driver.findElement(agreeToTermsCheckboxLocator);
-        agreeToTermsCheckbox.click();
+        step("Payment - kliknięcie w button 'Place Order'", ()->{
+            By placeOrderButtonInPaymentSectionLocator = By.xpath("//div[@class=\"ps-shown-by-js\"]/button");
+            WebElement placeOrderButtonInPaymentSection = driver.findElement(placeOrderButtonInPaymentSectionLocator);
+            placeOrderButtonInPaymentSection.click();});
 
-        //kliknięcie w button 'Place Order'
-        By placeOrderButtonInPaymentSectionLocator = By.xpath("//div[@class=\"ps-shown-by-js\"]/button");
-        WebElement placeOrderButtonInPaymentSection = driver.findElement(placeOrderButtonInPaymentSectionLocator);
-        placeOrderButtonInPaymentSection.click();
-
-        //potwierdzenie pojawienia się komunikatu
-        By confirmationMsgLocator = By.xpath("//h3[@class=\"h1 card-title\"]/i");
-        WebElement confirmationMsg = driver.findElement(confirmationMsgLocator);
-        Assertions.assertTrue(confirmationMsg.isDisplayed());
+        step("Potwierdzenie pojawienia się komunikatu", ()->{
+            By confirmationMsgLocator = By.xpath("//h3[@class=\"h1 card-title\"]/i");
+            WebElement confirmationMsg = driver.findElement(confirmationMsgLocator);
+            Assertions.assertTrue(confirmationMsg.isDisplayed());});
     }
 
     @Test     //Uzupełnienie formularza ‘Save time on your next order, sign up now’
