@@ -1090,52 +1090,49 @@ public class SeleniumPrestashopTest {
     @Order(22)
     public void addItemsToStaticWishlists() {
 
-        step("", ()->{});
+        step("Przejcie na stronę główną", ()->{
+            By homepageLinkLocator = By.id("_desktop_logo");
+            WebElement homepageLink = driver.findElement(homepageLinkLocator);
+            homepageLink.click();});
 
-        //Przejcie na stronę główną
-        By homepageLinkLocator = By.id("_desktop_logo");
-        WebElement homepageLink = driver.findElement(homepageLinkLocator);
-        homepageLink.click();
+        step("Kliknięcie w serduszko dodające do wishlist", ()->{
+            By heartButtonOfHummingbirdLocator = By.xpath("//a[contains(text(),\"Hummingbird printed t-shirt\")]/../../../button[@class=\"wishlist-button-add\"]");
+            WebElement heartButtonOfHummingbird = driver.findElement(heartButtonOfHummingbirdLocator);
+            heartButtonOfHummingbird.click();});
 
-        //Kliknięcie w serduszko dodające do wishlist
-        By heartButtonOfHummingbirdLocator = By.xpath("//a[contains(text(),\"Hummingbird printed t-shirt\")]/../../../button[@class=\"wishlist-button-add\"]");
-        WebElement heartButtonOfHummingbird = driver.findElement(heartButtonOfHummingbirdLocator);
-        heartButtonOfHummingbird.click();
+        step("Popup - kliknięcie w automatycznie utworzony 'My wishlist'", ()->{
+            By myWishlistPopupLocator = By.xpath("//div[@class=\"modal-body\"]/div/ul/li[@class=\"wishlist-list-item\"]");
+            wait.until(ExpectedConditions.elementToBeClickable(myWishlistPopupLocator));
+            WebElement myWishlistPopup = driver.findElement(myWishlistPopupLocator);
+            myWishlistPopup.click();});
 
-        //Popup - kliknięcie w automatycznie utworzony 'My wishlist'
-        By myWishlistPopupLocator = By.xpath("//div[@class=\"modal-body\"]/div/ul/li[@class=\"wishlist-list-item\"]");
-        wait.until(ExpectedConditions.elementToBeClickable(myWishlistPopupLocator));
-        WebElement myWishlistPopup = driver.findElement(myWishlistPopupLocator);
-        myWishlistPopup.click();
+        step("TOAST - potwierdzenie pojawienia się komunikatu potwierdzającego", ()->{
+            By productAddedToWishlistMsgLocator = By.xpath("//div[@class=\"wishlist-toast success\"]/p[@class=\"wishlist-toast-text\"]");
+            wait.until(ExpectedConditions.elementToBeClickable(productAddedToWishlistMsgLocator));
+            WebElement productAddedToWishlistMsg = driver.findElement(productAddedToWishlistMsgLocator);
+            Assertions.assertTrue(productAddedToWishlistMsg.isDisplayed());});
 
-        // TOAST - potwierdzenie pojawienia się komunikatu potwierdzającego
-        By productAddedToWishlistMsgLocator = By.xpath("//div[@class=\"wishlist-toast success\"]/p[@class=\"wishlist-toast-text\"]");
-        wait.until(ExpectedConditions.elementToBeClickable(productAddedToWishlistMsgLocator));
-        WebElement productAddedToWishlistMsg = driver.findElement(productAddedToWishlistMsgLocator);
-        Assertions.assertTrue(productAddedToWishlistMsg.isDisplayed());
+        step("Wejście w panel zalogowanego użytkownika", ()->{
+            By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
+            WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
+            userProfileLink.click();});
 
-        //Wejście w panel zalogowanego użytkownika
-        By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
-        WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
-        userProfileLink.click();
+        step("Wejście na podstronę 'My wishlists'", ()->{
+            By myWishlistsPageLocator = By.xpath("//a[@id=\"wishlist-link\"]/span/i");
+            WebElement myWishlistsPage = driver.findElement(myWishlistsPageLocator);
+            myWishlistsPage.click();});
 
-        //Wejście na podstronę 'My wishlists'
-        By myWishlistsPageLocator = By.xpath("//a[@id=\"wishlist-link\"]/span/i");
-        WebElement myWishlistsPage = driver.findElement(myWishlistsPageLocator);
-        myWishlistsPage.click();
+        step("Wejście na link listy 'My wishlist'", ()->{
+            By myWishlistLinkLocator = By.xpath("//p[@class=\"wishlist-list-item-title\"]");
+            wait.until(ExpectedConditions.elementToBeClickable(myWishlistLinkLocator));
+            WebElement myWishlistLink = driver.findElement(myWishlistLinkLocator);
+            myWishlistLink.click();});
 
-        //Wejście na link listy 'My wishlist'
-        By myWishlistLinkLocator = By.xpath("//p[@class=\"wishlist-list-item-title\"]");
-        wait.until(ExpectedConditions.elementToBeClickable(myWishlistLinkLocator));
-        WebElement myWishlistLink = driver.findElement(myWishlistLinkLocator);
-        myWishlistLink.click();
-
-        By wishListElementsLocator = By.xpath("//p[@class=\"wishlist-product-title\"]");
-        wait.until(ExpectedConditions.elementToBeClickable(wishListElementsLocator));
-        List<WebElement> wishListsElements = driver.findElements(wishListElementsLocator);
-        List<String> wishListsElementsNames = wishListsElements.stream().map(WebElement::getText).toList();
-        Assertions.assertTrue(wishListsElementsNames.size()==1 && wishListsElementsNames.getFirst().equals("Hummingbird printed t-shirt"));
-
+        step("potwierdzenie", ()->{        By wishListElementsLocator = By.xpath("//p[@class=\"wishlist-product-title\"]");
+            wait.until(ExpectedConditions.elementToBeClickable(wishListElementsLocator));
+            List<WebElement> wishListsElements = driver.findElements(wishListElementsLocator);
+            List<String> wishListsElementsNames = wishListsElements.stream().map(WebElement::getText).toList();
+            Assertions.assertTrue(wishListsElementsNames.size()==1 && wishListsElementsNames.getFirst().equals("Hummingbird printed t-shirt"));});
     }
 
     @Test    //Wishlists - utworzenie nowej wishlisty i dodanie produktu
