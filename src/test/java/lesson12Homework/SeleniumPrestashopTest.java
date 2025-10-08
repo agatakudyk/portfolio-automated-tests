@@ -715,44 +715,42 @@ public class SeleniumPrestashopTest {
     @Order(14)
     public void cartContentValidation() {
 
-        step("", ()->{});
+        step("zamknięcie popup dodania produktu i przejście do koszyka", ()->{
+            By closeAddToCartPopupLocator = By.xpath("//a[@class=\"btn btn-primary\"]/i");
+            WebElement closeAddToCartPopupClick = driver.findElement(closeAddToCartPopupLocator);
+            closeAddToCartPopupClick.click();});
 
-        //zamknięcie popup dodania produktu i przejście do koszyka
-        By closeAddToCartPopupLocator = By.xpath("//a[@class=\"btn btn-primary\"]/i");
-        WebElement closeAddToCartPopupClick = driver.findElement(closeAddToCartPopupLocator);
-        closeAddToCartPopupClick.click();
+        step("sprawdzenie nazwy produktów", ()->{
+            By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]/a");
+            String productNameInCart = driver.findElement(productNameInCartLocator).getText();
+            Assertions.assertEquals("The best is yet to come' Framed poster", productNameInCart);});
 
-        //sprawdzenie nazwy produktów
-        By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]/a");
-        String productNameInCart = driver.findElement(productNameInCartLocator).getText();
-        Assertions.assertEquals("The best is yet to come' Framed poster", productNameInCart);
+        step("porównanie ilości z sekcji produktu i sekcji podsumowania", ()->{
+            // ilość w sekcji produktu
+            By numberInItemsSectionLocator = By.xpath("//input[@class='js-cart-line-product-quantity form-control']");
+            WebElement numberInItemSection = driver.findElement(numberInItemsSectionLocator);
+            int productQuantity = Integer.parseInt(numberInItemSection.getDomAttribute("value"));
+            // ilość w sekcji podsumowania
+            By numberInPurchaseSummarySectionLocator = By.xpath("//span[@class='label js-subtotal']");
+            WebElement numberInPurchaseSummarySection = driver.findElement(numberInPurchaseSummarySectionLocator);
+            String summaryQuantityText = numberInPurchaseSummarySection.getText();
+            int summaryQuantity = Integer.parseInt(summaryQuantityText.replaceAll("\\D+", ""));
+            // porównanie ilości z sekcji produktu i sekcji podsumowania
+            Assertions.assertEquals(productQuantity, summaryQuantity);});
 
-        // porównanie ilości z sekcji produktu i sekcji podsumowania
-        // ilość w sekcji produktu
-        By numberInItemsSectionLocator = By.xpath("//input[@class='js-cart-line-product-quantity form-control']");
-        WebElement numberInItemSection = driver.findElement(numberInItemsSectionLocator);
-        int productQuantity = Integer.parseInt(numberInItemSection.getDomAttribute("value"));
-        // ilość w sekcji podsumowania
-        By numberInPurchaseSummarySectionLocator = By.xpath("//span[@class='label js-subtotal']");
-        WebElement numberInPurchaseSummarySection = driver.findElement(numberInPurchaseSummarySectionLocator);
-        String summaryQuantityText = numberInPurchaseSummarySection.getText();
-        int summaryQuantity = Integer.parseInt(summaryQuantityText.replaceAll("\\D+", ""));
-        // porównanie ilości z sekcji produktu i sekcji podsumowania
-        Assertions.assertEquals(productQuantity, summaryQuantity);
-
-        //sprawdzenie wartości całkowitej
-        //cena jednostkowa
-        By unitPriceOfItemLocator = By.xpath("//div[@class=\"product-line-info product-price h5 \"]/div[@class=\"current-price\"]");
-        WebElement unitPriceOfItem = driver.findElement(unitPriceOfItemLocator);
-        String unitPriceText = unitPriceOfItem.getText().replace("zł", "").replace(",", ".").trim();
-        double unitPrice = Double.parseDouble(unitPriceText);
-        //wartość całkowita z podsumowania
-        By totalPriceLocator = By.xpath("//div[@class='cart-summary-line cart-total']/span[@class='value']");
-        WebElement totalPriceElement = driver.findElement(totalPriceLocator);
-        String totalPriceText = totalPriceElement.getText().replace("zł", "").replace(",", ".").trim();
-        double totalPrice = Double.parseDouble(totalPriceText);
-        //oczekiwana wartość
-        double expectedTotal = unitPrice * productQuantity;
+        step("sprawdzenie wartości całkowitej", ()->{
+            //cena jednostkowa
+            By unitPriceOfItemLocator = By.xpath("//div[@class=\"product-line-info product-price h5 \"]/div[@class=\"current-price\"]");
+            WebElement unitPriceOfItem = driver.findElement(unitPriceOfItemLocator);
+            String unitPriceText = unitPriceOfItem.getText().replace("zł", "").replace(",", ".").trim();
+            double unitPrice = Double.parseDouble(unitPriceText);
+            //wartość całkowita z podsumowania
+            By totalPriceLocator = By.xpath("//div[@class='cart-summary-line cart-total']/span[@class='value']");
+            WebElement totalPriceElement = driver.findElement(totalPriceLocator);
+            String totalPriceText = totalPriceElement.getText().replace("zł", "").replace(",", ".").trim();
+            double totalPrice = Double.parseDouble(totalPriceText);
+            //oczekiwana wartość
+            double expectedTotal = unitPrice * productQuantity;});
     }
 
     @Test    //Formularz adresu – próba zapisania pustego formularza
