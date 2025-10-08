@@ -955,58 +955,56 @@ public class SeleniumPrestashopTest {
     @Order(20)
     public void reorderPreviousOrder() {
 
-        step("", ()->{});
+        step("przejście na stronę 'Reorder'", ()->{
+            By reorderPageLinkLocator = By.xpath("//a[@class=\"button-primary\" and text()=\"Reorder\"]");
+            WebElement reorderPageLink = driver.findElement(reorderPageLinkLocator);
+            reorderPageLink.click();});
 
-        //przejście na stronę 'Reorder'
-        By reorderPageLinkLocator = By.xpath("//a[@class=\"button-primary\" and text()=\"Reorder\"]");
-        WebElement reorderPageLink = driver.findElement(reorderPageLinkLocator);
-        reorderPageLink.click();
+        step("edycja adresu", ()->{
+            By editAddressesLinkLocator = By.xpath("//footer[@class=\"address-footer\"]/a[@data-link-action=\"edit-address\"]");
+            WebElement editAddressesLink = driver.findElement(editAddressesLinkLocator);
+            editAddressesLink.click();});
 
-        //edycja adresu
-        By editAddressesLinkLocator = By.xpath("//footer[@class=\"address-footer\"]/a[@data-link-action=\"edit-address\"]");
-        WebElement editAddressesLink = driver.findElement(editAddressesLinkLocator);
-        editAddressesLink.click();
+        step("Zmiana miasta", ()->{
+            By cityInAddressFieldLocator = By.id("field-city");
+            WebElement cityInAddressField = driver.findElement(cityInAddressFieldLocator);
+            cityInAddressField.clear();
+            cityInAddressField.sendKeys("Opole");});
 
-        //Zmiana miasta
-        By cityInAddressFieldLocator = By.id("field-city");
-        WebElement cityInAddressField = driver.findElement(cityInAddressFieldLocator);
-        cityInAddressField.clear();
-        cityInAddressField.sendKeys("Opole");
+        step("Kliknięcie buttona 'Continue'", ()->{
+            By continueButtonInAddressesSectionLocator = By.xpath("//footer[@class=\"form-footer clearfix\"]/button[@class=\"continue btn btn-primary float-xs-right\"]");
+            WebElement continueButtonInAddressesSection = driver.findElement(continueButtonInAddressesSectionLocator);
+            continueButtonInAddressesSection.click();});
 
-        //Kliknięcie buttona 'Continue'
-        By continueButtonInAddressesSectionLocator = By.xpath("//footer[@class=\"form-footer clearfix\"]/button[@class=\"continue btn btn-primary float-xs-right\"]");
-        WebElement continueButtonInAddressesSection = driver.findElement(continueButtonInAddressesSectionLocator);
-        continueButtonInAddressesSection.click();
+        step("Dostawa - zmiana z 'PrestaShop' na 'My carrier'", ()->{
+            By prestaShopRadioButtonLocator = By.id("delivery_option_2");
+            WebElement prestaShopRadioButton = driver.findElement(prestaShopRadioButtonLocator);
+            prestaShopRadioButton.click();});
 
-        //Dostawa - zmiana z 'PrestaShop' na 'My carrier'
-        By prestaShopRadioButtonLocator = By.id("delivery_option_2");
-        WebElement prestaShopRadioButton = driver.findElement(prestaShopRadioButtonLocator);
-        prestaShopRadioButton.click();
+        step("kliknięcie w button 'Continue'", ()->{
+            By continueButtonInShippingMethodFormLocator = By.xpath("//button[@name=\"confirmDeliveryOption\"]");
+            WebElement continueButtonInShippingMethodForm = driver.findElement(continueButtonInShippingMethodFormLocator);
+            continueButtonInShippingMethodForm.click();});
 
-        //kliknięcie w button 'Continue'
-        By continueButtonInShippingMethodFormLocator = By.xpath("//button[@name=\"confirmDeliveryOption\"]");
-        WebElement continueButtonInShippingMethodForm = driver.findElement(continueButtonInShippingMethodFormLocator);
-        continueButtonInShippingMethodForm.click();
+        step("Wybór opcji 'Pay by bank wire'", ()->{
+            By payByBankWireRadioButtonLocator = By.id("payment-option-2");
+            WebElement payByBankWireRadioButton = driver.findElement(payByBankWireRadioButtonLocator);
+            payByBankWireRadioButton.click();});
 
-        //Wybór opcji 'Pay by bank wire'
-        By payByBankWireRadioButtonLocator = By.id("payment-option-2");
-        WebElement payByBankWireRadioButton = driver.findElement(payByBankWireRadioButtonLocator);
-        payByBankWireRadioButton.click();
+        step("Wybór checkboxa zgody", ()->{
+            By agreeToTermsCheckboxLocator = By.xpath("//input[@name=\"conditions_to_approve[terms-and-conditions]\"]");
+            WebElement agreeToTermsCheckbox = driver.findElement(agreeToTermsCheckboxLocator);
+            agreeToTermsCheckbox.click();});
 
-        //Wybór checkboxa zgody
-        By agreeToTermsCheckboxLocator = By.xpath("//input[@name=\"conditions_to_approve[terms-and-conditions]\"]");
-        WebElement agreeToTermsCheckbox = driver.findElement(agreeToTermsCheckboxLocator);
-        agreeToTermsCheckbox.click();
+        step("kliknięcie w button 'Place Order'", ()->{
+            By placeOrderButtonInPaymentSectionLocator = By.xpath("//div[@class=\"ps-shown-by-js\"]/button");
+            WebElement placeOrderButtonInPaymentSection = driver.findElement(placeOrderButtonInPaymentSectionLocator);
+            placeOrderButtonInPaymentSection.click();});
 
-        //kliknięcie w button 'Place Order'
-        By placeOrderButtonInPaymentSectionLocator = By.xpath("//div[@class=\"ps-shown-by-js\"]/button");
-        WebElement placeOrderButtonInPaymentSection = driver.findElement(placeOrderButtonInPaymentSectionLocator);
-        placeOrderButtonInPaymentSection.click();
-
-        //potwierdzenie pojawienia się komunikatu
-        By confirmationMsgLocator = By.xpath("//h3[@class=\"h1 card-title\"]/i");
-        WebElement confirmationMsg = driver.findElement(confirmationMsgLocator);
-        Assertions.assertTrue(confirmationMsg.isDisplayed());
+        step("potwierdzenie pojawienia się komunikatu", ()->{
+            By confirmationMsgLocator = By.xpath("//h3[@class=\"h1 card-title\"]/i");
+            WebElement confirmationMsg = driver.findElement(confirmationMsgLocator);
+            Assertions.assertTrue(confirmationMsg.isDisplayed());});
     }
 
     @Test
