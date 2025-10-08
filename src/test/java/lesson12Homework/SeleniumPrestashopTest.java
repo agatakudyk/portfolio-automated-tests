@@ -871,36 +871,34 @@ public class SeleniumPrestashopTest {
     @Order(18)
     public void contactCustomerServiceDepartment() {
 
-        step("", ()->{});
+        step("kliknięcie w link formularza kontaktowego", ()->{
+            By customerServiceDepartmentContactLocator = By.xpath("//a[contains(text(),\"customer service department.\")]");
+            WebElement customerServiceDepartmentContact = driver.findElement(customerServiceDepartmentContactLocator);
+            customerServiceDepartmentContact.click();});
 
-        //kliknięcie w link formularza kontaktowego
-        By customerServiceDepartmentContactLocator = By.xpath("//a[contains(text(),\"customer service department.\")]");
-        WebElement customerServiceDepartmentContact = driver.findElement(customerServiceDepartmentContactLocator);
-        customerServiceDepartmentContact.click();
+        step("kliknięcie w button 'Send' - próba przesłania niewypełnionego formularza", ()->{
+            By sendButtonInContactUsSectionLocator = By.xpath("//input[@class=\"btn btn-primary\"]");
+            WebElement sendButtonInContactUsSection = driver.findElement(sendButtonInContactUsSectionLocator);
+            sendButtonInContactUsSection.click();});
 
-        //kliknięcie w button 'Send' - próba przesłania niewypełnionego formularza
-        By sendButtonInContactUsSectionLocator = By.xpath("//input[@class=\"btn btn-primary\"]");
-        WebElement sendButtonInContactUsSection = driver.findElement(sendButtonInContactUsSectionLocator);
-        sendButtonInContactUsSection.click();
+        step("potwierdzenie pojawienia się komunikatu walidacyjnego", ()->{
+            By validationMsgInContactUsSectionLocator = By.xpath("//li[contains(text(),\"The message cannot be blank.\")]");
+            WebElement validationMsgInContactUsSection = driver.findElement(validationMsgInContactUsSectionLocator);
+            Assertions.assertTrue(validationMsgInContactUsSection.isDisplayed());});
 
-        //potwierdzenie pojawienia się komunikatu walidacyjnego
-        By validationMsgInContactUsSectionLocator = By.xpath("//li[contains(text(),\"The message cannot be blank.\")]");
-        WebElement validationMsgInContactUsSection = driver.findElement(validationMsgInContactUsSectionLocator);
-        Assertions.assertTrue(validationMsgInContactUsSection.isDisplayed());
+        step("uzupełnienie treści wiadomości", ()->{
+            By msgFieldInContactUsSectionLocator = By.id("contactform-message");
+            WebElement msgFieldInContactUsSection = driver.findElement(msgFieldInContactUsSectionLocator);
+            msgFieldInContactUsSection.sendKeys("Chcę otrzymać FV za zamówienie.");});
 
-        //uzupełnienie treści wiadomości
-        By msgFieldInContactUsSectionLocator = By.id("contactform-message");
-        WebElement msgFieldInContactUsSection = driver.findElement(msgFieldInContactUsSectionLocator);
-        msgFieldInContactUsSection.sendKeys("Chcę otrzymać FV za zamówienie.");
-        
-        //kliknięcie w button 'Send' - próba przesłania niewypełnionego formularza
-        WebElement sendButtonInContactUsSectionNew = driver.findElement(sendButtonInContactUsSectionLocator);
-        sendButtonInContactUsSectionNew.click();
+        step("kliknięcie w button 'Send' - próba przesłania niewypełnionego formularza", ()->{
+            WebElement sendButtonInContactUsSectionNew = driver.findElement(sendButtonInContactUsSectionLocator);
+            sendButtonInContactUsSectionNew.click();});
 
-        //potwierdzenie pojawienia się komunikatu informacyjnego
-        By successMsgInContactUsSectionLocator = By.xpath("//li[contains(text(),\"Your message has been successfully sent to our team.\")]");
-        WebElement successMsgInContactUsSection = driver.findElement(successMsgInContactUsSectionLocator);
-        Assertions.assertTrue(successMsgInContactUsSection.isDisplayed());
+        step("potwierdzenie pojawienia się komunikatu informacyjnego", ()->{
+            By successMsgInContactUsSectionLocator = By.xpath("//li[contains(text(),\"Your message has been successfully sent to our team.\")]");
+            WebElement successMsgInContactUsSection = driver.findElement(successMsgInContactUsSectionLocator);
+            Assertions.assertTrue(successMsgInContactUsSection.isDisplayed());});
     }
 
 
