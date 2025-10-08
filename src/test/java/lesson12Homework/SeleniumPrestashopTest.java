@@ -218,47 +218,47 @@ public class SeleniumPrestashopTest {
     @Order(4)
     public void signUpNowFillInFormByUnregisteredUser() {
 
-        step("", ()->{});
+        step("Uzupełnij pole 'First name'", ()->{
+            By firstNameFieldLocator = By.id("field-firstname");
+            WebElement firstNmaeField = driver.findElement(firstNameFieldLocator);
+            firstNmaeField.sendKeys("Tomasz");});
 
-        //Uzupełnij pole 'First name'
-        By firstNameFieldLocator = By.id("field-firstname");
-        WebElement firstNmaeField = driver.findElement(firstNameFieldLocator);
-        firstNmaeField.sendKeys("Tomasz");
+        step("Uzupełnij pole 'Last name'", ()->{
+            By lastNameFieldLocator = By.id("field-lastname");
+            WebElement lastNameField = driver.findElement(lastNameFieldLocator);
+            lastNameField.sendKeys("Kot");});
 
-        //Uzupełnij pole 'Last name'
-        By lastNameFieldLocator = By.id("field-lastname");
-        WebElement lastNameField = driver.findElement(lastNameFieldLocator);
-        lastNameField.sendKeys("Kot");
+        step("Uzupełnij pole 'Email'", ()->{
+            By emailFieldLocator = By.id("field-email");
+            WebElement mailField = driver.findElement(emailFieldLocator);
+            mailField.sendKeys("kot123@wp.pl");});
 
-        //Uzupełnij pole 'Email'
-        By emailFieldLocator = By.id("field-email");
-        WebElement mailField = driver.findElement(emailFieldLocator);
-        mailField.sendKeys("kot123@wp.pl");
+        step("Uzupełnij pole 'Password'", ()->{
+            By passwordFieldLocator = By.id("field-password");
+            WebElement passwordField = driver.findElement(passwordFieldLocator);
+            passwordField.sendKeys("Mojehaslo123");});
 
-        //Uzupełnij pole 'Password'
-        By passwordFieldLocator = By.id("field-password");
-        WebElement passwordField = driver.findElement(passwordFieldLocator);
-        passwordField.sendKeys("Mojehaslo123");
+        step("Checkbox zgody na przetwarzanie danych osobowych", ()->{
+            By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
+            WebElement policyInfoCheckbox = driver.findElement(policyInfoLocator);
+            policyInfoCheckbox.click();});
 
-//checkbox informacji o przetwarzaniu danych osobowych
-        By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
-        WebElement policyInfoCheckbox = driver.findElement(policyInfoLocator);
-        policyInfoCheckbox.click();
+        step("Checkbox akceptacji regulaminu i polityki prywatności", ()->{
+            By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
+            WebElement privacyPolicyCheckbox = driver.findElement(privacyPolicyLocator);
+            privacyPolicyCheckbox.click();});
 
-        //checkbox akceptacji polityki prywatności
-        By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
-        WebElement privacyPolicyCheckbox = driver.findElement(privacyPolicyLocator);
-        privacyPolicyCheckbox.click();
-
-        //Kliknij w button 'Save'
-        By saveButtonLocator = By.xpath("//button[contains(text(),\"Save\")]");
-        WebElement saveButton = driver.findElement(saveButtonLocator);
-        saveButton.click();
+        step("Kliknij w button 'Save'", ()->{
+            By saveButtonLocator = By.xpath("//button[contains(text(),\"Save\")]");
+            WebElement saveButton = driver.findElement(saveButtonLocator);
+            saveButton.click();});
     }
 
     @Test  //Niepoprawna rejestracja przy pomocy pustego formularza
     @Order(5)
     public void failSignupWithEmptyFields() {
+
+        step("", ()->{});
 
         //kliknięcie w przycisk logowania
         By signInLocator = By.cssSelector(".user-info a");
@@ -286,6 +286,8 @@ public class SeleniumPrestashopTest {
     @Test  //Poprawna rejestracja użytkownika
     @Order(6)
     public void userSuccessSignup() {
+
+        step("", ()->{});
 
         //uzupełnienie pola imię
         By nameLocator = By.id("field-firstname");
