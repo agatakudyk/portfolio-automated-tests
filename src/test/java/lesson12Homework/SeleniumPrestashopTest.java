@@ -344,43 +344,41 @@ public class SeleniumPrestashopTest {
     }
 
     @Test
-    @Order(7)    //Logowanie z użyciem błędnych danych
+    @Order(7)    //Niepoprawne logowanie z użyciem pustych pól i błędnych danych
     public void failLoginWithIncorrectData() {
 
-        step("", ()->{});
+        step("Header - kliknięcie w button 'Sign In'", ()->{
+            By signInLocator = By.cssSelector(".user-info a");
+            WebElement signInButton = driver.findElement(signInLocator);
+            signInButton.click();});
 
-        //kliknięcie w przycisk 'Sign In' (header)
-        By signInLocator = By.cssSelector(".user-info a");
-        WebElement signInButton = driver.findElement(signInLocator);
-        signInButton.click();
+        step("Login page - kliknięcie w button 'Sign In'", ()->{
+            By loginButtonLocator = By.id("submit-login");
+            WebElement loginButtonClick = driver.findElement(loginButtonLocator);
+            loginButtonClick.click();});
 
-        //Strona logowania - kliknięcie w button 'Sign In' - próba zalogowania przy użyciu pustych pól
-        By loginButtonLocator = By.id("submit-login");
-        WebElement loginButtonClick = driver.findElement(loginButtonLocator);
-        loginButtonClick.click();
+        step("Login page/tooltip dynamiczny - potwierdzenie pojawienia się komunikatu", ()->{
+            By emailInputLocator = By.id("field-email");
+            WebElement emailInput = driver.findElement(emailInputLocator);
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            String msg = (String) js.executeScript("return arguments[0].validationMessage", emailInput);
+            Assertions.assertEquals("Wypełnij to pole.", msg);});
 
-        //potwierdzenie pojawienia się tooltipa z komunikatem walidacyjnym (tooltip dynamiczny)
-        By emailInputLocator = By.id("field-email");
-        WebElement emailInput = driver.findElement(emailInputLocator);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        String msg = (String) js.executeScript("return arguments[0].validationMessage", emailInput);
-        Assertions.assertEquals("Wypełnij to pole.", msg);
+        step("Login page - uzupełnienie pola 'Email'", ()->{
+            emailInput.sendKeys("blablabla@wp.pl");});
 
-        //uzupełnienie pola email
-        emailInput.sendKeys("blablabla@wp.pl");
+        step("Login page - uzupełnienie pola 'Password'", ()->{        //uzupełnienie hasła
+            By passwordLoginLocator = By.id("field-password");
+            WebElement passwordLoginInputField = driver.findElement(passwordLoginLocator);
+            passwordLoginInputField.sendKeys("blepassword");});
 
-        //uzupełnienie hasła
-        By passwordLoginLocator = By.id("field-password");
-        WebElement passwordLoginInputField = driver.findElement(passwordLoginLocator);
-        passwordLoginInputField.sendKeys("blepassword");
+        step("Login page - kliknięcie w button 'Sign In'", ()->{
+            loginButtonClick.click();});
 
-        //kliknięcie w button 'Sign In'
-        loginButtonClick.click();
-
-        //sprawdzenie komunikatu o błędnym logowaniu
-        By failMsgLocator = By.xpath("//li[@class=\"alert alert-danger\"]");
-        WebElement failMessage = driver.findElement(failMsgLocator);
-        Assertions.assertTrue(failMessage.isDisplayed());
+        step("Login page - sprawdzenie komunikatu o błędnym uwierzytelnieniu", ()->{
+            By failMsgLocator = By.xpath("//li[@class=\"alert alert-danger\"]");
+            WebElement failMessage = driver.findElement(failMsgLocator);
+            Assertions.assertTrue(failMessage.isDisplayed());});
     }
 
     @Test  //Logowanie/zresetowanie zapomnianego hasła + walidacja
