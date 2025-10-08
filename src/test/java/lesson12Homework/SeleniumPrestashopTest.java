@@ -381,31 +381,29 @@ public class SeleniumPrestashopTest {
             Assertions.assertTrue(failMessage.isDisplayed());});
     }
 
-    @Test  //Logowanie/zresetowanie zapomnianego hasła + walidacja
+    @Test  //Login page - zresetowanie zapomnianego hasła
     @Order(8)
     public void loginPasswordRecovery() {
 
-        step("", ()->{});
+        step("Login page - kliknięcie w link 'Forgot your password?'", ()->{
+            By passwordRecoveryLocator = By.xpath(" //div[@class=\"forgot-password\"]/a");
+            WebElement passwordRecoveryLink = driver.findElement(passwordRecoveryLocator);
+            passwordRecoveryLink.click();});
 
-        //kliknięcie w link resetu hasła
-        By passwordRecoveryLocator = By.xpath(" //div[@class=\"forgot-password\"]/a");
-        WebElement passwordRecoveryLink = driver.findElement(passwordRecoveryLocator);
-        passwordRecoveryLink.click();
+        step("Reset password page - uzupełnienie pola 'Email address'", ()->{
+            By recoveryMailLocator = By.xpath("//input[@class=\"form-control\"]");
+            WebElement recoveryEmailInputField = driver.findElement(recoveryMailLocator);
+            recoveryEmailInputField.sendKeys("test.mail@wp.pl");});
 
-        //wpisanie maila do resetu hasła
-        By recoveryMailLocator = By.xpath("//input[@class=\"form-control\"]");
-        WebElement recoveryEmailInputField = driver.findElement(recoveryMailLocator);
-        recoveryEmailInputField.sendKeys("test.mail@wp.pl");
+        step("Reset password page - kliknięcie w button 'Send reset link'", ()->{
+            By passwordRecoveryButtonLocator = By.id("send-reset-link");
+            WebElement passwordRecoveryButtonClick = driver.findElement(passwordRecoveryButtonLocator);
+            passwordRecoveryButtonClick.click();});
 
-        //kliknięcie w button 'Send Reset Link'
-        By passwordRecoveryButtonLocator = By.id("send-reset-link");
-        WebElement passwordRecoveryButtonClick = driver.findElement(passwordRecoveryButtonLocator);
-        passwordRecoveryButtonClick.click();
-
-        //Potwierdzenie wysłania maila
-        By sentMsgLocator = By.xpath("//li[@class=\"item\"]/p");
-        WebElement sentMessage = driver.findElement(sentMsgLocator);
-        Assertions.assertTrue(sentMessage.isDisplayed());
+        step("Reset password page - potwierdzenie wysłania maila", ()->{
+            By sentMsgLocator = By.xpath("//li[@class=\"item\"]/p");
+            WebElement sentMessage = driver.findElement(sentMsgLocator);
+            Assertions.assertTrue(sentMessage.isDisplayed());});
     }
 
     @Test     //Poprawne zalogowanie  + zmiana hasła + wylogowanie +  zalogowanie nowym hasłem
