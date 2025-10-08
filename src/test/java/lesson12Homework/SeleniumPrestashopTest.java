@@ -544,38 +544,35 @@ public class SeleniumPrestashopTest {
     @Order(10)
     public void clearAccessoriesProductsFiltering() {
 
-        step("", ()->{});
+        step("wejdź w podstronę ACCESSORIES", ()->{
+            By accessoriesPageLocator = By.id("category-6");
+            WebElement accessoriesPageLink = driver.findElement(accessoriesPageLocator);
+            accessoriesPageLink.click();});
 
-        //wejdź w podstronę ACCESSORIES
-        By accessoriesPageLocator = By.id("category-6");
-        WebElement accessoriesPageLink = driver.findElement(accessoriesPageLocator);
-        accessoriesPageLink.click();
+        step("Filtr - Composition / Ceramic", ()->{
+            By ceramicCompositionFilterLocator = By.xpath("//a[contains(text(),\"Ceramic\")]");
+            WebElement ceramicCompositionFilterCheckbox = driver.findElement(ceramicCompositionFilterLocator);
+            ceramicCompositionFilterCheckbox.click();
+            By ceramicCompositionFilterCheckboxLocator = By.xpath("//a[contains(text(),\"Ceramic\")]/../span/input");
+            wait.until(ExpectedConditions.elementToBeSelected(ceramicCompositionFilterCheckboxLocator));});
 
-        //Filtr - Composition / Ceramic
-        By ceramicCompositionFilterLocator = By.xpath("//a[contains(text(),\"Ceramic\")]");
-        WebElement ceramicCompositionFilterCheckbox = driver.findElement(ceramicCompositionFilterLocator);
-        ceramicCompositionFilterCheckbox.click();
+        step("Filtr - Availability", ()->{
+            By availableFilterLocator = By.xpath("//a[contains(text(),\"Available\")]");
+            WebElement availableFilterCheckbox = driver.findElement(availableFilterLocator);
+            availableFilterCheckbox.click();
+            By availableFilterCheckboxLocator = By.xpath("//a[contains(text(),\"Available\")]/../span/input");
+            wait.until(ExpectedConditions.elementToBeSelected(availableFilterCheckboxLocator));});
 
-        By ceramicCompositionFilterCheckboxLocator = By.xpath("//a[contains(text(),\"Ceramic\")]/../span/input");
-        wait.until(ExpectedConditions.elementToBeSelected(ceramicCompositionFilterCheckboxLocator));
+        step("Wyczyszczenie wybranych filtrów", ()->{
+            By clearAllFilterLocator = By.xpath("//button[@class=\"btn btn-tertiary js-search-filters-clear-all\"]");
+            WebElement clearAllFilterClick = driver.findElement(clearAllFilterLocator);
+            clearAllFilterClick.click();
+            wait.until(ExpectedConditions.invisibilityOf(clearAllFilterClick));});
 
-        //Filtr - Availability
-        By availableFilterLocator = By.xpath("//a[contains(text(),\"Available\")]");
-        WebElement availableFilterCheckbox = driver.findElement(availableFilterLocator);
-        availableFilterCheckbox.click();
-        By availableFilterCheckboxLocator = By.xpath("//a[contains(text(),\"Available\")]/../span/input");
-        wait.until(ExpectedConditions.elementToBeSelected(availableFilterCheckboxLocator));
-
-        //Wyczyszczenie wybranych filtrów
-        By clearAllFilterLocator = By.xpath("//button[@class=\"btn btn-tertiary js-search-filters-clear-all\"]");
-        WebElement clearAllFilterClick = driver.findElement(clearAllFilterLocator);
-        clearAllFilterClick.click();
-        wait.until(ExpectedConditions.invisibilityOf(clearAllFilterClick));
-
-        //potwiedzenie wyczyszczenia filtrów
-        By activeFiltersLocator = By.xpath("//p[contains(text(),\"Active filters\")]");
-        WebElement activeFilters = driver.findElement(activeFiltersLocator);
-        Assertions.assertFalse(activeFilters.isDisplayed());
+        step("potwiedzenie wyczyszczenia filtrów", ()->{
+            By activeFiltersLocator = By.xpath("//p[contains(text(),\"Active filters\")]");
+            WebElement activeFilters = driver.findElement(activeFiltersLocator);
+            Assertions.assertFalse(activeFilters.isDisplayed());});
     }
 
 
