@@ -839,32 +839,30 @@ public class SeleniumPrestashopTest {
     @Order(17)
     public void paymentMethodSuccessSelection() {
 
-        step("", ()->{});
+        step("Wybór opcji 'Pay by bank wire'", ()->{
+            By payByBankWireRadioButtonLocator = By.id("payment-option-2");
+            WebElement payByBankWireRadioButton = driver.findElement(payByBankWireRadioButtonLocator);
+            payByBankWireRadioButton.click();});
 
-        //Wybór opcji 'Pay by bank wire'
-        By payByBankWireRadioButtonLocator = By.id("payment-option-2");
-        WebElement payByBankWireRadioButton = driver.findElement(payByBankWireRadioButtonLocator);
-        payByBankWireRadioButton.click();
+        step("Zmiana z 'Pay by bank wire' na 'Pay by Check'", ()->{
+            By payByCheckRadioButtonLocator = By.id("payment-option-1");
+            WebElement payByCheckRadioButton = driver.findElement(payByCheckRadioButtonLocator);
+            payByCheckRadioButton.click();});
 
-        //Zmiana z 'Pay by bank wire' na 'Pay by Check'
-        By payByCheckRadioButtonLocator = By.id("payment-option-1");
-        WebElement payByCheckRadioButton = driver.findElement(payByCheckRadioButtonLocator);
-        payByCheckRadioButton.click();
+        step("Wybór checkboxa zgody", ()->{
+            By agreeToTermsCheckboxLocator = By.xpath("//input[@name=\"conditions_to_approve[terms-and-conditions]\"]");
+            WebElement agreeToTermsCheckbox = driver.findElement(agreeToTermsCheckboxLocator);
+            agreeToTermsCheckbox.click();});
 
-        //Wybór checkboxa zgody
-        By agreeToTermsCheckboxLocator = By.xpath("//input[@name=\"conditions_to_approve[terms-and-conditions]\"]");
-        WebElement agreeToTermsCheckbox = driver.findElement(agreeToTermsCheckboxLocator);
-        agreeToTermsCheckbox.click();
+        step("kliknięcie w button 'Place Order'", ()->{
+            By placeOrderButtonInPaymentSectionLocator = By.xpath("//div[@class=\"ps-shown-by-js\"]/button");
+            WebElement placeOrderButtonInPaymentSection = driver.findElement(placeOrderButtonInPaymentSectionLocator);
+            placeOrderButtonInPaymentSection.click();});
 
-        //kliknięcie w button 'Place Order'
-        By placeOrderButtonInPaymentSectionLocator = By.xpath("//div[@class=\"ps-shown-by-js\"]/button");
-        WebElement placeOrderButtonInPaymentSection = driver.findElement(placeOrderButtonInPaymentSectionLocator);
-        placeOrderButtonInPaymentSection.click();
-
-        //potwierdzenie pojawienia się komunikatu
-        By confirmationMsgLocator = By.xpath("//h3[@class=\"h1 card-title\"]/i");
-        WebElement confirmationMsg = driver.findElement(confirmationMsgLocator);
-        Assertions.assertTrue(confirmationMsg.isDisplayed());
+        step("potwierdzenie pojawienia się komunikatu", ()->{
+            By confirmationMsgLocator = By.xpath("//h3[@class=\"h1 card-title\"]/i");
+            WebElement confirmationMsg = driver.findElement(confirmationMsgLocator);
+            Assertions.assertTrue(confirmationMsg.isDisplayed());});
     }
 
     @Test
