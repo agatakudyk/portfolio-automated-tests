@@ -769,42 +769,40 @@ public class SeleniumPrestashopTest {
     @Order(15)
     public void addressesFormFailSaveWithEmptyFields() {
 
-        step("", ()->{});
+        step("przejście dalej z koszyka do adresu klikając button 'Proceed To Checkout'", ()->{
+            By proceedToCheckoutButtonInCartLocator = By.xpath("//a[@class=\"btn btn-primary\" and text()=\"Proceed to checkout\"]");
+            WebElement proceedToCheckoutButtonInCart = driver.findElement(proceedToCheckoutButtonInCartLocator);
+            proceedToCheckoutButtonInCart.click();});
 
-        //przejście dalej z koszyka do adresu klikając button 'Proceed To Checkout'
-        By proceedToCheckoutButtonInCartLocator = By.xpath("//a[@class=\"btn btn-primary\" and text()=\"Proceed to checkout\"]");
-        WebElement proceedToCheckoutButtonInCart = driver.findElement(proceedToCheckoutButtonInCartLocator);
-        proceedToCheckoutButtonInCart.click();
+        step("kliknięcie w button 'Continue'", ()->{
+            By continueButtonInAddressesFormLocator = By.xpath("//button[@name=\"confirm-addresses\" and contains(., \"Continue\")]");
+            WebElement continueButtonInAddressesForm = driver.findElement(continueButtonInAddressesFormLocator);
+            continueButtonInAddressesForm.click();});
 
-        //kliknięcie w button 'Continue'
-        By continueButtonInAddressesFormLocator = By.xpath("//button[@name=\"confirm-addresses\" and contains(., \"Continue\")]");
-        WebElement continueButtonInAddressesForm = driver.findElement(continueButtonInAddressesFormLocator);
-        continueButtonInAddressesForm.click();
+        step("potwierdzenie pojawienia się dymka z komunikatem walidacyjnym - tooltip dynamiczny", ()->{
+            By addressesInputLocator = By.xpath("//input[@name=\"address1\"]");
+            WebElement addressesInput = driver.findElement(addressesInputLocator);
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            String msg = (String) js.executeScript("return arguments[0].validationMessage", addressesInput);
+            Assertions.assertEquals("Wypełnij to pole.", msg);});
 
-        //potwierdzenie pojawienia się dymka z komunikatem walidacyjnym - tooltip dynamiczny
-        By addressesInputLocator = By.xpath("//input[@name=\"address1\"]");
-        WebElement addressesInput = driver.findElement(addressesInputLocator);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        String msg = (String) js.executeScript("return arguments[0].validationMessage", addressesInput);
-        Assertions.assertEquals("Wypełnij to pole.", msg);
+        step("uzupełnienie adresu", ()->{
+            By addressFieldLocator = By.id("field-address1");
+            WebElement addressField = driver.findElement(addressFieldLocator);
+            addressField.sendKeys("ul. Prosta 11");});
 
-        //uzupełnienie adresu
-        By addressFieldLocator = By.id("field-address1");
-        WebElement addressField = driver.findElement(addressFieldLocator);
-        addressField.sendKeys("ul. Prosta 11");
+        step("uzupełnienie kodu pocztowego", ()->{
+            By postalCodeFieldLocator = By.id("field-postcode");
+            WebElement postalCodeField = driver.findElement(postalCodeFieldLocator);
+            postalCodeField.sendKeys("11-234");});
 
-        //uzupełnienie kodu pocztowego
-        By postalCodeFieldLocator = By.id("field-postcode");
-        WebElement postalCodeField = driver.findElement(postalCodeFieldLocator);
-        postalCodeField.sendKeys("11-234");
+        step("uzupełnienie miasta", ()->{
+            By cityFieldLocal = By.id("field-city");
+            WebElement cityField = driver.findElement(cityFieldLocal);
+            cityField.sendKeys("Warszawa");});
 
-        //uzupełnienie miasta
-        By cityFieldLocal = By.id("field-city");
-        WebElement cityField = driver.findElement(cityFieldLocal);
-        cityField.sendKeys("Warszawa");
-
-        //kliknięcie w button 'Continue'
-        continueButtonInAddressesForm.click();
+        step("kliknięcie w button 'Continue'", ()->{
+            continueButtonInAddressesForm.click();});
     }
 
     @Test
