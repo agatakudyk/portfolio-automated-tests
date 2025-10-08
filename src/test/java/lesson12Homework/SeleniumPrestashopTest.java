@@ -685,32 +685,30 @@ public class SeleniumPrestashopTest {
     @Order(13)
     public void addProductsToCart() {
 
-        step("", ()->{});
+        step("Zmiana ilości produktu poprzez wpisanie liczby (wyczyść i wpisz wartość)", ()->{
+            By putProductQuantityLocator = By.id("quantity_wanted");
+            WebElement putProductQuantity = driver.findElement(putProductQuantityLocator);
+            putProductQuantity.sendKeys(Keys.CONTROL + "a");
+            putProductQuantity.sendKeys(Keys.DELETE);
+            putProductQuantity.sendKeys("4");});
 
-        //Zmiana ilości produktu poprzez wpisanie liczby (wyczyść i wpisz wartość)
-        By putProductQuantityLocator = By.id("quantity_wanted");
-        WebElement putProductQuantity = driver.findElement(putProductQuantityLocator);
-        putProductQuantity.sendKeys(Keys.CONTROL + "a");
-        putProductQuantity.sendKeys(Keys.DELETE);
-        putProductQuantity.sendKeys("4");
+        step("Zmiana ilości produktu poprzez kliknięcie w strzałki", ()->{
+            By selectQuantityLocator = By.xpath("//i[@class=\"material-icons touchspin-up\"]");
+            WebElement selectQuantityClick = driver.findElement(selectQuantityLocator);
+            selectQuantityClick.click();
+            selectQuantityClick.click();
+            selectQuantityClick.click();});
 
-        //Zmiana ilości produktu poprzez kliknięcie w strzałki
-        By selectQuantityLocator = By.xpath("//i[@class=\"material-icons touchspin-up\"]");
-        WebElement selectQuantityClick = driver.findElement(selectQuantityLocator);
-        selectQuantityClick.click();
-        selectQuantityClick.click();
-        selectQuantityClick.click();
+        step("Kliknij button dodaj do koszyka", ()->{
+            By addToCartButtonLocator = By.xpath("//button[@class=\"btn btn-primary add-to-cart\"]");
+            WebElement addToCartButton = driver.findElement(addToCartButtonLocator);
+            addToCartButton.click();});
 
-        //Kliknij button dodaj do koszyka
-        By addToCartButtonLocator = By.xpath("//button[@class=\"btn btn-primary add-to-cart\"]");
-        WebElement addToCartButton = driver.findElement(addToCartButtonLocator);
-        addToCartButton.click();
-
-        //potwierdzenie dodania do koszyka
-        By addProductPopupLocator = By.xpath("//h4[contains(text(),\"Product successfully added to your shopping cart\")]");
-        wait.until(ExpectedConditions.elementToBeClickable(addProductPopupLocator));
-        WebElement addProductPopup = driver.findElement(addProductPopupLocator);
-        Assertions.assertTrue(addProductPopup.isDisplayed());
+        step("potwierdzenie dodania do koszyka", ()->{
+            By addProductPopupLocator = By.xpath("//h4[contains(text(),\"Product successfully added to your shopping cart\")]");
+            wait.until(ExpectedConditions.elementToBeClickable(addProductPopupLocator));
+            WebElement addProductPopup = driver.findElement(addProductPopupLocator);
+            Assertions.assertTrue(addProductPopup.isDisplayed());});
     }
 
     @Test  //Koszyk
