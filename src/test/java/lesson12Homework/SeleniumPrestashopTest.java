@@ -1142,68 +1142,66 @@ public class SeleniumPrestashopTest {
     @Order(23)
     public void addItemsToNewWishlists() {
 
-        step("", ()->{});
+        step("Przejcie na stronę główną", ()->{
+            By homepageLinkLocator = By.id("_desktop_logo");
+            WebElement homepageLink = driver.findElement(homepageLinkLocator);
+            homepageLink.click();});
 
-        //Przejcie na stronę główną
-        By homepageLinkLocator = By.id("_desktop_logo");
-        WebElement homepageLink = driver.findElement(homepageLinkLocator);
-        homepageLink.click();
+        step("Kliknięcie w serduszko dodające do wishlist", ()->{
+            By heartButtonOfMugTheAdventureLocator = By.xpath("//a[contains(text(),\"Mug The adventure begins\")]/../../../button[@class=\"wishlist-button-add\"]");
+            WebElement heartButtonOfMugTheAdventure = driver.findElement(heartButtonOfMugTheAdventureLocator);
+            heartButtonOfMugTheAdventure.click();});
 
-        //Kliknięcie w serduszko dodające do wishlist
-        By heartButtonOfMugTheAdventureLocator = By.xpath("//a[contains(text(),\"Mug The adventure begins\")]/../../../button[@class=\"wishlist-button-add\"]");
-        WebElement heartButtonOfMugTheAdventure = driver.findElement(heartButtonOfMugTheAdventureLocator);
-        heartButtonOfMugTheAdventure.click();
+        step("Popup - kliknięcie 'Create new list'", ()->{
+            By newWishlistPopupLocator = By.xpath("//a[@class=\"wishlist-add-to-new text-primary\"]");
+            wait.until(ExpectedConditions.elementToBeClickable(newWishlistPopupLocator));
+            WebElement newWishlistPopup = driver.findElement(newWishlistPopupLocator);
+            newWishlistPopup.click();});
 
-        //Popup - kliknięcie 'Create new list'
-        By newWishlistPopupLocator = By.xpath("//a[@class=\"wishlist-add-to-new text-primary\"]");
-        wait.until(ExpectedConditions.elementToBeClickable(newWishlistPopupLocator));
-        WebElement newWishlistPopup = driver.findElement(newWishlistPopupLocator);
-        newWishlistPopup.click();
+        step("Wpisanie nazwy nowej listy", ()->{
+            By wishlistNameLocator = By.xpath("//input[@id=\"input2\"]");
+            WebElement wishlistNameField = driver.findElement(wishlistNameLocator);
+            wishlistNameField.sendKeys("Ulubione");});
 
-        //Wpisanie nazwy nowej listy
-        By wishlistNameLocator = By.xpath("//input[@id=\"input2\"]");
-        WebElement wishlistNameField = driver.findElement(wishlistNameLocator);
-        wishlistNameField.sendKeys("Ulubione");
+        step("Kliknięcie w button 'Create wishlist'", ()->{
+            By createNewWishListLocator = By.xpath("//button[contains(text(),\"Create wishlist\")]");
+            WebElement createNewWishList = driver.findElement(createNewWishListLocator);
+            createNewWishList.click();});
 
-        //Kliknięcie w button 'Create wishlist'
-        By createNewWishListLocator = By.xpath("//button[contains(text(),\"Create wishlist\")]");
-        WebElement createNewWishList = driver.findElement(createNewWishListLocator);
-        createNewWishList.click();
+        step("Popup - wybranie nowo utworzonej listy", ()->{
+            By ulubioneNewWishlistLector = By.xpath("//li[@class=\"wishlist-list-item\"]/p[contains(text(),\"Ulubione\")]");
+            wait.until(ExpectedConditions.elementToBeClickable(ulubioneNewWishlistLector));
+            WebElement ulubioneNewWishlist = driver.findElement(ulubioneNewWishlistLector);
+            ulubioneNewWishlist.click();});
 
-        //Popup - wybranie nowo utworzonej listy
-        By ulubioneNewWishlistLector = By.xpath("//li[@class=\"wishlist-list-item\"]/p[contains(text(),\"Ulubione\")]");
-        wait.until(ExpectedConditions.elementToBeClickable(ulubioneNewWishlistLector));
-        WebElement ulubioneNewWishlist = driver.findElement(ulubioneNewWishlistLector);
-        ulubioneNewWishlist.click();
+        step("TOAST - potwierdzenie pojawienia się komunikatu", ()->{
+            By productAddedToWishlistMsgLocator = By.xpath("//p[contains(text(),\"Product added\")]");
+            wait.until(ExpectedConditions.elementToBeClickable(productAddedToWishlistMsgLocator));
+            WebElement productAddedToWishlistMsg = driver.findElement(productAddedToWishlistMsgLocator);
+            Assertions.assertTrue(productAddedToWishlistMsg.isDisplayed());});
 
-        // TOAST - potwierdzenie pojawienia się komunikatu potwierdzającego Product added
-        By productAddedToWishlistMsgLocator = By.xpath("//p[contains(text(),\"Product added\")]");
-        wait.until(ExpectedConditions.elementToBeClickable(productAddedToWishlistMsgLocator));
-        WebElement productAddedToWishlistMsg = driver.findElement(productAddedToWishlistMsgLocator);
-        Assertions.assertTrue(productAddedToWishlistMsg.isDisplayed());
+        step("Wejście w panel zalogowanego użytkownika", ()->{
+            By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
+            WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
+            userProfileLink.click();});
 
-        //Wejście w panel zalogowanego użytkownika
-        By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
-        WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
-        userProfileLink.click();
+        step("Wejście na podstronę 'My wishlists'", ()->{
+            By myWishlistsPageLocator = By.xpath("//a[@id=\"wishlist-link\"]/span/i");
+            WebElement myWishlistsPage = driver.findElement(myWishlistsPageLocator);
+            myWishlistsPage.click();});
 
-        //Wejście na podstronę 'My wishlists'
-        By myWishlistsPageLocator = By.xpath("//a[@id=\"wishlist-link\"]/span/i");
-        WebElement myWishlistsPage = driver.findElement(myWishlistsPageLocator);
-        myWishlistsPage.click();
+        step("Wejście na link listy 'Ulubione'", ()->{
+            By ulubioneWishlistLinkLocator = By.xpath("//a[@class=\"wishlist-list-item-link\"]/p[contains(text(),\"Ulubione\")]");
+            wait.until(ExpectedConditions.elementToBeClickable(ulubioneWishlistLinkLocator));
+            WebElement ulubioneWishlistLink = driver.findElement(ulubioneWishlistLinkLocator);
+            ulubioneWishlistLink.click();});
 
-        //Wejście na link listy 'Ulubione'
-        By ulubioneWishlistLinkLocator = By.xpath("//a[@class=\"wishlist-list-item-link\"]/p[contains(text(),\"Ulubione\")]");
-        wait.until(ExpectedConditions.elementToBeClickable(ulubioneWishlistLinkLocator));
-        WebElement ulubioneWishlistLink = driver.findElement(ulubioneWishlistLinkLocator);
-        ulubioneWishlistLink.click();
-
-        By wishListElementsLocator = By.xpath("//p[@class=\"wishlist-product-title\"]");
-        wait.until(ExpectedConditions.elementToBeClickable(wishListElementsLocator));
-        List<WebElement> wishListsElements = driver.findElements(wishListElementsLocator);
-        List<String> wishListsElementsNames = wishListsElements.stream().map(WebElement::getText).toList();
-        Assertions.assertTrue(wishListsElementsNames.size()==1 && wishListsElementsNames.getFirst().equals("Mug The adventure begins"));
-
+        step("", ()->{
+            By wishListElementsLocator = By.xpath("//p[@class=\"wishlist-product-title\"]");
+            wait.until(ExpectedConditions.elementToBeClickable(wishListElementsLocator));
+            List<WebElement> wishListsElements = driver.findElements(wishListElementsLocator);
+            List<String> wishListsElementsNames = wishListsElements.stream().map(WebElement::getText).toList();
+            Assertions.assertTrue(wishListsElementsNames.size()==1 && wishListsElementsNames.getFirst().equals("Mug The adventure begins"));});
     }
 
     @Test    //Wishlists - utworzenie listy na podstronie ‘My wishlists’, zmiana nazwy i usunięcie
