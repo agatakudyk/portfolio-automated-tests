@@ -811,28 +811,25 @@ public class SeleniumPrestashopTest {
     @Order(16)
     public void shippingMethodSuccessSelection() {
 
-        step("", ()->{});
+        step("zmiana z 'PrestaShop' na 'My carrier'", ()->{
+            By prestaShopRadioButtonLocator = By.id("delivery_option_2");
+            WebElement prestaShopRadioButton = driver.findElement(prestaShopRadioButtonLocator);
+            prestaShopRadioButton.click();});
 
-        //zmiana z 'PrestaShop' na 'My carrier'
-        By prestaShopRadioButtonLocator = By.id("delivery_option_2");
-        WebElement prestaShopRadioButton = driver.findElement(prestaShopRadioButtonLocator);
-        prestaShopRadioButton.click();
+        step("zmiana z 'My carrier' na 'Prestashop'", ()->{
+            By myCarrierRadioButtonLocator = By.id("delivery_option_1");
+            WebElement myCarrierRadioButton = driver.findElement(myCarrierRadioButtonLocator);
+            myCarrierRadioButton.click();});
 
-        //zmiana z 'My carrier' na 'Prestashop'
-        By myCarrierRadioButtonLocator = By.id("delivery_option_1");
-        WebElement myCarrierRadioButton = driver.findElement(myCarrierRadioButtonLocator);
-        myCarrierRadioButton.click();
+        step("Dodanie komentarza do zamówienia", ()->{
+            By commentToOrderFieldLocator = By.id("delivery_message");
+            WebElement commentToOrderField = driver.findElement(commentToOrderFieldLocator);
+            commentToOrderField.sendKeys("Proszę o zostawienie paczki pod drzwiami.");});
 
-        //Dodanie komentarza do zamówienia
-        By commentToOrderFieldLocator = By.id("delivery_message");
-        WebElement commentToOrderField = driver.findElement(commentToOrderFieldLocator);
-        commentToOrderField.sendKeys("Proszę o zostawienie paczki pod drzwiami.");
-
-        //kliknięcie w button 'Continue'
-        By continueButtonInShippingMethodFormLocator = By.xpath("//button[@name=\"confirmDeliveryOption\"]");
-        WebElement continueButtonInShippingMethodForm = driver.findElement(continueButtonInShippingMethodFormLocator);
-        continueButtonInShippingMethodForm.click();
-
+        step("kliknięcie w button 'Continue'", ()->{
+            By continueButtonInShippingMethodFormLocator = By.xpath("//button[@name=\"confirmDeliveryOption\"]");
+            WebElement continueButtonInShippingMethodForm = driver.findElement(continueButtonInShippingMethodFormLocator);
+            continueButtonInShippingMethodForm.click();});
     }
 
     @Test
