@@ -258,29 +258,28 @@ public class SeleniumPrestashopTest {
     @Order(5)
     public void failSignupWithEmptyFields() {
 
-        step("", ()->{});
+        step("Header - kliknięcie w button 'Sign In'", ()->{
+            By signInLocator = By.cssSelector(".user-info a");
+            WebElement signInButton = driver.findElement(signInLocator);
+            signInButton.click();});
 
-        //kliknięcie w przycisk logowania
-        By signInLocator = By.cssSelector(".user-info a");
-        WebElement signInButton = driver.findElement(signInLocator);
-        signInButton.click();
+        step("Login page - kliknięcie w link rejestracji", ()->{
+            By signupLocator = By.cssSelector("a[data-link-action=\"display-register-form\"]");
+            WebElement signupLink = driver.findElement(signupLocator);
+            signupLink.click();});
 
-        //kliknięcie w link rejestracji
-        By signupLocator = By.cssSelector("a[data-link-action=\"display-register-form\"]");
-        WebElement signupLink = driver.findElement(signupLocator);
-        signupLink.click();
+        step("Create Account Page - kliknięcie buttona 'Save', zatwierdzenie nieuzupełnionego formularza", ()->{
+            By saveLocator = By.cssSelector(".form-control-submit");
+            WebElement saveButton = driver.findElement(saveLocator);
+            saveButton.click();});
 
-        // kliknięcie buttona Save, zatwierdzenie nieuzupełnionego formularza
-        By saveLocator = By.cssSelector(".form-control-submit");
-        WebElement saveButton = driver.findElement(saveLocator);
-        saveButton.click();
+        step("Tooltip dynamiczny - potwierdzenie pojawienia się komunikatu walidacyjnego", ()->{
+            By nameInputLocator = By.id("field-firstname");
+            WebElement nameInput = driver.findElement(nameInputLocator);
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            String msg = (String) js.executeScript("return arguments[0].validationMessage", nameInput);
+            Assertions.assertEquals("Wypełnij to pole.", msg);});
 
-        //potwierdzenie pojawienia się dymka z komunikatem walidacyjnym - tooltip dynamiczny
-        By nameInputLocator = By.id("field-firstname");
-        WebElement nameInput = driver.findElement(nameInputLocator);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        String msg = (String) js.executeScript("return arguments[0].validationMessage", nameInput);
-        Assertions.assertEquals("Wypełnij to pole.", msg);
     }
 
     @Test  //Poprawna rejestracja użytkownika
@@ -349,6 +348,8 @@ public class SeleniumPrestashopTest {
     @Test
     @Order(7)    //Logowanie z użyciem błędnych danych
     public void failLoginWithIncorrectData() {
+
+        step("", ()->{});
 
         //kliknięcie w przycisk 'Sign In' (header)
         By signInLocator = By.cssSelector(".user-info a");
