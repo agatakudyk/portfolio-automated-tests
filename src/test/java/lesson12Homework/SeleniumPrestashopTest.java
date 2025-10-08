@@ -1013,76 +1013,74 @@ public class SeleniumPrestashopTest {
     @Order(21)
     public void addUserAddress() {
 
-        step("", ()->{});
+        step("Wejście w panel zalogowanego użytkownika", ()->{
+            By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
+            WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
+            userProfileLink.click();});
 
-        //Wejście w panel zalogowanego użytkownika
-        By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
-        WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
-        userProfileLink.click();
+        step("Wejście na podstronę adresu - 'Addresses'", ()->{
+            By addressesPageLink = By.xpath("//a[@id=\"addresses-link\"]/span/i");
+            WebElement addressesPage = driver.findElement(addressesPageLink);
+            addressesPage.click();});
 
-        //Wejście na podstronę adresu - 'Addresses'
-        By addressesPageLink = By.xpath("//a[@id=\"addresses-link\"]/span/i");
-        WebElement addressesPage = driver.findElement(addressesPageLink);
-        addressesPage.click();
+        step("Dodanie nowego adresu - 'Create new address'", ()->{
+            By createNewAddressLinkLocator = By.xpath("//a[@data-link-action=\"add-address\"]");
+            WebElement createNewAddressLink = driver.findElement(createNewAddressLinkLocator);
+            createNewAddressLink.click();});
 
-        //Dodanie nowego adresu - 'Create new address'
-        By createNewAddressLinkLocator = By.xpath("//a[@data-link-action=\"add-address\"]");
-        WebElement createNewAddressLink = driver.findElement(createNewAddressLinkLocator);
-        createNewAddressLink.click();
+        step("Uzupełnienie pola 'Address'", ()->{
+            By addressFieldLocator = By.id("field-address1");
+            WebElement addressField = driver.findElement(addressFieldLocator);
+            addressField.sendKeys("ul. Kwiatowa 15");});
 
-        //Uzupełnienie pola 'Address'
-        By addressFieldLocator = By.id("field-address1");
-        WebElement addressField = driver.findElement(addressFieldLocator);
-        addressField.sendKeys("ul. Kwiatowa 15");
+        step("Uzupełnienie pola 'Zip/Postal Code'", ()->{
+            By zipPostaCodeFieldLocator = By.id("field-postcode");
+            WebElement zipPostaCodeField = driver.findElement(zipPostaCodeFieldLocator);
+            zipPostaCodeField.sendKeys("88-111");});
 
-        //Uzupełnienie pola 'Zip/Postal Code'
-        By zipPostaCodeFieldLocator = By.id("field-postcode");
-        WebElement zipPostaCodeField = driver.findElement(zipPostaCodeFieldLocator);
-        zipPostaCodeField.sendKeys("88-111");
+        step("Uzupełnienie pola 'City'", ()->{
+            By cityFieldLocator = By.id("field-city");
+            WebElement cityField = driver.findElement(cityFieldLocator);
+            cityField.sendKeys("Janowiec");});
 
-        //Uzupełnienie pola 'City'
-        By cityFieldLocator = By.id("field-city");
-        WebElement cityField = driver.findElement(cityFieldLocator);
-        cityField.sendKeys("Janowiec");
+        step("Kliknięcie w button 'Save'", ()->{
+            By saveButtonLocator = By.xpath("//button[@class=\"btn btn-primary form-control-submit float-xs-right\"]");
+            WebElement saveButton = driver.findElement(saveButtonLocator);
+            saveButton.click();});
 
-        //Kliknięcie w button 'Save'
-        By saveButtonLocator = By.xpath("//button[@class=\"btn btn-primary form-control-submit float-xs-right\"]");
-        WebElement saveButton = driver.findElement(saveButtonLocator);
-        saveButton.click();
+        step("potwierdzenie dodania adresu", ()->{
+            By addressSuccessfullyAddedMsgLocator = By.xpath("//li[contains(text(),\"Address successfully added!\")]");
+            WebElement addressSuccessfullyAddedMsg = driver.findElement(addressSuccessfullyAddedMsgLocator);
+            Assertions.assertTrue(addressSuccessfullyAddedMsg.isDisplayed());});
 
-        //potwierdzenie dodania adresu
-        By addressSuccessfullyAddedMsgLocator = By.xpath("//li[contains(text(),\"Address successfully added!\")]");
-        WebElement addressSuccessfullyAddedMsg = driver.findElement(addressSuccessfullyAddedMsgLocator);
-        Assertions.assertTrue(addressSuccessfullyAddedMsg.isDisplayed());
+        step("Aktualizacja nowego adresu - kliknięcie 'Update'", ()->{
+            By updateNewAddressButtonLocator = By.xpath("//address[text()[contains(.,\"Janowiec\")]]/../..//span[contains(text(),\"Update\")]");
+            WebElement updateNewAddressButton = driver.findElement(updateNewAddressButtonLocator);
+            updateNewAddressButton.click();});
 
-        //Aktualizacja nowego adresu - kliknięcie 'Update'
-        By updateNewAddressButtonLocator = By.xpath("//address[text()[contains(.,\"Janowiec\")]]/../..//span[contains(text(),\"Update\")]");
-        WebElement updateNewAddressButton = driver.findElement(updateNewAddressButtonLocator);
-        updateNewAddressButton.click();
+        step("Zmiana danych w polu 'Zip/Postal Code'", ()->{
+            zipPostaCodeField = driver.findElement(zipPostaCodeFieldLocator);
+            zipPostaCodeField.clear();
+            zipPostaCodeField.sendKeys("02-333");});
 
-        //Zmiana danych w polu 'Zip/Postal Code'
-        zipPostaCodeField = driver.findElement(zipPostaCodeFieldLocator);
-        zipPostaCodeField.clear();
-        zipPostaCodeField.sendKeys("02-333");
+        step("Kliknięcie w button 'Save'", ()->{
+            saveButton = driver.findElement(saveButtonLocator);
+            saveButton.click();});
 
-        //Kliknięcie w button 'Save'
-        saveButton = driver.findElement(saveButtonLocator);
-        saveButton.click();
+        step("potwierdzenie aktualizacji adresu", ()->{
+            By addressSuccessfullyUpdatedMsgLocator = By.xpath("//li[contains(text(),\"Address successfully updated!\")]");
+            WebElement addressSuccessfullyUpdatedMsg = driver.findElement(addressSuccessfullyUpdatedMsgLocator);
+            Assertions.assertTrue(addressSuccessfullyUpdatedMsg.isDisplayed());});
 
-        //potwierdzenie aktualizacji adresu
-        By addressSuccessfullyUpdatedMsgLocator = By.xpath("//li[contains(text(),\"Address successfully updated!\")]");
-        WebElement addressSuccessfullyUpdatedMsg = driver.findElement(addressSuccessfullyUpdatedMsgLocator);
-        Assertions.assertTrue(addressSuccessfullyUpdatedMsg.isDisplayed());
+        step("Usunięcie nowego adresu", ()->{
+            By deleteNewAddressButtonLocator = By.xpath("//address[text()[contains(.,\"Janowiec\")]]/../..//span[contains(text(),\"Delete\")]");
+            WebElement deleteNewAddressButton = driver.findElement(deleteNewAddressButtonLocator);
+            deleteNewAddressButton.click();});
 
-        //Usunięcie nowego adresu
-        By deleteNewAddressButtonLocator = By.xpath("//address[text()[contains(.,\"Janowiec\")]]/../..//span[contains(text(),\"Delete\")]");
-        WebElement deleteNewAddressButton = driver.findElement(deleteNewAddressButtonLocator);
-        deleteNewAddressButton.click();
-
-        //potwierdzenie usunięcia adresu
-        By addressSuccessfullyDeletedMsgLocator = By.xpath("//li[contains(text(),\"Address successfully deleted!\")]");
-        WebElement addressSuccessfullyDeletedMsg = driver.findElement(addressSuccessfullyDeletedMsgLocator);
-        Assertions.assertTrue(addressSuccessfullyDeletedMsg.isDisplayed());
+        step("potwierdzenie usunięcia adresu", ()->{
+            By addressSuccessfullyDeletedMsgLocator = By.xpath("//li[contains(text(),\"Address successfully deleted!\")]");
+            WebElement addressSuccessfullyDeletedMsg = driver.findElement(addressSuccessfullyDeletedMsgLocator);
+            Assertions.assertTrue(addressSuccessfullyDeletedMsg.isDisplayed());});
     }
 
 
