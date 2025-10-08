@@ -273,7 +273,7 @@ public class SeleniumPrestashopTest {
             WebElement saveButton = driver.findElement(saveLocator);
             saveButton.click();});
 
-        step("Tooltip dynamiczny - potwierdzenie pojawienia się komunikatu walidacyjnego", ()->{
+        step("Create Account Page/tooltip dynamiczny - potwierdzenie pojawienia się komunikatu", ()->{
             By nameInputLocator = By.id("field-firstname");
             WebElement nameInput = driver.findElement(nameInputLocator);
             JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -286,60 +286,58 @@ public class SeleniumPrestashopTest {
     @Order(6)
     public void userSuccessSignup() {
 
-        step("", ()->{});
+        step("Create Account Page - uzupełnienie pola 'First name'", ()->{
+            By nameLocator = By.id("field-firstname");
+            WebElement nameInputField = driver.findElement(nameLocator);
+            nameInputField.sendKeys("Anna");});
 
-        //uzupełnienie pola imię
-        By nameLocator = By.id("field-firstname");
-        WebElement nameInputField = driver.findElement(nameLocator);
-        nameInputField.sendKeys("Anna");
+        step("Create Account Page - uzupełnienie pola 'Last name'", ()->{
+            By surnameLocator = By.id("field-lastname");
+            WebElement surnameInputField = driver.findElement(surnameLocator);
+            surnameInputField.sendKeys("Testowianka");});
 
-        //uzupełnienie pola nazwisko
-        By surnameLocator = By.id("field-lastname");
-        WebElement surnameInputField = driver.findElement(surnameLocator);
-        surnameInputField.sendKeys("Testowianka");
+        step("Create Account Page - uzupełnienie pola 'Email'", ()->{
+            By mailLocator = By.id("field-email");
+            WebElement mailInputField = driver.findElement(mailLocator);
+            mailInputField.sendKeys(emailCreateName);});
 
-        //uzupełnienie pola e-mail
-        By mailLocator = By.id("field-email");
-        WebElement mailInputField = driver.findElement(mailLocator);
-        mailInputField.sendKeys(emailCreateName);
+        step("Create Account Page - uzupełnienie pola 'Password'", ()->{
+            By passwordLocator = By.id("field-password");
+            WebElement passwordInputField = driver.findElement(passwordLocator);
+            passwordInputField.sendKeys("Password123");});
 
-        //uzupełnienie pola hasło
-        By passwordLocator = By.id("field-password");
-        WebElement passwordInputField = driver.findElement(passwordLocator);
-        passwordInputField.sendKeys("Password123");
+        step("Create Account Page - kliknięcie w checkbox informacji o przetwarzaniu danych osobowych", ()->{
+            By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
+            WebElement policyInfoCheckbox = driver.findElement(policyInfoLocator);
+            policyInfoCheckbox.click();});
 
-        //checkbox informacji o przetwarzaniu danych osobowych
-        By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
-        WebElement policyInfoCheckbox = driver.findElement(policyInfoLocator);
-        policyInfoCheckbox.click();
+        step("Create Account Page - kliknięcie w checkbox akceptacji polityki prywatności", ()->{
+            By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
+            WebElement privacyPolicyCheckbox = driver.findElement(privacyPolicyLocator);
+            privacyPolicyCheckbox.click();});
 
-        //checkbox akceptacji polityki prywatności
-        By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
-        WebElement privacyPolicyCheckbox = driver.findElement(privacyPolicyLocator);
-        privacyPolicyCheckbox.click();
+        step("Create Account Page - kliknięcie w button 'Save'", ()->{
+            By saveLocator = By.cssSelector(".form-control-submit");
+            WebElement saveButton = driver.findElement(saveLocator);
+            saveButton.click();});
 
-        // kliknięcie buttona Save, zatwierdzenie formularza
-        By saveLocator = By.cssSelector(".form-control-submit");
-        WebElement saveButton = driver.findElement(saveLocator);
-        saveButton.click();
+        step("Sprawdzenie pomyślnej rejestracji - widoczność przycisku 'Sign out'", ()->{
+            By logoutLocator = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
+            WebElement logoutButton = driver.findElement(logoutLocator);
+            Assertions.assertTrue(logoutButton.isDisplayed());});
 
-        //sprawdzenie poprawnej rejestracji użytkownika
-        By logoutLocator = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
-        WebElement logoutButton = driver.findElement(logoutLocator);
-        Assertions.assertTrue(logoutButton.isDisplayed());
-
-        //Wylogowanie użytkownika z potwierdzeniem poprawności wylogowania
-        userSuccessLogout();
+        step("Wylogowanie użytkownika z potwierdzeniem pomyślnego wylogowania", ()->{
+            userSuccessLogout();});
     }
 
     private void userSuccessLogout() {
 
-        //kliknięcie buttona wyloguj
+        //Kliknięcie w button 'Sign out'
         By logoutLocator = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
         WebElement logoutButton = driver.findElement(logoutLocator);
         logoutButton.click();
 
-        //sprawdzenie poprawności wylogowania
+        //Sprawdzenie pomyślnego wylogowania - widoczność przycisku 'Sign in'
         By signInLocator = By.cssSelector(".user-info a");
         WebElement signInButton = driver.findElement(signInLocator);
         Assertions.assertTrue(signInButton.isDisplayed());
@@ -389,6 +387,8 @@ public class SeleniumPrestashopTest {
     @Order(8)
     public void loginPasswordRecovery() {
 
+        step("", ()->{});
+
         //kliknięcie w link resetu hasła
         By passwordRecoveryLocator = By.xpath(" //div[@class=\"forgot-password\"]/a");
         WebElement passwordRecoveryLink = driver.findElement(passwordRecoveryLocator);
@@ -413,6 +413,8 @@ public class SeleniumPrestashopTest {
     @Test     //Poprawne zalogowanie  + zmiana hasła + wylogowanie +  zalogowanie nowym hasłem
     @Order(9)
     public void userSuccessLogin() {
+
+        step("", ()->{});
 
         //przejście na stronę logowania
         By backToLoginPageLocator = By.xpath("//i[@class=\"material-icons\"]");
