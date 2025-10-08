@@ -1210,103 +1210,101 @@ public class SeleniumPrestashopTest {
     @Order(24)
     public void createNewWishlists() {
 
-        step("", ()->{});
+        step("przejście na podstronę 'My wishlist'", ()->{
+            By myWishlistsLinkLocator = By.xpath("//nav[@data-depth=\"4\"]//a[contains(., \"My wishlists\")]");
+            WebElement myWishlistsLink = driver.findElement(myWishlistsLinkLocator);
+            myWishlistsLink.click();});
 
-        //przejście na podstronę 'My wishlist'
-        By myWishlistsLinkLocator = By.xpath("//nav[@data-depth=\"4\"]//a[contains(., \"My wishlists\")]");
-        WebElement myWishlistsLink = driver.findElement(myWishlistsLinkLocator);
-        myWishlistsLink.click();
+        step("utworzenie nowej listy życzeń", ()->{
+            By createNewListWishlistLinkLocator = By.xpath("//div[@class=\"wishlist-container-header\"]/a[contains(text(),\"Create new list\")]");
+            wait.until(ExpectedConditions.elementToBeClickable(createNewListWishlistLinkLocator));
+            WebElement createNewListWishlistLink = driver.findElement(createNewListWishlistLinkLocator);
+            createNewListWishlistLink.click();});
 
-        //utworzenie nowej listy życzeń
-        By createNewListWishlistLinkLocator = By.xpath("//div[@class=\"wishlist-container-header\"]/a[contains(text(),\"Create new list\")]");
-        wait.until(ExpectedConditions.elementToBeClickable(createNewListWishlistLinkLocator));
-        WebElement createNewListWishlistLink = driver.findElement(createNewListWishlistLinkLocator);
-        createNewListWishlistLink.click();
+        step("wpisanie nazwy nowej listy życzeń", ()->{
+            By createNameOfNewListWishlistLocator = By.xpath("//input[@placeholder=\"Add name\"]");
+            wait.until(ExpectedConditions.elementToBeClickable(createNameOfNewListWishlistLocator));
+            WebElement createNameOfNewListWishlist = driver.findElement(createNameOfNewListWishlistLocator);
+            createNameOfNewListWishlist.sendKeys("Super lista");});
 
-        //wpisanie nazwy nowej listy życzeń
-        By createNameOfNewListWishlistLocator = By.xpath("//input[@placeholder=\"Add name\"]");
-        wait.until(ExpectedConditions.elementToBeClickable(createNameOfNewListWishlistLocator));
-        WebElement createNameOfNewListWishlist = driver.findElement(createNameOfNewListWishlistLocator);
-        createNameOfNewListWishlist.sendKeys("Super lista");
+        step("kliknięcie w button tworzący listę", ()->{
+            By createWishlistButtonLocator = By.xpath("//button[contains(text(),\"Create wishlist\")]");
+            WebElement createWishlistButton = driver.findElement(createWishlistButtonLocator);
+            createWishlistButton.click();});
 
-        //kliknięcie w button tworzący listę
-        By createWishlistButtonLocator = By.xpath("//button[contains(text(),\"Create wishlist\")]");
-        WebElement createWishlistButton = driver.findElement(createWishlistButtonLocator);
-        createWishlistButton.click();
+        step("TOAST - potwierdzenie pojawienia się komunikatu", ()->{
+            By wishlistSuccessCreatedMsgLocator = By.xpath("//p[contains(text(),\"The list has been properly created\")]");
+            wait.until(ExpectedConditions.elementToBeClickable(wishlistSuccessCreatedMsgLocator));
+            WebElement wishlistSuccessCreatedMsg = driver.findElement(wishlistSuccessCreatedMsgLocator);
+            Assertions.assertTrue(wishlistSuccessCreatedMsg.isDisplayed());});
 
-        //TOAST - potwierdzenie pojawienia się komunikatu
-        By wishlistSuccessCreatedMsgLocator = By.xpath("//p[contains(text(),\"The list has been properly created\")]");
-        wait.until(ExpectedConditions.elementToBeClickable(wishlistSuccessCreatedMsgLocator));
-        WebElement wishlistSuccessCreatedMsg = driver.findElement(wishlistSuccessCreatedMsgLocator);
-        Assertions.assertTrue(wishlistSuccessCreatedMsg.isDisplayed());
+        step("potwierdzenie utworzenia nowej wishlist", ()->{
+            By createdNewWishlistNameLocator = By.xpath("//div[@class=\"wishlist-list-container\"]//p[contains(text(),\"Super lista\")]");
+            WebElement createdNewWishlistName = driver.findElement(createdNewWishlistNameLocator);
+            Assertions.assertTrue(createdNewWishlistName.isDisplayed());});
 
-        //potwierdzenie utworzenia nowej wishlist
-        By createdNewWishlistNameLocator = By.xpath("//div[@class=\"wishlist-list-container\"]//p[contains(text(),\"Super lista\")]");
-        WebElement createdNewWishlistName = driver.findElement(createdNewWishlistNameLocator);
-        Assertions.assertTrue(createdNewWishlistName.isDisplayed());
+        step("trzy kropki", ()->{
+            By moreActionLocator = By.xpath("//p[contains(text(),\"Super lista\")]/../div[@class=\"wishlist-list-item-right\"]/button[@class=\"wishlist-list-item-actions\"]");
+            driver.findElement(moreActionLocator).click();});
 
-        //trzy kropki
-        By moreActionLocator = By.xpath("//p[contains(text(),\"Super lista\")]/../div[@class=\"wishlist-list-item-right\"]/button[@class=\"wishlist-list-item-actions\"]");
-        driver.findElement(moreActionLocator).click();
+        step("kliknięcie w rename", ()->{
+            By renameNewCreatedWishlistLocator = By.xpath("//p[contains(text(),\"Super lista\")]/..//div[@class=\"wishlist-list-item-right\"]/div[@class=\"dropdown-menu show\"]/button[contains(text(),\"Rename\")]");
+            WebElement renameWishList = driver.findElement(renameNewCreatedWishlistLocator);
+            renameWishList.click();});
 
-        //zmiana nazwy nowej listy życzeń
-        By renameNewCreatedWishlistLocator = By.xpath("//p[contains(text(),\"Super lista\")]/..//div[@class=\"wishlist-list-item-right\"]/div[@class=\"dropdown-menu show\"]/button[contains(text(),\"Rename\")]");
-        WebElement renameWishList = driver.findElement(renameNewCreatedWishlistLocator);
-        renameWishList.click();
+        step("zmiana nazwy nowej listy życzeń", ()->{
+            By changeNameOfListWishlistLocator = By.xpath("//h5[contains(text(),\"Rename wishlist\")]/../..//div/div/input");
+            wait.until(ExpectedConditions.elementToBeClickable(changeNameOfListWishlistLocator));
+            WebElement changeNameOfListWishList = driver.findElement(changeNameOfListWishlistLocator);
+            changeNameOfListWishList.clear();
+            changeNameOfListWishList.sendKeys("Lista życzeń");});
 
-        By changeNameOfListWishlistLocator = By.xpath("//h5[contains(text(),\"Rename wishlist\")]/../..//div/div/input");
-        wait.until(ExpectedConditions.elementToBeClickable(changeNameOfListWishlistLocator));
-        WebElement changeNameOfListWishList = driver.findElement(changeNameOfListWishlistLocator);
-        //zmiana nazwy listy - wyczyszczenie i wpisanie nowej
-        changeNameOfListWishList.clear();
-        changeNameOfListWishList.sendKeys("Lista życzeń");
+        step("kliknięcie w button 'Rename'", ()->{
+            By renameWishlistButtonLocator = By.xpath("//button[contains(text(),\"Rename wishlist\")]");
+            WebElement renameWishlistButton = driver.findElement(renameWishlistButtonLocator);
+            renameWishlistButton.click();});
 
-        //kliknięcie w button 'Rename'
-        By renameWishlistButtonLocator = By.xpath("//button[contains(text(),\"Rename wishlist\")]");
-        WebElement renameWishlistButton = driver.findElement(renameWishlistButtonLocator);
-        renameWishlistButton.click();
+        step("TOAST - potwierdzenie pojawienia się komunikatu", ()->{
+            By successRenamedNewWishlistLocator = By.xpath("//p[@class=\"wishlist-toast-text\"]");
+            wait.until(ExpectedConditions.elementToBeClickable(successRenamedNewWishlistLocator));
+            WebElement successRenamedNewWishlist = driver.findElement(successRenamedNewWishlistLocator);
+            Assertions.assertTrue(successRenamedNewWishlist.isDisplayed());});
 
-        //TOAST - potwierdzenie pojawienia się komunikatu
-        By successRenamedNewWishlistLocator = By.xpath("//p[@class=\"wishlist-toast-text\"]");
-        wait.until(ExpectedConditions.elementToBeClickable(successRenamedNewWishlistLocator));
-        WebElement successRenamedNewWishlist = driver.findElement(successRenamedNewWishlistLocator);
-        Assertions.assertTrue(successRenamedNewWishlist.isDisplayed());
+        step("trzy kropki", ()->{
+            moreActionLocator = By.xpath("//p[contains(text(),\"Lista życzeń\")]/../div[@class=\"wishlist-list-item-right\"]/button[@class=\"wishlist-list-item-actions\"]");
+            wait.until(ExpectedConditions.elementToBeClickable(moreActionLocator));
+            driver.findElement(moreActionLocator).click();});
 
-        //trzy kropki
-        moreActionLocator = By.xpath("//p[contains(text(),\"Lista życzeń\")]/../div[@class=\"wishlist-list-item-right\"]/button[@class=\"wishlist-list-item-actions\"]");
-        wait.until(ExpectedConditions.elementToBeClickable(moreActionLocator));
-        driver.findElement(moreActionLocator).click();
+        step("Udostępnienie listy - kliknięcie w button 'Share'", ()->{
+            By shareButtonWishlistLocator = By.xpath("//button[contains(text(),\"Share\")]");
+            WebElement shareButtonWishlist = driver.findElement(shareButtonWishlistLocator);
+            shareButtonWishlist.click();});
 
-        //Udostępnienie listy - kliknięcie w button 'Share'
-        By shareButtonWishlistLocator = By.xpath("//button[contains(text(),\"Share\")]");
-        WebElement shareButtonWishlist = driver.findElement(shareButtonWishlistLocator);
-        shareButtonWishlist.click();
+        step("Kliknięcie w button 'Copy text'", ()->{
+            By copyTextButtonOfWishlistLocator = By.xpath("//button[contains(text(),\"Copy text\")]");
+            WebElement copyTextButtonOfWishlist = driver.findElement(copyTextButtonOfWishlistLocator);
+            copyTextButtonOfWishlist.click();});
 
-        //Kliknięcie w button 'Copy text'
-        By copyTextButtonOfWishlistLocator = By.xpath("//button[contains(text(),\"Copy text\")]");
-        WebElement copyTextButtonOfWishlist = driver.findElement(copyTextButtonOfWishlistLocator);
-        copyTextButtonOfWishlist.click();
+        step("TOAST - potwierdzenie pojawienia się komunikatu", ()->{
+            By shareLinkCopiedMsgLocator = By.xpath("//p[@class=\"wishlist-toast-text\"]");
+            WebElement shareLinkCopiedMsg = driver.findElement(shareLinkCopiedMsgLocator);
+            Assertions.assertTrue(shareLinkCopiedMsg.isDisplayed());});
 
-        //TOAST - potwierdzenie pojawienia się komunikatu
-        By shareLinkCopiedMsgLocator = By.xpath("//p[@class=\"wishlist-toast-text\"]");
-        WebElement shareLinkCopiedMsg = driver.findElement(shareLinkCopiedMsgLocator);
-        Assertions.assertTrue(shareLinkCopiedMsg.isDisplayed());
+        step("Usunięcie listy", ()->{
+            By deleteWishlistButtonLocator = By.xpath("//p[contains(text(),\"Lista życzeń\")]/../div[@class=\"wishlist-list-item-right\"]/button/i[contains(text(),\"delete\")]");
+            WebElement deleteWishlistButton = driver.findElement(deleteWishlistButtonLocator);
+            deleteWishlistButton.click();});
 
-        //Usunięcie listy
-        By deleteWishlistButtonLocator = By.xpath("//p[contains(text(),\"Lista życzeń\")]/../div[@class=\"wishlist-list-item-right\"]/button/i[contains(text(),\"delete\")]");
-        WebElement deleteWishlistButton = driver.findElement(deleteWishlistButtonLocator);
-        deleteWishlistButton.click();
+        step("Usunięcie listy", ()->{
+            By deleteConfirmLocator = By.xpath("//div[@class=\"modal-footer\"]/button[contains(text(),\"Delete\")]");
+            WebElement deleteConfirm = driver.findElement(deleteConfirmLocator);
+            deleteConfirm.click();});
 
-        By deleteConfirmLocator = By.xpath("//div[@class=\"modal-footer\"]/button[contains(text(),\"Delete\")]");
-        WebElement deleteConfirm = driver.findElement(deleteConfirmLocator);
-        deleteConfirm.click();
-
-        //TOAST - potwierdzenie pojawienia się komunikatu
-        By listRemovedComfirmLocator = By.xpath("//p[contains(text(),\"List has been removed\")]");
-        wait.until(ExpectedConditions.elementToBeClickable(listRemovedComfirmLocator));
-        WebElement listRemovedComfirm = driver.findElement(listRemovedComfirmLocator);
-
-        Assertions.assertTrue(listRemovedComfirm.isDisplayed());
+        step("TOAST - potwierdzenie pojawienia się komunikatu", ()->{
+            By listRemovedComfirmLocator = By.xpath("//p[contains(text(),\"List has been removed\")]");
+            wait.until(ExpectedConditions.elementToBeClickable(listRemovedComfirmLocator));
+            WebElement listRemovedComfirm = driver.findElement(listRemovedComfirmLocator);
+            Assertions.assertTrue(listRemovedComfirm.isDisplayed());});
     }
 
     @Test   //Strona główna/Footer -  sprawdzenie działania linków w stopce
