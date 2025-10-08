@@ -504,43 +504,40 @@ public class SeleniumPrestashopTest {
 
     private void backToPreviousPassword() {
 
-        step("", ()->{});
+        step("Wejście w panel zalogowanego uzytkownika", ()->{
+            By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
+            WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
+            userProfileLink.click();});
 
-        //Wejście w panel zalogowanego uzytkownika
-        By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
-        WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
-        userProfileLink.click();
+        step("Wejście na podstronę 'Information'", ()->{
+            By informationPageLocator = By.xpath("//a[@id=\"identity-link\"]");
+            WebElement informationPage = driver.findElement(informationPageLocator);
+            informationPage.click();});
 
-        //Wejście na podstronę 'Information'
-        By informationPageLocator = By.xpath("//a[@id=\"identity-link\"]");
-        WebElement informationPage = driver.findElement(informationPageLocator);
-        informationPage.click();
+        step("wpisanie aktualnego hasła logowania", ()->{
+            By currentPasswordFieldLocator = By.id("field-password");
+            WebElement currentPasswordField = driver.findElement(currentPasswordFieldLocator);
+            currentPasswordField.sendKeys("TestTest123");});
 
-        //wpisanie aktualnego hasła logowania
-        By currentPasswordFieldLocator = By.id("field-password");
-        WebElement currentPasswordField = driver.findElement(currentPasswordFieldLocator);
-        currentPasswordField.sendKeys("TestTest123");
+        step("wpisanie nowego hasła logowania", ()->{
+            By newPasswordFieldLocator = By.xpath("//input[@name=\"new_password\"]");
+            WebElement newPasswordField = driver.findElement(newPasswordFieldLocator);
+            newPasswordField.sendKeys("Password123");});
 
-        //wpisanie nowego hasła logowania
-        By newPasswordFieldLocator = By.xpath("//input[@name=\"new_password\"]");
-        WebElement newPasswordField = driver.findElement(newPasswordFieldLocator);
-        newPasswordField.sendKeys("Password123");
+        step("checkbox akceptacji polityki prywatności", ()->{
+            By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
+            WebElement privacyPolicyCheckbox = driver.findElement(privacyPolicyLocator);
+            privacyPolicyCheckbox.click();});
 
-        //checkbox akceptacji polityki prywatności
-        By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
-        WebElement privacyPolicyCheckbox = driver.findElement(privacyPolicyLocator);
-        privacyPolicyCheckbox.click();
+        step("checkbox informacji o przetwarzaniu danych osobowych", ()->{
+            By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
+            WebElement policyInfoCheckbox = driver.findElement(policyInfoLocator);
+            policyInfoCheckbox.click();});
 
-        //checkbox informacji o przetwarzaniu danych osobowych
-        By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
-        WebElement policyInfoCheckbox = driver.findElement(policyInfoLocator);
-        policyInfoCheckbox.click();
-
-        //kliknięcie buttona 'Save'
-        By informationSaveButtonLocator = By.xpath("//button[@class=\"btn btn-primary form-control-submit " + "float-xs-right\"]");
-        WebElement informationSaveButton = driver.findElement(informationSaveButtonLocator);
-        informationSaveButton.click();
-
+        step("kliknięcie buttona 'Save'", ()->{
+            By informationSaveButtonLocator = By.xpath("//button[@class=\"btn btn-primary form-control-submit " + "float-xs-right\"]");
+            WebElement informationSaveButton = driver.findElement(informationSaveButtonLocator);
+            informationSaveButton.click();});
     }
 
     @Test //Podstrona Accessories - filtrowanie
