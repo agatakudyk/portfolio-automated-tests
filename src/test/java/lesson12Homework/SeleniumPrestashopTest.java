@@ -642,45 +642,43 @@ public class SeleniumPrestashopTest {
     @Order(12)
     public void successAddPosterReview() {
 
-        step("", ()->{});
+        step("wybranie produktu poster 'The Best Is Yet...'", ()->{
+            By theBestPosterLocator = By.xpath("//img[@alt=\"The best is yet to come' Framed poster\"]");
+            WebElement theBestPoster = driver.findElement(theBestPosterLocator);
+            theBestPoster.click();});
 
-        //wybranie produktu poster 'The Best Is Yet...'
-        By theBestPosterLocator = By.xpath("//img[@alt=\"The best is yet to come' Framed poster\"]");
-        WebElement theBestPoster = driver.findElement(theBestPosterLocator);
-        theBestPoster.click();
+        step("kliknięcie w button dodania opinii o produkcie", ()->{
+            By commentButtonLocator = By.xpath("//div[@class=\"product-comment-list-item\"]/button");
+            WebElement commentButtonClick = driver.findElement(commentButtonLocator);
+            wait.until(ExpectedConditions.elementToBeClickable(commentButtonLocator));
+            commentButtonClick.click();});
 
-        //kliknięcie w button dodania opinii o produkcie
-        By commentButtonLocator = By.xpath("//div[@class=\"product-comment-list-item\"]/button");
-        WebElement commentButtonClick = driver.findElement(commentButtonLocator);
-        wait.until(ExpectedConditions.elementToBeClickable(commentButtonLocator));
-        commentButtonClick.click();
+        step("dodaj tytuł opinii", ()->{
+            By commentTitleLocator = By.id("comment_title");
+            WebElement commentTitleFillIn = driver.findElement(commentTitleLocator);
+            wait.until(ExpectedConditions.elementToBeClickable(commentTitleFillIn));
+            commentTitleFillIn.sendKeys("To bardzo dobry produkt.");});
 
-        //dodaj tytuł opinii
-        By commentTitleLocator = By.id("comment_title");
-        WebElement commentTitleFillIn = driver.findElement(commentTitleLocator);
-        wait.until(ExpectedConditions.elementToBeClickable(commentTitleFillIn));
-        commentTitleFillIn.sendKeys("To bardzo dobry produkt.");
+        step("dodaj treść komentarza", ()->{
+            By commentTextLocator = By.id("comment_content");
+            WebElement commentTextFillIn = driver.findElement(commentTextLocator);
+            commentTextFillIn.sendKeys("Cute home decor to suit any room or home.");});
 
-        //dodaj treść komentarza
-        By commentTextLocator = By.id("comment_content");
-        WebElement commentTextFillIn = driver.findElement(commentTextLocator);
-        commentTextFillIn.sendKeys("Cute home decor to suit any room or home.");
+        step("kliknięcie w button 'send'", ()->{
+            By sendButtonLocator = By.xpath("//button[@class=\"btn btn-comment btn-comment-big\"]");
+            WebElement sendButtonClick = driver.findElement(sendButtonLocator);
+            sendButtonClick.click();});
 
-        //kliknięcie w button 'send'
-        By sendButtonLocator = By.xpath("//button[@class=\"btn btn-comment btn-comment-big\"]");
-        WebElement sendButtonClick = driver.findElement(sendButtonLocator);
-        sendButtonClick.click();
+        step("potwierdzenie dodania komentarza", ()->{
+            By addCommentPopupLocator = By.id("product-comment-posted-modal-message");
+            WebElement addCommentPopup = driver.findElement(addCommentPopupLocator);
+            wait.until(ExpectedConditions.elementToBeClickable(addCommentPopupLocator));
+            Assertions.assertTrue(addCommentPopup.isDisplayed());});
 
-        //potwierdzenie dodania komentarza
-        By addCommentPopupLocator = By.id("product-comment-posted-modal-message");
-        WebElement addCommentPopup = driver.findElement(addCommentPopupLocator);
-        wait.until(ExpectedConditions.elementToBeClickable(addCommentPopupLocator));
-        Assertions.assertTrue(addCommentPopup.isDisplayed());
-
-        //zamknięcie popup - kliknięcie w button 'Ok'
-        By okCommentButtonLocator = By.xpath("//div[contains(text(), \"Your comment has been submitted and will be available once approved by a moderator.\")]/../div[@class=\"post-comment-buttons\"]/button[@class=\"btn btn-comment btn-comment-huge\"]");
-        WebElement okCommentButtonClick = driver.findElement(okCommentButtonLocator);
-        okCommentButtonClick.click();
+        step("zamknięcie popup - kliknięcie w button 'Ok'", ()->{
+            By okCommentButtonLocator = By.xpath("//div[contains(text(), \"Your comment has been submitted and will be available once approved by a moderator.\")]/../div[@class=\"post-comment-buttons\"]/button[@class=\"btn btn-comment btn-comment-huge\"]");
+            WebElement okCommentButtonClick = driver.findElement(okCommentButtonLocator);
+            okCommentButtonClick.click();});
     }
 
     @Test    //Dodanie kilku sztuk produktu do koszyka
