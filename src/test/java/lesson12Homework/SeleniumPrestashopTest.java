@@ -48,7 +48,8 @@ public class SeleniumPrestashopTest {
             englishLanguageSwitch.click();});
 
         step("Home page - potwierdzenie ustawienia języka angielskiego", ()->{
-            By englishLanguageCheckLocator = By.xpath("//button[@data-toggle=\"dropdown\"]" + "/span[contains(text(),\"English\")]");
+            By englishLanguageCheckLocator = By.xpath("//button[@data-toggle=\"dropdown\"]" +
+                    "/span[contains(text(),\"English\")]");
             WebElement englishLanguageCheck = driver.findElement(englishLanguageCheckLocator);
             Assertions.assertTrue(englishLanguageCheck.isDisplayed());});
     }
@@ -59,22 +60,27 @@ public class SeleniumPrestashopTest {
     public void addToCartAndDeleteProductByUnregisteredUser() {
 
         step("Unregistered user - kliknięcie wishlist-button produktu 'Today is a good day Framed Poster'", ()->{
-            By heartButtonOfTodayIsAGoodDayFramedPosterLocator = By.xpath("//a[contains(text(),\"Today is a good day Framed\")]/../../../button[@class=\"wishlist-button-add\"]");
-            WebElement heartButtonOfTodayIsAGoodDayFramedPoster = driver.findElement(heartButtonOfTodayIsAGoodDayFramedPosterLocator);
-            heartButtonOfTodayIsAGoodDayFramedPoster.click();});
+            By heartButtonOfTodayIsAGoodDayFramedPosterLocator = By.xpath(
+                    "//a[contains(text(),\"Today is a good day Framed\")]" +
+                            "/../../../button[@class=\"wishlist-button-add\"]");
+            WebElement heartButtonOfTodayIsAGoodDayPoster = driver.findElement(heartButtonOfTodayIsAGoodDayFramedPosterLocator);
+            heartButtonOfTodayIsAGoodDayPoster.click();});
 
         step("Potwierdzenie pojawienia się komunikatu walidacyjnego", ()->{
-            By loginRequiredMsgLocator = By.xpath("//p[contains(text(),\"You need to be logged in to save products in your wishlist.\")]");
+            By loginRequiredMsgLocator = By.xpath("//p[contains(text(),\"You need to be logged in to " +
+                    "save products in your wishlist.\")]");
             WebElement loginRequiredMsg = driver.findElement(loginRequiredMsgLocator);
             Assertions.assertTrue(loginRequiredMsg.isDisplayed());});
 
         step("Zamknięcie okna popup - kliknięcie w button 'Cancel'", ()->{
-            By cancelPopupButtonLocator = By.xpath("//a[contains(text(),\"Sign in\")]/../button[contains(text(),\"Cancel\")]");
+            By cancelPopupButtonLocator = By.xpath("//a[contains(text(),\"Sign in\")]" +
+                    "/../button[contains(text(),\"Cancel\")]");
             WebElement cancelPopupButton = driver.findElement(cancelPopupButtonLocator);
             cancelPopupButton.click();});
 
         step("Wejście w okno produktu 'Today is a good day Framed Poster'", ()->{
-            By openTodayIsAGoodDayFramedPosterLocator = By.xpath("//a[@class=\"thumbnail product-thumbnail\"]/img[@alt=\"Today is a good day Framed poster\"]");
+            By openTodayIsAGoodDayFramedPosterLocator = By.xpath("//a[@class=\"thumbnail product-thumbnail\"]" +
+                    "/img[@alt=\"Today is a good day Framed poster\"]");
             WebElement openTodayIsAGoodDayFramedPoster = driver.findElement(openTodayIsAGoodDayFramedPosterLocator);
             openTodayIsAGoodDayFramedPoster.click();});
 
@@ -84,7 +90,8 @@ public class SeleniumPrestashopTest {
             addToCartButton.click();});
 
         step("Potwierdzenie pojawienia się komunikatu informacyjnego", ()->{
-            By addProductPopupLocator = By.xpath("//h4[contains(text(),\"Product successfully added to your shopping cart\")]");
+            By addProductPopupLocator = By.xpath("//h4[contains(text(),\"Product successfully added to " +
+                    "your shopping cart\")]");
             wait.until(ExpectedConditions.elementToBeClickable(addProductPopupLocator));
             WebElement addProductPopup = driver.findElement(addProductPopupLocator);
             Assertions.assertTrue(addProductPopup.isDisplayed());});
@@ -95,7 +102,8 @@ public class SeleniumPrestashopTest {
             closeAddToCartPopupClick.click();});
 
         step("Cart - sprawdzenie zgodności nazwy produktu w koszyku", ()->{
-            By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]/a[contains(text(),\"Today is a good day Framed poster\")]");
+            By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]" +
+                    "/a[contains(text(),\"Today is a good day Framed poster\")]");
             String productNameInCart = driver.findElement(productNameInCartLocator).getText();
             Assertions.assertEquals("Today is a good day Framed poster", productNameInCart);});
 
@@ -132,7 +140,8 @@ public class SeleniumPrestashopTest {
             addToCartButton.click();});
 
         step("Zamknięcie okna popup - kliknięcie w button 'Proceed to checkout'", ()->{
-            By closeAddToCartPopupLocator = By.xpath("//a[@class=\"btn btn-primary\"]//i[@class=\"material-icons rtl-no-flip\"]");
+            By closeAddToCartPopupLocator = By.xpath("//a[@class=\"btn btn-primary\"]" +
+                    "//i[@class=\"material-icons rtl-no-flip\"]");
             wait.until(ExpectedConditions.elementToBeClickable(closeAddToCartPopupLocator));
             WebElement closeAddToCartPopupClick = driver.findElement(closeAddToCartPopupLocator);
             closeAddToCartPopupClick.click();});
@@ -168,7 +177,8 @@ public class SeleniumPrestashopTest {
             privacyPolicyCheckbox.click();});
 
         step("Personal Information - kliknięcie w button 'Continue'", ()->{
-            By continueButtonLocator = By.xpath("//section[@id=\"checkout-personal-information-step\"]//button[@type=\"submit\"]");
+            By continueButtonLocator = By.xpath("//section[@id=\"checkout-personal-information-step\"]" +
+                    "//button[@type=\"submit\"]");
             WebElement continueButton = driver.findElement(continueButtonLocator);
             continueButton.click();});
 
@@ -188,7 +198,8 @@ public class SeleniumPrestashopTest {
             cityField.sendKeys("Koszalin");});
 
         step("Addresses - kliknięcie w button 'Continue'", ()->{
-            By adreessContinuseLocator = By.xpath("//section[@id=\"checkout-addresses-step\"]//button[@type=\"submit\"]");
+            By adreessContinuseLocator = By.xpath("//section[@id=\"checkout-addresses-step\"]" +
+                    "//button[@type=\"submit\"]");
             WebElement adreessContinuse = driver.findElement(adreessContinuseLocator);
             adreessContinuse.click();});
 
@@ -479,12 +490,14 @@ public class SeleniumPrestashopTest {
             policyInfoCheckbox.click();});
 
         step("Your personal information - kliknięcie w button 'Save'", ()->{
-            By informationSaveButtonLocator = By.xpath("//button[@class=\"btn btn-primary form-control-submit " + "float-xs-right\"]");
+            By informationSaveButtonLocator = By.xpath(
+                    "//button[@class=\"btn btn-primary form-control-submit float-xs-right\"]");
             WebElement informationSaveButton = driver.findElement(informationSaveButtonLocator);
             informationSaveButton.click();});
 
         step("Potwierdzenie pojawienia się komunikatu", ()->{
-            By updatedInformationTextLocator = By.xpath("//ul/li[contains(text()," + "\"Information successfully updated.\")]");
+            By updatedInformationTextLocator = By.xpath("//ul/li[contains(text()," +
+                    "\"Information successfully updated.\")]");
             WebElement updatedInformationText = driver.findElement(updatedInformationTextLocator);
             Assertions.assertTrue(updatedInformationText.isDisplayed());});
 
@@ -549,7 +562,8 @@ public class SeleniumPrestashopTest {
             policyInfoCheckbox.click();});
 
         step("kliknięcie buttona 'Save'", ()->{
-            By informationSaveButtonLocator = By.xpath("//button[@class=\"btn btn-primary form-control-submit " + "float-xs-right\"]");
+            By informationSaveButtonLocator = By.xpath("//button[@class=\"btn btn-primary form-control-submit " +
+                    "float-xs-right\"]");
             WebElement informationSaveButton = driver.findElement(informationSaveButtonLocator);
             informationSaveButton.click();});
     }
@@ -637,7 +651,8 @@ public class SeleniumPrestashopTest {
         Thread.sleep(1000);
 
         //Sortowanie - ‘Price, low to high’
-        By sortByPriceAscLocator = By.xpath("//div[@class=\"dropdown-menu\"]/a[contains(text(),\"Price, low to high\")]");
+        By sortByPriceAscLocator = By.xpath("//div[@class=\"dropdown-menu\"]" +
+                "/a[contains(text(),\"Price, low to high\")]");
         WebElement sortByPriceAsc = driver.findElement(sortByPriceAscLocator);
         sortByPriceAsc.click();
         Thread.sleep(1000);
@@ -696,7 +711,10 @@ public class SeleniumPrestashopTest {
             Assertions.assertTrue(addCommentPopup.isDisplayed());});
 
         step("zamknięcie popup - kliknięcie w button 'Ok'", ()->{
-            By okCommentButtonLocator = By.xpath("//div[contains(text(), \"Your comment has been submitted and will be available once approved by a moderator.\")]/../div[@class=\"post-comment-buttons\"]/button[@class=\"btn btn-comment btn-comment-huge\"]");
+            By okCommentButtonLocator = By.xpath(
+                    "//div[contains(text(), \"Your comment has been submitted and will be available once " +
+                            "approved by a moderator.\")]/../div[@class=\"post-comment-buttons\"]" +
+                            "/button[@class=\"btn btn-comment btn-comment-huge\"]");
             WebElement okCommentButtonClick = driver.findElement(okCommentButtonLocator);
             okCommentButtonClick.click();});
     }
@@ -726,7 +744,8 @@ public class SeleniumPrestashopTest {
             addToCartButton.click();});
 
         step("potwierdzenie dodania do koszyka", ()->{
-            By addProductPopupLocator = By.xpath("//h4[contains(text(),\"Product successfully added to your shopping cart\")]");
+            By addProductPopupLocator = By.xpath("//h4[contains(text(),\"Product successfully added to " +
+                    "your shopping cart\")]");
             wait.until(ExpectedConditions.elementToBeClickable(addProductPopupLocator));
             WebElement addProductPopup = driver.findElement(addProductPopupLocator);
             Assertions.assertTrue(addProductPopup.isDisplayed());});
@@ -762,7 +781,8 @@ public class SeleniumPrestashopTest {
 
         step("sprawdzenie wartości całkowitej", ()->{
             //cena jednostkowa
-            By unitPriceOfItemLocator = By.xpath("//div[@class=\"product-line-info product-price h5 \"]/div[@class=\"current-price\"]");
+            By unitPriceOfItemLocator = By.xpath("//div[@class=\"product-line-info product-price h5 \"]" +
+                    "/div[@class=\"current-price\"]");
             WebElement unitPriceOfItem = driver.findElement(unitPriceOfItemLocator);
             String unitPriceText = unitPriceOfItem.getText().replace("zł", "").replace(",", ".").trim();
             double unitPrice = Double.parseDouble(unitPriceText);
@@ -785,12 +805,14 @@ public class SeleniumPrestashopTest {
     public void addressesFormFailSaveWithEmptyFields() {
 
         step("przejście dalej z koszyka do adresu klikając button 'Proceed To Checkout'", ()->{
-            By proceedToCheckoutButtonInCartLocator = By.xpath("//a[@class=\"btn btn-primary\" and text()=\"Proceed to checkout\"]");
+            By proceedToCheckoutButtonInCartLocator = By.xpath("//a[@class=\"btn btn-primary\" and " +
+                    "text()=\"Proceed to checkout\"]");
             WebElement proceedToCheckoutButtonInCart = driver.findElement(proceedToCheckoutButtonInCartLocator);
             proceedToCheckoutButtonInCart.click();});
 
         step("kliknięcie w button 'Continue'", ()->{
-            By continueButtonInAddressesFormLocator = By.xpath("//button[@name=\"confirm-addresses\" and contains(., \"Continue\")]");
+            By continueButtonInAddressesFormLocator = By.xpath("//button[@name=\"confirm-addresses\" and " +
+                    "contains(., \"Continue\")]");
             WebElement continueButtonInAddressesForm = driver.findElement(continueButtonInAddressesFormLocator);
             continueButtonInAddressesForm.click();});
 
@@ -817,7 +839,8 @@ public class SeleniumPrestashopTest {
             cityField.sendKeys("Warszawa");});
 
         step("kliknięcie w button 'Continue'", ()->{
-            By continueButtonInAddressesFormLocator = By.xpath("//button[@name=\"confirm-addresses\" and contains(., \"Continue\")]");
+            By continueButtonInAddressesFormLocator = By.xpath("//button[@name=\"confirm-addresses\" and " +
+                    "contains(., \"Continue\")]");
             WebElement continueButtonInAddressesForm = driver.findElement(continueButtonInAddressesFormLocator);
             continueButtonInAddressesForm.click();});
     }
@@ -885,7 +908,8 @@ public class SeleniumPrestashopTest {
     public void contactCustomerServiceDepartment() {
 
         step("kliknięcie w link formularza kontaktowego", ()->{
-            By customerServiceDepartmentContactLocator = By.xpath("//a[contains(text(),\"customer service department.\")]");
+            By customerServiceDepartmentContactLocator = By.xpath(
+                    "//a[contains(text(),\"customer service department.\")]");
             WebElement customerServiceDepartmentContact = driver.findElement(customerServiceDepartmentContactLocator);
             customerServiceDepartmentContact.click();});
 
@@ -895,7 +919,8 @@ public class SeleniumPrestashopTest {
             sendButtonInContactUsSection.click();});
 
         step("potwierdzenie pojawienia się komunikatu walidacyjnego", ()->{
-            By validationMsgInContactUsSectionLocator = By.xpath("//li[contains(text(),\"The message cannot be blank.\")]");
+            By validationMsgInContactUsSectionLocator = By.xpath(
+                    "//li[contains(text(),\"The message cannot be blank.\")]");
             WebElement validationMsgInContactUsSection = driver.findElement(validationMsgInContactUsSectionLocator);
             Assertions.assertTrue(validationMsgInContactUsSection.isDisplayed());});
 
@@ -910,7 +935,8 @@ public class SeleniumPrestashopTest {
             sendButtonInContactUsSection.click();});
 
         step("potwierdzenie pojawienia się komunikatu informacyjnego", ()->{
-            By successMsgInContactUsSectionLocator = By.xpath("//li[contains(text(),\"Your message has been successfully sent to our team.\")]");
+            By successMsgInContactUsSectionLocator = By.xpath("//li[contains(text(),\"Your message has " +
+                    "been successfully sent to our team.\")]");
             WebElement successMsgInContactUsSection = driver.findElement(successMsgInContactUsSectionLocator);
             Assertions.assertTrue(successMsgInContactUsSection.isDisplayed());});
     }
@@ -972,7 +998,8 @@ public class SeleniumPrestashopTest {
             reorderPageLink.click();});
 
         step("edycja adresu", ()->{
-            By editAddressesLinkLocator = By.xpath("//footer[@class=\"address-footer\"]/a[@data-link-action=\"edit-address\"]");
+            By editAddressesLinkLocator = By.xpath(
+                    "//footer[@class=\"address-footer\"]/a[@data-link-action=\"edit-address\"]");
             WebElement editAddressesLink = driver.findElement(editAddressesLinkLocator);
             editAddressesLink.click();});
 
@@ -983,7 +1010,8 @@ public class SeleniumPrestashopTest {
             cityInAddressField.sendKeys("Opole");});
 
         step("Kliknięcie buttona 'Continue'", ()->{
-            By continueButtonInAddressesSectionLocator = By.xpath("//footer[@class=\"form-footer clearfix\"]/button[@class=\"continue btn btn-primary float-xs-right\"]");
+            By continueButtonInAddressesSectionLocator = By.xpath("//footer[@class=\"form-footer clearfix\"]" +
+                    "/button[@class=\"continue btn btn-primary float-xs-right\"]");
             WebElement continueButtonInAddressesSection = driver.findElement(continueButtonInAddressesSectionLocator);
             continueButtonInAddressesSection.click();});
 
@@ -1064,7 +1092,8 @@ public class SeleniumPrestashopTest {
             Assertions.assertTrue(addressSuccessfullyAddedMsg.isDisplayed());});
 
         step("Aktualizacja nowego adresu - kliknięcie 'Update'", ()->{
-            By updateNewAddressButtonLocator = By.xpath("//address[text()[contains(.,\"Janowiec\")]]/../..//span[contains(text(),\"Update\")]");
+            By updateNewAddressButtonLocator = By.xpath("//address[text()[contains(.,\"Janowiec\")]]" +
+                    "/../..//span[contains(text(),\"Update\")]");
             WebElement updateNewAddressButton = driver.findElement(updateNewAddressButtonLocator);
             updateNewAddressButton.click();});
 
@@ -1080,17 +1109,20 @@ public class SeleniumPrestashopTest {
             saveButton.click();});
 
         step("potwierdzenie aktualizacji adresu", ()->{
-            By addressSuccessfullyUpdatedMsgLocator = By.xpath("//li[contains(text(),\"Address successfully updated!\")]");
+            By addressSuccessfullyUpdatedMsgLocator = By.xpath(
+                    "//li[contains(text(),\"Address successfully updated!\")]");
             WebElement addressSuccessfullyUpdatedMsg = driver.findElement(addressSuccessfullyUpdatedMsgLocator);
             Assertions.assertTrue(addressSuccessfullyUpdatedMsg.isDisplayed());});
 
         step("Usunięcie nowego adresu", ()->{
-            By deleteNewAddressButtonLocator = By.xpath("//address[text()[contains(.,\"Janowiec\")]]/../..//span[contains(text(),\"Delete\")]");
+            By deleteNewAddressButtonLocator = By.xpath("//address[text()[contains(.,\"Janowiec\")]]" +
+                    "/../..//span[contains(text(),\"Delete\")]");
             WebElement deleteNewAddressButton = driver.findElement(deleteNewAddressButtonLocator);
             deleteNewAddressButton.click();});
 
         step("potwierdzenie usunięcia adresu", ()->{
-            By addressSuccessfullyDeletedMsgLocator = By.xpath("//li[contains(text(),\"Address successfully deleted!\")]");
+            By addressSuccessfullyDeletedMsgLocator = By.xpath(
+                    "//li[contains(text(),\"Address successfully deleted!\")]");
             WebElement addressSuccessfullyDeletedMsg = driver.findElement(addressSuccessfullyDeletedMsgLocator);
             Assertions.assertTrue(addressSuccessfullyDeletedMsg.isDisplayed());});
     }
@@ -1106,18 +1138,22 @@ public class SeleniumPrestashopTest {
             homepageLink.click();});
 
         step("Kliknięcie w serduszko dodające do wishlist", ()->{
-            By heartButtonOfHummingbirdLocator = By.xpath("//a[contains(text(),\"Hummingbird printed t-shirt\")]/../../../button[@class=\"wishlist-button-add\"]");
+            By heartButtonOfHummingbirdLocator = By.xpath(
+                    "//a[contains(text(),\"Hummingbird printed t-shirt\")]" +
+                            "/../../../button[@class=\"wishlist-button-add\"]");
             WebElement heartButtonOfHummingbird = driver.findElement(heartButtonOfHummingbirdLocator);
             heartButtonOfHummingbird.click();});
 
         step("Popup - kliknięcie w automatycznie utworzony 'My wishlist'", ()->{
-            By myWishlistPopupLocator = By.xpath("//div[@class=\"modal-body\"]/div/ul/li[@class=\"wishlist-list-item\"]");
+            By myWishlistPopupLocator = By.xpath("//div[@class=\"modal-body\"]" +
+                    "/div/ul/li[@class=\"wishlist-list-item\"]");
             wait.until(ExpectedConditions.elementToBeClickable(myWishlistPopupLocator));
             WebElement myWishlistPopup = driver.findElement(myWishlistPopupLocator);
             myWishlistPopup.click();});
 
         step("TOAST - potwierdzenie pojawienia się komunikatu potwierdzającego", ()->{
-            By productAddedToWishlistMsgLocator = By.xpath("//div[@class=\"wishlist-toast success\"]/p[@class=\"wishlist-toast-text\"]");
+            By productAddedToWishlistMsgLocator = By.xpath("//div[@class=\"wishlist-toast success\"]" +
+                    "/p[@class=\"wishlist-toast-text\"]");
             wait.until(ExpectedConditions.elementToBeClickable(productAddedToWishlistMsgLocator));
             WebElement productAddedToWishlistMsg = driver.findElement(productAddedToWishlistMsgLocator);
             Assertions.assertTrue(productAddedToWishlistMsg.isDisplayed());});
@@ -1138,7 +1174,8 @@ public class SeleniumPrestashopTest {
             WebElement myWishlistLink = driver.findElement(myWishlistLinkLocator);
             myWishlistLink.click();});
 
-        step("potwierdzenie", ()->{        By wishListElementsLocator = By.xpath("//p[@class=\"wishlist-product-title\"]");
+        step("potwierdzenie", ()->{        By wishListElementsLocator = By.xpath(
+                "//p[@class=\"wishlist-product-title\"]");
             wait.until(ExpectedConditions.elementToBeClickable(wishListElementsLocator));
             List<WebElement> wishListsElements = driver.findElements(wishListElementsLocator);
             List<String> wishListsElementsNames = wishListsElements.stream().map(WebElement::getText).toList();
@@ -1156,7 +1193,8 @@ public class SeleniumPrestashopTest {
             homepageLink.click();});
 
         step("Kliknięcie w serduszko dodające do wishlist", ()->{
-            By heartButtonOfMugTheAdventureLocator = By.xpath("//a[contains(text(),\"Mug The adventure begins\")]/../../../button[@class=\"wishlist-button-add\"]");
+            By heartButtonOfMugTheAdventureLocator = By.xpath("//a[contains(text(),\"Mug The adventure begins\")]" +
+                    "/../../../button[@class=\"wishlist-button-add\"]");
             WebElement heartButtonOfMugTheAdventure = driver.findElement(heartButtonOfMugTheAdventureLocator);
             heartButtonOfMugTheAdventure.click();});
 
@@ -1177,7 +1215,8 @@ public class SeleniumPrestashopTest {
             createNewWishList.click();});
 
         step("Popup - wybranie nowo utworzonej listy", ()->{
-            By ulubioneNewWishlistLector = By.xpath("//li[@class=\"wishlist-list-item\"]/p[contains(text(),\"Ulubione\")]");
+            By ulubioneNewWishlistLector = By.xpath("//li[@class=\"wishlist-list-item\"]" +
+                    "/p[contains(text(),\"Ulubione\")]");
             wait.until(ExpectedConditions.elementToBeClickable(ulubioneNewWishlistLector));
             WebElement ulubioneNewWishlist = driver.findElement(ulubioneNewWishlistLector);
             ulubioneNewWishlist.click();});
@@ -1199,7 +1238,8 @@ public class SeleniumPrestashopTest {
             myWishlistsPage.click();});
 
         step("Wejście na link listy 'Ulubione'", ()->{
-            By ulubioneWishlistLinkLocator = By.xpath("//a[@class=\"wishlist-list-item-link\"]/p[contains(text(),\"Ulubione\")]");
+            By ulubioneWishlistLinkLocator = By.xpath("//a[@class=\"wishlist-list-item-link\"]" +
+                    "/p[contains(text(),\"Ulubione\")]");
             wait.until(ExpectedConditions.elementToBeClickable(ulubioneWishlistLinkLocator));
             WebElement ulubioneWishlistLink = driver.findElement(ulubioneWishlistLinkLocator);
             ulubioneWishlistLink.click();});
@@ -1223,7 +1263,8 @@ public class SeleniumPrestashopTest {
             myWishlistsLink.click();});
 
         step("utworzenie nowej listy życzeń", ()->{
-            By createNewListWishlistLinkLocator = By.xpath("//div[@class=\"wishlist-container-header\"]/a[contains(text(),\"Create new list\")]");
+            By createNewListWishlistLinkLocator = By.xpath("//div[@class=\"wishlist-container-header\"]" +
+                    "/a[contains(text(),\"Create new list\")]");
             wait.until(ExpectedConditions.elementToBeClickable(createNewListWishlistLinkLocator));
             WebElement createNewListWishlistLink = driver.findElement(createNewListWishlistLinkLocator);
             createNewListWishlistLink.click();});
@@ -1246,16 +1287,19 @@ public class SeleniumPrestashopTest {
             Assertions.assertTrue(wishlistSuccessCreatedMsg.isDisplayed());});
 
         step("potwierdzenie utworzenia nowej wishlist", ()->{
-            By createdNewWishlistNameLocator = By.xpath("//div[@class=\"wishlist-list-container\"]//p[contains(text(),\"Super lista\")]");
+            By createdNewWishlistNameLocator = By.xpath("//div[@class=\"wishlist-list-container\"]" +
+                    "//p[contains(text(),\"Super lista\")]");
             WebElement createdNewWishlistName = driver.findElement(createdNewWishlistNameLocator);
             Assertions.assertTrue(createdNewWishlistName.isDisplayed());});
 
         step("trzy kropki", ()->{
-            By moreActionLocator = By.xpath("//p[contains(text(),\"Super lista\")]/../div[@class=\"wishlist-list-item-right\"]/button[@class=\"wishlist-list-item-actions\"]");
+            By moreActionLocator = By.xpath("//p[contains(text(),\"Super lista\")]" +
+                    "/../div[@class=\"wishlist-list-item-right\"]/button[@class=\"wishlist-list-item-actions\"]");
             driver.findElement(moreActionLocator).click();});
 
         step("kliknięcie w rename", ()->{
-            By renameNewCreatedWishlistLocator = By.xpath("//p[contains(text(),\"Super lista\")]/..//div[@class=\"wishlist-list-item-right\"]/div[@class=\"dropdown-menu show\"]/button[contains(text(),\"Rename\")]");
+            By renameNewCreatedWishlistLocator = By.xpath("//p[contains(text(),\"Super lista\")]" +
+                    "/..//div[@class=\"wishlist-list-item-right\"]/div[@class=\"dropdown-menu show\"]/button[contains(text(),\"Rename\")]");
             WebElement renameWishList = driver.findElement(renameNewCreatedWishlistLocator);
             renameWishList.click();});
 
@@ -1278,7 +1322,8 @@ public class SeleniumPrestashopTest {
             Assertions.assertTrue(successRenamedNewWishlist.isDisplayed());});
 
         step("trzy kropki", ()->{
-            By moreActionLocator = By.xpath("//p[contains(text(),\"Lista życzeń\")]/../div[@class=\"wishlist-list-item-right\"]/button[@class=\"wishlist-list-item-actions\"]");
+            By moreActionLocator = By.xpath("//p[contains(text(),\"Lista życzeń\")]" +
+                    "/../div[@class=\"wishlist-list-item-right\"]/button[@class=\"wishlist-list-item-actions\"]");
             wait.until(ExpectedConditions.elementToBeClickable(moreActionLocator));
             driver.findElement(moreActionLocator).click();});
 
@@ -1298,7 +1343,8 @@ public class SeleniumPrestashopTest {
             Assertions.assertTrue(shareLinkCopiedMsg.isDisplayed());});
 
         step("Usunięcie listy", ()->{
-            By deleteWishlistButtonLocator = By.xpath("//p[contains(text(),\"Lista życzeń\")]/../div[@class=\"wishlist-list-item-right\"]/button/i[contains(text(),\"delete\")]");
+            By deleteWishlistButtonLocator = By.xpath("//p[contains(text(),\"Lista życzeń\")]" +
+                    "/../div[@class=\"wishlist-list-item-right\"]/button/i[contains(text(),\"delete\")]");
             WebElement deleteWishlistButton = driver.findElement(deleteWishlistButtonLocator);
             deleteWishlistButton.click();});
 
@@ -1375,7 +1421,8 @@ public class SeleniumPrestashopTest {
             termsAndConditionsOfUseLink.click();});
 
         step("Potwierdzenie otwarcia podstrony 'Terms and conditions of use'", ()->{
-            By termsAndConditionsOfUsePageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text(), " + "\"Terms and conditions of use\")]");
+            By termsAndConditionsOfUsePageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
+                    "/h1[contains(text(), " + "\"Terms and conditions of use\")]");
             WebElement termsAndConditionsOfUsePageName = driver.findElement(termsAndConditionsOfUsePageNameLocator);
             Assertions.assertTrue(termsAndConditionsOfUsePageName.isDisplayed());});
 
@@ -1385,7 +1432,8 @@ public class SeleniumPrestashopTest {
             aboutUsLink.click();});
 
         step("Potwierdzenie otwarcia podstrony 'About us'", ()->{
-            By aboutUsPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text(), " + "\"About us\")]");
+            By aboutUsPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text(), " +
+                    "\"About us\")]");
             WebElement aboutUsPageName = driver.findElement(aboutUsPageNameLocator);
             Assertions.assertTrue(aboutUsPageName.isDisplayed());});
 
@@ -1395,7 +1443,8 @@ public class SeleniumPrestashopTest {
             securePaymentLink.click();});
 
         step("Potwierdzenie otwarcia podstrony 'Secure payment'", ()->{
-            By securePaymentPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text(), " + "\"Secure payment\")]");
+            By securePaymentPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
+                    "/h1[contains(text()\"Secure payment\")]");
             WebElement securePaymentPageName = driver.findElement(securePaymentPageNameLocator);
             Assertions.assertTrue(securePaymentPageName.isDisplayed());});
 
@@ -1405,7 +1454,8 @@ public class SeleniumPrestashopTest {
             contactUsLink.click();});
 
         step("Potwierdzenie otwarcia podstrony 'Contact us'", ()->{
-            By contactUsPageNameLocator = By.xpath("//div[@class=\"col-md-9 col-md-offset-3\"]/h3[contains(text(),\"Contact us\")]");
+            By contactUsPageNameLocator = By.xpath("//div[@class=\"col-md-9 col-md-offset-3\"]" +
+                    "/h3[contains(text(),\"Contact us\")]");
             WebElement contactUsPageName = driver.findElement(contactUsPageNameLocator);
             Assertions.assertTrue(contactUsPageName.isDisplayed());});
 
@@ -1415,7 +1465,8 @@ public class SeleniumPrestashopTest {
             sitemapLink.click();});
 
         step("Potwierdzenie otwarcia podstrony 'Sitemap'", ()->{
-            By sitemapPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1/span[contains(text(), " + "\"Sitemap\")]");
+            By sitemapPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
+                    "/h1/span[contains(text(),\"Sitemap\")]");
             WebElement sitemapPageName = driver.findElement(sitemapPageNameLocator);
             Assertions.assertTrue(sitemapPageName.isDisplayed());});
 
@@ -1435,7 +1486,8 @@ public class SeleniumPrestashopTest {
             personalInfoLink.click();});
 
         step("Potwierdzenie otwarcia podstrony 'Personal info'", ()->{
-            By personalInfoPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text()," + "\"Your personal information\")]");
+            By personalInfoPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
+                    "/h1[contains(text(),\"Your personal information\")]");
             WebElement personalInfoPageName = driver.findElement(personalInfoPageNameLocator);
             Assertions.assertTrue(personalInfoPageName.isDisplayed());});
 
@@ -1445,7 +1497,8 @@ public class SeleniumPrestashopTest {
             ordersLink.click();});
 
         step("Potwierdzenie otwarcia podstrony 'Orders'", ()->{
-            By orderHistoryPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text()," + "\"Order history\")]");
+            By orderHistoryPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
+                    "/h1[contains(text(),\"Order history\")]");
             WebElement orderHistoryPageName = driver.findElement(orderHistoryPageNameLocator);
             Assertions.assertTrue(orderHistoryPageName.isDisplayed());});
 
@@ -1455,7 +1508,8 @@ public class SeleniumPrestashopTest {
             creditSlipsLink.click();});
 
         step("Potwierdzenie otwarcia podstrony 'Credit slips'", ()->{
-            By creditSlipsPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text()," + "\"Credit slips\")]");
+            By creditSlipsPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
+                    "/h1[contains(text(),\"Credit slips\")]");
             WebElement creditSlipsPageName = driver.findElement(creditSlipsPageNameLocator);
             Assertions.assertTrue(creditSlipsPageName.isDisplayed());});
 
@@ -1465,7 +1519,8 @@ public class SeleniumPrestashopTest {
             addressesLink.click();});
 
         step("Potwierdzenie otwarcia podstrony 'Addresses'", ()->{
-            By yourAddressesPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text()," + "\"Your addresses\")]");
+            By yourAddressesPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
+                    "/h1[contains(text(),\"Your addresses\")]");
             WebElement yourAddressesPageName = driver.findElement(yourAddressesPageNameLocator);
             Assertions.assertTrue(yourAddressesPageName.isDisplayed());});
 
