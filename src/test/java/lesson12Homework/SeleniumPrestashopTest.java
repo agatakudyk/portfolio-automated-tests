@@ -16,12 +16,14 @@ import java.util.List;
 
 import static io.qameta.allure.Allure.step;
 
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SeleniumPrestashopTest {
 
     String emailCreateName = "testowianka255@wp.pl";
     static ChromeDriver driver;
     static WebDriverWait wait;
+
 
     @BeforeAll
     public static void beforeAll() {
@@ -30,31 +32,33 @@ public class SeleniumPrestashopTest {
         driver.get("http://localhost:8080/pl/");
     }
 
-    @Test   //Zmiana języka strony z polskiego na angielski
+
+    @Test   //Home page - zmiana języka strony z polskiego na angielski
     @Order(1)
     public void languageSwitchIntoEnglish() {
 
-        step("Kliknięcie w dropdown-button, by rozwinąć listę z językami", ()->{
+        step("Home page - kliknięcie w dropdown-button, by rozwinąć listę z językami", ()->{
             By languageDropdownButtonLocator = By.xpath("//button[@data-toggle=\"dropdown\"]");
             WebElement languageSwitchClick = driver.findElement(languageDropdownButtonLocator);
             languageSwitchClick.click();});
 
-        step("Kliknięcie opcji 'English' na rozwijanej liście języków", ()->{
+        step("Home page/dropdown - kliknięcie opcji 'English' na rozwijanej liście języków", ()->{
             By englishLanguageSwitchLocator = By.xpath("//a[@data-iso-code=\"en\"]");
             WebElement englishLanguageSwitch = driver.findElement(englishLanguageSwitchLocator);
             englishLanguageSwitch.click();});
 
-        step("Potwierdzenie ustawienia języka angielskiego", ()->{
+        step("Home page - potwierdzenie ustawienia języka angielskiego", ()->{
             By englishLanguageCheckLocator = By.xpath("//button[@data-toggle=\"dropdown\"]" + "/span[contains(text(),\"English\")]");
             WebElement englishLanguageCheck = driver.findElement(englishLanguageCheckLocator);
             Assertions.assertTrue(englishLanguageCheck.isDisplayed());});
     }
 
+
     @Test     //Użytkownik niezarejestrowany - dodanie produktu do wishlist, dodanie i usunięcie z koszyka
     @Order(2)
     public void addToCartAndDeleteProductByUnregisteredUser() {
 
-        step("Unregistered user - kliknięcie w wishlist-button produktu 'Today is a good day Framed Poster'", ()->{
+        step("Unregistered user - kliknięcie wishlist-button produktu 'Today is a good day Framed Poster'", ()->{
             By heartButtonOfTodayIsAGoodDayFramedPosterLocator = By.xpath("//a[contains(text(),\"Today is a good day Framed\")]/../../../button[@class=\"wishlist-button-add\"]");
             WebElement heartButtonOfTodayIsAGoodDayFramedPoster = driver.findElement(heartButtonOfTodayIsAGoodDayFramedPosterLocator);
             heartButtonOfTodayIsAGoodDayFramedPoster.click();});
@@ -90,39 +94,39 @@ public class SeleniumPrestashopTest {
             WebElement closeAddToCartPopupClick = driver.findElement(closeAddToCartPopupLocator);
             closeAddToCartPopupClick.click();});
 
-        step("Sprawdzenie zgodności nazwy produktu w koszyku", ()->{
+        step("Cart - sprawdzenie zgodności nazwy produktu w koszyku", ()->{
             By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]/a[contains(text(),\"Today is a good day Framed poster\")]");
             String productNameInCart = driver.findElement(productNameInCartLocator).getText();
             Assertions.assertEquals("Today is a good day Framed poster", productNameInCart);});
 
-        step("Usunięcie produktu z koszyka", ()->{
+        step("Cart - usunięcie produktu z koszyka", ()->{
             By trashIconLocator = By.xpath("//a[@class=\"remove-from-cart\"]/i[contains(text(),\"delete\")]");
             WebElement trashIcon = driver.findElement(trashIconLocator);
             trashIcon.click();});
 
-        step("Potwierdzenie pojawienia się komunikatu potwierdzającego usunięcie", ()->{
+        step("Cart - potwierdzenie pojawienia się komunikatu potwierdzającego usunięcie", ()->{
             By emptyCartMsgLocator = By.xpath("//span[contains(text(),\"There are no more items in your cart\")]");
             wait.until(ExpectedConditions.elementToBeClickable(emptyCartMsgLocator));//TODO zaaczekac az strona sie przeladuje
             WebElement emptyCartMsg = driver.findElement(emptyCartMsgLocator);
             Assertions.assertTrue(emptyCartMsg.isDisplayed());});
-
     }
+
 
     @Test     //Użytkownik niezarejestrowany - dodanie do koszyka i finalizacja zakupu
     @Order(3)
     public void addProductToCartAndCheckoutByUnregisteredUser() {
 
-        step("Przejcie z koszyka na stronę główną", ()->{
+        step("Cart - przejcie z koszyka na stronę główną", ()->{
             By homepageLinkLocator = By.id("_desktop_logo");
             WebElement homepageLink = driver.findElement(homepageLinkLocator);
             homepageLink.click();});
 
-        step("Wejście w okno produktu 'Today is a good day Framed Poster'", ()->{
+        step("Home page - wejście w okno produktu 'Today is a good day Framed Poster'", ()->{
             By openTodayIsaGoodDayFramedPosterLocator = By.xpath("//img[@alt=\"Today is a good day Framed poster\"]");
             WebElement openTodayIsaGoodDayFramedPoster = driver.findElement(openTodayIsaGoodDayFramedPosterLocator);
             openTodayIsaGoodDayFramedPoster.click();});
 
-        step("Dodanie do koszyka - kliknięcie w button 'Add to cart'", ()->{
+        step("Kliknięcie w button 'Add to cart'", ()->{
             By addToCartButtonLocator = By.xpath("//button[@data-button-action=\"add-to-cart\"]");
             WebElement addToCartButton = driver.findElement(addToCartButtonLocator);
             addToCartButton.click();});
@@ -214,11 +218,12 @@ public class SeleniumPrestashopTest {
             Assertions.assertTrue(confirmationMsg.isDisplayed());});
     }
 
-    @Test     //Uzupełnienie formularza ‘Save time on your next order, sign up now’
+
+    @Test     //Order confirmation page - uzupełnienie formularza ‘Save time on your next order, sign up now’
     @Order(4)
     public void signUpNowFillInFormByUnregisteredUser() {
 
-        step("Uzupełnij pole 'First name'", ()->{
+        step("Order confirmation page - uzupełnij pole 'First name'", ()->{
             By firstNameFieldLocator = By.id("field-firstname");
             WebElement firstNmaeField = driver.findElement(firstNameFieldLocator);
             firstNmaeField.sendKeys("Tomasz");});
@@ -248,11 +253,12 @@ public class SeleniumPrestashopTest {
             WebElement privacyPolicyCheckbox = driver.findElement(privacyPolicyLocator);
             privacyPolicyCheckbox.click();});
 
-        step("Kliknij w button 'Save'", ()->{
+        step("Kliknięcie w button 'Save'", ()->{
             By saveButtonLocator = By.xpath("//button[contains(text(),\"Save\")]");
             WebElement saveButton = driver.findElement(saveButtonLocator);
             saveButton.click();});
     }
+
 
     @Test  //Niepoprawna rejestracja przy pomocy pustego formularza
     @Order(5)
@@ -268,7 +274,7 @@ public class SeleniumPrestashopTest {
             WebElement signupLink = driver.findElement(signupLocator);
             signupLink.click();});
 
-        step("Create Account Page - kliknięcie buttona 'Save', zatwierdzenie nieuzupełnionego formularza", ()->{
+        step("Create Account Page - kliknięcie w button 'Save'", ()->{
             By saveLocator = By.cssSelector(".form-control-submit");
             WebElement saveButton = driver.findElement(saveLocator);
             saveButton.click();});
@@ -279,8 +285,8 @@ public class SeleniumPrestashopTest {
             JavascriptExecutor js = (JavascriptExecutor) driver;
             String msg = (String) js.executeScript("return arguments[0].validationMessage", nameInput);
             Assertions.assertEquals("Wypełnij to pole.", msg);});
-
     }
+
 
     @Test  //Poprawna rejestracja użytkownika
     @Order(6)
@@ -330,6 +336,7 @@ public class SeleniumPrestashopTest {
             userSuccessLogout();});
     }
 
+
     private void userSuccessLogout() {
 
         //Kliknięcie w button 'Sign out'
@@ -342,6 +349,7 @@ public class SeleniumPrestashopTest {
         WebElement signInButton = driver.findElement(signInLocator);
         Assertions.assertTrue(signInButton.isDisplayed());
     }
+
 
     @Test
     @Order(7)    //Niepoprawne logowanie z użyciem pustych pól i błędnych danych
@@ -365,6 +373,8 @@ public class SeleniumPrestashopTest {
             Assertions.assertEquals("Wypełnij to pole.", msg);});
 
         step("Login page - uzupełnienie pola 'Email'", ()->{
+            By emailInputLocator = By.id("field-email");
+            WebElement emailInput = driver.findElement(emailInputLocator);
             emailInput.sendKeys("blablabla@wp.pl");});
 
         step("Login page - uzupełnienie pola 'Password'", ()->{        //uzupełnienie hasła
@@ -373,12 +383,15 @@ public class SeleniumPrestashopTest {
             passwordLoginInputField.sendKeys("blepassword");});
 
         step("Login page - kliknięcie w button 'Sign In'", ()->{
+            By loginButtonLocator = By.id("submit-login");
+            WebElement loginButtonClick = driver.findElement(loginButtonLocator);
             loginButtonClick.click();});
 
         step("Login page - sprawdzenie komunikatu o błędnym uwierzytelnieniu", ()->{
             By failMsgLocator = By.xpath("//li[@class=\"alert alert-danger\"]");
             WebElement failMessage = driver.findElement(failMsgLocator);
-            Assertions.assertTrue(failMessage.isDisplayed());});
+            Assertions.assertTrue(failMessage.isDisplayed());
+        });
     }
 
     @Test  //Login page - zresetowanie zapomnianego hasła
@@ -406,7 +419,7 @@ public class SeleniumPrestashopTest {
             Assertions.assertTrue(sentMessage.isDisplayed());});
     }
 
-    @Test     //Poprawne zalogowanie  + zmiana hasła + wylogowanie + zalogowanie nowym hasłem
+    @Test     //Poprawne zalogowanie  + zmiana hasła + zalogowanie nowym hasłem
     @Order(9)
     public void userSuccessLogin() {
 
@@ -455,52 +468,53 @@ public class SeleniumPrestashopTest {
             WebElement newPasswordField = driver.findElement(newPasswordFieldLocator);
             newPasswordField.sendKeys("TestTest123");});
 
-        step("Checkbox akceptacji regulaminu i polityki prywatności", ()->{
+        step("Your personal information - checkbox akceptacji regulaminu i polityki prywatności", ()->{
             By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
             WebElement privacyPolicyCheckbox = driver.findElement(privacyPolicyLocator);
             privacyPolicyCheckbox.click();});
 
-        step("Checkbox akceptacji regulaminu i polityki prywatności", ()->{
+        step("Your personal information - checkbox akceptacji regulaminu i polityki prywatności", ()->{
             By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
             WebElement policyInfoCheckbox = driver.findElement(policyInfoLocator);
             policyInfoCheckbox.click();});
 
-        step("", ()->{        //kliknięcie buttona 'Save'
+        step("Your personal information - kliknięcie w button 'Save'", ()->{
             By informationSaveButtonLocator = By.xpath("//button[@class=\"btn btn-primary form-control-submit " + "float-xs-right\"]");
             WebElement informationSaveButton = driver.findElement(informationSaveButtonLocator);
             informationSaveButton.click();});
 
-        step("", ()->{        //potwierdzenie pojawienia się komunikatu
+        step("Potwierdzenie pojawienia się komunikatu", ()->{
             By updatedInformationTextLocator = By.xpath("//ul/li[contains(text()," + "\"Information successfully updated.\")]");
             WebElement updatedInformationText = driver.findElement(updatedInformationTextLocator);
             Assertions.assertTrue(updatedInformationText.isDisplayed());});
 
-        step("", ()->{        //Wylogowanie użytkownika z potwierdzeniem poprawności wylogowania
+        step("Wylogowanie użytkownika z potwierdzeniem poprawności wylogowania", ()->{
             userSuccessLogout();});
 
-        step("", ()->{        //uzupełnienie pola email
+        step("uzupełnienie pola email", ()->{
             By emailLoginLocatorNew = By.id("field-email");
             WebElement emailLoginInputFieldNew = driver.findElement(emailLoginLocatorNew);
             emailLoginInputFieldNew.sendKeys(emailCreateName);});
 
-        step("", ()->{        //uzupełnienie hasła
+        step("uzupełnienie hasła", ()->{
             By passwordLoginLocatorNew = By.id("field-password");
             WebElement passwordLoginInputFieldNew = driver.findElement(passwordLoginLocatorNew);
             passwordLoginInputFieldNew.sendKeys("TestTest123");});
 
-        step("", ()->{        //kliknięcie w button 'Sign In'
+        step("kliknięcie w button 'Sign In'", ()->{
             By loginButtonLocatorNew = By.id("submit-login");
             WebElement loginButtonClickNew = driver.findElement(loginButtonLocatorNew);
             loginButtonClickNew.click();});
 
-        step("", ()->{        //sprawdzenie poprawności zalogowania użytkownika
+        step("sprawdzenie poprawności zalogowania użytkownika", ()->{
             By logoutLocatorNew = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
             WebElement logoutButtonNew = driver.findElement(logoutLocatorNew);
             Assertions.assertTrue(logoutButtonNew.isDisplayed());});
 
-        step("", ()->{        //przywrócenie starego hasła
+        step("przywrócenie starego hasła", ()->{
             backToPreviousPassword();});
     }
+
 
     private void backToPreviousPassword() {
 
@@ -539,6 +553,7 @@ public class SeleniumPrestashopTest {
             WebElement informationSaveButton = driver.findElement(informationSaveButtonLocator);
             informationSaveButton.click();});
     }
+
 
     @Test //Podstrona Accessories - filtrowanie
     @Order(10)
@@ -580,49 +595,54 @@ public class SeleniumPrestashopTest {
     @Order(11)
     public void filterArtProducts() throws InterruptedException {
 
+        step("wejdź w podstronę Art", ()->{
+            By artPageLocator = By.id("category-9");
+            WebElement artPageLink = driver.findElement(artPageLocator);
+            artPageLink.click();
+            Thread.sleep(1000);});
+
+        step("", ()->{
+            By sortByListLocator = By.xpath("//button[@aria-label=\"Sort by selection\"]");
+            WebElement sorByList = driver.findElement(sortByListLocator);
+            sorByList.click();});
+
+        step("Sortowanie - 'Name, A to Z'", ()->{
+            By sortByNameAZLocator = By.xpath("//div[@class=\"dropdown-menu\"]/a[contains(text(),\"Name, A to Z\")]");
+            WebElement sortByNameAZ = driver.findElement(sortByNameAZLocator);
+            sortByNameAZ.click();
+            Thread.sleep(1000);});
+
+        step("", ()->{
+            By productsListLocator = By.xpath("//div[@class=\"product-description\"]/h2/a");
+            List<WebElement> productsLists = driver.findElements(productsListLocator);
+
+            List<String>productsNames = new ArrayList<>();
+            for(WebElement product : productsLists){
+                productsNames.add(product.getText());
+            }
+            List<String>productsAlphabeticalOrder = productsNames.stream().sorted().toList();
+
+            for(int i=0; i < productsNames.size(); i++){
+                Assertions.assertEquals(productsNames.get(i), productsAlphabeticalOrder.get(i));
+            }
+        });
+
+        step("", ()->{});
         step("", ()->{});
 
-        //wejdź w podstronę Art
-        By artPageLocator = By.id("category-9");
-        WebElement artPageLink = driver.findElement(artPageLocator);
-        artPageLink.click();
-        Thread.sleep(1000);
+        //klikniecie w sort by
         By sortByListLocator = By.xpath("//button[@aria-label=\"Sort by selection\"]");
-        driver.findElement(sortByListLocator).click();
-
-        //Sortowanie - 'Name, A to Z'
-        By sortByNameAZLocator = By.xpath("//div[@class=\"dropdown-menu\"]/a[contains(text(),\"Name, A to Z\")]");
-        WebElement sortByNameAZ = driver.findElement(sortByNameAZLocator);
-        sortByNameAZ.click();
-
-        Thread.sleep(1000);
-
-        By productsListLocator = By.xpath("//div[@class=\"product-description\"]/h2/a");
-        List<WebElement> productsLists = driver.findElements(productsListLocator);
-
-        List<String>productsNames = new ArrayList<>();
-        for(WebElement product : productsLists){
-            productsNames.add(product.getText());
-        }
-        List<String>productsAlphabeticalOrder = productsNames.stream().sorted().toList();
-
-        for(int i=0; i < productsNames.size(); i++){
-            Assertions.assertEquals(productsNames.get(i), productsAlphabeticalOrder.get(i));
-        }
-
-
-
-        driver.findElement(sortByListLocator).click();
-
+        WebElement sortByList = driver.findElement(sortByListLocator);
+        sortByList.click();
         Thread.sleep(1000);
 
         //Sortowanie - ‘Price, low to high’
         By sortByPriceAscLocator = By.xpath("//div[@class=\"dropdown-menu\"]/a[contains(text(),\"Price, low to high\")]");
         WebElement sortByPriceAsc = driver.findElement(sortByPriceAscLocator);
         sortByPriceAsc.click();
-
         Thread.sleep(1000);
 
+        //pobranie z listy elementów i sprawdzenie czy są posortowane
         By productsListLocator2 = By.xpath("//div[@class=\"product-price-and-shipping\"]/span");
         List<WebElement> productsLists2 = driver.findElements(productsListLocator2);
 
@@ -635,8 +655,8 @@ public class SeleniumPrestashopTest {
         for(int i=0; i < productsPrices.size(); i++){
             Assertions.assertEquals(productsPrices.get(i), productsAlphabeticalOrder2.get(i));
         }
-
     }
+
 
     @Test   //Wybranie produktu + dodanie opinii o produkcie
     @Order(12)
@@ -681,6 +701,7 @@ public class SeleniumPrestashopTest {
             okCommentButtonClick.click();});
     }
 
+
     @Test    //Dodanie kilku sztuk produktu do koszyka
     @Order(13)
     public void addProductsToCart() {
@@ -710,6 +731,7 @@ public class SeleniumPrestashopTest {
             WebElement addProductPopup = driver.findElement(addProductPopupLocator);
             Assertions.assertTrue(addProductPopup.isDisplayed());});
     }
+
 
     @Test  //Koszyk
     @Order(14)
@@ -744,6 +766,10 @@ public class SeleniumPrestashopTest {
             WebElement unitPriceOfItem = driver.findElement(unitPriceOfItemLocator);
             String unitPriceText = unitPriceOfItem.getText().replace("zł", "").replace(",", ".").trim();
             double unitPrice = Double.parseDouble(unitPriceText);
+            // ilość w sekcji produktu
+            By numberInItemsSectionLocator = By.xpath("//input[@class='js-cart-line-product-quantity form-control']");
+            WebElement numberInItemSection = driver.findElement(numberInItemsSectionLocator);
+            int productQuantity = Integer.parseInt(numberInItemSection.getDomAttribute("value"));
             //wartość całkowita z podsumowania
             By totalPriceLocator = By.xpath("//div[@class='cart-summary-line cart-total']/span[@class='value']");
             WebElement totalPriceElement = driver.findElement(totalPriceLocator);
@@ -752,6 +778,7 @@ public class SeleniumPrestashopTest {
             //oczekiwana wartość
             double expectedTotal = unitPrice * productQuantity;});
     }
+
 
     @Test    //Formularz adresu – próba zapisania pustego formularza
     @Order(15)
@@ -790,8 +817,11 @@ public class SeleniumPrestashopTest {
             cityField.sendKeys("Warszawa");});
 
         step("kliknięcie w button 'Continue'", ()->{
+            By continueButtonInAddressesFormLocator = By.xpath("//button[@name=\"confirm-addresses\" and contains(., \"Continue\")]");
+            WebElement continueButtonInAddressesForm = driver.findElement(continueButtonInAddressesFormLocator);
             continueButtonInAddressesForm.click();});
     }
+
 
     @Test
     @Order(16)
@@ -817,6 +847,7 @@ public class SeleniumPrestashopTest {
             WebElement continueButtonInShippingMethodForm = driver.findElement(continueButtonInShippingMethodFormLocator);
             continueButtonInShippingMethodForm.click();});
     }
+
 
     @Test
     @Order(17)
@@ -848,6 +879,7 @@ public class SeleniumPrestashopTest {
             Assertions.assertTrue(confirmationMsg.isDisplayed());});
     }
 
+
     @Test
     @Order(18)
     public void contactCustomerServiceDepartment() {
@@ -873,8 +905,9 @@ public class SeleniumPrestashopTest {
             msgFieldInContactUsSection.sendKeys("Chcę otrzymać FV za zamówienie.");});
 
         step("kliknięcie w button 'Send' - próba przesłania niewypełnionego formularza", ()->{
-            WebElement sendButtonInContactUsSectionNew = driver.findElement(sendButtonInContactUsSectionLocator);
-            sendButtonInContactUsSectionNew.click();});
+            By sendButtonInContactUsSectionLocator = By.xpath("//input[@class=\"btn btn-primary\"]");
+            WebElement sendButtonInContactUsSection = driver.findElement(sendButtonInContactUsSectionLocator);
+            sendButtonInContactUsSection.click();});
 
         step("potwierdzenie pojawienia się komunikatu informacyjnego", ()->{
             By successMsgInContactUsSectionLocator = By.xpath("//li[contains(text(),\"Your message has been successfully sent to our team.\")]");
@@ -918,14 +951,16 @@ public class SeleniumPrestashopTest {
             fillInMsgTextInField.sendKeys("Proszę o wysyłkę możliwie najszybciej. Dziękuję.");});
 
         step("Kliknięcie 'Send'", ()->{
-            WebElement sendButtonInDetailsPageNew = driver.findElement(sendButtonInDetailsPageLocator);
-            sendButtonInDetailsPageNew.click();});
+            By sendButtonInDetailsPageLocator = By.xpath("//*[@name=\"submitMessage\"]");
+            WebElement sendButtonInDetailsPage = driver.findElement(sendButtonInDetailsPageLocator);
+            sendButtonInDetailsPage.click();});
 
         step("potwierdzenie wysłania wiadomości", ()->{
             By sendConfirmationMsgLocator = By.xpath("//li[contains(text(),\"Message successfully sent\")]");
             WebElement sendConfirmationMsg = driver.findElement(sendConfirmationMsgLocator);
             Assertions.assertTrue(sendConfirmationMsg.isDisplayed());});
     }
+
 
     @Test     //Panel użytkownika/Reorder - ponowne złożenie zamówienia
     @Order(20)
@@ -983,6 +1018,7 @@ public class SeleniumPrestashopTest {
             Assertions.assertTrue(confirmationMsg.isDisplayed());});
     }
 
+
     @Test
     @Order(21)
     public void addUserAddress() {
@@ -1033,12 +1069,14 @@ public class SeleniumPrestashopTest {
             updateNewAddressButton.click();});
 
         step("Zmiana danych w polu 'Zip/Postal Code'", ()->{
-            zipPostaCodeField = driver.findElement(zipPostaCodeFieldLocator);
+            By zipPostaCodeFieldLocator = By.id("field-postcode");
+            WebElement zipPostaCodeField = driver.findElement(zipPostaCodeFieldLocator);
             zipPostaCodeField.clear();
             zipPostaCodeField.sendKeys("02-333");});
 
         step("Kliknięcie w button 'Save'", ()->{
-            saveButton = driver.findElement(saveButtonLocator);
+            By saveButtonLocator = By.xpath("//button[@class=\"btn btn-primary form-control-submit float-xs-right\"]");
+            WebElement saveButton = driver.findElement(saveButtonLocator);
             saveButton.click();});
 
         step("potwierdzenie aktualizacji adresu", ()->{
@@ -1107,6 +1145,7 @@ public class SeleniumPrestashopTest {
             Assertions.assertTrue(wishListsElementsNames.size()==1 && wishListsElementsNames.getFirst().equals("Hummingbird printed t-shirt"));});
     }
 
+
     @Test    //Wishlists - utworzenie nowej wishlisty i dodanie produktu
     @Order(23)
     public void addItemsToNewWishlists() {
@@ -1173,6 +1212,7 @@ public class SeleniumPrestashopTest {
             Assertions.assertTrue(wishListsElementsNames.size()==1 && wishListsElementsNames.getFirst().equals("Mug The adventure begins"));});
     }
 
+
     @Test    //Wishlists - utworzenie listy na podstronie ‘My wishlists’, zmiana nazwy i usunięcie
     @Order(24)
     public void createNewWishlists() {
@@ -1238,7 +1278,7 @@ public class SeleniumPrestashopTest {
             Assertions.assertTrue(successRenamedNewWishlist.isDisplayed());});
 
         step("trzy kropki", ()->{
-            moreActionLocator = By.xpath("//p[contains(text(),\"Lista życzeń\")]/../div[@class=\"wishlist-list-item-right\"]/button[@class=\"wishlist-list-item-actions\"]");
+            By moreActionLocator = By.xpath("//p[contains(text(),\"Lista życzeń\")]/../div[@class=\"wishlist-list-item-right\"]/button[@class=\"wishlist-list-item-actions\"]");
             wait.until(ExpectedConditions.elementToBeClickable(moreActionLocator));
             driver.findElement(moreActionLocator).click();});
 
@@ -1274,173 +1314,165 @@ public class SeleniumPrestashopTest {
             Assertions.assertTrue(listRemovedComfirm.isDisplayed());});
     }
 
-    @Test   //Strona główna/Footer -  sprawdzenie działania linków w stopce
+
+    @Test   //Home page/Footer - sprawdzenie działania linków w stopce
     @Order(25)
     public void checkFooterLinksClickable() {
 
-        step("Kliknięcie w link 'Prices drop'", ()->{
+        step("Home page/Footer - kliknięcie w link 'Prices drop'", ()->{
             By pricesDropLinkLocator = By.id("link-product-page-prices-drop-1");
             WebElement pricesDropLink = driver.findElement(pricesDropLinkLocator);
             pricesDropLink.click();});
 
-        step("potwierdzenie otwarcia podstrony", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Prices drop'", ()->{
             By pricesDropPageNameLocator = By.id("js-product-list-header");
             WebElement pricesDropPageName = driver.findElement(pricesDropPageNameLocator);
             Assertions.assertTrue(pricesDropPageName.isDisplayed());});
 
-        step("Kliknięcie w link 'New products'", ()->{
+        step("Home page/Footer - kliknięcie w link 'New products'", ()->{
             By newProductsLinkLocator = By.id("link-product-page-new-products-1");
             WebElement newProductsLink = driver.findElement(newProductsLinkLocator);
             newProductsLink.click();});
 
-        step("potwierdzenie wejścia na podstronę", ()->{
+        step("Potwierdzenie otwarcia podstrony 'New products'", ()->{
             By newProductsPageNameLocator = By.id("js-product-list-header");
             WebElement newProductsPageName = driver.findElement(newProductsPageNameLocator);
             Assertions.assertTrue(newProductsPageName.isDisplayed());});
 
-        step("Kliknięcie w link 'Best sales'", ()->{
-            By bestSalesLinkLocator = By.id("link-product-page-best-sales-1");
-            WebElement bestSalesLink = driver.findElement(bestSalesLinkLocator);
-            bestSalesLink.click();});
+        step("Home page/Footer - kliknięcie w link 'Best sellers'", ()->{
+            By bestSellersLinkLocator = By.id("link-product-page-best-sales-1");
+            WebElement bestSellersLink = driver.findElement(bestSellersLinkLocator);
+            bestSellersLink.click();});
 
-        step("potwierdzenie wejścia na podstronę", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Best sellers'", ()->{
             By bestSellersPageNameLocator = By.id("js-product-list-header");
             WebElement bestSellersPageName = driver.findElement(bestSellersPageNameLocator);
             Assertions.assertTrue(bestSellersPageName.isDisplayed());});
 
-        step("Kliknięcie w link 'Delivery'", ()->{
+        step("Home page/Footer - kliknięcie w link 'Delivery'", ()->{
             By deliveryLinkLocator = By.id("link-cms-page-1-2");
             WebElement deliveryLink = driver.findElement(deliveryLinkLocator);
             deliveryLink.click();});
 
-        step("potwierdzenie wejścia na podstronę", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Delivery'", ()->{
             By deliveryPageNameLink = By.xpath("//h1[contains(text(),\"Delivery\")]");
             WebElement deliveryPageName = driver.findElement(deliveryPageNameLink);
             Assertions.assertTrue(deliveryPageName.isDisplayed());});
 
-        step("Kliknięcie w link 'Legal Notice'", ()->{
+        step("Home page/Footer - kliknięcie w link 'Legal Notice'", ()->{
             By legalNoticeLinkLocator = By.id("link-cms-page-2-2");
             WebElement legalNoticeLink = driver.findElement(legalNoticeLinkLocator);
             legalNoticeLink.click();});
 
-        step("Potwierdzenie wejścia na podstronę", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Legal Notice'", ()->{
             By legalNoticePageNameLocator = By.xpath("//h1[contains(text(),\"Legal Notice\")]");
             WebElement legalNoticePageName = driver.findElement(legalNoticePageNameLocator);
             Assertions.assertTrue(legalNoticePageName.isDisplayed());});
 
-        step("Kliknięcie w link 'Terms and conditions of use'", ()->{
+        step("Home page/Footer - kliknięcie w link 'Terms and conditions of use'", ()->{
             By termsAndConditionsOfUseLinkLocator = By.id("link-cms-page-3-2");
             WebElement termsAndConditionsOfUseLink = driver.findElement(termsAndConditionsOfUseLinkLocator);
             termsAndConditionsOfUseLink.click();});
 
-        step("potwierdzenie wejścia na podstronę", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Terms and conditions of use'", ()->{
             By termsAndConditionsOfUsePageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text(), " + "\"Terms and conditions of use\")]");
             WebElement termsAndConditionsOfUsePageName = driver.findElement(termsAndConditionsOfUsePageNameLocator);
             Assertions.assertTrue(termsAndConditionsOfUsePageName.isDisplayed());});
 
-        step("Kliknięcie w link 'About us'", ()->{
+        step("Home page/Footer - kliknięcie w link 'About us'", ()->{
             By aboutUsLinkLocator = By.id("link-cms-page-4-2");
             WebElement aboutUsLink = driver.findElement(aboutUsLinkLocator);
             aboutUsLink.click();});
 
-        step("potwierdzenie wejścia na podstronę", ()->{
+        step("Potwierdzenie otwarcia podstrony 'About us'", ()->{
             By aboutUsPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text(), " + "\"About us\")]");
             WebElement aboutUsPageName = driver.findElement(aboutUsPageNameLocator);
             Assertions.assertTrue(aboutUsPageName.isDisplayed());});
 
-        step("Kliknięcie w link 'Secure payment'", ()->{
+        step("Home page/Footer - kliknięcie w link 'Secure payment'", ()->{
             By securePaymentLinkLocator = By.id("link-cms-page-5-2");
             WebElement securePaymentLink = driver.findElement(securePaymentLinkLocator);
             securePaymentLink.click();});
 
-        step("potwierdzenie wejścia na podstronę", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Secure payment'", ()->{
             By securePaymentPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text(), " + "\"Secure payment\")]");
             WebElement securePaymentPageName = driver.findElement(securePaymentPageNameLocator);
             Assertions.assertTrue(securePaymentPageName.isDisplayed());});
 
-        step("Kliknięcie w link 'Contact us'", ()->{
+        step("Home page/Footer - kliknięcie w link 'Contact us'", ()->{
             By contactUsLinkLocator = By.id("link-static-page-contact-2");
             WebElement contactUsLink = driver.findElement(contactUsLinkLocator);
             contactUsLink.click();});
 
-        step("potwierdzenie wejścia na podstronę", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Contact us'", ()->{
             By contactUsPageNameLocator = By.xpath("//div[@class=\"col-md-9 col-md-offset-3\"]/h3[contains(text(),\"Contact us\")]");
             WebElement contactUsPageName = driver.findElement(contactUsPageNameLocator);
             Assertions.assertTrue(contactUsPageName.isDisplayed());});
 
-        step("Kliknięcie w link 'Sitemap'", ()->{
+        step("Home page/Footer - kliknięcie w link 'Sitemap'", ()->{
             By sitemapLinkLocator = By.id("link-static-page-sitemap-2");
             WebElement sitemapLink = driver.findElement(sitemapLinkLocator);
             sitemapLink.click();});
 
-        step("potwierdzenie wejścia na podstronę", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Sitemap'", ()->{
             By sitemapPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1/span[contains(text(), " + "\"Sitemap\")]");
             WebElement sitemapPageName = driver.findElement(sitemapPageNameLocator);
             Assertions.assertTrue(sitemapPageName.isDisplayed());});
 
-        step("Kliknięcie w link 'Stores'", ()->{
+        step("Home page/Footer - kliknięcie w link 'Stores'", ()->{
             By storesLinkLocator = By.id("link-static-page-stores-2");
             WebElement storesLink = driver.findElement(storesLinkLocator);
             storesLink.click();});
 
-        step("potwierdzenia wejscie na podstronę", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Stores'", ()->{
             By ourStoresPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1");
-            WebElement ourStoresPageName = driver.findElement(aboutUsLinkLocator);
+            WebElement ourStoresPageName = driver.findElement(ourStoresPageNameLocator);
             Assertions.assertTrue(ourStoresPageName.isDisplayed());});
 
-        step("Kliknięcie w link 'Personal info'", ()->{
+        step("Home page/Footer - kliknięcie w link 'Personal info'", ()->{
             By personalInfoLinkLocator = By.xpath("//a[@title=\"Personal info\"]");
             WebElement personalInfoLink = driver.findElement(personalInfoLinkLocator);
             personalInfoLink.click();});
 
-        step("potwierdzenie wejścia na podstronę", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Personal info'", ()->{
             By personalInfoPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text()," + "\"Your personal information\")]");
             WebElement personalInfoPageName = driver.findElement(personalInfoPageNameLocator);
             Assertions.assertTrue(personalInfoPageName.isDisplayed());});
 
-        step("Kliknięcie w link 'Orders'", ()->{
+        step("Home page/Footer - kliknięcie w link 'Orders'", ()->{
             By ordersLinkLocator = By.xpath("//a[@title=\"Orders\"]");
             WebElement ordersLink = driver.findElement(ordersLinkLocator);
             ordersLink.click();});
 
-        step("potwierdzenie wejścia na podstronę", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Orders'", ()->{
             By orderHistoryPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text()," + "\"Order history\")]");
             WebElement orderHistoryPageName = driver.findElement(orderHistoryPageNameLocator);
             Assertions.assertTrue(orderHistoryPageName.isDisplayed());});
 
-        step("Kliknięcie w link 'Credit slips'", ()->{
+        step("Home page/Footer - kliknięcie w link 'Credit slips'", ()->{
             By creditSlipsLinkLocator = By.xpath("//a[@title=\"Credit slips\"]");
             WebElement creditSlipsLink = driver.findElement(creditSlipsLinkLocator);
             creditSlipsLink.click();});
 
-        step("potwierdzenie wejścia na podstronę", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Credit slips'", ()->{
             By creditSlipsPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text()," + "\"Credit slips\")]");
             WebElement creditSlipsPageName = driver.findElement(creditSlipsPageNameLocator);
             Assertions.assertTrue(creditSlipsPageName.isDisplayed());});
 
-        step("Kliknięcie w link 'Addresses'", ()->{
+        step("Home page/Footer - kliknięcie w link 'Addresses'", ()->{
             By addressesLinkLocator = By.xpath("//a[@title=\"Addresses\"]");
             WebElement addressesLink = driver.findElement(addressesLinkLocator);
             addressesLink.click();});
 
-        step("potwierdzenie wejścia na podstronę", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Addresses'", ()->{
             By yourAddressesPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text()," + "\"Your addresses\")]");
             WebElement yourAddressesPageName = driver.findElement(yourAddressesPageNameLocator);
             Assertions.assertTrue(yourAddressesPageName.isDisplayed());});
 
-        step("Kliknięcie w link 'Wishlist'", ()->{
-            By wishlistLinkLocator = By.xpath("//a[@title=\"My wishlists\"]");
-            WebElement wishlistLink = driver.findElement(wishlistLinkLocator);
-            wishlistLink.click();});
-
-        step("potwierdzenie wejścia na podstronę", ()->{
-            By myWishlistsPageNameLocator = By.xpath("//h1[contains(text(),\"My wishlists\")]");
-            WebElement myWishlistsPageName = driver.findElement(myWishlistsPageNameLocator);
-            Assertions.assertTrue(myWishlistsPageName.isDisplayed());});
-
-        step("Wylogowanie użytkownika z potwierdzeniem poprawności wylogowania", ()->{
+        step("Podstrona 'Addresses' - wylogowanie użytkownika z potwierdzeniem poprawności wylogowania", ()->{
             userSuccessLogout();});
     }
+
 
     @AfterAll
     public static void afterAll() {
