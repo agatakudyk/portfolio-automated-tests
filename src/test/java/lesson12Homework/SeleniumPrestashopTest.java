@@ -20,7 +20,7 @@ import static io.qameta.allure.Allure.step;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SeleniumPrestashopTest {
 
-    String emailCreateName = "testowianka255@wp.pl";
+    String emailCreateName = "testowianka263@wp.pl";
     static ChromeDriver driver;
     static WebDriverWait wait;
 
@@ -114,7 +114,7 @@ public class SeleniumPrestashopTest {
 
         step("Cart - potwierdzenie pojawienia się komunikatu potwierdzającego usunięcie", ()->{
             By emptyCartMsgLocator = By.xpath("//span[contains(text(),\"There are no more items in your cart\")]");
-            wait.until(ExpectedConditions.elementToBeClickable(emptyCartMsgLocator));//TODO zaaczekac az strona sie przeladuje
+            wait.until(ExpectedConditions.elementToBeClickable(emptyCartMsgLocator));
             WebElement emptyCartMsg = driver.findElement(emptyCartMsgLocator);
             Assertions.assertTrue(emptyCartMsg.isDisplayed());});
     }
@@ -458,11 +458,6 @@ public class SeleniumPrestashopTest {
             By logoutLocator = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
             WebElement logoutButton = driver.findElement(logoutLocator);
             Assertions.assertTrue(logoutButton.isDisplayed());});
-
-        step("Header - kliknięcie w button 'Sign In'", ()->{
-            By signInLocator = By.cssSelector(".user-info a");
-            WebElement signInButton = driver.findElement(signInLocator);
-            signInButton.click();});
 
         step("Your account - kliknięcie w link 'Information'", ()->{
             By informationPageLocator = By.xpath("//a[@id=\"identity-link\"]");
@@ -1444,7 +1439,7 @@ public class SeleniumPrestashopTest {
 
         step("Potwierdzenie otwarcia podstrony 'Secure payment'", ()->{
             By securePaymentPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
-                    "/h1[contains(text()\"Secure payment\")]");
+                    "/h1[contains(text(),\"Secure payment\")]");
             WebElement securePaymentPageName = driver.findElement(securePaymentPageNameLocator);
             Assertions.assertTrue(securePaymentPageName.isDisplayed());});
 
