@@ -1,0 +1,1 @@
+Testy napisane w ramach zadania 12 skopiuj i przepisz używając PageObjectPattern
