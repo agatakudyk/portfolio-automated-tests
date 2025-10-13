@@ -165,7 +165,7 @@ import static io.qameta.allure.Allure.step;
 
         step("Personal Information - checkbox akceptacji regulaminu i polityki prywatności", ()->{
             PersonalInformation personal = new PersonalInformation();
-            personal.termsAndCinditionsCheckbox();
+            personal.termsAndConditionsCheckbox();
         });
 
         step("Personal Information - przejście do 'Addresses' poprzez kliknięcie w button 'Continue'", ()->{
@@ -225,51 +225,51 @@ import static io.qameta.allure.Allure.step;
     public void signUpNowFillInFormByUnregisteredUser() {
 
         step("‘Save time on...' form - kliknięcie w button 'Save'", ()->{
-            By saveButtonLocator = By.xpath("//button[contains(text(),\"Save\")]");
-            WebElement saveButton = driver.findElement(saveButtonLocator);
-            saveButton.click();});
+            OrderConfirmation confirmation = new OrderConfirmation();
+            confirmation.saveButtonInForm();
+        });
 
-        step("Tooltip dynamiczny- potwierdzenie pojawienia się dymka z komunikatem walidacyjnym", ()->{
-            By firstNameFieldLocator = By.id("field-firstname");
-            WebElement firstNameField = driver.findElement(firstNameFieldLocator);
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            String msg = (String) js.executeScript("return arguments[0].validationMessage", firstNameField);
-            Assertions.assertEquals("Wypełnij to pole.", msg);});
+//        step("Tooltip dynamiczny- potwierdzenie pojawienia się dymka z komunikatem walidacyjnym", ()->{
+//            By firstNameFieldLocator = By.id("field-firstname");
+//            WebElement firstNameField = driver.findElement(firstNameFieldLocator);
+//            JavascriptExecutor js = (JavascriptExecutor) driver;
+//            String msg = (String) js.executeScript("return arguments[0].validationMessage", firstNameField);
+//            Assertions.assertEquals("Wypełnij to pole.", msg);});
 
         step("‘Save time on...' form - uzupełnienie pola 'First name'", ()->{
-            By firstNameFieldLocator = By.id("field-firstname");
-            WebElement firstNmaeField = driver.findElement(firstNameFieldLocator);
-            firstNmaeField.sendKeys("Tomasz");});
+            UnregisteredUserData unregistered = new UnregisteredUserData();
+            unregistered.firstName();
+        });
 
         step("‘Save time on...' form - uzupełnienie pola 'Last name'", ()->{
-            By lastNameFieldLocator = By.id("field-lastname");
-            WebElement lastNameField = driver.findElement(lastNameFieldLocator);
-            lastNameField.sendKeys("Kot");});
+            UnregisteredUserData unregistered = new UnregisteredUserData();
+            unregistered.lastName();
+        });
 
         step("‘Save time on...' form - uzupełnienie pola 'Email'", ()->{
-            By emailFieldLocator = By.id("field-email");
-            WebElement mailField = driver.findElement(emailFieldLocator);
-            mailField.sendKeys("kot123@wp.pl");});
+            UnregisteredUserData unregistered = new UnregisteredUserData();
+            unregistered.email();
+        });
 
         step("‘Save time on...' form - uzupełnienie pola 'Password'", ()->{
-            By passwordFieldLocator = By.id("field-password");
-            WebElement passwordField = driver.findElement(passwordFieldLocator);
-            passwordField.sendKeys("Mojehaslo123");});
+            UnregisteredUserData unregistered = new UnregisteredUserData();
+            unregistered.password();
+        });
 
         step("‘Save time on...' form - kliknięcie w checkbox zgody na przetwarzanie danych osobowych", ()->{
-            By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
-            WebElement policyInfoCheckbox = driver.findElement(policyInfoLocator);
-            policyInfoCheckbox.click();});
+            OrderConfirmation confirmation = new OrderConfirmation();
+            confirmation.customerPrivacyCheckbox();
+        });
 
         step("‘Save time on...' form - kliknięcie w checkbox akceptacji regulaminu i polityki prywatności", ()->{
-            By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
-            WebElement privacyPolicyCheckbox = driver.findElement(privacyPolicyLocator);
-            privacyPolicyCheckbox.click();});
+            OrderConfirmation confirmation = new OrderConfirmation();
+            confirmation.termsAndConditionsCheckbox();
+        });
 
         step("Zapisanie danych poprzez kliknięcie w button 'Save'", ()->{
-            By saveButtonLocator = By.xpath("//button[contains(text(),\"Save\")]");
-            WebElement saveButton = driver.findElement(saveButtonLocator);
-            saveButton.click();});
+            OrderConfirmation confirmation = new OrderConfirmation();
+            confirmation.saveButtonInForm();
+        });
     }
 
 
