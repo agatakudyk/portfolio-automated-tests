@@ -24,6 +24,12 @@ public void firstName() {
         By emailFieldLocator = By.id("field-email");
         getDriver().findElement(emailFieldLocator).sendKeys("kot123@wp.pl");
     }
+    //uzupełnienie pola 'Password'
+    public void password() {
+        By passwordFieldLocator = By.id("field-password");
+        getDriver().findElement(passwordFieldLocator).sendKeys("Mojehaslo123");
+    }
+
     //uzupełnienie pola 'Address'
     public void address() {
         By addressFieldLocator = By.id("field-address1");
