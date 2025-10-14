@@ -5,18 +5,6 @@ import static lesson15Homework.driver.DriverProvider.getDriver;
 
 public class Home {
 
-    //zmiana języka / kliknięcie w dropdown-button
-    public void languageDropdownButton() {
-        By languageDropdownButtonLocator = By.xpath("//button[@data-toggle=\"dropdown\"]");
-        getDriver().findElement(languageDropdownButtonLocator).click();
-    }
-
-    //wybór opcji 'English' na liście języków
-    public void englishLanguageSelectionFromDropdown() {
-        By englishLanguageSwitchLocator = By.xpath("//a[@data-iso-code=\"en\"]");
-        getDriver().findElement(englishLanguageSwitchLocator).click();
-    }
-
     //kliknięcie wishlist-button produktu 'Today is a good day Framed Poster'
     public void wishlistIconOfPosterTodayIsAGoodDay() {
         By heartButtonOfTodayIsAGoodDayFramedPosterLocator = By.xpath(
