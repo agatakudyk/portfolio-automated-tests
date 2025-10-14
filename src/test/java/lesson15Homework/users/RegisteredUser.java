@@ -36,4 +36,22 @@ public class RegisteredUser {
         By newPasswordFieldLocator = By.xpath("//input[@name=\"new_password\"]");
         getDriver().findElement(newPasswordFieldLocator).sendKeys("TestTest123");
     }
+
+    //uzupełnienie pola 'Address'
+    public void address() {
+        By addressFieldLocator = By.id("fieldaddress1");
+        getDriver().findElement(addressFieldLocator).sendKeys("ul. Prosta 11");
+    }
+
+    //uzupełnienie pola 'Zip/Postal Code'
+    public void postalCode() {
+        By postalCodeFieldLocator = By.id("field-postcode");
+        getDriver().findElement(postalCodeFieldLocator).sendKeys("11-234");
+    }
+
+    //uzupełnienie pola 'City'
+    public void city() {
+        By cityFieldLocal = By.id("field-city");
+        getDriver().findElement(cityFieldLocal).sendKeys("Warszawa");
+    }
 }
