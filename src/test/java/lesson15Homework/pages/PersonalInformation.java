@@ -15,7 +15,7 @@ public class PersonalInformation {
     }
 
     //Personal Information - checkbox akceptacji regulaminu i polityki prywatności
-    public void termsAndCinditionsCheckbox() {
+    public void termsAndConditionsCheckbox() {
         By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
         getDriver().findElement(privacyPolicyLocator).click();
     }
