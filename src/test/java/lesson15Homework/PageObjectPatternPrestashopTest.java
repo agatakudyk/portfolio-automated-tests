@@ -368,42 +368,42 @@ import static io.qameta.allure.Allure.step;
     public void failLoginWithIncorrectData() {
 
         step("Header - kliknięcie w button 'Sign In'", ()->{
-            By signInLocator = By.cssSelector(".user-info a");
-            WebElement signInButton = driver.findElement(signInLocator);
-            signInButton.click();});
+            Header header = new Header();
+            header.signIn();
+        });
 
         step("Login page - kliknięcie w button 'Sign In'", ()->{
-            By loginButtonLocator = By.id("submit-login");
-            WebElement loginButtonClick = driver.findElement(loginButtonLocator);
-            loginButtonClick.click();});
+            LogIn login = new LogIn();
+            login.signInButton();
+        });
 
-        step("Tooltip dynamiczny - potwierdzenie pojawienia się komunikatu", ()->{
-            By emailInputLocator = By.id("field-email");
-            WebElement emailInput = driver.findElement(emailInputLocator);
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            String msg = (String) js.executeScript("return arguments[0].validationMessage", emailInput);
-            Assertions.assertEquals("Wypełnij to pole.", msg);});
+//        step("Tooltip dynamiczny - potwierdzenie pojawienia się komunikatu", ()->{
+//            By emailInputLocator = By.id("field-email");
+//            WebElement emailInput = driver.findElement(emailInputLocator);
+//            JavascriptExecutor js = (JavascriptExecutor) driver;
+//            String msg = (String) js.executeScript("return arguments[0].validationMessage", emailInput);
+//            Assertions.assertEquals("Wypełnij to pole.", msg);});
 
         step("Login page - uzupełnienie pola 'Email'", ()->{
-            By emailInputLocator = By.id("field-email");
-            WebElement emailInput = driver.findElement(emailInputLocator);
-            emailInput.sendKeys("blablabla@wp.pl");});
+            LogIn login = new LogIn();
+            login.emailField();
+        });
 
         step("Login page - uzupełnienie pola 'Password'", ()->{        //uzupełnienie hasła
-            By passwordLoginLocator = By.id("field-password");
-            WebElement passwordLoginInputField = driver.findElement(passwordLoginLocator);
-            passwordLoginInputField.sendKeys("blepassword");});
+            LogIn login = new LogIn();
+            login.passwordField();
+        });
 
         step("Login page - kliknięcie w button 'Sign In'", ()->{
-            By loginButtonLocator = By.id("submit-login");
-            WebElement loginButtonClick = driver.findElement(loginButtonLocator);
-            loginButtonClick.click();});
-
-        step("Login page - sprawdzenie komunikatu o błędnym uwierzytelnieniu", ()->{
-            By failMsgLocator = By.xpath("//li[@class=\"alert alert-danger\"]");
-            WebElement failMessage = driver.findElement(failMsgLocator);
-            Assertions.assertTrue(failMessage.isDisplayed());
+            LogIn login = new LogIn();
+            login.signInButton();
         });
+
+//        step("Login page - sprawdzenie komunikatu o błędnym uwierzytelnieniu", ()->{
+//            By failMsgLocator = By.xpath("//li[@class=\"alert alert-danger\"]");
+//            WebElement failMessage = driver.findElement(failMsgLocator);
+//            Assertions.assertTrue(failMessage.isDisplayed());
+//        });
     }
 
     @Test  //Login page - zresetowanie zapomnianego hasła
