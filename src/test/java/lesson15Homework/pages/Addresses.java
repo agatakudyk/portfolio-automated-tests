@@ -12,4 +12,5 @@ public class Addresses {
                 "//button[@type=\"submit\"]");
         getDriver().findElement(addreessContinuseLocator).click();
     }
+
 }
