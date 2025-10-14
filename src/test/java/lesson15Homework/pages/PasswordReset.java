@@ -19,4 +19,10 @@ public class PasswordReset {
         By passwordRecoveryButtonLocator = By.id("send-reset-link");
         getDriver().findElement(passwordRecoveryButtonLocator).click();
     }
+
+    //kliknięcie w link 'Back to Login'
+    public void backToLoginPageLink() {
+        By backToLoginPageLocator = By.xpath("//i[@class=\"material-icons\"]");
+        getDriver().findElement(backToLoginPageLocator).click();
+    }
 }
