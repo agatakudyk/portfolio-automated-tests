@@ -1,6 +1,7 @@
 package lesson15Homework.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
 import static lesson15Homework.driver.DriverProvider.getDriver;
@@ -30,5 +31,25 @@ public class ProductTheBestIsYetToCome {
     public void sendReviewButton() {
         By sendButtonLocator = By.xpath("//button[@class=\"btn btn-comment btn-comment-big\"]");
         getDriver().findElement(sendButtonLocator).click();
+    }
+    //review sent popup - kliknięcie w button 'OK'
+    public void okReviewButton() {
+        By okCommentButtonLocator = By.xpath(
+                "//div[contains(text(), \"Your comment has been submitted and will be available once " +
+                        "approved by a moderator.\")]/../div[@class=\"post-comment-buttons\"]" +
+                        "/button[@class=\"btn btn-comment btn-comment-huge\"]");
+        getDriver().findElement(okCommentButtonLocator).click();
+    }
+
+//kliknięcie button 'Add to cart'
+    public void addToCartButton() {
+        By addToCartButtonLocator = By.xpath("//button[@class=\"btn btn-primary add-to-cart\"]");
+        getDriver().findElement(addToCartButtonLocator).click();
+    }
+
+    //popup 'Product successfully added...' - kliknięcie 'Proceed to checkout'
+    public void proceedToCheckoutButton() {
+        By closeAddToCartPopupLocator = By.xpath("//a[@class=\"btn btn-primary\"]/i");
+        getDriver().findElement(closeAddToCartPopupLocator).click();
     }
 }
