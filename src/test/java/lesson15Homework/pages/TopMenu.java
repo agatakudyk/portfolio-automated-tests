@@ -1,9 +1,8 @@
 package lesson15Homework.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
 import static lesson15Homework.driver.DriverProvider.getDriver;
+
 
 public class TopMenu {
 
