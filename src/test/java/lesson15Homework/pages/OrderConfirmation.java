@@ -13,6 +13,7 @@ public class OrderConfirmation {
         By saveButtonLocator = By.xpath("//button[contains(text(),\"Save\")]");
         getDriver().findElement(saveButtonLocator).click();
     }
+
     //checkbox zgody na przetwarzanie danych osobowych
     public void customerPrivacyCheckbox() {
         By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
@@ -23,5 +24,12 @@ public class OrderConfirmation {
     public void termsAndConditionsCheckbox() {
         By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
         getDriver().findElement(privacyPolicyLocator).click();
+    }
+
+    //kliknięcie w link kontaktu z działem obsługi klienta
+    public void customerServiceDepartmentContact() {
+        By customerServiceDepartmentContactLocator = By.xpath(
+                "//a[contains(text(),\"customer service department.\")]");
+        getDriver().findElement(customerServiceDepartmentContactLocator).click();
     }
 }
