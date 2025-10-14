@@ -31,4 +31,10 @@ public class Header {
         By signInLocator = By.cssSelector(".user-info a");
         getDriver().findElement(signInLocator).click();
     }
+
+    //wejście na profil użytkownika
+    public void userProfile() {
+        By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
+        getDriver().findElement(userProfileLinkLocator).click();
+    }
 }
