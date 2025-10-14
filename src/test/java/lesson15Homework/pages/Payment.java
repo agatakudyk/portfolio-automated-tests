@@ -14,6 +14,12 @@ public class Payment {
         getDriver().findElement(payByBankWireRadioButtonLocator).click();
     }
 
+    //wybór opcji 'Pay by Check'
+    public void payByCheck() {
+        By payByCheckRadioButtonLocator = By.id("payment-option-1");
+        getDriver().findElement(payByCheckRadioButtonLocator).click();
+    }
+
     //wybór checkboxa zgody
     public void agreeToTermsCheckbox() {
         By agreeToTermsCheckboxLocator = By.xpath("//input[@name=\"conditions_to_approve[terms-and-conditions]\"]");
@@ -25,4 +31,5 @@ public class Payment {
         By placeOrderButtonInPaymentSectionLocator = By.xpath("//div[@class=\"ps-shown-by-js\"]/button");
         getDriver().findElement(placeOrderButtonInPaymentSectionLocator).click();
     }
+
     }
