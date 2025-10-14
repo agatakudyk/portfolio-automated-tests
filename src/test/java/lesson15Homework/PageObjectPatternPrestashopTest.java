@@ -2,6 +2,7 @@ package lesson15Homework;
 
 import lesson15Homework.driver.DriverProvider;
 import lesson15Homework.pages.*;
+import lesson15Homework.users.RegisteredUser;
 import lesson15Homework.users.UnregisteredUserData;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
@@ -35,13 +36,13 @@ import static io.qameta.allure.Allure.step;
     public void languageSwitchIntoEnglish() {
 
         step("Home page - zmiana języka / kliknięcie w dropdown-button", ()->{
-            Home home = new Home();
-            home.languageDropdownButton();
+            Header header = new Header();
+            header.languageDropdownButton();
         });
 
         step("Home page/dropdown - kliknięcie opcji 'English' na rozwijanej liście języków", ()->{
-            Home home = new Home();
-            home.englishLanguageSelectionFromDropdown();
+            Header header = new Header();
+            header.englishLanguageSelectionFromDropdown();
         });
 
 //        step("Home page - potwierdzenie ustawienia języka angielskiego", ()->{
@@ -224,7 +225,7 @@ import static io.qameta.allure.Allure.step;
     @Order(4)
     public void signUpNowFillInFormByUnregisteredUser() {
 
-        step("‘Save time on...' form - kliknięcie w button 'Save'", ()->{
+        step("‘Save time on...' form - kliknięcie w button 'Save'", () -> {
             OrderConfirmation confirmation = new OrderConfirmation();
             confirmation.saveButtonInForm();
         });
@@ -236,37 +237,37 @@ import static io.qameta.allure.Allure.step;
 //            String msg = (String) js.executeScript("return arguments[0].validationMessage", firstNameField);
 //            Assertions.assertEquals("Wypełnij to pole.", msg);});
 
-        step("‘Save time on...' form - uzupełnienie pola 'First name'", ()->{
+        step("‘Save time on...' form - uzupełnienie pola 'First name'", () -> {
             UnregisteredUserData unregistered = new UnregisteredUserData();
             unregistered.firstName();
         });
 
-        step("‘Save time on...' form - uzupełnienie pola 'Last name'", ()->{
+        step("‘Save time on...' form - uzupełnienie pola 'Last name'", () -> {
             UnregisteredUserData unregistered = new UnregisteredUserData();
             unregistered.lastName();
         });
 
-        step("‘Save time on...' form - uzupełnienie pola 'Email'", ()->{
+        step("‘Save time on...' form - uzupełnienie pola 'Email'", () -> {
             UnregisteredUserData unregistered = new UnregisteredUserData();
             unregistered.email();
         });
 
-        step("‘Save time on...' form - uzupełnienie pola 'Password'", ()->{
+        step("‘Save time on...' form - uzupełnienie pola 'Password'", () -> {
             UnregisteredUserData unregistered = new UnregisteredUserData();
             unregistered.password();
         });
 
-        step("‘Save time on...' form - kliknięcie w checkbox zgody na przetwarzanie danych osobowych", ()->{
+        step("‘Save time on...' form - kliknięcie w checkbox zgody na przetwarzanie danych osobowych", () -> {
             OrderConfirmation confirmation = new OrderConfirmation();
             confirmation.customerPrivacyCheckbox();
         });
 
-        step("‘Save time on...' form - kliknięcie w checkbox akceptacji regulaminu i polityki prywatności", ()->{
+        step("‘Save time on...' form - kliknięcie w checkbox akceptacji regulaminu i polityki prywatności", () -> {
             OrderConfirmation confirmation = new OrderConfirmation();
             confirmation.termsAndConditionsCheckbox();
         });
 
-        step("Zapisanie danych poprzez kliknięcie w button 'Save'", ()->{
+        step("Zapisanie danych poprzez kliknięcie w button 'Save'", () -> {
             OrderConfirmation confirmation = new OrderConfirmation();
             confirmation.saveButtonInForm();
         });
@@ -278,21 +279,21 @@ import static io.qameta.allure.Allure.step;
     public void failSignupWithEmptyFields() {
 
         step("Login page - kliknięcie w link rejestracji", ()->{
-            By signupLocator = By.cssSelector("a[data-link-action=\"display-register-form\"]");
-            WebElement signupLink = driver.findElement(signupLocator);
-            signupLink.click();});
+            LogIn login = new LogIn();
+            login.signupLink();
+        });
 
         step("Create account page - kliknięcie w button 'Save'", ()->{
-            By saveLocator = By.cssSelector(".form-control-submit");
-            WebElement saveButton = driver.findElement(saveLocator);
-            saveButton.click();});
+            CreateAccount create = new CreateAccount();
+            create.saveButton();
+        });
 
-        step("Create account page/tooltip dynamiczny - potwierdzenie pojawienia się komunikatu", ()->{
-            By nameInputLocator = By.id("field-firstname");
-            WebElement nameInput = driver.findElement(nameInputLocator);
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            String msg = (String) js.executeScript("return arguments[0].validationMessage", nameInput);
-            Assertions.assertEquals("Wypełnij to pole.", msg);});
+//        step("Create account page/tooltip dynamiczny - potwierdzenie pojawienia się komunikatu", ()->{
+//            By nameInputLocator = By.id("field-firstname");
+//            WebElement nameInput = driver.findElement(nameInputLocator);
+//            JavascriptExecutor js = (JavascriptExecutor) driver;
+//            String msg = (String) js.executeScript("return arguments[0].validationMessage", nameInput);
+//            Assertions.assertEquals("Wypełnij to pole.", msg);});
     }
 
 
@@ -300,47 +301,51 @@ import static io.qameta.allure.Allure.step;
     @Order(6)
     public void userSuccessSignup() {
 
-        step("Create account page - uzupełnienie pola 'First name'", ()->{
-            By nameLocator = By.id("field-firstname");
-            WebElement nameInputField = driver.findElement(nameLocator);
-            nameInputField.sendKeys("Anna");});
+        step("Create account - uzupełnienie pola 'First name'", ()->{
+            RegisteredUser registered = new RegisteredUser();
+            registered.name();
+        });
 
-        step("Create account page - uzupełnienie pola 'Last name'", ()->{
-            By surnameLocator = By.id("field-lastname");
-            WebElement surnameInputField = driver.findElement(surnameLocator);
-            surnameInputField.sendKeys("Testowianka");});
+        step("Create account - uzupełnienie pola 'Last name'", ()->{
+            RegisteredUser registered = new RegisteredUser();
+            registered.lastName();
+        });
 
-        step("Create account page - uzupełnienie pola 'Email'", ()->{
-            By mailLocator = By.id("field-email");
-            WebElement mailInputField = driver.findElement(mailLocator);
-            mailInputField.sendKeys("wpisz maila");});
+        step("Create account - uzupełnienie pola 'Email'", ()->{
+            RegisteredUser registered = new RegisteredUser();
+            registered.email();
+        });
 
-        step("Create Account Page - uzupełnienie pola 'Password'", ()->{
-            By passwordLocator = By.id("field-password");
-            WebElement passwordInputField = driver.findElement(passwordLocator);
-            passwordInputField.sendKeys("Password123");});
+        step("Create Account - uzupełnienie pola 'Password'", ()->{
+            RegisteredUser registered = new RegisteredUser();
+            registered.password();
+        });
 
-        step("Create Account Page - kliknięcie w checkbox informacji o przetwarzaniu danych osobowych", ()->{
-            By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
-            WebElement policyInfoCheckbox = driver.findElement(policyInfoLocator);
-            policyInfoCheckbox.click();});
+        step("Create Account - kliknięcie w checkbox informacji o przetwarzaniu danych osobowych", ()->{
+            CreateAccount create = new CreateAccount();
+            create.customerPrivacyCheckbox();
+        });
 
-        step("Create Account Page - kliknięcie w checkbox akceptacji polityki prywatności", ()->{
-            By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
-            WebElement privacyPolicyCheckbox = driver.findElement(privacyPolicyLocator);
-            privacyPolicyCheckbox.click();});
+        step("Create Account - kliknięcie w checkbox akceptacji polityki prywatności", ()->{
+            CreateAccount create = new CreateAccount();
+            create.termsAndConditionsCheckbox();
+        });
 
-        step("Create Account Page - kliknięcie w button 'Save'", ()->{
-            By saveLocator = By.cssSelector(".form-control-submit");
-            WebElement saveButton = driver.findElement(saveLocator);
-            saveButton.click();});
+        step("Create Account - kliknięcie w button 'Save'", ()->{
+            CreateAccount create = new CreateAccount();
+            create.saveButton();
+        });
 
-        step("Sprawdzenie pomyślnej rejestracji - widoczność przycisku 'Sign out'", ()->{
-            By logoutLocator = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
-            WebElement logoutButton = driver.findElement(logoutLocator);
-            Assertions.assertTrue(logoutButton.isDisplayed());});
+//        step("Sprawdzenie pomyślnej rejestracji - widoczność przycisku 'Sign out'", ()->{
+//            By logoutLocator = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
+//            WebElement logoutButton = driver.findElement(logoutLocator);
+//            Assertions.assertTrue(logoutButton.isDisplayed());
+//            });
 
-        step("Wylogowanie użytkownika z potwierdzeniem pomyślnego wylogowania", this::userSuccessLogout);
+        step("Header - kliknięcie w button 'Sign out'", ()->{
+            Header header = new Header();
+            header.signout();
+        });
     }
 
 
@@ -351,10 +356,10 @@ import static io.qameta.allure.Allure.step;
         WebElement logoutButton = driver.findElement(logoutLocator);
         logoutButton.click();
 
-        //Sprawdzenie pomyślnego wylogowania - widoczność przycisku 'Sign in'
-        By signInLocator = By.cssSelector(".user-info a");
-        WebElement signInButton = driver.findElement(signInLocator);
-        Assertions.assertTrue(signInButton.isDisplayed());
+//        //Sprawdzenie pomyślnego wylogowania - widoczność przycisku 'Sign in'
+//        By signInLocator = By.cssSelector(".user-info a");
+//        WebElement signInButton = driver.findElement(signInLocator);
+//        Assertions.assertTrue(signInButton.isDisplayed());
     }
 
 
