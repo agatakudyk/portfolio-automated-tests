@@ -25,6 +25,11 @@ public void sortByPriceAsc() {
     getDriver().findElement(sortByPriceAscLocator).click();
 }
 
+//wejście w okno produktu 'The Best Is Yet...'
+    public void theBestPoster() {
+        By theBestPosterLocator = By.xpath("//img[@alt=\"The best is yet to come' Framed poster\"]");
+        getDriver().findElement(theBestPosterLocator).click();
+    }
 
 
 }
