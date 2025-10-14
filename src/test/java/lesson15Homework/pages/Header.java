@@ -25,4 +25,10 @@ public class Header {
         By logoutLocator = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
         getDriver().findElement(logoutLocator).click();
     }
+
+    //kliknięcie w button 'Sign In'
+    public void signIn() {
+        By signInLocator = By.cssSelector(".user-info a");
+        getDriver().findElement(signInLocator).click();
+    }
 }
