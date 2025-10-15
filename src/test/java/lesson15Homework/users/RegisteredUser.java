@@ -79,4 +79,12 @@ public class RegisteredUser {
         By cityFieldLocator = By.id("field-city");
         getDriver().findElement(cityFieldLocator).sendKeys("Janowiec");
     }
+
+    //zmiana danych w polu 'Zip/Postal Code'
+    public void replaceNewZipPostaCode() {
+        By replaceNewzipPostaCodeFieldLocator = By.id("field-postcode");
+        WebElement zipPostaCodeField = getDriver().findElement(replaceNewzipPostaCodeFieldLocator);
+        zipPostaCodeField.clear();
+        zipPostaCodeField.sendKeys("02-333");
+    }
 }
