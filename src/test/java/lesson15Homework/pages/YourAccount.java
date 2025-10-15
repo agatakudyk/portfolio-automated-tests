@@ -12,9 +12,15 @@ public class YourAccount {
         getDriver().findElement(informationPageLocator).click();
     }
 
-    //wejście w sekcję 'Order history and details'
+    //kliknięcie w link 'Order history and details'
     public void orderHistoryAndDetails() {
         By orderHistoryAndDetailsLinkLocator = By.id("history-link");
         getDriver().findElement(orderHistoryAndDetailsLinkLocator).click();
+    }
+
+    //kliknięcie w link 'Addresses'
+    public void addresses() {
+        By addressesPageLink = By.xpath("//a[@id=\"addresses-link\"]/span/i");
+        getDriver().findElement(addressesPageLink).click();
     }
 }
