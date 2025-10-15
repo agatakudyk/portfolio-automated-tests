@@ -1,6 +1,9 @@
 package lesson15Homework.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import static lesson15Homework.driver.DriverProvider.getDriver;
 
 public class Home {
@@ -25,5 +28,20 @@ public class Home {
         By openTodayIsAGoodDayFramedPosterLocator = By.xpath("//a[@class=\"thumbnail product-thumbnail\"]" +
                 "/img[@alt=\"Today is a good day Framed poster\"]");
         getDriver().findElement(openTodayIsAGoodDayFramedPosterLocator).click();
+    }
+
+    //kliknięcie wishlist-button produktu 'Hummingbird printed t-shirt'
+    public void wishlistIconOfHummingbirdPrintedTshirt() {
+        By heartButtonOfHummingbirdLocator = By.xpath(
+                "//a[contains(text(),\"Hummingbird printed t-shirt\")]" +
+                        "/../../../button[@class=\"wishlist-button-add\"]");
+        getDriver().findElement(heartButtonOfHummingbirdLocator).click();
+    }
+
+    //Popup 'Add to whishlist' - kliknięcie w link 'My wishlist'
+    public void myWishlistSelection() {
+        By myWishlistPopupLocator = By.xpath("//div[@class=\"modal-body\"]" +
+                "/div/ul/li[@class=\"wishlist-list-item\"]");
+        getDriver().findElement(myWishlistPopupLocator).click();
     }
 }
