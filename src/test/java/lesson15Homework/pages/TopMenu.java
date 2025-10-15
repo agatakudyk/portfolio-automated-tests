@@ -18,5 +18,10 @@ public class TopMenu {
         getDriver().findElement(artPageLocator).click();
     }
 
+    //Przejcie na Home page
+    public void homePageLogo() {
+        By homepageLinkLocator = By.id("_desktop_logo");
+        getDriver().findElement(homepageLinkLocator).click();
+    }
 
 }
