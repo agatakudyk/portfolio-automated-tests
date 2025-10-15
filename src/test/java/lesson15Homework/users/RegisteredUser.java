@@ -61,4 +61,22 @@ public class RegisteredUser {
         cityInAddressField.clear();
         cityInAddressField.sendKeys("Opole");
     }
+
+    //uzupełnienie pola nowy 'Address'
+    public void createNewAddress() {
+        By addressFieldLocator = By.id("field-address1");
+        getDriver().findElement(addressFieldLocator).sendKeys("ul. Kwiatowa 15");
+    }
+
+    //uzupełnienie pola nowy 'Zip/Postal Code'
+    public void createNewZipPostaCode() {
+        By zipPostaCodeFieldLocator = By.id("field-postcode");
+        getDriver().findElement(zipPostaCodeFieldLocator).sendKeys("88-111");
+    }
+
+    //uzupełnienie pola nowy 'City'
+    public void createNewCity() {
+        By cityFieldLocator = By.id("field-city");
+        getDriver().findElement(cityFieldLocator).sendKeys("Janowiec");
+    }
 }
