@@ -2,7 +2,6 @@ package lesson15Homework.users;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
 import static lesson15Homework.driver.DriverProvider.getDriver;
 
 public class RegisteredUser {
@@ -53,5 +52,13 @@ public class RegisteredUser {
     public void city() {
         By cityFieldLocal = By.id("field-city");
         getDriver().findElement(cityFieldLocal).sendKeys("Warszawa");
+    }
+
+    //wpisanie nowej nazwy miasta
+    public void newCity() {
+        By cityInAddressFieldLocator = By.id("field-city");
+      WebElement cityInAddressField = getDriver().findElement(cityInAddressFieldLocator);
+        cityInAddressField.clear();
+        cityInAddressField.sendKeys("Opole");
     }
 }
