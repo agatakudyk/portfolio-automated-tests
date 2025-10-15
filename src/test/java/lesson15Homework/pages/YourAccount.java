@@ -23,4 +23,10 @@ public class YourAccount {
         By addressesPageLink = By.xpath("//a[@id=\"addresses-link\"]/span/i");
         getDriver().findElement(addressesPageLink).click();
     }
+
+    //kliknięcie w link 'My wishlists'
+    public void myWishlists() {
+        By myWishlistsPageLocator = By.xpath("//a[@id=\"wishlist-link\"]/span/i");
+        getDriver().findElement(myWishlistsPageLocator).click();
+    }
 }
