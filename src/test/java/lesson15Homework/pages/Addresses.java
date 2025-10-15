@@ -1,8 +1,6 @@
 package lesson15Homework.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
 import static lesson15Homework.driver.DriverProvider.getDriver;
 
 
@@ -22,4 +20,9 @@ public class Addresses {
         getDriver().findElement(editAddressesLinkLocator).click();
     }
 
+    //kliknięcie w link 'Create new address'
+    public void createNewAddressLink() {
+        By createNewAddressLinkLocator = By.xpath("//a[@data-link-action=\"add-address\"]");
+        getDriver().findElement(createNewAddressLinkLocator).click();
+    }
 }
