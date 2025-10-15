@@ -51,4 +51,29 @@ public class Home {
                 "/../../../button[@class=\"wishlist-button-add\"]");
         getDriver().findElement(heartButtonOfMugTheAdventureLocator).click();
     }
+
+    //popup - kliknięcie w link 'Create new list'
+    public void createNewWishlist() {
+        By newWishlistPopupLocator = By.xpath("//a[@class=\"wishlist-add-to-new text-primary\"]");
+        getDriver().findElement(newWishlistPopupLocator).click();
+    }
+
+    //wpisanie nazwy nowej listy
+    public void wishlistNameFillIn() {
+        By wishlistNameLocator = By.xpath("//input[@id=\"input2\"]");
+        getDriver().findElement(wishlistNameLocator).sendKeys("Ulubione");
+    }
+
+    //kliknięcie w button 'Create wishlist'
+    public void createNewWishListButton() {
+        By createNewWishListLocator = By.xpath("//button[contains(text(),\"Create wishlist\")]");
+        getDriver().findElement(createNewWishListLocator).click();
+    }
+
+    //wybranie nowo utworzonej listy
+    public void ulubioneNewWishlist() {
+        By ulubioneNewWishlistLector = By.xpath("//li[@class=\"wishlist-list-item\"]" +
+                "/p[contains(text(),\"Ulubione\")]");
+        getDriver().findElement(ulubioneNewWishlistLector).click();
+    }
 }
