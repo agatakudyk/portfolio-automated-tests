@@ -17,4 +17,10 @@ public class OrderDetails {
         By fillInMsgTextInFormLocator = By.xpath("//textarea[@name=\"msgText\"]");
         getDriver().findElement(fillInMsgTextInFormLocator).sendKeys("Proszę o wysyłkę możliwie najszybciej. Dziękuję.");
     }
+
+    //kliknięcie w link 'Reorder'
+    public void reorderLink() {
+        By reorderPageLinkLocator = By.xpath("//a[@class=\"button-primary\" and text()=\"Reorder\"]");
+       getDriver().findElement(reorderPageLinkLocator).click();
+    }
 }
