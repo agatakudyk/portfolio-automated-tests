@@ -5,9 +5,9 @@ import static lesson15Homework.driver.DriverProvider.getDriver;
 
 public class NewAddress {
 
-    //uzupełnienie pola 'Address'
-    public void address() {
-        By addressFieldLocator = By.id("field-address1");
-        getDriver().findElement(addressFieldLocator).sendKeys("ul. Kwiatowa 15");
+    //kliknięcie w button 'Save
+    public void saveButton() {
+        By saveButtonLocator = By.xpath("//button[@class=\"btn btn-primary form-control-submit float-xs-right\"]");
+        getDriver().findElement(saveButtonLocator).click();
     }
 }
