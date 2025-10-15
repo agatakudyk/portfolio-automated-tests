@@ -44,4 +44,11 @@ public class Home {
                 "/div/ul/li[@class=\"wishlist-list-item\"]");
         getDriver().findElement(myWishlistPopupLocator).click();
     }
+
+    //kliknięcie wishlist-button produktu 'Mug The adventure begins'
+    public void wishlistIconOfMugTheAdventureBegins() {
+        By heartButtonOfMugTheAdventureLocator = By.xpath("//a[contains(text(),\"Mug The adventure begins\")]" +
+                "/../../../button[@class=\"wishlist-button-add\"]");
+        getDriver().findElement(heartButtonOfMugTheAdventureLocator).click();
+    }
 }
