@@ -26,4 +26,23 @@ public class MyWishlists {
         By myWishlistsLinkLocator = By.xpath("//nav[@data-depth=\"4\"]//a[contains(., \"My wishlists\")]");
         getDriver().findElement(myWishlistsLinkLocator).click();
     }
+
+    //kliknięcie w 'Create new list
+    public void createNewList() {
+        By createNewListWishlistLinkLocator = By.xpath("//div[@class=\"wishlist-container-header\"]" +
+                "/a[contains(text(),\"Create new list\")]");
+        getDriver().findElement(createNewListWishlistLinkLocator).click();
+    }
+
+    //Popup 'Create wishlist' - wpisanie nazwy nowej listy życzeń
+    public void addNameOfNewList() {
+        By createNameOfNewListWishlistLocator = By.xpath("//input[@placeholder=\"Add name\"]");
+        getDriver().findElement(createNameOfNewListWishlistLocator).sendKeys("Super lista");
+    }
+
+    //Popup 'Create wishlist' - kliknięcie w button 'Create wishlist'
+    public void createWishlistButton() {
+        By createWishlistButtonLocator = By.xpath("//button[contains(text(),\"Create wishlist\")]");
+        getDriver().findElement(createWishlistButtonLocator).click();
+    }
 }
