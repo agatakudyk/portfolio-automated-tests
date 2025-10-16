@@ -1,6 +1,5 @@
 package lesson12Homework;
 
-import com.codeborne.selenide.As;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;

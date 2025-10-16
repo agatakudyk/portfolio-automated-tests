@@ -1,7 +1,7 @@
 package lesson8Homework;
 
-import com.codeborne.selenide.Driver;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -24,20 +23,18 @@ public class Lesson8PrestashopTest {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    FluentWait<WebDriver> fluentWait;
 
     @BeforeEach
     public void setup() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
     }
 
     @Test
-    public void addToCart() throws InterruptedException {
+    public void addToCart() {
 
         driver.get("https://demo.prestashop.com/#/en/front");
 
@@ -52,8 +49,7 @@ public class Lesson8PrestashopTest {
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h4[@id=\"myModalLabel\"]")));
         WebElement addTocartElement = driver.findElement(By.xpath("//h4[contains(text(),\"Product successfully added to your shopping cart\")]"));
-//////        String addTocartMessage = driver.findElement(By.cssSelector("modal-title h6 text-sm-center")).getText();
-        //Assertions.assertEquals("modal-title h6 text-sm-center", addTocartMessage);
+
         String addToCartMessage = getDisplayedText(addTocartElement);
         assertTrue(addToCartMessage.contains("Product successfully added to your shopping cart"));
     }
@@ -68,7 +64,7 @@ public class Lesson8PrestashopTest {
         return text;
     }
 
-    //@Test
+    @Test
     public void acceptNewsletter() {
 
         driver.get("https://demo.prestashop.com/#/en/front");
@@ -91,7 +87,7 @@ public class Lesson8PrestashopTest {
         Assertions.assertEquals("You have successfully subscribed to this newsletter.", newsletterMessage);
     }
 
-    //@AfterEach
+    @AfterEach
     public void teardown() {
         if (driver != null) {
             driver.quit();
