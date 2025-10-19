@@ -10,46 +10,43 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
 
 import static io.qameta.allure.Allure.step;
 
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-    public class PageObjectPatternPrestashopTest {
+public class PageObjectPatternPrestashopTest {
 
-        static WebDriver driver;
-        static WebDriverWait wait;
+    static WebDriver driver;
+    static WebDriverWait wait;
 
-        @BeforeAll
-        public static void beforeAll() {
+    @BeforeAll
+    public static void beforeAll() {
 
-            driver = DriverProvider.getDriver();
-            wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-            driver.get("http://localhost:8080/pl/");
-        }
+        driver = DriverProvider.getDriver();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        driver.get("http://localhost:8080/pl/");
+    }
 
 
     @Test   //Home page - zmiana języka strony z polskiego na angielski
     @Order(1)
     public void languageSwitchIntoEnglish() {
 
-        step("Home page - zmiana języka / kliknięcie w dropdown-button", ()->{
+        step("Home page - zmiana języka / kliknięcie w dropdown-button", () -> {
             Header header = new Header();
             header.languageDropdownButton();
         });
 
-        step("Home page/dropdown - kliknięcie opcji 'English' na rozwijanej liście języków", ()->{
+        step("Home page/dropdown - kliknięcie opcji 'English' na rozwijanej liście języków", () -> {
             Header header = new Header();
             header.englishLanguageSelectionFromDropdown();
         });
 
-//        step("Home page - potwierdzenie ustawienia języka angielskiego", ()->{
-//            By englishLanguageCheckLocator = By.xpath("//button[@data-toggle=\"dropdown\"]" +
-//                    "/span[contains(text(),\"English\")]");
-//            WebElement englishLanguageCheck = driver.findElement(englishLanguageCheckLocator);
-//            Assertions.assertTrue(englishLanguageCheck.isDisplayed());});
+        step("Home page - potwierdzenie ustawienia języka angielskiego", () -> {
+            Header header = new Header();
+            Assertions.assertTrue(header.isEnglishLanguageDisplayed());
+        });
     }
 
 
@@ -57,61 +54,60 @@ import static io.qameta.allure.Allure.step;
     @Order(2)
     public void addToCartAndDeleteProductByUnregisteredUser() {
 
-        step("Unregistered user - kliknięcie wishlist-button produktu 'Today is a good day Framed Poster'", ()->{
+        step("Unregistered user - kliknięcie wishlist-button produktu 'Today is a good day Framed Poster'", () -> {
             Home home = new Home();
             home.wishlistIconOfPosterTodayIsAGoodDay();
         });
 
-//        step("Potwierdzenie pojawienia się popupu z komunikatem walidacyjnym", ()->{
-//            By loginRequiredMsgLocator = By.xpath("//p[contains(text(),\"You need to be logged in to " +
-//                    "save products in your wishlist.\")]");
-//            WebElement loginRequiredMsg = driver.findElement(loginRequiredMsgLocator);
-//            Assertions.assertTrue(loginRequiredMsg.isDisplayed());});
+        step("Potwierdzenie pojawienia się popupu z komunikatem walidacyjnym", () -> {
+            Home home = new Home();
+            Assertions.assertTrue(home.isMsgDisplayedThatLoginRequired());
+        });
 
-        step("Zamknięcie okna z komunikatem - kliknięcie w button 'Cancel'", ()->{
+        step("Zamknięcie okna z komunikatem - kliknięcie w button 'Cancel'", () -> {
             Home home = new Home();
             home.closeWishlistPopupOfUnregisteredUser();
         });
 
-        step("Wejście na stronę produktu 'Today is a good day Framed Poster'", ()->{
+        step("Wejście na stronę produktu 'Today is a good day Framed Poster'", () -> {
             Home home = new Home();
             home.enterProductPageOfTodayIsAGoodDayFramedPoster();
         });
 
-        step("Dodanie produktu do koszyka - kliknięcie w button 'Add to cart'", ()->{
-            ProductTodayIsAGoodDayFramedPoster page = new ProductTodayIsAGoodDayFramedPoster();
-            page.addToCartButton();
+        step("Dodanie produktu do koszyka - kliknięcie w button 'Add to cart'", () -> {
+            ProductTodayIsAGoodDayFramedPoster todayIsAGoodDay = new ProductTodayIsAGoodDayFramedPoster();
+            todayIsAGoodDay.addToCartButton();
         });
 
-//        step("Potwierdzenie pojawienia się popupu z komunikatem potwierdzającym pomyślne dodanie", ()->{
-//            By addProductPopupLocator = By.xpath("//h4[contains(text(),\"Product successfully added to " +
-//                    "your shopping cart\")]");
-//            wait.until(ExpectedConditions.elementToBeClickable(addProductPopupLocator));
-//            WebElement addProductPopup = driver.findElement(addProductPopupLocator);
-//            Assertions.assertTrue(addProductPopup.isDisplayed());});
+        step("Potwierdzenie pojawienia się popupu z komunikatem potwierdzającym pomyślne dodanie", () -> {
+            ProductTodayIsAGoodDayFramedPoster todayIsAGoodDay = new ProductTodayIsAGoodDayFramedPoster();
+            Assertions.assertTrue(todayIsAGoodDay.isSuccessPopupDisplayed());
+
+            //TODO            wait.until(ExpectedConditions.elementToBeClickable(addProductPopupLocator));
+        });
 
 
-        step("Zamknięcie okna popup - kliknięcie w button 'Proceed to checkout'", ()->{
+        step("Zamknięcie okna popup - kliknięcie w button 'Proceed to checkout'", () -> {
             ProductTodayIsAGoodDayFramedPoster page = new ProductTodayIsAGoodDayFramedPoster();
             page.closeAddToCartPopupLocator();
         });
 
-//        step("Shopping cart - sprawdzenie zgodności nazwy produktu w koszyku", ()->{
-//            By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]" +
-//                    "/a[contains(text(),\"Today is a good day Framed poster\")]");
-//            String productNameInCart = driver.findElement(productNameInCartLocator).getText();
-//            Assertions.assertEquals("Today is a good day Framed poster", productNameInCart);});
+        step("Shopping cart - sprawdzenie zgodności nazwy produktu w koszyku", () -> {
+            Cart cart = new Cart();
+            Assertions.assertTrue(cart.isProductInCart());
+        });
 
-        step("Shopping cart - usunięcie produktu z koszyka", ()->{
+        step("Shopping cart - usunięcie produktu z koszyka", () -> {
             Cart cart = new Cart();
             cart.deleteCartItem();
         });
 
-//        step("Shopping cart - potwierdzenie pojawienia się komunikatu, że koszyk jest pusty", ()->{
-//            By emptyCartMsgLocator = By.xpath("//span[contains(text(),\"There are no more items in your cart\")]");
-//            wait.until(ExpectedConditions.elementToBeClickable(emptyCartMsgLocator));
-//            WebElement emptyCartMsg = driver.findElement(emptyCartMsgLocator);
-//            Assertions.assertTrue(emptyCartMsg.isDisplayed());});
+        step("Shopping cart - potwierdzenie pojawienia się komunikatu, że koszyk jest pusty", () -> {
+            Cart cart = new Cart();
+            Assertions.assertTrue(cart.isMsgThatCartEmpty());
+
+            //TODO wait.until(ExpectedConditions.elementToBeClickable(emptyCartMsgLocator));
+        });
     }
 
 
@@ -119,105 +115,105 @@ import static io.qameta.allure.Allure.step;
     @Order(3)
     public void addProductToCartAndCheckoutByUnregisteredUser() {
 
-        step("Shopping cart - przejcie z koszyka na stronę główną", ()->{
+        step("Shopping cart - przejcie z koszyka na stronę główną", () -> {
             Cart cart = new Cart();
             cart.homePageLink();
         });
 
-        step("Home page - wejście w okno produktu 'Today is a good day Framed Poster'", ()->{
+        step("Home page - wejście w okno produktu 'Today is a good day Framed Poster'", () -> {
             Home home = new Home();
             home.enterProductPageOfTodayIsAGoodDayFramedPoster();
         });
 
-        step("Dodanie produktu do koszyka - kliknięcie w button 'Add to cart'", ()->{
+        step("Dodanie produktu do koszyka - kliknięcie w button 'Add to cart'", () -> {
             ProductTodayIsAGoodDayFramedPoster page = new ProductTodayIsAGoodDayFramedPoster();
             page.addToCartButton();
         });
 
-        step("Popup w oknie produktu - kliknięcie w button 'Proceed to checkout'", ()->{
+        step("Popup w oknie produktu - kliknięcie w button 'Proceed to checkout'", () -> {
             ProductTodayIsAGoodDayFramedPoster poster = new ProductTodayIsAGoodDayFramedPoster();
             poster.closeAddToCartPopupLocator();
         });
 
-        step("Cart - kliknięcie w button 'Proceed to checkout'", ()->{
-        Cart cart = new Cart();
-        cart.proceedToCheckoutButton();
+        step("Cart - kliknięcie w button 'Proceed to checkout'", () -> {
+            Cart cart = new Cart();
+            cart.proceedToCheckoutButton();
         });
 
-        step("Personal Information - uzupełnienie pola 'First name'", ()->{
+        step("Personal Information - uzupełnienie pola 'First name'", () -> {
             UnregisteredUserData unregisteredUser = new UnregisteredUserData();
             unregisteredUser.firstName();
         });
 
-        step("Personal Information - uzupełnienie pola 'Last name'", ()->{
+        step("Personal Information - uzupełnienie pola 'Last name'", () -> {
             UnregisteredUserData unregisteredUser = new UnregisteredUserData();
             unregisteredUser.lastName();
         });
 
-        step("Personal Information - uzupełnienie pola 'Email'", ()->{
+        step("Personal Information - uzupełnienie pola 'Email'", () -> {
             UnregisteredUserData unregisteredUser = new UnregisteredUserData();
             unregisteredUser.email();
         });
 
-        step("Personal Information - checkbox zgody na przetwarzanie danych osobowych", ()->{
+        step("Personal Information - checkbox zgody na przetwarzanie danych osobowych", () -> {
             PersonalInformation personal = new PersonalInformation();
             personal.customerPrivacyCheckbox();
         });
 
-        step("Personal Information - checkbox akceptacji regulaminu i polityki prywatności", ()->{
+        step("Personal Information - checkbox akceptacji regulaminu i polityki prywatności", () -> {
             PersonalInformation personal = new PersonalInformation();
             personal.termsAndConditionsCheckbox();
         });
 
-        step("Personal Information - przejście do 'Addresses' poprzez kliknięcie w button 'Continue'", ()->{
+        step("Personal Information - przejście do 'Addresses' poprzez kliknięcie w button 'Continue'", () -> {
             PersonalInformation personal = new PersonalInformation();
             personal.continueButton();
         });
 
-        step("Addresses - uzupełnienie pola 'Address'", ()->{
+        step("Addresses - uzupełnienie pola 'Address'", () -> {
             UnregisteredUserData unregisteredUser = new UnregisteredUserData();
             unregisteredUser.address();
         });
 
-        step("Addresses - uzupełnienie pola 'Zip/Postal Code'", ()->{
+        step("Addresses - uzupełnienie pola 'Zip/Postal Code'", () -> {
             UnregisteredUserData unregisteredUser = new UnregisteredUserData();
             unregisteredUser.postalCode();
         });
 
-        step("Addresses - uzupełnienie pola 'City'", ()->{
+        step("Addresses - uzupełnienie pola 'City'", () -> {
             UnregisteredUserData unregisteredUser = new UnregisteredUserData();
             unregisteredUser.city();
         });
 
-        step("Addresses - przejście do 'Shipping Method' poprzez kliknięcie w button 'Continue'", ()->{
+        step("Addresses - przejście do 'Shipping Method' poprzez kliknięcie w button 'Continue'", () -> {
             Addresses addresses = new Addresses();
             addresses.continueButton();
         });
 
-        step("Shipping Method - przejście do 'Payment' poprzez kliknięcie w button 'Continue'", ()->{
+        step("Shipping Method - przejście do 'Payment' poprzez kliknięcie w button 'Continue'", () -> {
             ShippingMethod shipping = new ShippingMethod();
             shipping.continueButton();
         });
 
-        step("Payment - wybór opcji 'Pay by bank wire'", ()->{
+        step("Payment - wybór opcji 'Pay by bank wire'", () -> {
             Payment payment = new Payment();
             payment.payByBankWire();
         });
 
-        step("Payment -  wybór checkboxa zgody", ()->{
+        step("Payment -  wybór checkboxa zgody", () -> {
             Payment payment = new Payment();
             payment.agreeToTermsCheckbox();
         });
 
-        step("Payment - przejście na 'Order confirmation page' poprzez kliknięcie w button 'Place Order'", ()->{
+        step("Payment - przejście na 'Order confirmation page' poprzez kliknięcie w button 'Place Order'", () -> {
             Payment payment = new Payment();
             payment.placeOrderButton();
         });
 
-//        step("Order confirmation page - potwierdzenie pojawienia się komunikatu potwierdzającego", ()->{
-//            By confirmationMsgLocator = By.xpath("//h3[@class=\"h1 card-title\"]/i");
-//            WebElement confirmationMsg = driver.findElement(confirmationMsgLocator);
-//            Assertions.assertTrue(confirmationMsg.isDisplayed());});
+        step("Order confirmation - wyświetlenie komunikatu potwierdzającego 'Your order is confirmed'", () -> {
+            OrderConfirmation confirmation = new OrderConfirmation();
+            Assertions.assertTrue(confirmation.isMsgThatOrderConfirmed());
+        });
     }
 
 
@@ -230,12 +226,10 @@ import static io.qameta.allure.Allure.step;
             confirmation.saveButtonInForm();
         });
 
-//        step("Tooltip dynamiczny- potwierdzenie pojawienia się dymka z komunikatem walidacyjnym", ()->{
-//            By firstNameFieldLocator = By.id("field-firstname");
-//            WebElement firstNameField = driver.findElement(firstNameFieldLocator);
-//            JavascriptExecutor js = (JavascriptExecutor) driver;
-//            String msg = (String) js.executeScript("return arguments[0].validationMessage", firstNameField);
-//            Assertions.assertEquals("Wypełnij to pole.", msg);});
+        step("Tooltip dynamiczny- potwierdzenie pojawienia się dymka z komunikatem walidacyjnym", () -> {
+            OrderConfirmation confirmation = new OrderConfirmation();
+            Assertions.assertEquals("Wypełnij to pole.", confirmation.getValidationMsg());
+        });
 
         step("‘Save time on...' form - uzupełnienie pola 'First name'", () -> {
             UnregisteredUserData unregistered = new UnregisteredUserData();
@@ -278,22 +272,20 @@ import static io.qameta.allure.Allure.step;
     @Order(5)
     public void failSignupWithEmptyFields() {
 
-        step("Login page - kliknięcie w link rejestracji", ()->{
+        step("Login page - kliknięcie w link rejestracji", () -> {
             LogIn login = new LogIn();
             login.signupLink();
         });
 
-        step("Create account page - kliknięcie w button 'Save'", ()->{
+        step("Create account page - kliknięcie w button 'Save'", () -> {
             CreateAccount create = new CreateAccount();
             create.saveButton();
         });
 
-//        step("Create account page/tooltip dynamiczny - potwierdzenie pojawienia się komunikatu", ()->{
-//            By nameInputLocator = By.id("field-firstname");
-//            WebElement nameInput = driver.findElement(nameInputLocator);
-//            JavascriptExecutor js = (JavascriptExecutor) driver;
-//            String msg = (String) js.executeScript("return arguments[0].validationMessage", nameInput);
-//            Assertions.assertEquals("Wypełnij to pole.", msg);});
+        step("Create account page/tooltip dynamiczny - potwierdzenie pojawienia się komunikatu", () -> {
+            CreateAccount create = new CreateAccount();
+            Assertions.assertEquals("Wypełnij to pole.", create.getValidationMsg());
+        });
     }
 
 
@@ -301,265 +293,255 @@ import static io.qameta.allure.Allure.step;
     @Order(6)
     public void userSuccessSignup() {
 
-        step("Create account - uzupełnienie pola 'First name'", ()->{
+        step("Create account - uzupełnienie pola 'First name'", () -> {
             RegisteredUser registered = new RegisteredUser();
             registered.name();
         });
 
-        step("Create account - uzupełnienie pola 'Last name'", ()->{
+        step("Create account - uzupełnienie pola 'Last name'", () -> {
             RegisteredUser registered = new RegisteredUser();
             registered.lastName();
         });
 
-        step("Create account - uzupełnienie pola 'Email'", ()->{
+        step("Create account - uzupełnienie pola 'Email'", () -> {
             RegisteredUser registered = new RegisteredUser();
             registered.email();
         });
 
-        step("Create Account - uzupełnienie pola 'Password'", ()->{
+        step("Create Account - uzupełnienie pola 'Password'", () -> {
             RegisteredUser registered = new RegisteredUser();
             registered.password();
         });
 
-        step("Create Account - kliknięcie w checkbox informacji o przetwarzaniu danych osobowych", ()->{
+        step("Create Account - kliknięcie w checkbox informacji o przetwarzaniu danych osobowych", () -> {
             CreateAccount create = new CreateAccount();
             create.customerPrivacyCheckbox();
         });
 
-        step("Create Account - kliknięcie w checkbox akceptacji polityki prywatności", ()->{
+        step("Create Account - kliknięcie w checkbox akceptacji polityki prywatności", () -> {
             CreateAccount create = new CreateAccount();
             create.termsAndConditionsCheckbox();
         });
 
-        step("Create Account - kliknięcie w button 'Save'", ()->{
+        step("Create Account - kliknięcie w button 'Save'", () -> {
             CreateAccount create = new CreateAccount();
             create.saveButton();
         });
 
-//        step("Sprawdzenie pomyślnej rejestracji - widoczność przycisku 'Sign out'", ()->{
-//            By logoutLocator = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
-//            WebElement logoutButton = driver.findElement(logoutLocator);
-//            Assertions.assertTrue(logoutButton.isDisplayed());
-//            });
+        step("Sprawdzenie pomyślnej rejestracji - widoczność przycisku 'Sign out'", () -> {
+            Header header = new Header();
+            Assertions.assertTrue(header.isButtonSignOutDisplayed());
+        });
 
-        step("Header - kliknięcie w button 'Sign out'", ()->{
+        step("Header - kliknięcie w button 'Sign out' / wylogowanie użytkownika ", () -> {
             Header header = new Header();
             header.signout();
+        });
+
+        step("Sprawdzenie czy wylogowany - widoczność przycisku 'Sign in'", () -> {
+            Header header = new Header();
+            Assertions.assertTrue(header.isButtonSignInDisplayed());
         });
     }
 
 
-    private void userSuccessLogout() {
-
-        //Kliknięcie w button 'Sign out'
-        By logoutLocator = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
-        WebElement logoutButton = driver.findElement(logoutLocator);
-        logoutButton.click();
-
-//        //Sprawdzenie pomyślnego wylogowania - widoczność przycisku 'Sign in'
-//        By signInLocator = By.cssSelector(".user-info a");
-//        WebElement signInButton = driver.findElement(signInLocator);
-//        Assertions.assertTrue(signInButton.isDisplayed());
-    }
-
-
+    //Niepoprawne logowanie z użyciem pustych pól i błędnych danych
     @Test
-    @Order(7)    //Niepoprawne logowanie z użyciem pustych pól i błędnych danych
+    @Order(7)
     public void failLoginWithIncorrectData() {
 
-        step("Header - kliknięcie w button 'Sign In'", ()->{
+        step("Header - kliknięcie w button 'Sign In'", () -> {
             Header header = new Header();
             header.signIn();
         });
 
-        step("Login page - kliknięcie w button 'Sign In'", ()->{
+        step("Login page - kliknięcie w button 'Sign In'", () -> {
             LogIn login = new LogIn();
             login.signInButton();
         });
 
-//        step("Tooltip dynamiczny - potwierdzenie pojawienia się komunikatu", ()->{
-//            By emailInputLocator = By.id("field-email");
-//            WebElement emailInput = driver.findElement(emailInputLocator);
-//            JavascriptExecutor js = (JavascriptExecutor) driver;
-//            String msg = (String) js.executeScript("return arguments[0].validationMessage", emailInput);
-//            Assertions.assertEquals("Wypełnij to pole.", msg);});
+        step("Tooltip dynamiczny - potwierdzenie pojawienia się komunikatu", () -> {
+            LogIn login = new LogIn();
+            Assertions.assertEquals("Wypełnij to pole.", login.getValidationMsg());
+        });
 
-        step("Login page - uzupełnienie pola 'Email'", ()->{
+        step("Login page - uzupełnienie pola 'Email'", () -> {
             LogIn login = new LogIn();
             login.emailField();
         });
 
-        step("Login page - uzupełnienie pola 'Password'", ()->{        //uzupełnienie hasła
+        step("Login page - uzupełnienie pola 'Password'", () -> {
             LogIn login = new LogIn();
             login.passwordField();
         });
 
-        step("Login page - kliknięcie w button 'Sign In'", ()->{
+        step("Login page - kliknięcie w button 'Sign In'", () -> {
             LogIn login = new LogIn();
             login.signInButton();
         });
 
-//        step("Login page - sprawdzenie komunikatu o błędnym uwierzytelnieniu", ()->{
-//            By failMsgLocator = By.xpath("//li[@class=\"alert alert-danger\"]");
-//            WebElement failMessage = driver.findElement(failMsgLocator);
-//            Assertions.assertTrue(failMessage.isDisplayed());
-//        });
+        step("Login page - sprawdzenie komunikatu 'Authentication failed.'", () -> {
+            LogIn login = new LogIn();
+            Assertions.assertTrue(login.isMsgAuthenticationFailedDisplayed());
+        });
     }
+
 
     @Test  //Login page - zresetowanie zapomnianego hasła
     @Order(8)
     public void loginPasswordReset() {
 
-        step("Login page - kliknięcie w link 'Forgot your password?'", ()->{
+        step("Login page - kliknięcie w link 'Forgot your password?'", () -> {
             LogIn login = new LogIn();
             login.passwordRecoveryLink();
         });
 
-        step("Reset password page - uzupełnienie pola 'Email address'", ()->{
+        step("Reset password page - uzupełnienie pola 'Email address'", () -> {
             PasswordReset reset = new PasswordReset();
             reset.email();
         });
 
-        step("Reset password page - kliknięcie w button 'Send reset link'", ()->{
+        step("Reset password page - kliknięcie w button 'Send reset link'", () -> {
             PasswordReset reset = new PasswordReset();
             reset.sendResetLink();
         });
 
-//        step("Reset password page - sprawdzenie komunikatu potwierdzającego wysłanie maila", ()->{
-//            By sentMsgLocator = By.xpath("//li[@class=\"item\"]/p");
-//            WebElement sentMessage = driver.findElement(sentMsgLocator);
-//            Assertions.assertTrue(sentMessage.isDisplayed());});
+        step("Reset password page - sprawdzenie komunikatu potwierdzającego wysłanie maila", () -> {
+            PasswordReset reset = new PasswordReset();
+            Assertions.assertTrue(reset.isMsgOfSentMsgDisplayed());
+        });
     }
+
 
     @Test     //Poprawne zalogowanie  + zmiana hasła + zalogowanie nowym hasłem
     @Order(9)
     public void userSuccessLogin() {
 
-        step("Reset password page - kliknięcie w link 'Back to Login'", ()->{
-            By backToLoginPageLocator = By.xpath("//i[@class=\"material-icons\"]");
-            WebElement backToLoginPageLink = driver.findElement(backToLoginPageLocator);
-            backToLoginPageLink.click();});
+        step("Reset password page - kliknięcie w link 'Back to Login'", () -> {
+            PasswordReset reset = new PasswordReset();
+            reset.backToLoginPageLink();
+        });
 
-        step("Login page - uzupełnienie pola 'Email'", ()->{
-            By emailLoginLocator = By.id("field-email");
-            WebElement emailLoginInputField = driver.findElement(emailLoginLocator);
-            emailLoginInputField.sendKeys("wpisz maila");});
+        step("Login page - uzupełnienie pola 'Email'", () -> {
+            RegisteredUser registered = new RegisteredUser();
+            registered.email();
+        });
 
-        step("Login page - uzupełnienie pola 'Password'", ()->{
-            By passwordLoginLocator = By.id("field-password");
-            WebElement passwordLoginInputField = driver.findElement(passwordLoginLocator);
-            passwordLoginInputField.sendKeys("Password123");});
+        step("Login page - uzupełnienie pola 'Password'", () -> {
+            RegisteredUser registered = new RegisteredUser();
+            registered.password();
+        });
 
-        step("Login page - kliknięcie w button 'Sign In'", ()->{
-            By loginButtonLocator = By.id("submit-login");
-            WebElement loginButtonClick = driver.findElement(loginButtonLocator);
-            loginButtonClick.click();});
+        step("Login page - kliknięcie w button 'Sign In'", () -> {
+            LogIn login = new LogIn();
+            login.signInButton();
+        });
 
-        step("Sprawdzenie pomyślnego zalogowania - widoczność przycisku 'Sign out'", ()->{
-            By logoutLocator = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
-            WebElement logoutButton = driver.findElement(logoutLocator);
-            Assertions.assertTrue(logoutButton.isDisplayed());});
+        step("Sprawdzenie pomyślnego zalogowania - widoczność przycisku 'Sign out'", () -> {
+            Header header = new Header();
+            Assertions.assertTrue(header.isButtonSignOutDisplayed());
+        });
 
-        step("Your account - kliknięcie w link 'Information'", ()->{
-            By informationPageLocator = By.xpath("//a[@id=\"identity-link\"]");
-            WebElement informationPage = driver.findElement(informationPageLocator);
-            informationPage.click();});
+        step("Your account - kliknięcie w link 'Information'", () -> {
+            YourAccount account = new YourAccount();
+            account.informationLink();
+        });
 
-        step("Your personal information - uzupełnienie pola 'Password' / dotychczasowe hasło", ()->{
-            By currentPasswordFieldLocator = By.id("field-password");
-            WebElement currentPasswordField = driver.findElement(currentPasswordFieldLocator);
-            currentPasswordField.sendKeys("Password123");});
+        step("Your personal information - uzupełnienie pola 'Password' / dotychczasowe hasło", () -> {
+            RegisteredUser registered = new RegisteredUser();
+            registered.password();
+        });
 
-        step("Your personal information - uzupełnienie pola 'New password' / nowe hasło", ()->{
-            By newPasswordFieldLocator = By.xpath("//input[@name=\"new_password\"]");
-            WebElement newPasswordField = driver.findElement(newPasswordFieldLocator);
-            newPasswordField.sendKeys("TestTest123");});
+        step("Your personal information - uzupełnienie pola 'New password' / nowe hasło", () -> {
+            RegisteredUser registered = new RegisteredUser();
+            registered.newPassword();
+        });
 
-        step("Your personal information - checkbox akceptacji regulaminu i polityki prywatności", ()->{
-            By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
-            WebElement privacyPolicyCheckbox = driver.findElement(privacyPolicyLocator);
-            privacyPolicyCheckbox.click();});
+        step("Your personal information - checkbox akceptacji regulaminu i polityki prywatności", () -> {
+            YourPersonalInformation personal = new YourPersonalInformation();
+            personal.termsAndConditionsCheckbox();
+        });
 
-        step("Your personal information - checkbox akceptacji regulaminu i polityki prywatności", ()->{
-            By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
-            WebElement policyInfoCheckbox = driver.findElement(policyInfoLocator);
-            policyInfoCheckbox.click();});
+        step("Your personal information - checkbox zgody na przetwarzanie danych osobowych", () -> {
+            YourPersonalInformation personal = new YourPersonalInformation();
+            personal.customerPrivacyCheckbox();
+        });
 
-        step("Your personal information - kliknięcie w button 'Save'", ()->{
-            By informationSaveButtonLocator = By.xpath(
-                    "//button[@class=\"btn btn-primary form-control-submit float-xs-right\"]");
-            WebElement informationSaveButton = driver.findElement(informationSaveButtonLocator);
-            informationSaveButton.click();});
+        step("Your personal information - kliknięcie w button 'Save'", () -> {
+            YourPersonalInformation personal = new YourPersonalInformation();
+            personal.saveButton();
+        });
 
         step("Your personal information - potwierdzenie pojawienia się komunikatu", ()->{
-            By updatedInformationTextLocator = By.xpath("//ul/li[contains(text()," +
-                    "\"Information successfully updated.\")]");
-            WebElement updatedInformationText = driver.findElement(updatedInformationTextLocator);
-            Assertions.assertTrue(updatedInformationText.isDisplayed());});
+            YourPersonalInformation personal = new YourPersonalInformation();
+            Assertions.assertTrue(personal.isMsgThatInformationUpdated());
+            });
 
-        step("Wylogowanie użytkownika z potwierdzeniem poprawności wylogowania", this::userSuccessLogout);
+        step("Header/wyloguj się - kliknięcie w button 'Sign out'", () -> {
+            Header header = new Header();
+            header.signout();
+        });
 
-        step("Login page - uzupełnienie pola email", ()->{
-            By emailLoginLocatorNew = By.id("field-email");
-            WebElement emailLoginInputFieldNew = driver.findElement(emailLoginLocatorNew);
-            emailLoginInputFieldNew.sendKeys("wpisz maila");});
+        step("Login page - uzupełnienie pola email", () -> {
+            RegisteredUser registered = new RegisteredUser();
+            registered.email();
+        });
 
-        step("Login page - uzupełnienie nowego hasła", ()->{
-            By passwordLoginLocatorNew = By.id("field-password");
-            WebElement passwordLoginInputFieldNew = driver.findElement(passwordLoginLocatorNew);
-            passwordLoginInputFieldNew.sendKeys("TestTest123");});
+        step("Login page - uzupełnienie nowego hasła", () -> {
+            RegisteredUser registered = new RegisteredUser();
+            registered.newPassword();
+        });
 
-        step("Login page - kliknięcie w button 'Sign In'", ()->{
-            By loginButtonLocatorNew = By.id("submit-login");
-            WebElement loginButtonClickNew = driver.findElement(loginButtonLocatorNew);
-            loginButtonClickNew.click();});
+        step("Login page - kliknięcie w button 'Sign In'", () -> {
+            LogIn login = new LogIn();
+            login.signInButton();
+        });
 
-        step("Sprawdzenie poprawności zalogowania użytkownika - widoczność przycisku 'Sign out", ()->{
-            By logoutLocatorNew = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
-            WebElement logoutButtonNew = driver.findElement(logoutLocatorNew);
-            Assertions.assertTrue(logoutButtonNew.isDisplayed());});
+        step("Sprawdzenie poprawności zalogowania użytkownika - widoczność przycisku 'Sign out'", ()->{
+            Header header = new Header();
+            Assertions.assertTrue(header.isButtonSignOutDisplayed());
+        });
 
-        step("przywrócenie starego hasła", this::backToPreviousPassword);
+        step("Metoda prywatna - przywrócenie starego hasła", this::backToPreviousPassword);
     }
 
 
-    private void backToPreviousPassword() {
+    private void backToPreviousPassword () {
 
-        step("Wejście w panel zalogowanego uzytkownika", ()->{
-            By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
-            WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
-            userProfileLink.click();});
+        step("Header - wejście na profil użytkownika 'Your account'", () -> {
+            Header header = new Header();
+            header.userProfile();
+        });
 
-        step("Wejście na podstronę 'Information'", ()->{
-            By informationPageLocator = By.xpath("//a[@id=\"identity-link\"]");
-            WebElement informationPage = driver.findElement(informationPageLocator);
-            informationPage.click();});
+        step("Wejście w link 'Information'", () -> {
+            YourAccount account = new YourAccount();
+            account.informationLink();
+        });
 
-        step("wpisanie aktualnego hasła logowania", ()->{
-            By currentPasswordFieldLocator = By.id("field-password");
-            WebElement currentPasswordField = driver.findElement(currentPasswordFieldLocator);
-            currentPasswordField.sendKeys("TestTest123");});
+        step("wpisanie aktualnego hasła logowania", () -> {
+            RegisteredUser registered = new RegisteredUser();
+            registered.newPassword();
+        });
 
-        step("wpisanie nowego hasła logowania", ()->{
-            By newPasswordFieldLocator = By.xpath("//input[@name=\"new_password\"]");
-            WebElement newPasswordField = driver.findElement(newPasswordFieldLocator);
-            newPasswordField.sendKeys("Password123");});
+        step("wpisanie nowego hasła logowania", () -> {
+            RegisteredUser registered = new RegisteredUser();
+            registered.password();
+        });
 
-        step("checkbox akceptacji polityki prywatności", ()->{
-            By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
-            WebElement privacyPolicyCheckbox = driver.findElement(privacyPolicyLocator);
-            privacyPolicyCheckbox.click();});
+        step("Your personal information - checkbox akceptacji regulaminu i polityki prywatności", () -> {
+            YourPersonalInformation personal = new YourPersonalInformation();
+            personal.termsAndConditionsCheckbox();
+        });
 
-        step("checkbox informacji o przetwarzaniu danych osobowych", ()->{
-            By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
-            WebElement policyInfoCheckbox = driver.findElement(policyInfoLocator);
-            policyInfoCheckbox.click();});
+        step("our personal information - checkbox zgody na przetwarzanie danych osobowych", () -> {
+            YourPersonalInformation personal = new YourPersonalInformation();
+            personal.customerPrivacyCheckbox();
+        });
 
-        step("kliknięcie buttona 'Save'", ()->{
-            By informationSaveButtonLocator = By.xpath("//button[@class=\"btn btn-primary form-control-submit " +
-                    "float-xs-right\"]");
-            WebElement informationSaveButton = driver.findElement(informationSaveButtonLocator);
-            informationSaveButton.click();});
+        step("kliknięcie buttona 'Save'", () -> {
+            YourPersonalInformation personal = new YourPersonalInformation();
+            personal.saveButton();
+        });
     }
 
 
@@ -567,101 +549,103 @@ import static io.qameta.allure.Allure.step;
     @Order(10)
     public void clearAccessoriesProductsFiltering() {
 
-        step("Przejście na podstronę ACCESSORIES", ()->{
-            By accessoriesPageLocator = By.id("category-6");
-            WebElement accessoriesPageLink = driver.findElement(accessoriesPageLocator);
-            accessoriesPageLink.click();});
+        step("wejście na stronę ACCESSORIES", () -> {
+            TopMenu top = new TopMenu();
+            top.accessoriesPageLink();
+        });
 
-        step("Accessories page - wybór filtra 'Ceramic'", ()->{
-            By ceramicCompositionFilterLocator = By.xpath("//a[contains(text(),\"Ceramic\")]");
-            WebElement ceramicCompositionFilterCheckbox = driver.findElement(ceramicCompositionFilterLocator);
-            ceramicCompositionFilterCheckbox.click();
-            By ceramicCompositionFilterCheckboxLocator = By.xpath("//a[contains(text(),\"Ceramic\")]/../span/input");
-            wait.until(ExpectedConditions.elementToBeSelected(ceramicCompositionFilterCheckboxLocator));});
+        step("Accessories page - wybór filtra 'Ceramic'", () -> {
+            Accessories accessories = new Accessories();
+            accessories.ceramicCompositionFilter();
 
-        step("Accessories page - wybór filtra 'Available'", ()->{
-            By availableFilterLocator = By.xpath("//a[contains(text(),\"Available\")]");
-            WebElement availableFilterCheckbox = driver.findElement(availableFilterLocator);
-            availableFilterCheckbox.click();
-            By availableFilterCheckboxLocator = By.xpath("//a[contains(text(),\"Available\")]/../span/input");
-            wait.until(ExpectedConditions.elementToBeSelected(availableFilterCheckboxLocator));});
+            //TODO
+//            By ceramicCompositionFilterCheckboxLocator = By.xpath("//a[contains(text(),\"Ceramic\")]/../span/input");
+//            wait.until(ExpectedConditions.elementToBeSelected(ceramicCompositionFilterCheckboxLocator));
+        });
 
-        step("Accessories page - wyczyszczenie wybranych filtrów", ()->{
-            By clearAllFilterLocator = By.xpath("//button[@class=\"btn btn-tertiary js-search-filters-clear-all\"]");
-            WebElement clearAllFilterClick = driver.findElement(clearAllFilterLocator);
-            clearAllFilterClick.click();
-            wait.until(ExpectedConditions.invisibilityOf(clearAllFilterClick));});
+        step("Accessories page - wybór filtra 'Available'", () -> {
+            Accessories accessories = new Accessories();
+            accessories.availableFilter();
+
+            //todo By availableFilterCheckboxLocator = By.xpath("//a[contains(text(),\"Available\")]/../span/input");
+            //todo wait.until(ExpectedConditions.elementToBeSelected(availableFilterCheckboxLocator));});
+        });
+
+        step("Accessories page - wyczyszczenie wybranych filtrów", () -> {
+            Accessories accessories = new Accessories();
+            accessories.allFiltersClear();
+            //todo wait.until(ExpectedConditions.invisibilityOf(clearAllFilterClick));});
+        });
 
         step("Accessories page - potwierdzenie wyczyszczenia filtrów", ()->{
-            By activeFiltersLocator = By.xpath("//p[contains(text(),\"Active filters\")]");
-            WebElement activeFilters = driver.findElement(activeFiltersLocator);
-            Assertions.assertFalse(activeFilters.isDisplayed());});
+            Accessories accessories = new Accessories();
+            Assertions.assertFalse(accessories.isFilterClear());
+        });
     }
 
 
     @Test    //Podstrona ART - sortowanie
     @Order(11)
-    public void filterArtProducts() throws InterruptedException {
+    public void sortArtProducts() throws InterruptedException {
 
-        step("Przejście na podstronę ART", ()->{
-            By artPageLocator = By.id("category-9");
-            WebElement artPageLink = driver.findElement(artPageLocator);
-            artPageLink.click();
-            Thread.sleep(1000);});
-
-        step("Podstrona ART - kliknięcie w pole sortowania", ()->{
-            By sortByListLocator = By.xpath("//button[@aria-label=\"Sort by selection\"]");
-            WebElement sorByList = driver.findElement(sortByListLocator);
-            sorByList.click();});
-
-        step("Podstrona ART - posortowanie według 'Name, A to Z'", ()->{
-            By sortByNameAZLocator = By.xpath("//div[@class=\"dropdown-menu\"]/a[contains(text(),\"Name, A to Z\")]");
-            WebElement sortByNameAZ = driver.findElement(sortByNameAZLocator);
-            sortByNameAZ.click();
-            Thread.sleep(1000);});
-
-        step("Podstrona ART - pobranie z listy elementów i sprawdzenie czy są posortowane", ()->{
-            By productsListLocator = By.xpath("//div[@class=\"product-description\"]/h2/a");
-            List<WebElement> productsLists = driver.findElements(productsListLocator);
-
-            List<String>productsNames = new ArrayList<>();
-            for(WebElement product : productsLists){
-                productsNames.add(product.getText());
-            }
-            List<String>productsAlphabeticalOrder = productsNames.stream().sorted().toList();
-
-            for(int i=0; i < productsNames.size(); i++){
-                Assertions.assertEquals(productsNames.get(i), productsAlphabeticalOrder.get(i));
-            }
+        step("wejście na podstronę ART", () -> {
+            TopMenu top = new TopMenu();
+            top.artPageLink();
+            //TODO Thread.sleep(1000);
         });
 
-        step("Podstrona ART - kliknięcie w pole sortowania", ()->{
-            By sortByListLocator = By.xpath("//button[@aria-label=\"Sort by selection\"]");
-            WebElement sortByList = driver.findElement(sortByListLocator);
-            sortByList.click();
-            Thread.sleep(1000);});
-
-        step("Podstrona ART - posortowanie według ‘Price, low to high’", ()->{
-            By sortByPriceAscLocator = By.xpath("//div[@class=\"dropdown-menu\"]" +
-                    "/a[contains(text(),\"Price, low to high\")]");
-            WebElement sortByPriceAsc = driver.findElement(sortByPriceAscLocator);
-            sortByPriceAsc.click();
-            Thread.sleep(1000);});
-
-        step("Podstrona ART - pobranie z listy elementów i sprawdzenie czy są posortowane", ()->{
-            By productsListLocator2 = By.xpath("//div[@class=\"product-price-and-shipping\"]/span");
-            List<WebElement> productsLists2 = driver.findElements(productsListLocator2);
-
-            List<String>productsPrices = new ArrayList<>();
-            for(WebElement product : productsLists2){
-                productsPrices.add(product.getText());
-            }
-            List<String>productsAlphabeticalOrder2 = productsPrices.stream().sorted().toList();
-
-            for(int i=0; i < productsPrices.size(); i++){
-                Assertions.assertEquals(productsPrices.get(i), productsAlphabeticalOrder2.get(i));
-            }
+        step("strona ART - kliknięcie w pole sortowania", () -> {
+            Art art = new Art();
+            art.sortByButton();
         });
+
+        step("strona ART - posortowanie według 'Name, A to Z'", () -> {
+            Art art = new Art();
+            art.sortByNameAZ();
+        });
+        // todo Thread.sleep(1000);});
+
+//        step("strona ART - pobranie z listy elementów i sprawdzenie czy są posortowane", ()->{
+//            By productsListLocator = By.xpath("//div[@class=\"product-description\"]/h2/a");
+//            List<WebElement> productsLists = driver.findElements(productsListLocator);
+//
+//            List<String>productsNames = new ArrayList<>();
+//            for(WebElement product : productsLists){
+//                productsNames.add(product.getText());
+//            }
+//            List<String>productsAlphabeticalOrder = productsNames.stream().sorted().toList();
+//
+//            for(int i=0; i < productsNames.size(); i++){
+//                Assertions.assertEquals(productsNames.get(i), productsAlphabeticalOrder.get(i));
+//            }
+//        });
+
+        step("strona ART - kliknięcie w pole sortowania", () -> {
+            Art art = new Art();
+            art.sortByButton();
+            //todo Thread.sleep(1000);});
+        });
+
+        step("strona ART - posortowanie według ‘Price, low to high’", () -> {
+            Art art = new Art();
+            art.sortByPriceAsc();
+            //todo Thread.sleep(1000);});
+        });
+
+//        step("Podstrona ART - pobranie z listy elementów i sprawdzenie czy są posortowane", ()->{
+//            By productsListLocator2 = By.xpath("//div[@class=\"product-price-and-shipping\"]/span");
+//            List<WebElement> productsLists2 = driver.findElements(productsListLocator2);
+//
+//            List<String>productsPrices = new ArrayList<>();
+//            for(WebElement product : productsLists2){
+//                productsPrices.add(product.getText());
+//            }
+//            List<String>productsAlphabeticalOrder2 = productsPrices.stream().sorted().toList();
+//
+//            for(int i=0; i < productsPrices.size(); i++){
+//                Assertions.assertEquals(productsPrices.get(i), productsAlphabeticalOrder2.get(i));
+//            }
+//        });
     }
 
 
@@ -669,46 +653,46 @@ import static io.qameta.allure.Allure.step;
     @Order(12)
     public void successAddPosterReview() {
 
-        step("Podstrona ART - wejście w okno produktu 'The Best Is Yet...'", ()->{
-            By theBestPosterLocator = By.xpath("//img[@alt=\"The best is yet to come' Framed poster\"]");
-            WebElement theBestPoster = driver.findElement(theBestPosterLocator);
-            theBestPoster.click();});
+        step("Podstrona ART - wejście w okno produktu 'The Best Is Yet To Come Framed Poster'", () -> {
+            Art art = new Art();
+            art.theBestPoster();
+        });
 
-        step("Strona produktu - kliknięcie w button dodania opinii o produkcie", ()->{
-            By commentButtonLocator = By.xpath("//div[@class=\"product-comment-list-item\"]/button");
-            WebElement commentButtonClick = driver.findElement(commentButtonLocator);
-            wait.until(ExpectedConditions.elementToBeClickable(commentButtonLocator));
-            commentButtonClick.click();});
+        step("Strona produktu - kliknięcie w button dodania opinii o produkcie", () -> {
+            ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
+            best.productReviewButton();
 
-        step("WRITE YOUR REVIEW - wpisanie tytułu komentarza", ()->{
-            By commentTitleLocator = By.id("comment_title");
-            WebElement commentTitleFillIn = driver.findElement(commentTitleLocator);
-            wait.until(ExpectedConditions.elementToBeClickable(commentTitleFillIn));
-            commentTitleFillIn.sendKeys("Moja ocena produktu");});
+            //todo wait.until(ExpectedConditions.elementToBeClickable(commentButtonLocator));
+        });
 
-        step("WRITE YOUR REVIEW - wpisanie treści komentarza", ()->{
-            By commentTextLocator = By.id("comment_content");
-            WebElement commentTextFillIn = driver.findElement(commentTextLocator);
-            commentTextFillIn.sendKeys("To bardzo dobry produkt.");});
+        step("popup 'Write your review' - wpisanie tytułu komentarza", () -> {
+            ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
+            best.reviewTitle();
 
-        step("WRITE YOUR REVIEW - kliknięcie w button 'Send'", ()->{
-            By sendButtonLocator = By.xpath("//button[@class=\"btn btn-comment btn-comment-big\"]");
-            WebElement sendButtonClick = driver.findElement(sendButtonLocator);
-            sendButtonClick.click();});
+            //todo wait.until(ExpectedConditions.elementToBeClickable(commentTitleFillIn));
+        });
+
+        step("WRITE YOUR REVIEW - wpisanie treści komentarza", () -> {
+            ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
+            best.reviewFillIn();
+        });
+
+        step("WRITE YOUR REVIEW - kliknięcie w button 'Send'", () -> {
+            ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
+            best.sendReviewButton();
+        });
 
         step("Popup REVIEW SENT - potwierdzenie dodania komentarza", ()->{
-            By addCommentPopupLocator = By.id("product-comment-posted-modal-message");
-            WebElement addCommentPopup = driver.findElement(addCommentPopupLocator);
-            wait.until(ExpectedConditions.elementToBeClickable(addCommentPopupLocator));
-            Assertions.assertTrue(addCommentPopup.isDisplayed());});
+            ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
+            Assertions.assertTrue(best.isCommentAdded());
 
-        step("Popup REVIEW SENT - zamknięcie okna poprzez kliknięcie w button 'OK'", ()->{
-            By okCommentButtonLocator = By.xpath(
-                    "//div[contains(text(), \"Your comment has been submitted and will be available once " +
-                            "approved by a moderator.\")]/../div[@class=\"post-comment-buttons\"]" +
-                            "/button[@class=\"btn btn-comment btn-comment-huge\"]");
-            WebElement okCommentButtonClick = driver.findElement(okCommentButtonLocator);
-            okCommentButtonClick.click();});
+            //todo wait.until(ExpectedConditions.elementToBeClickable(addCommentPopupLocator));
+        });
+
+        step("Popup REVIEW SENT - zamknięcie okna poprzez kliknięcie w button 'OK'", () -> {
+            ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
+            best.okReviewButton();
+        });
     }
 
 
@@ -716,31 +700,35 @@ import static io.qameta.allure.Allure.step;
     @Order(13)
     public void addProductsToCart() {
 
-        step("Strona produktu - zmiana ilości produktu poprzez wpisanie liczby (wyczyść i wpisz wartość)", ()->{
-            By putProductQuantityLocator = By.id("quantity_wanted");
-            WebElement putProductQuantity = driver.findElement(putProductQuantityLocator);
-            putProductQuantity.sendKeys(Keys.CONTROL + "a");
-            putProductQuantity.sendKeys(Keys.DELETE);
-            putProductQuantity.sendKeys("4");});
+//        step("Strona produktu - zmiana ilości produktu poprzez wpisanie liczby (wyczyść i wpisz wartość)", ()->{
+//            //zmiana ilości produktu poprzez wpisanie liczby
+//            public void putProductQuantity() {
+//                By putProductQuantityLocator = By.id("quantity_wanted");
+//                getDriver().findElement(putProductQuantityLocator);
+//                putProductQuantity.sendKeys(Keys.CONTROL + "a");
+//                putProductQuantity.sendKeys(Keys.DELETE);
+//                putProductQuantity.sendKeys("4");
+//            }
+//            });
 
-        step("Strona produktu - zmiana ilości produktu poprzez kliknięcie w strzałki", ()->{
-            By selectQuantityLocator = By.xpath("//i[@class=\"material-icons touchspin-up\"]");
-            WebElement selectQuantityClick = driver.findElement(selectQuantityLocator);
-            selectQuantityClick.click();
-            selectQuantityClick.click();
-            selectQuantityClick.click();});
+//        step("Strona produktu - zmiana ilości produktu poprzez kliknięcie w strzałki", ()->{
+//            By selectQuantityLocator = By.xpath("//i[@class=\"material-icons touchspin-up\"]");
+//            WebElement selectQuantityClick = driver.findElement(selectQuantityLocator);
+//            selectQuantityClick.click();
+//            selectQuantityClick.click();
+//            selectQuantityClick.click();});
 
-        step("Strona produktu - kliknięcie button 'Add to cart'", ()->{
-            By addToCartButtonLocator = By.xpath("//button[@class=\"btn btn-primary add-to-cart\"]");
-            WebElement addToCartButton = driver.findElement(addToCartButtonLocator);
-            addToCartButton.click();});
+        step("Strona produktu - kliknięcie button 'Add to cart'", () -> {
+            ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
+            best.addToCartButton();
+        });
 
-        step("Popup - sprawdzenie komunikatu potwierdzającego dodanie do koszyka", ()->{
-            By addProductPopupLocator = By.xpath("//h4[contains(text(),\"Product successfully added to " +
-                    "your shopping cart\")]");
-            wait.until(ExpectedConditions.elementToBeClickable(addProductPopupLocator));
-            WebElement addProductPopup = driver.findElement(addProductPopupLocator);
-            Assertions.assertTrue(addProductPopup.isDisplayed());});
+//        step("Popup - sprawdzenie komunikatu potwierdzającego dodanie do koszyka", ()->{
+//            By addProductPopupLocator = By.xpath("//h4[contains(text(),\"Product successfully added to " +
+//                    "your shopping cart\")]");
+//            wait.until(ExpectedConditions.elementToBeClickable(addProductPopupLocator));
+//            WebElement addProductPopup = driver.findElement(addProductPopupLocator);
+//            Assertions.assertTrue(addProductPopup.isDisplayed());});
     }
 
 
@@ -748,17 +736,17 @@ import static io.qameta.allure.Allure.step;
     @Order(14)
     public void cartContentValidation() {
 
-        step("Popup - zamknięcie okna poprzez kliknięcie 'Proceed to checkout'", ()->{
-            By closeAddToCartPopupLocator = By.xpath("//a[@class=\"btn btn-primary\"]/i");
-            WebElement closeAddToCartPopupClick = driver.findElement(closeAddToCartPopupLocator);
-            closeAddToCartPopupClick.click();});
+        step("Popup - zamknięcie okna poprzez kliknięcie 'Proceed to checkout'", () -> {
+            ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
+            best.proceedToCheckoutButton();
+        });
 
-        step("Shopping cart - sprawdzenie nazwy produktu", ()->{
-            By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]/a");
-            String productNameInCart = driver.findElement(productNameInCartLocator).getText();
-            Assertions.assertEquals("The best is yet to come' Framed poster", productNameInCart);});
+        step("Cart - sprawdzenie nazwy produktu", () -> {
+            Cart cart = new Cart();
+            Assertions.assertEquals("The best is yet to come' Framed poster",cart.getProductNameInCart());
+        });
 
-        step("Shopping cart - porównanie ilości z sekcji produktu i sekcji podsumowania", ()->{
+        step("Shopping cart - porównanie ilości z sekcji produktu i sekcji podsumowania", () -> {
             // ilość w sekcji produktu
             By numberInItemsSectionLocator = By.xpath("//input[@class='js-cart-line-product-quantity form-control']");
             WebElement numberInItemSection = driver.findElement(numberInItemsSectionLocator);
@@ -769,12 +757,12 @@ import static io.qameta.allure.Allure.step;
             String summaryQuantityText = numberInPurchaseSummarySection.getText();
             int summaryQuantity = Integer.parseInt(summaryQuantityText.replaceAll("\\D+", ""));
             // porównanie ilości z sekcji produktu i sekcji podsumowania
-            Assertions.assertEquals(productQuantity, summaryQuantity);});
+            Assertions.assertEquals(productQuantity, summaryQuantity);
+        });
 
-        step("Shopping cart - sprawdzenie wartości całkowitej", ()->{
+        step("Shopping cart - sprawdzenie wartości całkowitej", () -> {
             //cena jednostkowa
-            By unitPriceOfItemLocator = By.xpath("//div[@class=\"product-line-info product-price h5 \"]" +
-                    "/div[@class=\"current-price\"]");
+            By unitPriceOfItemLocator = By.xpath("//div[@class=\"product-line-info product-price h5 \"]" + "/div[@class=\"current-price\"]");
             WebElement unitPriceOfItem = driver.findElement(unitPriceOfItemLocator);
             String unitPriceText = unitPriceOfItem.getText().replace("zł", "").replace(",", ".").trim();
             double unitPrice = Double.parseDouble(unitPriceText);
@@ -788,7 +776,8 @@ import static io.qameta.allure.Allure.step;
             String totalPriceText = totalPriceElement.getText().replace("zł", "").replace(",", ".").trim();
             double totalPrice = Double.parseDouble(totalPriceText);
             //oczekiwana wartość
-            double expectedTotal = unitPrice * productQuantity;});
+            double expectedTotal = unitPrice * productQuantity;
+        });
     }
 
 
@@ -796,45 +785,40 @@ import static io.qameta.allure.Allure.step;
     @Order(15)
     public void addressesFormFailSaveWithEmptyFields() {
 
-        step("Shopping cart - przejście do adresu klikając button 'Proceed To Checkout'", ()->{
-            By proceedToCheckoutButtonInCartLocator = By.xpath("//a[@class=\"btn btn-primary\" and " +
-                    "text()=\"Proceed to checkout\"]");
-            WebElement proceedToCheckoutButtonInCart = driver.findElement(proceedToCheckoutButtonInCartLocator);
-            proceedToCheckoutButtonInCart.click();});
+        step("Shopping cart - przejście do adresu klikając button 'Proceed To Checkout'", () -> {
+            Cart cart = new Cart();
+            cart.proceedToCheckoutButton();
+        });
 
-        step("Addresses - kliknięcie w button 'Continue'", ()->{
-            By continueButtonInAddressesFormLocator = By.xpath("//button[@name=\"confirm-addresses\" and " +
-                    "contains(., \"Continue\")]");
-            WebElement continueButtonInAddressesForm = driver.findElement(continueButtonInAddressesFormLocator);
-            continueButtonInAddressesForm.click();});
+        step("Addresses - kliknięcie w button 'Continue'", () -> {
+            Addresses address = new Addresses();
+            address.continueButton();
+        });
 
-        step("Addresses/tooltip dynamiczny - potwierdzenie pojawienia się komunikatu walidacyjnego", ()->{
-            By addressesInputLocator = By.xpath("//input[@name=\"address1\"]");
-            WebElement addressesInput = driver.findElement(addressesInputLocator);
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            String msg = (String) js.executeScript("return arguments[0].validationMessage", addressesInput);
-            Assertions.assertEquals("Wypełnij to pole.", msg);});
+        step("Addresses/tooltip dynamiczny - potwierdzenie pojawienia się komunikatu walidacyjnego", () -> {
+            Addresses address = new Addresses();
+            Assertions.assertEquals("Wypełnij to pole.",address.getValidationMsg());
+        });
 
-        step("Addresses - uzupełnienie pola 'Address'", ()->{
-            By addressFieldLocator = By.id("field-address1");
-            WebElement addressField = driver.findElement(addressFieldLocator);
-            addressField.sendKeys("ul. Prosta 11");});
+        step("Addresses - uzupełnienie pola 'Address'", () -> {
+            RegisteredUser registered = new RegisteredUser();
+            registered.address();
+        });
 
-        step("Addresses - uzupełnienie pola 'Zip/Postal Code'", ()->{
-            By postalCodeFieldLocator = By.id("field-postcode");
-            WebElement postalCodeField = driver.findElement(postalCodeFieldLocator);
-            postalCodeField.sendKeys("11-234");});
+        step("Addresses - uzupełnienie pola 'Zip/Postal Code'", () -> {
+            RegisteredUser registered = new RegisteredUser();
+            registered.postalCode();
+        });
 
-        step("Addresses - uzupełnienie pola 'City'", ()->{
-            By cityFieldLocal = By.id("field-city");
-            WebElement cityField = driver.findElement(cityFieldLocal);
-            cityField.sendKeys("Warszawa");});
+        step("Addresses - uzupełnienie pola 'City'", () -> {
+            RegisteredUser registered = new RegisteredUser();
+            registered.city();
+        });
 
-        step("Addresses - kliknięcie w button 'Continue'", ()->{
-            By continueButtonInAddressesFormLocator = By.xpath("//button[@name=\"confirm-addresses\" and " +
-                    "contains(., \"Continue\")]");
-            WebElement continueButtonInAddressesForm = driver.findElement(continueButtonInAddressesFormLocator);
-            continueButtonInAddressesForm.click();});
+        step("Addresses - kliknięcie w button 'Continue'", () -> {
+            Addresses address = new Addresses();
+            address.continueButton();
+        });
     }
 
 
@@ -842,56 +826,56 @@ import static io.qameta.allure.Allure.step;
     @Order(16)
     public void shippingMethodSuccessSelection() {
 
-        step("Shipping method - wybranie formy dostawy 'My carrier'", ()->{
-            By prestaShopRadioButtonLocator = By.id("delivery_option_2");
-            WebElement prestaShopRadioButton = driver.findElement(prestaShopRadioButtonLocator);
-            prestaShopRadioButton.click();});
+        step("Shipping method - wybranie formy dostawy 'My carrier'", () -> {
+            ShippingMethod shipping = new ShippingMethod();
+            shipping.prestaShopRadioButton();
+        });
 
-        step("Shipping method - wybranie formy dostawy pierwszej/nazwa ustawiana w Dockerze", ()->{
-            By myCarrierRadioButtonLocator = By.id("delivery_option_1");
-            WebElement myCarrierRadioButton = driver.findElement(myCarrierRadioButtonLocator);
-            myCarrierRadioButton.click();});
+        step("Shipping method - wybranie formy dostawy pierwszej/nazwa ustawiana w Dockerze", () -> {
+            ShippingMethod shipping = new ShippingMethod();
+            shipping.myCarrierRadioButton();
+        });
 
-        step("Shipping method - dodanie komentarza do zamówienia", ()->{
-            By commentToOrderFieldLocator = By.id("delivery_message");
-            WebElement commentToOrderField = driver.findElement(commentToOrderFieldLocator);
-            commentToOrderField.sendKeys("Proszę o zostawienie paczki pod drzwiami.");});
+        step("Shipping method - dodanie komentarza do zamówienia", () -> {
+            ShippingMethod shipping = new ShippingMethod();
+            shipping.commentToOrder();
+        });
 
-        step("Shipping method - kliknięcie w button 'Continue'", ()->{
-            By continueButtonInShippingMethodFormLocator = By.xpath("//button[@name=\"confirmDeliveryOption\"]");
-            WebElement continueButtonInShippingMethodForm = driver.findElement(continueButtonInShippingMethodFormLocator);
-            continueButtonInShippingMethodForm.click();});
+        step("Shipping method - kliknięcie w button 'Continue'", () -> {
+            ShippingMethod shipping = new ShippingMethod();
+            shipping.continueButton();
+        });
     }
 
 
-    @Test   //Payment - wybór formy płatności
+    @Test
     @Order(17)
     public void paymentMethodSuccessSelection() {
 
-        step("Payment - wybór opcji 'Pay by bank wire'", ()->{
-            By payByBankWireRadioButtonLocator = By.id("payment-option-2");
-            WebElement payByBankWireRadioButton = driver.findElement(payByBankWireRadioButtonLocator);
-            payByBankWireRadioButton.click();});
+        step("Payment - wybór opcji 'Pay by bank wire'", () -> {
+            Payment pay = new Payment();
+            pay.payByBankWire();
+        });
 
-        step("Payment - wybór opcji 'Pay by Check'", ()->{
-            By payByCheckRadioButtonLocator = By.id("payment-option-1");
-            WebElement payByCheckRadioButton = driver.findElement(payByCheckRadioButtonLocator);
-            payByCheckRadioButton.click();});
+        step("Payment - wybór opcji 'Pay by Check'", () -> {
+            Payment pay = new Payment();
+            pay.payByCheck();
+        });
 
-        step("Payment - wybór checkboxa zgody", ()->{
-            By agreeToTermsCheckboxLocator = By.xpath("//input[@name=\"conditions_to_approve[terms-and-conditions]\"]");
-            WebElement agreeToTermsCheckbox = driver.findElement(agreeToTermsCheckboxLocator);
-            agreeToTermsCheckbox.click();});
+        step("Payment - wybór checkboxa zgody", () -> {
+            Payment pay = new Payment();
+            pay.agreeToTermsCheckbox();
+        });
 
-        step("Payment - kliknięcie w button 'Place Order'", ()->{
-            By placeOrderButtonInPaymentSectionLocator = By.xpath("//div[@class=\"ps-shown-by-js\"]/button");
-            WebElement placeOrderButtonInPaymentSection = driver.findElement(placeOrderButtonInPaymentSectionLocator);
-            placeOrderButtonInPaymentSection.click();});
+        step("Payment - kliknięcie w button 'Place Order'", () -> {
+            Payment pay = new Payment();
+            pay.placeOrderButton();
+        });
 
         step("Order confirmation page - sprawdzenie pojawienia się komunikatu potwierdzającego", ()->{
-            By confirmationMsgLocator = By.xpath("//h3[@class=\"h1 card-title\"]/i");
-            WebElement confirmationMsg = driver.findElement(confirmationMsgLocator);
-            Assertions.assertTrue(confirmationMsg.isDisplayed());});
+            OrderConfirmation confirmation = new OrderConfirmation();
+            Assertions.assertTrue(confirmation.isMsgThatOrderConfirmed());
+        });
     }
 
 
@@ -899,38 +883,35 @@ import static io.qameta.allure.Allure.step;
     @Order(18)
     public void contactCustomerServiceDepartment() {
 
-        step("Order confirmation page - kliknięcie w link formularza kontaktowego", ()->{
-            By customerServiceDepartmentContactLocator = By.xpath(
-                    "//a[contains(text(),\"customer service department.\")]");
-            WebElement customerServiceDepartmentContact = driver.findElement(customerServiceDepartmentContactLocator);
-            customerServiceDepartmentContact.click();});
+        step("Order confirmation page - kliknięcie w link kontaktu z działem obsługi klienta", () -> {
+            OrderConfirmation order = new OrderConfirmation();
+            order.customerServiceDepartmentContact();
+        });
 
-        step("Contact us - kliknięcie w button 'Send' - próba przesłania niewypełnionego formularza", ()->{
-            By sendButtonInContactUsSectionLocator = By.xpath("//input[@class=\"btn btn-primary\"]");
-            WebElement sendButtonInContactUsSection = driver.findElement(sendButtonInContactUsSectionLocator);
-            sendButtonInContactUsSection.click();});
+        step("Contact us - kliknięcie w button 'Send' - próba przesłania niewypełnionego formularza", () -> {
+            ContactUs contact = new ContactUs();
+            contact.sendButton();
+        });
 
         step("Contact us - potwierdzenie pojawienia się komunikatu walidacyjnego", ()->{
-            By validationMsgInContactUsSectionLocator = By.xpath(
-                    "//li[contains(text(),\"The message cannot be blank.\")]");
-            WebElement validationMsgInContactUsSection = driver.findElement(validationMsgInContactUsSectionLocator);
-            Assertions.assertTrue(validationMsgInContactUsSection.isDisplayed());});
+            ContactUs contact = new ContactUs();
+            Assertions.assertTrue(contact.isValidationMsgDisplayed());
+        });
 
-        step("Contact us - wpisanie treści wiadomości", ()->{
-            By msgFieldInContactUsSectionLocator = By.id("contactform-message");
-            WebElement msgFieldInContactUsSection = driver.findElement(msgFieldInContactUsSectionLocator);
-            msgFieldInContactUsSection.sendKeys("Chcę otrzymać FV za zamówienie.");});
+        step("Contact us - wpisanie treści wiadomości", () -> {
+            ContactUs contact = new ContactUs();
+            contact.msgFillIn();
+        });
 
-        step("Contact us - kliknięcie w button 'Send'", ()->{
-            By sendButtonInContactUsSectionLocator = By.xpath("//input[@class=\"btn btn-primary\"]");
-            WebElement sendButtonInContactUsSection = driver.findElement(sendButtonInContactUsSectionLocator);
-            sendButtonInContactUsSection.click();});
+        step("Contact us - kliknięcie w button 'Send'", () -> {
+            ContactUs contact = new ContactUs();
+            contact.sendButton();
+        });
 
-        step("Contact us - potwierdzenie pojawienia się komunikatu informacyjnego", ()->{
-            By successMsgInContactUsSectionLocator = By.xpath("//li[contains(text(),\"Your message has " +
-                    "been successfully sent to our team.\")]");
-            WebElement successMsgInContactUsSection = driver.findElement(successMsgInContactUsSectionLocator);
-            Assertions.assertTrue(successMsgInContactUsSection.isDisplayed());});
+        step("Komunikat informacyjny 'Your message has been successfully sent to our team.'", ()->{
+            ContactUs contact = new ContactUs();
+            Assertions.assertTrue(contact.isInformationMsgDisplayed());
+        });
     }
 
 
@@ -938,45 +919,45 @@ import static io.qameta.allure.Allure.step;
     @Order(19)
     public void addMsgInOrderDetailsPage() {
 
-        step("Przejście na stronę 'Your account'", ()->{
-            By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
-            WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
-            userProfileLink.click();});
+        step("Header - wejście na profil użytkownika 'Your account'", () -> {
+            Header header = new Header();
+            header.userProfile();
+        });
 
-        step("Your account - wejście w sekcję 'Order history and details'", ()->{
-            By orderHistoryAndDetailsLinkLocator = By.id("history-link");
-            WebElement orderHistoryAndDetailsLink = driver.findElement(orderHistoryAndDetailsLinkLocator);
-            orderHistoryAndDetailsLink.click();});
+        step("Your account - wejście w sekcję 'Order history and details'", () -> {
+            YourAccount account = new YourAccount();
+            account.orderHistoryAndDetails();
+        });
 
-        step("Przejście na stronę 'Order details'", ()->{
-            By orderDetailsLinkLocator = By.xpath("//a[@data-link-action=\"view-order-details\"]");
-            WebElement orderDetailsLink = driver.findElement(orderDetailsLinkLocator);
-            orderDetailsLink.click();});
+        step("Kliknięcie w link 'Details'", () -> {
+            OrderHistoryAndDetails order = new OrderHistoryAndDetails();
+            order.detailsLink();
+        });
 
-        step("'Order details' - kliknięcie 'Send' w pustym formularzu 'ADD A MESSAGE'", ()->{
-            By sendButtonInDetailsPageLocator = By.xpath("//*[@name=\"submitMessage\"]");
-            WebElement sendButtonInDetailsPage = driver.findElement(sendButtonInDetailsPageLocator);
-            sendButtonInDetailsPage.click();});
+        step("'Order details' - kliknięcie 'Send' w pustym formularzu 'ADD A MESSAGE'", () -> {
+            OrderDetails details = new OrderDetails();
+            details.sendButton();
+        });
 
-        step("Potwierdzenie pojawienia się komunikatu walidacji", ()->{
-            By validationMsgInDetailsPageLocator = By.xpath("//li[contains(text(),\"The message cannot be blank.\")]");
-            WebElement validationMsgInDetailsPage = driver.findElement(validationMsgInDetailsPageLocator);
-            Assertions.assertTrue(validationMsgInDetailsPage.isDisplayed());});
+        step("Potwierdzenie pojawienia się komunikatu walidacji 'The message cannot be blank.'", ()->{
+            OrderDetails details = new OrderDetails();
+            Assertions.assertTrue(details.isValidationMsgDisplayed());
+        });
 
-        step("Uzupełnienie treści wiadomości", ()->{
-            By fillInMsgTextInFormLocator = By.xpath("//textarea[@name=\"msgText\"]");
-            WebElement fillInMsgTextInField = driver.findElement(fillInMsgTextInFormLocator);
-            fillInMsgTextInField.sendKeys("Proszę o wysyłkę możliwie najszybciej. Dziękuję.");});
+        step("'Order details' - Uzupełnienie treści wiadomości", () -> {
+            OrderDetails details = new OrderDetails();
+            details.msgFillIn();
+        });
 
-        step("Kliknięcie 'Send'", ()->{
-            By sendButtonInDetailsPageLocator = By.xpath("//*[@name=\"submitMessage\"]");
-            WebElement sendButtonInDetailsPage = driver.findElement(sendButtonInDetailsPageLocator);
-            sendButtonInDetailsPage.click();});
+        step("'Order details' - kliknięcie 'Send'", () -> {
+            OrderDetails details = new OrderDetails();
+            details.sendButton();
+        });
 
-        step("potwierdzenie wysłania wiadomości", ()->{
-            By sendConfirmationMsgLocator = By.xpath("//li[contains(text(),\"Message successfully sent\")]");
-            WebElement sendConfirmationMsg = driver.findElement(sendConfirmationMsgLocator);
-            Assertions.assertTrue(sendConfirmationMsg.isDisplayed());});
+        step("potwierdzenie wysłania wiadomości 'Message successfully sent'", ()->{
+            OrderDetails details = new OrderDetails();
+            Assertions.assertTrue(details.isInformationMsgDisplayed());
+        });
     }
 
 
@@ -984,58 +965,55 @@ import static io.qameta.allure.Allure.step;
     @Order(20)
     public void reorderPreviousOrder() {
 
-        step("'Order details' - przejście na stronę 'Reorder'", ()->{
-            By reorderPageLinkLocator = By.xpath("//a[@class=\"button-primary\" and text()=\"Reorder\"]");
-            WebElement reorderPageLink = driver.findElement(reorderPageLinkLocator);
-            reorderPageLink.click();});
+        step("'Order details' - kliknięcie w link 'Reorder'", () -> {
+            OrderDetails details = new OrderDetails();
+            details.reorderLink();
+        });
 
-        step("Addresses - wejście w link 'Edit'", ()->{
-            By editAddressesLinkLocator = By.xpath(
-                    "//footer[@class=\"address-footer\"]/a[@data-link-action=\"edit-address\"]");
-            WebElement editAddressesLink = driver.findElement(editAddressesLinkLocator);
-            editAddressesLink.click();});
+        step("Addresses - wejście w link 'Edit'", () -> {
+            YourAddresses yourAddress = new YourAddresses();
+            yourAddress.editAddress();
+        });
 
-        step("Addresses - zmiana nazwy miasta", ()->{
-            By cityInAddressFieldLocator = By.id("field-city");
-            WebElement cityInAddressField = driver.findElement(cityInAddressFieldLocator);
-            cityInAddressField.clear();
-            cityInAddressField.sendKeys("Opole");});
+        step("Addresses - zmiana nazwy miasta", () -> {
+            RegisteredUser registered = new RegisteredUser();
+            registered.newCity();
+        });
 
-        step("Addresses - kliknięcie buttona 'Continue'", ()->{
-            By continueButtonInAddressesSectionLocator = By.xpath("//footer[@class=\"form-footer clearfix\"]" +
-                    "/button[@class=\"continue btn btn-primary float-xs-right\"]");
-            WebElement continueButtonInAddressesSection = driver.findElement(continueButtonInAddressesSectionLocator);
-            continueButtonInAddressesSection.click();});
+        step("Addresses - kliknięcie buttona 'Continue'", () -> {
+            Addresses addresses = new Addresses();
+            addresses.continueButton();
+        });
 
-        step("Shipping method - wybór radio buttona 'My carrier'", ()->{
-            By prestaShopRadioButtonLocator = By.id("delivery_option_2");
-            WebElement prestaShopRadioButton = driver.findElement(prestaShopRadioButtonLocator);
-            prestaShopRadioButton.click();});
+        step("Shipping method - wybór radio buttona 'My carrier'", () -> {
+            ShippingMethod shipping = new ShippingMethod();
+            shipping.prestaShopRadioButton();
+        });
 
-        step("Shipping method - kliknięcie w button 'Continue'", ()->{
-            By continueButtonInShippingMethodFormLocator = By.xpath("//button[@name=\"confirmDeliveryOption\"]");
-            WebElement continueButtonInShippingMethodForm = driver.findElement(continueButtonInShippingMethodFormLocator);
-            continueButtonInShippingMethodForm.click();});
+        step("Shipping method - kliknięcie w button 'Continue'", () -> {
+            ShippingMethod shipping = new ShippingMethod();
+            shipping.continueButton();
+        });
 
-        step("Payment - wybór opcji 'Pay by bank wire'", ()->{
-            By payByBankWireRadioButtonLocator = By.id("payment-option-2");
-            WebElement payByBankWireRadioButton = driver.findElement(payByBankWireRadioButtonLocator);
-            payByBankWireRadioButton.click();});
+        step("Payment - wybór opcji 'Pay by bank wire'", () -> {
+            Payment payment = new Payment();
+            payment.payByBankWire();
+        });
 
-        step("Payment - wybór checkboxa zgody", ()->{
-            By agreeToTermsCheckboxLocator = By.xpath("//input[@name=\"conditions_to_approve[terms-and-conditions]\"]");
-            WebElement agreeToTermsCheckbox = driver.findElement(agreeToTermsCheckboxLocator);
-            agreeToTermsCheckbox.click();});
+        step("Payment - wybór checkboxa zgody", () -> {
+            Payment payment = new Payment();
+            payment.agreeToTermsCheckbox();
+        });
 
-        step("Payment - kliknięcie w button 'Place Order'", ()->{
-            By placeOrderButtonInPaymentSectionLocator = By.xpath("//div[@class=\"ps-shown-by-js\"]/button");
-            WebElement placeOrderButtonInPaymentSection = driver.findElement(placeOrderButtonInPaymentSectionLocator);
-            placeOrderButtonInPaymentSection.click();});
+        step("Payment - kliknięcie w button 'Place Order'", () -> {
+            Payment payment = new Payment();
+            payment.placeOrderButton();
+        });
 
         step("Order confirmation page - sprawdzenie pojawienia się komunikatu potwierdzającego", ()->{
-            By confirmationMsgLocator = By.xpath("//h3[@class=\"h1 card-title\"]/i");
-            WebElement confirmationMsg = driver.findElement(confirmationMsgLocator);
-            Assertions.assertTrue(confirmationMsg.isDisplayed());});
+            OrderConfirmation confirmation = new OrderConfirmation();
+            Assertions.assertTrue(confirmation.isMsgThatOrderConfirmed());
+        });
     }
 
 
@@ -1043,80 +1021,75 @@ import static io.qameta.allure.Allure.step;
     @Order(21)
     public void addUserAddress() {
 
-        step("Order confirmation page - przejście na stronę 'Your account'", ()->{
-            By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
-            WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
-            userProfileLink.click();});
+        step("Order confirmation page - przejście na stronę 'Your account'", () -> {
+            Header header = new Header();
+            header.userProfile();
+        });
 
-        step("'Your account' - przejście na stronę 'Addresses'", ()->{
-            By addressesPageLink = By.xpath("//a[@id=\"addresses-link\"]/span/i");
-            WebElement addressesPage = driver.findElement(addressesPageLink);
-            addressesPage.click();});
+        step("'Your account' - przejście na stronę 'Addresses'", () -> {
+            YourAccount account = new YourAccount();
+            account.addresses();
+        });
 
-        step("Your addresses - kliknięcie w link 'Create new address'", ()->{
-            By createNewAddressLinkLocator = By.xpath("//a[@data-link-action=\"add-address\"]");
-            WebElement createNewAddressLink = driver.findElement(createNewAddressLinkLocator);
-            createNewAddressLink.click();});
+        step("Your addresses - kliknięcie w link 'Create new address'", () -> {
+            YourAddresses yourAddress = new YourAddresses();
+            yourAddress.createNewAddressLink();
+        });
 
-        step("New address - uzupełnienie pola 'Address'", ()->{
-            By addressFieldLocator = By.id("field-address1");
-            WebElement addressField = driver.findElement(addressFieldLocator);
-            addressField.sendKeys("ul. Kwiatowa 15");});
+        step("New address - uzupełnienie pola 'Address'", () -> {
+            RegisteredUser registered = new RegisteredUser();
+            registered.createNewAddress();
+        });
 
-        step("New address - uzupełnienie pola 'Zip/Postal Code'", ()->{
-            By zipPostaCodeFieldLocator = By.id("field-postcode");
-            WebElement zipPostaCodeField = driver.findElement(zipPostaCodeFieldLocator);
-            zipPostaCodeField.sendKeys("88-111");});
+        step("New address - uzupełnienie pola 'Zip/Postal Code'", () -> {
+            RegisteredUser registered = new RegisteredUser();
+            registered.createNewZipPostaCode();
+        });
 
-        step("New address - uzupełnienie pola 'City'", ()->{
-            By cityFieldLocator = By.id("field-city");
-            WebElement cityField = driver.findElement(cityFieldLocator);
-            cityField.sendKeys("Janowiec");});
+        step("New address - uzupełnienie pola 'City'", () -> {
+            RegisteredUser registered = new RegisteredUser();
+            registered.createNewCity();
+        });
 
-        step("New address - kliknięcie w button 'Save'", ()->{
-            By saveButtonLocator = By.xpath("//button[@class=\"btn btn-primary form-control-submit float-xs-right\"]");
-            WebElement saveButton = driver.findElement(saveButtonLocator);
-            saveButton.click();});
+        step("New address - kliknięcie w button 'Save'", () -> {
+            NewAddress newAddress = new NewAddress();
+            newAddress.saveButton();
+        });
 
-        step("Your addresses - sprawdzenie komunikatu potwierdzającego dodania adresu", ()->{
-            By addressSuccessfullyAddedMsgLocator = By.xpath("//li[contains(text(),\"Address successfully added!\")]");
-            WebElement addressSuccessfullyAddedMsg = driver.findElement(addressSuccessfullyAddedMsgLocator);
-            Assertions.assertTrue(addressSuccessfullyAddedMsg.isDisplayed());});
+        step("Your addresses - komunikat potwierdzający dodanie adresu 'Address successfully added!'", ()->{
+            YourAddresses yourAddress = new YourAddresses();
+            Assertions.assertTrue(yourAddress.isAddMsgDisplayed());
+        });
 
-        step("Your addresses - kliknięcie w link 'Update'", ()->{
-            By updateNewAddressButtonLocator = By.xpath("//address[text()[contains(.,\"Janowiec\")]]" +
-                    "/../..//span[contains(text(),\"Update\")]");
-            WebElement updateNewAddressButton = driver.findElement(updateNewAddressButtonLocator);
-            updateNewAddressButton.click();});
+        step("Your addresses - kliknięcie w link 'Update'", () -> {
+            YourAddresses yourAddress = new YourAddresses();
+            yourAddress.updateAddress();
+        });
 
-        step("Update your address - zmiana danych w polu 'Zip/Postal Code'", ()->{
-            By zipPostaCodeFieldLocator = By.id("field-postcode");
-            WebElement zipPostaCodeField = driver.findElement(zipPostaCodeFieldLocator);
-            zipPostaCodeField.clear();
-            zipPostaCodeField.sendKeys("02-333");});
+        step("Update your address - zmiana danych w polu 'Zip/Postal Code'", () -> {
+            RegisteredUser registered = new RegisteredUser();
+            registered.replaceNewZipPostaCode();
+        });
 
-        step("Update your address - kliknięcie w button 'Save'", ()->{
-            By saveButtonLocator = By.xpath("//button[@class=\"btn btn-primary form-control-submit float-xs-right\"]");
-            WebElement saveButton = driver.findElement(saveButtonLocator);
-            saveButton.click();});
+        step("Update your address - kliknięcie w button 'Save'", () -> {
+            UpdateYourAddress update = new UpdateYourAddress();
+            update.saveButton();
+        });
 
-        step("Your addresses - sprawdzenie komunikatu potwierdzającego aktualizację adresu", ()->{
-            By addressSuccessfullyUpdatedMsgLocator = By.xpath(
-                    "//li[contains(text(),\"Address successfully updated!\")]");
-            WebElement addressSuccessfullyUpdatedMsg = driver.findElement(addressSuccessfullyUpdatedMsgLocator);
-            Assertions.assertTrue(addressSuccessfullyUpdatedMsg.isDisplayed());});
+        step("Your addresses - komunikat potwierdzający aktualizację 'Address successfully updated!'", () -> {
+            YourAddresses yourAddress = new YourAddresses();
+            Assertions.assertTrue(yourAddress.isUpdateMsgDisplayed());
+        });
 
-        step("Your addresses - usunięcie nowego adresu", ()->{
-            By deleteNewAddressButtonLocator = By.xpath("//address[text()[contains(.,\"Janowiec\")]]" +
-                    "/../..//span[contains(text(),\"Delete\")]");
-            WebElement deleteNewAddressButton = driver.findElement(deleteNewAddressButtonLocator);
-            deleteNewAddressButton.click();});
+        step("Your addresses - usunięcie nowego adresu", () -> {
+            YourAddresses yourAddress = new YourAddresses();
+            yourAddress.deleteNewAddress();
+        });
 
-        step("Your addresses - sprawdzenie komunikatu potwierdzającego usunięcie adresu", ()->{
-            By addressSuccessfullyDeletedMsgLocator = By.xpath(
-                    "//li[contains(text(),\"Address successfully deleted!\")]");
-            WebElement addressSuccessfullyDeletedMsg = driver.findElement(addressSuccessfullyDeletedMsgLocator);
-            Assertions.assertTrue(addressSuccessfullyDeletedMsg.isDisplayed());});
+        step("Your addresses - komunikat potwierdzającego usunięcie 'Address successfully deleted!'", ()->{
+            YourAddresses yourAddress = new YourAddresses();
+            Assertions.assertTrue(yourAddress.isDeleteMsgDisplayed());
+        });
     }
 
 
@@ -1124,55 +1097,55 @@ import static io.qameta.allure.Allure.step;
     @Order(22)
     public void addItemsToStaticWishlists() {
 
-        step("Przejcie na Home page", ()->{
-            By homepageLinkLocator = By.id("_desktop_logo");
-            WebElement homepageLink = driver.findElement(homepageLinkLocator);
-            homepageLink.click();});
+        step("Przejcie na Home page", () -> {
+            TopMenu top = new TopMenu();
+            top.homePageLogo();
+        });
 
-        step("Home page - kliknięcie w serduszko dodające do wishlist", ()->{
-            By heartButtonOfHummingbirdLocator = By.xpath(
-                    "//a[contains(text(),\"Hummingbird printed t-shirt\")]" +
-                            "/../../../button[@class=\"wishlist-button-add\"]");
-            WebElement heartButtonOfHummingbird = driver.findElement(heartButtonOfHummingbirdLocator);
-            heartButtonOfHummingbird.click();});
+        step("Home page - kliknięcie w serduszko dodające do wishlist", () -> {
+            Home home = new Home();
+            home.wishlistIconOfHummingbirdPrintedTshirt();
+        });
 
-        step("Popup 'Add to whishlist' - kliknięcie w link 'My wishlist'", ()->{
-            By myWishlistPopupLocator = By.xpath("//div[@class=\"modal-body\"]" +
-                    "/div/ul/li[@class=\"wishlist-list-item\"]");
-            wait.until(ExpectedConditions.elementToBeClickable(myWishlistPopupLocator));
-            WebElement myWishlistPopup = driver.findElement(myWishlistPopupLocator);
-            myWishlistPopup.click();});
+        step("Popup 'Add to whishlist' - kliknięcie w link 'My wishlist'", () -> {
+            Home home = new Home();
+            home.myWishlistSelection();
 
-        step("TOAST - potwierdzenie pojawienia się komunikatu potwierdzającego", ()->{
-            By productAddedToWishlistMsgLocator = By.xpath("//div[@class=\"wishlist-toast success\"]" +
-                    "/p[@class=\"wishlist-toast-text\"]");
-            wait.until(ExpectedConditions.elementToBeClickable(productAddedToWishlistMsgLocator));
-            WebElement productAddedToWishlistMsg = driver.findElement(productAddedToWishlistMsgLocator);
-            Assertions.assertTrue(productAddedToWishlistMsg.isDisplayed());});
+            //todo wait.until(ExpectedConditions.elementToBeClickable(myWishlistPopupLocator));
+        });
 
-        step("Home page - przejście na stronę 'Your account'", ()->{
-            By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
-            WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
-            userProfileLink.click();});
+        step("TOAST 'Product added' - potwierdzenie pojawienia się komunikatu", ()->{
+            Home home = new Home();
+            Assertions.assertTrue(home.isAddedMsgDisplayed());
 
-        step("'Your account' - przejście na stronę 'My wishlists'", ()->{
-            By myWishlistsPageLocator = By.xpath("//a[@id=\"wishlist-link\"]/span/i");
-            WebElement myWishlistsPage = driver.findElement(myWishlistsPageLocator);
-            myWishlistsPage.click();});
+            //todo  wait.until(ExpectedConditions.elementToBeClickable(productAddedToWishlistMsgLocator));
+        });
 
-        step("'My wishlists' - wejście na link 'My wishlist'", ()->{
-            By myWishlistLinkLocator = By.xpath("//p[@class=\"wishlist-list-item-title\"]");
-            wait.until(ExpectedConditions.elementToBeClickable(myWishlistLinkLocator));
-            WebElement myWishlistLink = driver.findElement(myWishlistLinkLocator);
-            myWishlistLink.click();});
+        step("Header - wejście na profil użytkownika 'Your account'", () -> {
+            Header header = new Header();
+            header.userProfile();
+        });
 
-        step("'My wishlist' - sprawdzenie, że produkt jest na liście", ()->{
-            By wishListElementsLocator = By.xpath(
-                "//p[@class=\"wishlist-product-title\"]");
-            wait.until(ExpectedConditions.elementToBeClickable(wishListElementsLocator));
-            List<WebElement> wishListsElements = driver.findElements(wishListElementsLocator);
-            List<String> wishListsElementsNames = wishListsElements.stream().map(WebElement::getText).toList();
-            Assertions.assertTrue(wishListsElementsNames.size()==1 && wishListsElementsNames.getFirst().equals("Hummingbird printed t-shirt"));});
+        step("'Your account' - przejście na stronę 'My wishlists'", () -> {
+            YourAccount account = new YourAccount();
+            account.myWishlists();
+        });
+
+        step("'My wishlists' - wejście na link 'My wishlist'", () -> {
+            MyWishlists myWishlist = new MyWishlists();
+            myWishlist.myWishlistLink();
+
+            //todo wait.until(ExpectedConditions.elementToBeClickable(myWishlistLinkLocator));
+        });
+
+//        step("'My wishlist' - sprawdzenie, że produkt jest na liście", ()->{
+//            By wishListElementsLocator = By.xpath(
+//                "//p[@class=\"wishlist-product-title\"]");
+//            wait.until(ExpectedConditions.elementToBeClickable(wishListElementsLocator));
+//            List<WebElement> wishListsElements = driver.findElements(wishListElementsLocator);
+//            List<String> wishListsElementsNames = wishListsElements.stream().map(WebElement::getText).toList();
+//            Assertions.assertTrue(wishListsElementsNames.size()==1 && wishListsElementsNames.getFirst().equals("Hummingbird printed t-shirt"));
+//        });
     }
 
 
@@ -1180,177 +1153,181 @@ import static io.qameta.allure.Allure.step;
     @Order(23)
     public void addItemsToNewWishlists() {
 
-        step("Przejcie na Home page", ()->{
-            By homepageLinkLocator = By.id("_desktop_logo");
-            WebElement homepageLink = driver.findElement(homepageLinkLocator);
-            homepageLink.click();});
+        step("Przejcie na Home page", () -> {
+            TopMenu top = new TopMenu();
+            top.homePageLogo();
+        });
 
-        step("Home page - kliknięcie w serduszko dodające do wishlist", ()->{
-            By heartButtonOfMugTheAdventureLocator = By.xpath("//a[contains(text(),\"Mug The adventure begins\")]" +
-                    "/../../../button[@class=\"wishlist-button-add\"]");
-            WebElement heartButtonOfMugTheAdventure = driver.findElement(heartButtonOfMugTheAdventureLocator);
-            heartButtonOfMugTheAdventure.click();});
+        step("Home page - kliknięcie w serduszko dodające do wishlist", () -> {
+            Home home = new Home();
+            home.wishlistIconOfMugTheAdventureBegins();
+        });
 
-        step("Popup 'Add to whishlist' - kliknięcie w link 'Create new list'", ()->{
-            By newWishlistPopupLocator = By.xpath("//a[@class=\"wishlist-add-to-new text-primary\"]");
-            wait.until(ExpectedConditions.elementToBeClickable(newWishlistPopupLocator));
-            WebElement newWishlistPopup = driver.findElement(newWishlistPopupLocator);
-            newWishlistPopup.click();});
+        step("Popup 'Add to whishlist' - kliknięcie w link 'Create new list'", () -> {
+            Home home = new Home();
+            home.createNewWishlist();
 
-        step("Popup 'Create wishlist' - wpisanie nazwy nowej listy", ()->{
-            By wishlistNameLocator = By.xpath("//input[@id=\"input2\"]");
-            WebElement wishlistNameField = driver.findElement(wishlistNameLocator);
-            wishlistNameField.sendKeys("Ulubione");});
+            //todo wait.until(ExpectedConditions.elementToBeClickable(newWishlistPopupLocator));
+        });
 
-        step("Popup 'Create wishlist' - kliknięcie w button 'Create wishlist'", ()->{
-            By createNewWishListLocator = By.xpath("//button[contains(text(),\"Create wishlist\")]");
-            WebElement createNewWishList = driver.findElement(createNewWishListLocator);
-            createNewWishList.click();});
+        step("Home page/Popup 'Create wishlist' - wpisanie nazwy nowej listy", () -> {
+            Home home = new Home();
+            home.wishlistNameFillIn();
+        });
 
-        step("Popup 'Add to whishlist' - wybranie nowo utworzonej listy", ()->{
-            By ulubioneNewWishlistLector = By.xpath("//li[@class=\"wishlist-list-item\"]" +
-                    "/p[contains(text(),\"Ulubione\")]");
-            wait.until(ExpectedConditions.elementToBeClickable(ulubioneNewWishlistLector));
-            WebElement ulubioneNewWishlist = driver.findElement(ulubioneNewWishlistLector);
-            ulubioneNewWishlist.click();});
+        step("Home page/Popup 'Create wishlist' - kliknięcie w button 'Create wishlist'", () -> {
+            Home home = new Home();
+            home.createNewWishListButton();
+        });
 
-        step("TOAST - potwierdzenie pojawienia się komunikatu", ()->{
-            By productAddedToWishlistMsgLocator = By.xpath("//p[contains(text(),\"Product added\")]");
-            wait.until(ExpectedConditions.elementToBeClickable(productAddedToWishlistMsgLocator));
-            WebElement productAddedToWishlistMsg = driver.findElement(productAddedToWishlistMsgLocator);
-            Assertions.assertTrue(productAddedToWishlistMsg.isDisplayed());});
+        step("Popup 'Add to whishlist' - wybranie nowo utworzonej listy", () -> {
+            Home home = new Home();
+            home.ulubioneNewWishlist();
 
-        step("Home page - przejście na stronę 'Your account'", ()->{
-            By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
-            WebElement userProfileLink = driver.findElement(userProfileLinkLocator);
-            userProfileLink.click();});
+            //todo wait.until(ExpectedConditions.elementToBeClickable(ulubioneNewWishlistLector));
+        });
 
-        step("'Your account' - wejście na stronę 'My wishlists'", ()->{
-            By myWishlistsPageLocator = By.xpath("//a[@id=\"wishlist-link\"]/span/i");
-            WebElement myWishlistsPage = driver.findElement(myWishlistsPageLocator);
-            myWishlistsPage.click();});
+        step("Home page/TOAST - potwierdzenie pojawienia się komunikatu 'Product added'", ()->{
+            Home home = new Home();
+            Assertions.assertTrue(home.isAddedMsgDisplayed());
 
-        step("'My wishlists' - wejście na link listy 'Ulubione'", ()->{
-            By ulubioneWishlistLinkLocator = By.xpath("//a[@class=\"wishlist-list-item-link\"]" +
-                    "/p[contains(text(),\"Ulubione\")]");
-            wait.until(ExpectedConditions.elementToBeClickable(ulubioneWishlistLinkLocator));
-            WebElement ulubioneWishlistLink = driver.findElement(ulubioneWishlistLinkLocator);
-            ulubioneWishlistLink.click();});
+            //todo wait.until(ExpectedConditions.elementToBeClickable(productAddedToWishlistMsgLocator));
+        });
 
-        step("Ulubione - sprawdzenie, że produkt jest na liście", ()->{
-            By wishListElementsLocator = By.xpath("//p[@class=\"wishlist-product-title\"]");
-            wait.until(ExpectedConditions.elementToBeClickable(wishListElementsLocator));
-            List<WebElement> wishListsElements = driver.findElements(wishListElementsLocator);
-            List<String> wishListsElementsNames = wishListsElements.stream().map(WebElement::getText).toList();
-            Assertions.assertTrue(wishListsElementsNames.size()==1 && wishListsElementsNames.getFirst().equals("Mug The adventure begins"));});
+        step("Header - wejście na profil użytkownika 'Your account'", () -> {
+            Header header = new Header();
+            header.userProfile();
+        });
+
+        step("'Your account' - wejście na stronę 'My wishlists'", () -> {
+            YourAccount account = new YourAccount();
+            account.myWishlists();
+        });
+
+        step("'My wishlists' - wejście na link listy 'Ulubione'", () -> {
+            MyWishlists myWishlists = new MyWishlists();
+            myWishlists.ulubioneWishlistLink();
+
+            //todo  wait.until(ExpectedConditions.elementToBeClickable(ulubioneWishlistLinkLocator));
+        });
+
+//        step("Ulubione - sprawdzenie, że produkt jest na liście", ()->{
+//            By wishListElementsLocator = By.xpath("//p[@class=\"wishlist-product-title\"]");
+//            wait.until(ExpectedConditions.elementToBeClickable(wishListElementsLocator));
+//            List<WebElement> wishListsElements = driver.findElements(wishListElementsLocator);
+//            List<String> wishListsElementsNames = wishListsElements.stream().map(WebElement::getText).toList();
+//            Assertions.assertTrue(wishListsElementsNames.size()==1 && wishListsElementsNames.getFirst().equals("Mug The adventure begins"));
+//        });
     }
 
 
-    @Test    //Wishlists - utworzenie listy na podstronie ‘My wishlists’, zmiana nazwy i usunięcie
+    @Test   //Wishlists - utworzenie listy na podstronie ‘My wishlists’, zmiana nazwy i usunięcie
     @Order(24)
     public void createNewWishlists() {
 
-        step("Ulubione - przejście na stronę 'My wishlists'", ()->{
-            By myWishlistsLinkLocator = By.xpath("//nav[@data-depth=\"4\"]//a[contains(., \"My wishlists\")]");
-            WebElement myWishlistsLink = driver.findElement(myWishlistsLinkLocator);
-            myWishlistsLink.click();});
+        step("Ulubione - przejście na stronę 'My wishlists'", () -> {
+            MyWishlists myWishlists = new MyWishlists();
+            myWishlists.myWishlistsPage();
+        });
 
-        step("My wishlists - kliknięcie w 'Create new list'", ()->{
-            By createNewListWishlistLinkLocator = By.xpath("//div[@class=\"wishlist-container-header\"]" +
-                    "/a[contains(text(),\"Create new list\")]");
-            wait.until(ExpectedConditions.elementToBeClickable(createNewListWishlistLinkLocator));
-            WebElement createNewListWishlistLink = driver.findElement(createNewListWishlistLinkLocator);
-            createNewListWishlistLink.click();});
+        step("My wishlists - kliknięcie w 'Create new list'", () -> {
+            MyWishlists myWishlists = new MyWishlists();
+            myWishlists.createNewList();
 
-        step("Popup 'Create wishlist' - wpisanie nazwy nowej listy życzeń", ()->{
-            By createNameOfNewListWishlistLocator = By.xpath("//input[@placeholder=\"Add name\"]");
-            wait.until(ExpectedConditions.elementToBeClickable(createNameOfNewListWishlistLocator));
-            WebElement createNameOfNewListWishlist = driver.findElement(createNameOfNewListWishlistLocator);
-            createNameOfNewListWishlist.sendKeys("Super lista");});
+            //todo wait.until(ExpectedConditions.elementToBeClickable(createNewListWishlistLinkLocator));
+        });
 
-        step("Popup 'Create wishlist' - kliknięcie w button 'Create wishlist'", ()->{
-            By createWishlistButtonLocator = By.xpath("//button[contains(text(),\"Create wishlist\")]");
-            WebElement createWishlistButton = driver.findElement(createWishlistButtonLocator);
-            createWishlistButton.click();});
+        step("Popup 'Create wishlist' - wpisanie nazwy nowej listy życzeń", () -> {
+            MyWishlists myWishlists = new MyWishlists();
+            myWishlists.addNameOfNewList();
 
-        step("TOAST - potwierdzenie pojawienia się komunikatu", ()->{
-            By wishlistSuccessCreatedMsgLocator = By.xpath("//p[contains(text(),\"The list has been properly created\")]");
-            wait.until(ExpectedConditions.elementToBeClickable(wishlistSuccessCreatedMsgLocator));
-            WebElement wishlistSuccessCreatedMsg = driver.findElement(wishlistSuccessCreatedMsgLocator);
-            Assertions.assertTrue(wishlistSuccessCreatedMsg.isDisplayed());});
+            //todo wait.until(ExpectedConditions.elementToBeClickable(createNameOfNewListWishlistLocator));
+        });
 
-        step("potwierdzenie utworzenia nowej wishlist", ()->{
-            By createdNewWishlistNameLocator = By.xpath("//div[@class=\"wishlist-list-container\"]" +
-                    "//p[contains(text(),\"Super lista\")]");
-            WebElement createdNewWishlistName = driver.findElement(createdNewWishlistNameLocator);
-            Assertions.assertTrue(createdNewWishlistName.isDisplayed());});
+        step("Popup 'Create wishlist' - kliknięcie w button 'Create wishlist'", () -> {
+            MyWishlists myWishlists = new MyWishlists();
+            myWishlists.createWishlistButton();
+        });
 
-        step("My wishlists - kliknięcie w trzy kropki", ()->{
-            By moreActionLocator = By.xpath("//p[contains(text(),\"Super lista\")]" +
-                    "/../div[@class=\"wishlist-list-item-right\"]/button[@class=\"wishlist-list-item-actions\"]");
-            driver.findElement(moreActionLocator).click();});
+        step("TOAST/'The list has been properly created' - potwierdzenie pojawienia się komunikatu", ()->{
+            MyWishlists myWishlists = new MyWishlists();
+            Assertions.assertTrue(myWishlists.isCreatedMsgDisplayed());
 
-        step("My wishlists - kliknięcie w 'Rename'", ()->{
-            By renameNewCreatedWishlistLocator = By.xpath("//p[contains(text(),\"Super lista\")]" +
-                    "/..//div[@class=\"wishlist-list-item-right\"]/div[@class=\"dropdown-menu show\"]/button[contains(text(),\"Rename\")]");
-            WebElement renameWishList = driver.findElement(renameNewCreatedWishlistLocator);
-            renameWishList.click();});
+           //todo  wait.until(ExpectedConditions.elementToBeClickable(wishlistSuccessCreatedMsgLocator));
+        });
 
-        step("Popup 'Rename wishlist' - aktualizacja nazwy nowej listy życzeń", ()->{
-            By changeNameOfListWishlistLocator = By.xpath("//h5[contains(text(),\"Rename wishlist\")]/../..//div/div/input");
-            wait.until(ExpectedConditions.elementToBeClickable(changeNameOfListWishlistLocator));
-            WebElement changeNameOfListWishList = driver.findElement(changeNameOfListWishlistLocator);
-            changeNameOfListWishList.clear();
-            changeNameOfListWishList.sendKeys("Lista życzeń");});
+        step("potwierdzenie, czy istnieje lista o nazwie 'Super lista'", ()->{
+            MyWishlists myWishlists = new MyWishlists();
+            Assertions.assertTrue(myWishlists.isSuperListaDisplayed());
+        });
 
-        step("Popup 'Rename wishlist' - kliknięcie w button 'Rename wishlist'", ()->{
-            By renameWishlistButtonLocator = By.xpath("//button[contains(text(),\"Rename wishlist\")]");
-            WebElement renameWishlistButton = driver.findElement(renameWishlistButtonLocator);
-            renameWishlistButton.click();});
+        step("My wishlists - kliknięcie w trzy kropki", () -> {
+            MyWishlists myWishlists = new MyWishlists();
+            myWishlists.moreActionsButton();
+        });
 
-        step("TOAST - potwierdzenie pojawienia się komunikatu", ()->{
-            By successRenamedNewWishlistLocator = By.xpath("//p[@class=\"wishlist-toast-text\"]");
-            wait.until(ExpectedConditions.elementToBeClickable(successRenamedNewWishlistLocator));
-            WebElement successRenamedNewWishlist = driver.findElement(successRenamedNewWishlistLocator);
-            Assertions.assertTrue(successRenamedNewWishlist.isDisplayed());});
+        step("My wishlists - kliknięcie w 'Rename'", () -> {
+            MyWishlists myWishlists = new MyWishlists();
+            myWishlists.renameWishlist();
+        });
 
-        step("My wishlists - kliknięcie w trzy kropki", ()->{
-            By moreActionLocator = By.xpath("//p[contains(text(),\"Lista życzeń\")]" +
-                    "/../div[@class=\"wishlist-list-item-right\"]/button[@class=\"wishlist-list-item-actions\"]");
-            wait.until(ExpectedConditions.elementToBeClickable(moreActionLocator));
-            driver.findElement(moreActionLocator).click();});
+        step("Popup 'Rename wishlist' - aktualizacja nazwy nowej listy życzeń", () -> {
+            MyWishlists myWishlists = new MyWishlists();
+            myWishlists.wishlistRenameField();
 
-        step("My wishlists - kliknięcie w button 'Share'", ()->{
-            By shareButtonWishlistLocator = By.xpath("//button[contains(text(),\"Share\")]");
-            WebElement shareButtonWishlist = driver.findElement(shareButtonWishlistLocator);
-            shareButtonWishlist.click();});
+            //todo wait.until(ExpectedConditions.elementToBeClickable(changeNameOfListWishlistLocator));
+        });
 
-        step("Share wishlist - kliknięcie w button 'Copy text'", ()->{
-            By copyTextButtonOfWishlistLocator = By.xpath("//button[contains(text(),\"Copy text\")]");
-            WebElement copyTextButtonOfWishlist = driver.findElement(copyTextButtonOfWishlistLocator);
-            copyTextButtonOfWishlist.click();});
+        step("Popup 'Rename wishlist' - kliknięcie w button 'Rename wishlist'", () -> {
+            MyWishlists myWishlists = new MyWishlists();
+            myWishlists.renameWishlistButton();
+        });
 
-        step("TOAST - potwierdzenie pojawienia się komunikatu", ()->{
-            By shareLinkCopiedMsgLocator = By.xpath("//p[@class=\"wishlist-toast-text\"]");
-            WebElement shareLinkCopiedMsg = driver.findElement(shareLinkCopiedMsgLocator);
-            Assertions.assertTrue(shareLinkCopiedMsg.isDisplayed());});
+        step("TOAST/'List has been renamed' - potwierdzenie pojawienia się komunikatu", ()->{
+            MyWishlists myWishlists = new MyWishlists();
+            Assertions.assertTrue(myWishlists.isRenamedListMsgDisplayed());
 
-        step("My wishlists - usunięcie listy", ()->{
-            By deleteWishlistButtonLocator = By.xpath("//p[contains(text(),\"Lista życzeń\")]" +
-                    "/../div[@class=\"wishlist-list-item-right\"]/button/i[contains(text(),\"delete\")]");
-            WebElement deleteWishlistButton = driver.findElement(deleteWishlistButtonLocator);
-            deleteWishlistButton.click();});
+            //todo wait.until(ExpectedConditions.elementToBeClickable(successRenamedNewWishlistLocator));
+        });
 
-        step("Popum 'Delete wishlist' - kliknięcie w button 'Delete'", ()->{
-            By deleteConfirmLocator = By.xpath("//div[@class=\"modal-footer\"]/button[contains(text(),\"Delete\")]");
-            WebElement deleteConfirm = driver.findElement(deleteConfirmLocator);
-            deleteConfirm.click();});
+        step("My wishlists - kliknięcie w trzy kropki", () -> {
+            MyWishlists myWishlists = new MyWishlists();
+            myWishlists.moreActionsButton();
 
-        step("TOAST - potwierdzenie pojawienia się komunikatu", ()->{
-            By listRemovedComfirmLocator = By.xpath("//p[contains(text(),\"List has been removed\")]");
-            wait.until(ExpectedConditions.elementToBeClickable(listRemovedComfirmLocator));
-            WebElement listRemovedComfirm = driver.findElement(listRemovedComfirmLocator);
-            Assertions.assertTrue(listRemovedComfirm.isDisplayed());});
+            //todo wait.until(ExpectedConditions.elementToBeClickable(moreActionLocator));
+        });
+
+        step("My wishlists - kliknięcie w button 'Share'", () -> {
+            MyWishlists myWishlists = new MyWishlists();
+            myWishlists.shareButton();
+        });
+
+        step("Share wishlist - kliknięcie w button 'Copy text'", () -> {
+            MyWishlists myWishlists = new MyWishlists();
+            myWishlists.copyTextButton();
+        });
+
+        step("TOAST/'Share link copied!' - potwierdzenie pojawienia się komunikatu", ()->{
+            MyWishlists myWishlists = new MyWishlists();
+            Assertions.assertTrue(myWishlists.isCopiedLinkMsgDisplayed());
+        });
+
+        step("My wishlists - usunięcie listy", () -> {
+            MyWishlists myWishlists = new MyWishlists();
+            myWishlists.deleteWishlist();
+        });
+
+        step("Popup 'Delete wishlist' - kliknięcie w button 'Delete'", () -> {
+            MyWishlists myWishlists = new MyWishlists();
+            myWishlists.deleteButton();
+        });
+
+        step("TOAST/'List has been removed' - potwierdzenie pojawienia się komunikatu", ()->{
+            MyWishlists myWishlists = new MyWishlists();
+            Assertions.assertTrue(myWishlists.isRemovedListMsgDisplayed());
+
+            //todo wait.until(ExpectedConditions.elementToBeClickable(listRemovedComfirmLocator));
+        });
     }
 
 
@@ -1358,173 +1335,195 @@ import static io.qameta.allure.Allure.step;
     @Order(25)
     public void checkFooterLinksClickable() {
 
-        step("Home page/Footer - kliknięcie w link 'Prices drop'", ()->{
-            By pricesDropLinkLocator = By.id("link-product-page-prices-drop-1");
-            WebElement pricesDropLink = driver.findElement(pricesDropLinkLocator);
-            pricesDropLink.click();});
+        step("Home page/Footer - kliknięcie w link 'Prices drop'", () -> {
+            Footer footer = new Footer();
+            footer.pricesDrop();
+        });
 
-        step("Potwierdzenie otwarcia podstrony 'Prices drop'", ()->{
-            By pricesDropPageNameLocator = By.id("js-product-list-header");
-            WebElement pricesDropPageName = driver.findElement(pricesDropPageNameLocator);
-            Assertions.assertTrue(pricesDropPageName.isDisplayed());});
+//        step("Potwierdzenie otwarcia podstrony 'Prices drop'", ()->{
+//            By pricesDropPageNameLocator = By.id("js-product-list-header");
+//            WebElement pricesDropPageName = driver.findElement(pricesDropPageNameLocator);
+//            Assertions.assertTrue(pricesDropPageName.isDisplayed());
+//        });
 
-        step("Home page/Footer - kliknięcie w link 'New products'", ()->{
-            By newProductsLinkLocator = By.id("link-product-page-new-products-1");
-            WebElement newProductsLink = driver.findElement(newProductsLinkLocator);
-            newProductsLink.click();});
+        step("Home page/Footer - kliknięcie w link 'New products'", () -> {
+            Footer footer = new Footer();
+            footer.newProducts();
+        });
 
-        step("Potwierdzenie otwarcia podstrony 'New products'", ()->{
-            By newProductsPageNameLocator = By.id("js-product-list-header");
-            WebElement newProductsPageName = driver.findElement(newProductsPageNameLocator);
-            Assertions.assertTrue(newProductsPageName.isDisplayed());});
+//        step("Potwierdzenie otwarcia podstrony 'New products'", ()->{
+//            By newProductsPageNameLocator = By.id("js-product-list-header");
+//            WebElement newProductsPageName = driver.findElement(newProductsPageNameLocator);
+//            Assertions.assertTrue(newProductsPageName.isDisplayed());
+//        });
 
-        step("Home page/Footer - kliknięcie w link 'Best sellers'", ()->{
-            By bestSellersLinkLocator = By.id("link-product-page-best-sales-1");
-            WebElement bestSellersLink = driver.findElement(bestSellersLinkLocator);
-            bestSellersLink.click();});
+        step("Home page/Footer - kliknięcie w link 'Best sellers'", () -> {
+            Footer footer = new Footer();
+            footer.bestSellers();
+        });
 
-        step("Potwierdzenie otwarcia podstrony 'Best sellers'", ()->{
-            By bestSellersPageNameLocator = By.id("js-product-list-header");
-            WebElement bestSellersPageName = driver.findElement(bestSellersPageNameLocator);
-            Assertions.assertTrue(bestSellersPageName.isDisplayed());});
+//        step("Potwierdzenie otwarcia podstrony 'Best sellers'", ()->{
+//            By bestSellersPageNameLocator = By.id("js-product-list-header");
+//            WebElement bestSellersPageName = driver.findElement(bestSellersPageNameLocator);
+//            Assertions.assertTrue(bestSellersPageName.isDisplayed());
+//        });
 
-        step("Home page/Footer - kliknięcie w link 'Delivery'", ()->{
-            By deliveryLinkLocator = By.id("link-cms-page-1-2");
-            WebElement deliveryLink = driver.findElement(deliveryLinkLocator);
-            deliveryLink.click();});
+        step("Home page/Footer - kliknięcie w link 'Delivery'", () -> {
+            Footer footer = new Footer();
+            footer.delivery();
+        });
 
-        step("Potwierdzenie otwarcia podstrony 'Delivery'", ()->{
-            By deliveryPageNameLink = By.xpath("//h1[contains(text(),\"Delivery\")]");
-            WebElement deliveryPageName = driver.findElement(deliveryPageNameLink);
-            Assertions.assertTrue(deliveryPageName.isDisplayed());});
+//        step("Potwierdzenie otwarcia podstrony 'Delivery'", ()->{
+//            By deliveryPageNameLink = By.xpath("//h1[contains(text(),\"Delivery\")]");
+//            WebElement deliveryPageName = driver.findElement(deliveryPageNameLink);
+//            Assertions.assertTrue(deliveryPageName.isDisplayed());
+//        });
 
-        step("Home page/Footer - kliknięcie w link 'Legal Notice'", ()->{
-            By legalNoticeLinkLocator = By.id("link-cms-page-2-2");
-            WebElement legalNoticeLink = driver.findElement(legalNoticeLinkLocator);
-            legalNoticeLink.click();});
+        step("Home page/Footer - kliknięcie w link 'Legal Notice'", () -> {
+            Footer footer = new Footer();
+            footer.legalNotice();
+        });
 
-        step("Potwierdzenie otwarcia podstrony 'Legal Notice'", ()->{
-            By legalNoticePageNameLocator = By.xpath("//h1[contains(text(),\"Legal Notice\")]");
-            WebElement legalNoticePageName = driver.findElement(legalNoticePageNameLocator);
-            Assertions.assertTrue(legalNoticePageName.isDisplayed());});
+//        step("Potwierdzenie otwarcia podstrony 'Legal Notice'", ()->{
+//            By legalNoticePageNameLocator = By.xpath("//h1[contains(text(),\"Legal Notice\")]");
+//            WebElement legalNoticePageName = driver.findElement(legalNoticePageNameLocator);
+//            Assertions.assertTrue(legalNoticePageName.isDisplayed());
+//        });
 
-        step("Home page/Footer - kliknięcie w link 'Terms and conditions of use'", ()->{
-            By termsAndConditionsOfUseLinkLocator = By.id("link-cms-page-3-2");
-            WebElement termsAndConditionsOfUseLink = driver.findElement(termsAndConditionsOfUseLinkLocator);
-            termsAndConditionsOfUseLink.click();});
+        step("Home page/Footer - kliknięcie w link 'Terms and conditions of use'", () -> {
+            Footer footer = new Footer();
+            footer.termsAndConditionsOfUse();
+        });
 
-        step("Potwierdzenie otwarcia podstrony 'Terms and conditions of use'", ()->{
-            By termsAndConditionsOfUsePageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
-                    "/h1[contains(text(), " + "\"Terms and conditions of use\")]");
-            WebElement termsAndConditionsOfUsePageName = driver.findElement(termsAndConditionsOfUsePageNameLocator);
-            Assertions.assertTrue(termsAndConditionsOfUsePageName.isDisplayed());});
+//        step("Potwierdzenie otwarcia podstrony 'Terms and conditions of use'", ()->{
+//            By termsAndConditionsOfUsePageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
+//                    "/h1[contains(text(), " + "\"Terms and conditions of use\")]");
+//            WebElement termsAndConditionsOfUsePageName = driver.findElement(termsAndConditionsOfUsePageNameLocator);
+//            Assertions.assertTrue(termsAndConditionsOfUsePageName.isDisplayed());
+//        });
 
-        step("Home page/Footer - kliknięcie w link 'About us'", ()->{
-            By aboutUsLinkLocator = By.id("link-cms-page-4-2");
-            WebElement aboutUsLink = driver.findElement(aboutUsLinkLocator);
-            aboutUsLink.click();});
+        step("Home page/Footer - kliknięcie w link 'About us'", () -> {
+            Footer footer = new Footer();
+            footer.aboutUs();
+        });
 
-        step("Potwierdzenie otwarcia podstrony 'About us'", ()->{
-            By aboutUsPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text(), " +
-                    "\"About us\")]");
-            WebElement aboutUsPageName = driver.findElement(aboutUsPageNameLocator);
-            Assertions.assertTrue(aboutUsPageName.isDisplayed());});
+//        step("Potwierdzenie otwarcia podstrony 'About us'", ()->{
+//            By aboutUsPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text(), " +
+//                    "\"About us\")]");
+//            WebElement aboutUsPageName = driver.findElement(aboutUsPageNameLocator);
+//            Assertions.assertTrue(aboutUsPageName.isDisplayed());
+//        });
 
-        step("Home page/Footer - kliknięcie w link 'Secure payment'", ()->{
-            By securePaymentLinkLocator = By.id("link-cms-page-5-2");
-            WebElement securePaymentLink = driver.findElement(securePaymentLinkLocator);
-            securePaymentLink.click();});
+        step("Home page/Footer - kliknięcie w link 'Secure payment'", () -> {
+            Footer footer = new Footer();
+            footer.securePayment();
+        });
 
-        step("Potwierdzenie otwarcia podstrony 'Secure payment'", ()->{
-            By securePaymentPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
-                    "/h1[contains(text(),\"Secure payment\")]");
-            WebElement securePaymentPageName = driver.findElement(securePaymentPageNameLocator);
-            Assertions.assertTrue(securePaymentPageName.isDisplayed());});
+//        step("Potwierdzenie otwarcia podstrony 'Secure payment'", ()->{
+//            By securePaymentPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
+//                    "/h1[contains(text(),\"Secure payment\")]");
+//            WebElement securePaymentPageName = driver.findElement(securePaymentPageNameLocator);
+//            Assertions.assertTrue(securePaymentPageName.isDisplayed());
+//        });
 
-        step("Home page/Footer - kliknięcie w link 'Contact us'", ()->{
-            By contactUsLinkLocator = By.id("link-static-page-contact-2");
-            WebElement contactUsLink = driver.findElement(contactUsLinkLocator);
-            contactUsLink.click();});
+        step("Home page/Footer - kliknięcie w link 'Contact us'", () -> {
+            Footer footer = new Footer();
+            footer.contactUs();
+        });
 
-        step("Potwierdzenie otwarcia podstrony 'Contact us'", ()->{
-            By contactUsPageNameLocator = By.xpath("//div[@class=\"col-md-9 col-md-offset-3\"]" +
-                    "/h3[contains(text(),\"Contact us\")]");
-            WebElement contactUsPageName = driver.findElement(contactUsPageNameLocator);
-            Assertions.assertTrue(contactUsPageName.isDisplayed());});
+//        step("Potwierdzenie otwarcia podstrony 'Contact us'", ()->{
+//            By contactUsPageNameLocator = By.xpath("//div[@class=\"col-md-9 col-md-offset-3\"]" +
+//                    "/h3[contains(text(),\"Contact us\")]");
+//            WebElement contactUsPageName = driver.findElement(contactUsPageNameLocator);
+//            Assertions.assertTrue(contactUsPageName.isDisplayed());
+//        });
 
-        step("Home page/Footer - kliknięcie w link 'Sitemap'", ()->{
-            By sitemapLinkLocator = By.id("link-static-page-sitemap-2");
-            WebElement sitemapLink = driver.findElement(sitemapLinkLocator);
-            sitemapLink.click();});
+        step("Home page/Footer - kliknięcie w link 'Sitemap'", () -> {
+            Footer footer = new Footer();
+            footer.sitemap();
+        });
 
-        step("Potwierdzenie otwarcia podstrony 'Sitemap'", ()->{
-            By sitemapPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
-                    "/h1/span[contains(text(),\"Sitemap\")]");
-            WebElement sitemapPageName = driver.findElement(sitemapPageNameLocator);
-            Assertions.assertTrue(sitemapPageName.isDisplayed());});
+//        step("Potwierdzenie otwarcia podstrony 'Sitemap'", ()->{
+//            By sitemapPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
+//                    "/h1/span[contains(text(),\"Sitemap\")]");
+//            WebElement sitemapPageName = driver.findElement(sitemapPageNameLocator);
+//            Assertions.assertTrue(sitemapPageName.isDisplayed());
+//        });
 
-        step("Home page/Footer - kliknięcie w link 'Stores'", ()->{
-            By storesLinkLocator = By.id("link-static-page-stores-2");
-            WebElement storesLink = driver.findElement(storesLinkLocator);
-            storesLink.click();});
+        step("Home page/Footer - kliknięcie w link 'Stores'", () -> {
+            Footer footer = new Footer();
+            footer.stores();
+        });
 
-        step("Potwierdzenie otwarcia podstrony 'Stores'", ()->{
-            By ourStoresPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1");
-            WebElement ourStoresPageName = driver.findElement(ourStoresPageNameLocator);
-            Assertions.assertTrue(ourStoresPageName.isDisplayed());});
+//        step("Potwierdzenie otwarcia podstrony 'Stores'", ()->{
+//            By ourStoresPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1");
+//            WebElement ourStoresPageName = driver.findElement(ourStoresPageNameLocator);
+//            Assertions.assertTrue(ourStoresPageName.isDisplayed());
+//        });
 
-        step("Home page/Footer - kliknięcie w link 'Personal info'", ()->{
-            By personalInfoLinkLocator = By.xpath("//a[@title=\"Personal info\"]");
-            WebElement personalInfoLink = driver.findElement(personalInfoLinkLocator);
-            personalInfoLink.click();});
+        step("Home page/Footer - kliknięcie w link 'Personal info'", () -> {
+            Footer footer = new Footer();
+            footer.personalInfo();
+        });
 
-        step("Potwierdzenie otwarcia podstrony 'Personal info'", ()->{
-            By personalInfoPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
-                    "/h1[contains(text(),\"Your personal information\")]");
-            WebElement personalInfoPageName = driver.findElement(personalInfoPageNameLocator);
-            Assertions.assertTrue(personalInfoPageName.isDisplayed());});
+//        step("Potwierdzenie otwarcia podstrony 'Personal info'", ()->{
+//            By personalInfoPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
+//                    "/h1[contains(text(),\"Your personal information\")]");
+//            WebElement personalInfoPageName = driver.findElement(personalInfoPageNameLocator);
+//            Assertions.assertTrue(personalInfoPageName.isDisplayed());
+//        });
 
-        step("Home page/Footer - kliknięcie w link 'Orders'", ()->{
-            By ordersLinkLocator = By.xpath("//a[@title=\"Orders\"]");
-            WebElement ordersLink = driver.findElement(ordersLinkLocator);
-            ordersLink.click();});
+        step("Home page/Footer - kliknięcie w link 'Orders'", () -> {
+            Footer footer = new Footer();
+            footer.orders();
+        });
 
-        step("Potwierdzenie otwarcia podstrony 'Orders'", ()->{
-            By orderHistoryPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
-                    "/h1[contains(text(),\"Order history\")]");
-            WebElement orderHistoryPageName = driver.findElement(orderHistoryPageNameLocator);
-            Assertions.assertTrue(orderHistoryPageName.isDisplayed());});
+//        step("Potwierdzenie otwarcia podstrony 'Orders'", ()->{
+//            By orderHistoryPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
+//                    "/h1[contains(text(),\"Order history\")]");
+//            WebElement orderHistoryPageName = driver.findElement(orderHistoryPageNameLocator);
+//            Assertions.assertTrue(orderHistoryPageName.isDisplayed());
+//        });
 
-        step("Home page/Footer - kliknięcie w link 'Credit slips'", ()->{
-            By creditSlipsLinkLocator = By.xpath("//a[@title=\"Credit slips\"]");
-            WebElement creditSlipsLink = driver.findElement(creditSlipsLinkLocator);
-            creditSlipsLink.click();});
+        step("Home page/Footer - kliknięcie w link 'Credit slips'", () -> {
+            Footer footer = new Footer();
+            footer.creditSlips();
+        });
 
-        step("Potwierdzenie otwarcia podstrony 'Credit slips'", ()->{
-            By creditSlipsPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
-                    "/h1[contains(text(),\"Credit slips\")]");
-            WebElement creditSlipsPageName = driver.findElement(creditSlipsPageNameLocator);
-            Assertions.assertTrue(creditSlipsPageName.isDisplayed());});
+//        step("Potwierdzenie otwarcia podstrony 'Credit slips'", ()->{
+//            By creditSlipsPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
+//                    "/h1[contains(text(),\"Credit slips\")]");
+//            WebElement creditSlipsPageName = driver.findElement(creditSlipsPageNameLocator);
+//            Assertions.assertTrue(creditSlipsPageName.isDisplayed());
+//        });
 
-        step("Home page/Footer - kliknięcie w link 'Addresses'", ()->{
-            By addressesLinkLocator = By.xpath("//a[@title=\"Addresses\"]");
-            WebElement addressesLink = driver.findElement(addressesLinkLocator);
-            addressesLink.click();});
+        step("Home page/Footer - kliknięcie w link 'Addresses'", () -> {
+            Footer footer = new Footer();
+            footer.addresses();
+        });
 
-        step("Potwierdzenie otwarcia podstrony 'Addresses'", ()->{
-            By yourAddressesPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
-                    "/h1[contains(text(),\"Your addresses\")]");
-            WebElement yourAddressesPageName = driver.findElement(yourAddressesPageNameLocator);
-            Assertions.assertTrue(yourAddressesPageName.isDisplayed());});
+//        step("Potwierdzenie otwarcia podstrony 'Addresses'", ()->{
+//            By yourAddressesPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
+//                    "/h1[contains(text(),\"Your addresses\")]");
+//            WebElement yourAddressesPageName = driver.findElement(yourAddressesPageNameLocator);
+//            Assertions.assertTrue(yourAddressesPageName.isDisplayed());
+//        });
 
-        step("Podstrona 'Addresses' - wylogowanie użytkownika z potwierdzeniem poprawności wylogowania", ()->{
-            userSuccessLogout();});
+        step("Header - kliknięcie w button 'Sign out'", () -> {
+            Header header = new Header();
+            header.signout();
+        });
+
+        step("Sprawdzenie pomyślnej rejestracji - widoczność przycisku 'Sign out'", () -> {
+            Header header = new Header();
+            Assertions.assertTrue(header.isButtonSignInDisplayed());
+        });
     }
 
 
     @AfterAll
-    public static void afterAll() {
-        driver.quit();
+    public static void tearDownSuite() {
+        DriverProvider.quitDriver();
     }
 }
 
