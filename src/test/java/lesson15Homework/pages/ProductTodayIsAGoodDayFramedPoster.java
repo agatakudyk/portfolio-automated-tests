@@ -21,4 +21,13 @@ public class ProductTodayIsAGoodDayFramedPoster {
     By closeAddToCartPopupLocator = By.xpath("//a[@class=\"btn btn-primary\"]/i");
     getDriver().findElement(closeAddToCartPopupLocator).click();
 }
+
+//Potwierdzenie pojawienia się popupu z komunikatem potwierdzającym pomyślne dodanie
+public boolean isSuccessPopupDisplayed() {
+        By addProductPopupLocator = By.xpath("//h4[contains(text(),\"Product successfully added to " +
+            "your shopping cart\")]");
+    WebElement addProductPopup = getDriver().findElement(addProductPopupLocator);
+    return addProductPopup.isDisplayed();
+}
+
 }
