@@ -3,6 +3,7 @@ package lesson15Homework.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static lesson15Homework.driver.DriverProvider.getDriver;
 
@@ -32,6 +33,7 @@ public class ProductTheBestIsYetToCome {
         By sendButtonLocator = By.xpath("//button[@class=\"btn btn-comment btn-comment-big\"]");
         getDriver().findElement(sendButtonLocator).click();
     }
+
     //review sent popup - kliknięcie w button 'OK'
     public void okReviewButton() {
         By okCommentButtonLocator = By.xpath(
@@ -41,7 +43,7 @@ public class ProductTheBestIsYetToCome {
         getDriver().findElement(okCommentButtonLocator).click();
     }
 
-//kliknięcie button 'Add to cart'
+    //kliknięcie button 'Add to cart'
     public void addToCartButton() {
         By addToCartButtonLocator = By.xpath("//button[@class=\"btn btn-primary add-to-cart\"]");
         getDriver().findElement(addToCartButtonLocator).click();
@@ -51,5 +53,12 @@ public class ProductTheBestIsYetToCome {
     public void proceedToCheckoutButton() {
         By closeAddToCartPopupLocator = By.xpath("//a[@class=\"btn btn-primary\"]/i");
         getDriver().findElement(closeAddToCartPopupLocator).click();
+    }
+
+    //asercja - potwierdzenie dodania komentarza
+    public boolean isCommentAdded() {
+        By addCommentPopupLocator = By.id("product-comment-posted-modal-message");
+        WebElement addCommentPopup = getDriver().findElement(addCommentPopupLocator);
+        return addCommentPopup.isDisplayed();
     }
 }
