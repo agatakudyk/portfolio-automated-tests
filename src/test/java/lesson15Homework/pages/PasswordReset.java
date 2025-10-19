@@ -25,4 +25,11 @@ public class PasswordReset {
         By backToLoginPageLocator = By.xpath("//i[@class=\"material-icons\"]");
         getDriver().findElement(backToLoginPageLocator).click();
     }
+
+    //asercja - sprawdzenie komunikatu potwierdzającego wysłanie maila
+    public boolean isMsgOfSentMsgDisplayed() {
+        By sentMsgLocator = By.xpath("//li[@class=\"item\"]/p");
+        WebElement sentMessage = getDriver().findElement(sentMsgLocator);
+        return sentMessage.isDisplayed();
+    }
 }
