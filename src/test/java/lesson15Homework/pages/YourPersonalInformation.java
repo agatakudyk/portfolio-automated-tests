@@ -26,4 +26,12 @@ public class YourPersonalInformation {
                 "//button[@class=\"btn btn-primary form-control-submit float-xs-right\"]");
         getDriver().findElement(informationSaveButtonLocator).click();
     }
+
+    //asercja - sprawdzenie pojawienia się komunikatu 'Information successfully updated.'
+public boolean isMsgThatInformationUpdated() {
+    By updatedInformationTextLocator = By.xpath("//ul/li[contains(text()," +
+            "\"Information successfully updated.\")]");
+    WebElement updatedInformationText = getDriver().findElement(updatedInformationTextLocator);
+    return updatedInformationText.isDisplayed();
+}
 }
