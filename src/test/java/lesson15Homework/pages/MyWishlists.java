@@ -97,4 +97,40 @@ public class MyWishlists {
         By deleteConfirmLocator = By.xpath("//div[@class=\"modal-footer\"]/button[contains(text(),\"Delete\")]");
         getDriver().findElement(deleteConfirmLocator).click();
     }
+
+    //asercja - TOAST/'The list has been properly created' - potwierdzenie pojawienia się komunikatu
+    public boolean isCreatedMsgDisplayed() {
+        By wishlistSuccessCreatedMsgLocator = By.xpath("//p[contains(text(),\"The list has been properly created\")]");
+        WebElement wishlistSuccessCreatedMsg = getDriver().findElement(wishlistSuccessCreatedMsgLocator);
+        return wishlistSuccessCreatedMsg.isDisplayed();
+    }
+
+    //asercja - potwierdzenie, czy istnieje lista o nazwie 'Super lista'
+    public boolean isSuperListaDisplayed() {
+        By createdNewWishlistNameLocator = By.xpath("//div[@class=\"wishlist-list-container\"]" +
+                "//p[contains(text(),\"Super lista\")]");
+        WebElement createdNewWishlistName = getDriver().findElement(createdNewWishlistNameLocator);
+        return createdNewWishlistName.isDisplayed();
+    }
+
+    //TOAST/'List has been renamed' - potwierdzenie pojawienia się komunikatu
+    public boolean isRenamedListMsgDisplayed() {
+        By successRenamedNewWishlistLocator = By.xpath("//p[@class=\"wishlist-toast-text\"]");
+        WebElement successRenamedNewWishlist = getDriver().findElement(successRenamedNewWishlistLocator);
+        return successRenamedNewWishlist.isDisplayed();
+    }
+
+    //TOAST/'Share link copied!' - potwierdzenie pojawienia się komunikatu
+    public boolean isCopiedLinkMsgDisplayed() {
+        By shareLinkCopiedMsgLocator = By.xpath("//p[@class=\"wishlist-toast-text\"]");
+        WebElement shareLinkCopiedMsg = getDriver().findElement(shareLinkCopiedMsgLocator);
+        return shareLinkCopiedMsg.isDisplayed();
+    }
+
+    //TOAST/'List has been removed' - potwierdzenie pojawienia się komunikatu
+    public boolean isRemovedListMsgDisplayed() {
+        By listRemovedComfirmLocator = By.xpath("//p[contains(text(),\"List has been removed\")]");
+        WebElement listRemovedComfirm = getDriver().findElement(listRemovedComfirmLocator);
+        return listRemovedComfirm.isDisplayed();
+    }
 }
