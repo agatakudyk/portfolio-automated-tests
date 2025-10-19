@@ -1,6 +1,7 @@
 package lesson15Homework.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import static lesson15Homework.driver.DriverProvider.getDriver;
@@ -23,5 +24,15 @@ public class CreateAccount {
     public void termsAndConditionsCheckbox() {
         By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
        getDriver().findElement(privacyPolicyLocator).click();
+    }
+
+    //potwierdzenie pojawienia się komunikatu 'Wypełnij to pole'
+    public String getValidationMsg() {
+        By nameInputLocator = By.id("field-firstname");
+        WebElement nameInput = getDriver().findElement(nameInputLocator);
+
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        String msg = (String) js.executeScript("return arguments[0].validationMessage", nameInput);
+        return msg;
     }
 }
