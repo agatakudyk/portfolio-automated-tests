@@ -1,6 +1,8 @@
 package lesson15Homework.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
 import static lesson15Homework.driver.DriverProvider.getDriver;
 
 
@@ -16,5 +18,21 @@ public class ContactUs {
     public void msgFillIn() {
         By msgFieldInContactUsSectionLocator = By.id("contactform-message");
         getDriver().findElement(msgFieldInContactUsSectionLocator).sendKeys("Chcę otrzymać FV za zamówienie.");
+    }
+
+    //asercja - potwierdzenie pojawienia się komunikatu walidacyjnego
+    public boolean isValidationMsgDisplayed() {
+        By validationMsgInContactUsSectionLocator = By.xpath(
+                "//li[contains(text(),\"The message cannot be blank.\")]");
+        WebElement validationMsgInContactUsSection = getDriver().findElement(validationMsgInContactUsSectionLocator);
+        return validationMsgInContactUsSection.isDisplayed();
+    }
+
+    //asercja - potwierdzenie komunikatu informacyjnego 'Your message has been successfully sent to our team.'
+    public boolean isInformationMsgDisplayed() {
+        By successMsgInContactUsSectionLocator = By.xpath("//li[contains(text(),\"Your message has " +
+                "been successfully sent to our team.\")]");
+        WebElement successMsgInContactUsSection = getDriver().findElement(successMsgInContactUsSectionLocator);
+        return successMsgInContactUsSection.isDisplayed();
     }
 }
