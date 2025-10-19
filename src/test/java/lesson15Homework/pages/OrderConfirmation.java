@@ -1,6 +1,7 @@
 package lesson15Homework.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import static lesson15Homework.driver.DriverProvider.getDriver;
@@ -31,5 +32,22 @@ public class OrderConfirmation {
         By customerServiceDepartmentContactLocator = By.xpath(
                 "//a[contains(text(),\"customer service department.\")]");
         getDriver().findElement(customerServiceDepartmentContactLocator).click();
+    }
+
+    //asercja - potwierdzenie pojawienia się komunikatu potwierdzającego 'Your order is confirmed'
+    public boolean isMsgThatOrderConfirmed() {
+        By confirmationMsgLocator = By.xpath("//h3[@class=\"h1 card-title\"]/i");
+        WebElement confirmationMsg = getDriver().findElement(confirmationMsgLocator);
+        return confirmationMsg.isDisplayed();
+    }
+
+    //asercja - potwierdzenie pojawienia się dymka z komunikatem walidacyjnym
+    public String getValidationMsg() {
+        By firstNameFieldLocator = By.id("field-firstname");
+        WebElement firstNameField = getDriver().findElement(firstNameFieldLocator);
+
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        String msg = (String) js.executeScript("return arguments[0].validationMessage", firstNameField);
+        return msg;
     }
 }
