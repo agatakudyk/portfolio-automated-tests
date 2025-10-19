@@ -14,6 +14,9 @@ public class DriverProvider {
     private static WebDriverWait wait;
     private static String browser = "Chrome";
 
+    private DriverProvider() {
+    }
+
     public static WebDriver getDriver() {
 
         if (driver == null) {
@@ -36,7 +39,10 @@ public class DriverProvider {
         }
         return driver;
     }
-public static WebDriverWait getWaiter() {return wait;}
+
+    public static WebDriverWait getWaiter() {
+        return wait;
+    }
 
     public static void quitDriver() {
         if (driver != null) {
