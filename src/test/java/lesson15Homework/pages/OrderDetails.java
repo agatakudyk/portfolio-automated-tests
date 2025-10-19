@@ -1,12 +1,14 @@
 package lesson15Homework.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
 import static lesson15Homework.driver.DriverProvider.getDriver;
 
 
 public class OrderDetails {
 
-//kliknięcie 'Send'
+    //kliknięcie 'Send'
     public void sendButton() {
         By sendButtonInDetailsPageLocator = By.xpath("//*[@name=\"submitMessage\"]");
         getDriver().findElement(sendButtonInDetailsPageLocator).click();
@@ -21,6 +23,20 @@ public class OrderDetails {
     //kliknięcie w link 'Reorder'
     public void reorderLink() {
         By reorderPageLinkLocator = By.xpath("//a[@class=\"button-primary\" and text()=\"Reorder\"]");
-       getDriver().findElement(reorderPageLinkLocator).click();
+        getDriver().findElement(reorderPageLinkLocator).click();
+    }
+
+    //asercja - pojawienia się komunikatu walidacji 'The message cannot be blank.'
+    public boolean isValidationMsgDisplayed() {
+        By validationMsgInDetailsPageLocator = By.xpath("//li[contains(text(),\"The message cannot be blank.\")]");
+        WebElement validationMsgInDetailsPage = getDriver().findElement(validationMsgInDetailsPageLocator);
+        return validationMsgInDetailsPage.isDisplayed();
+    }
+
+    //asercja - potwierdzenie wysłania wiadomości 'Message successfully sent'
+    public boolean isInformationMsgDisplayed() {
+        By sendConfirmationMsgLocator = By.xpath("//li[contains(text(),\"Message successfully sent\")]");
+        WebElement sendConfirmationMsg = getDriver().findElement(sendConfirmationMsgLocator);
+        return sendConfirmationMsg.isDisplayed();
     }
 }
