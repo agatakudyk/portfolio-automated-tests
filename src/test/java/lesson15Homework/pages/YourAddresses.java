@@ -1,6 +1,8 @@
 package lesson15Homework.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
 import static lesson15Homework.driver.DriverProvider.getDriver;
 
 
@@ -31,5 +33,28 @@ public class YourAddresses {
         By updateNewAddressButtonLocator = By.xpath("//address[text()[contains(.,\"Janowiec\")]]" +
                 "/../..//span[contains(text(),\"Update\")]");
         getDriver().findElement(updateNewAddressButtonLocator).click();
+    }
+
+    //asercja -  komunikat potwierdzający dodanie adresu 'Address successfully added!'
+    public boolean isAddMsgDisplayed() {
+        By addressSuccessfullyAddedMsgLocator = By.xpath("//li[contains(text(),\"Address successfully added!\")]");
+        WebElement addressSuccessfullyAddedMsg = getDriver().findElement(addressSuccessfullyAddedMsgLocator);
+        return addressSuccessfullyAddedMsg.isDisplayed();
+    }
+
+    //asercja - komunikat potwierdzający aktualizację 'Address successfully updated!'
+    public boolean isUpdateMsgDisplayed() {
+        By addressSuccessfullyUpdatedMsgLocator = By.xpath(
+                "//li[contains(text(),\"Address successfully updated!\")]");
+        WebElement addressSuccessfullyUpdatedMsg = getDriver().findElement(addressSuccessfullyUpdatedMsgLocator);
+        return addressSuccessfullyUpdatedMsg.isDisplayed();
+    }
+
+    //komunikat potwierdzającego usunięcie 'Address successfully deleted!'
+    public boolean isDeleteMsgDisplayed() {
+        By addressSuccessfullyDeletedMsgLocator = By.xpath(
+                "//li[contains(text(),\"Address successfully deleted!\")]");
+        WebElement addressSuccessfullyDeletedMsg = getDriver().findElement(addressSuccessfullyDeletedMsgLocator);
+        return addressSuccessfullyDeletedMsg.isDisplayed();
     }
 }
