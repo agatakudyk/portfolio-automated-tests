@@ -6,11 +6,8 @@ import lesson15Homework.users.RegisteredUser;
 import lesson15Homework.users.UnregisteredUserData;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
-
 import static io.qameta.allure.Allure.step;
 
 
@@ -1340,174 +1337,150 @@ public class PageObjectPatternPrestashopTest {
             footer.pricesDrop();
         });
 
-//        step("Potwierdzenie otwarcia podstrony 'Prices drop'", ()->{
-//            By pricesDropPageNameLocator = By.id("js-product-list-header");
-//            WebElement pricesDropPageName = driver.findElement(pricesDropPageNameLocator);
-//            Assertions.assertTrue(pricesDropPageName.isDisplayed());
-//        });
+        step("Potwierdzenie otwarcia podstrony 'Prices drop'", ()->{
+            Footer footer = new Footer();
+            Assertions.assertTrue(footer.isPricesDropPageOpened());
+        });
 
         step("Home page/Footer - kliknięcie w link 'New products'", () -> {
             Footer footer = new Footer();
             footer.newProducts();
         });
 
-//        step("Potwierdzenie otwarcia podstrony 'New products'", ()->{
-//            By newProductsPageNameLocator = By.id("js-product-list-header");
-//            WebElement newProductsPageName = driver.findElement(newProductsPageNameLocator);
-//            Assertions.assertTrue(newProductsPageName.isDisplayed());
-//        });
+        step("Potwierdzenie otwarcia podstrony 'New products'", ()->{
+            Footer footer = new Footer();
+            Assertions.assertTrue(footer.isNewProductsPageOpened());
+        });
 
         step("Home page/Footer - kliknięcie w link 'Best sellers'", () -> {
             Footer footer = new Footer();
             footer.bestSellers();
         });
 
-//        step("Potwierdzenie otwarcia podstrony 'Best sellers'", ()->{
-//            By bestSellersPageNameLocator = By.id("js-product-list-header");
-//            WebElement bestSellersPageName = driver.findElement(bestSellersPageNameLocator);
-//            Assertions.assertTrue(bestSellersPageName.isDisplayed());
-//        });
+        step("Potwierdzenie otwarcia podstrony 'Best sellers'", ()->{
+            Footer footer = new Footer();
+            Assertions.assertTrue(footer.isBestSellersPageOpened());
+        });
 
         step("Home page/Footer - kliknięcie w link 'Delivery'", () -> {
             Footer footer = new Footer();
             footer.delivery();
         });
 
-//        step("Potwierdzenie otwarcia podstrony 'Delivery'", ()->{
-//            By deliveryPageNameLink = By.xpath("//h1[contains(text(),\"Delivery\")]");
-//            WebElement deliveryPageName = driver.findElement(deliveryPageNameLink);
-//            Assertions.assertTrue(deliveryPageName.isDisplayed());
-//        });
+        step("Potwierdzenie otwarcia podstrony 'Delivery'", ()->{
+            Footer footer = new Footer();
+            Assertions.assertTrue(footer.isDeliveryPageOpened());
+        });
 
         step("Home page/Footer - kliknięcie w link 'Legal Notice'", () -> {
             Footer footer = new Footer();
             footer.legalNotice();
         });
 
-//        step("Potwierdzenie otwarcia podstrony 'Legal Notice'", ()->{
-//            By legalNoticePageNameLocator = By.xpath("//h1[contains(text(),\"Legal Notice\")]");
-//            WebElement legalNoticePageName = driver.findElement(legalNoticePageNameLocator);
-//            Assertions.assertTrue(legalNoticePageName.isDisplayed());
-//        });
+        step("Potwierdzenie otwarcia podstrony 'Legal Notice'", ()->{
+            Footer footer = new Footer();
+            Assertions.assertTrue(footer.isLegalNoticePageOpened());
+        });
 
         step("Home page/Footer - kliknięcie w link 'Terms and conditions of use'", () -> {
             Footer footer = new Footer();
             footer.termsAndConditionsOfUse();
         });
 
-//        step("Potwierdzenie otwarcia podstrony 'Terms and conditions of use'", ()->{
-//            By termsAndConditionsOfUsePageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
-//                    "/h1[contains(text(), " + "\"Terms and conditions of use\")]");
-//            WebElement termsAndConditionsOfUsePageName = driver.findElement(termsAndConditionsOfUsePageNameLocator);
-//            Assertions.assertTrue(termsAndConditionsOfUsePageName.isDisplayed());
-//        });
+        step("Potwierdzenie otwarcia podstrony 'Terms and conditions of use'", ()->{
+            Footer footer = new Footer();
+            Assertions.assertTrue(footer.isTermsAndConditionsPageOpened());
+        });
 
         step("Home page/Footer - kliknięcie w link 'About us'", () -> {
             Footer footer = new Footer();
             footer.aboutUs();
         });
 
-//        step("Potwierdzenie otwarcia podstrony 'About us'", ()->{
-//            By aboutUsPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text(), " +
-//                    "\"About us\")]");
-//            WebElement aboutUsPageName = driver.findElement(aboutUsPageNameLocator);
-//            Assertions.assertTrue(aboutUsPageName.isDisplayed());
-//        });
+        step("Potwierdzenie otwarcia podstrony 'About us'", ()->{
+            Footer footer = new Footer();
+            Assertions.assertTrue(footer.isAboutUsPageOpened());
+        });
 
         step("Home page/Footer - kliknięcie w link 'Secure payment'", () -> {
             Footer footer = new Footer();
             footer.securePayment();
         });
 
-//        step("Potwierdzenie otwarcia podstrony 'Secure payment'", ()->{
-//            By securePaymentPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
-//                    "/h1[contains(text(),\"Secure payment\")]");
-//            WebElement securePaymentPageName = driver.findElement(securePaymentPageNameLocator);
-//            Assertions.assertTrue(securePaymentPageName.isDisplayed());
-//        });
+        step("Potwierdzenie otwarcia podstrony 'Secure payment'", ()->{
+            Footer footer = new Footer();
+            Assertions.assertTrue(footer.isSecurePaymentPageOpened());
+        });
 
         step("Home page/Footer - kliknięcie w link 'Contact us'", () -> {
             Footer footer = new Footer();
             footer.contactUs();
         });
 
-//        step("Potwierdzenie otwarcia podstrony 'Contact us'", ()->{
-//            By contactUsPageNameLocator = By.xpath("//div[@class=\"col-md-9 col-md-offset-3\"]" +
-//                    "/h3[contains(text(),\"Contact us\")]");
-//            WebElement contactUsPageName = driver.findElement(contactUsPageNameLocator);
-//            Assertions.assertTrue(contactUsPageName.isDisplayed());
-//        });
+        step("Potwierdzenie otwarcia podstrony 'Contact us'", ()->{
+            Footer footer = new Footer();
+            Assertions.assertTrue(footer.isContactUsPageOpened());
+        });
 
         step("Home page/Footer - kliknięcie w link 'Sitemap'", () -> {
             Footer footer = new Footer();
             footer.sitemap();
         });
 
-//        step("Potwierdzenie otwarcia podstrony 'Sitemap'", ()->{
-//            By sitemapPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
-//                    "/h1/span[contains(text(),\"Sitemap\")]");
-//            WebElement sitemapPageName = driver.findElement(sitemapPageNameLocator);
-//            Assertions.assertTrue(sitemapPageName.isDisplayed());
-//        });
+        step("Potwierdzenie otwarcia podstrony 'Sitemap'", ()->{
+            Footer footer = new Footer();
+            Assertions.assertTrue(footer.isSitemapPageOpened());
+        });
 
         step("Home page/Footer - kliknięcie w link 'Stores'", () -> {
             Footer footer = new Footer();
             footer.stores();
         });
 
-//        step("Potwierdzenie otwarcia podstrony 'Stores'", ()->{
-//            By ourStoresPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1");
-//            WebElement ourStoresPageName = driver.findElement(ourStoresPageNameLocator);
-//            Assertions.assertTrue(ourStoresPageName.isDisplayed());
-//        });
+        step("Potwierdzenie otwarcia podstrony 'Stores'", ()->{
+            Footer footer = new Footer();
+            Assertions.assertTrue(footer.isStoresPageOpened());
+        });
 
         step("Home page/Footer - kliknięcie w link 'Personal info'", () -> {
             Footer footer = new Footer();
             footer.personalInfo();
         });
 
-//        step("Potwierdzenie otwarcia podstrony 'Personal info'", ()->{
-//            By personalInfoPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
-//                    "/h1[contains(text(),\"Your personal information\")]");
-//            WebElement personalInfoPageName = driver.findElement(personalInfoPageNameLocator);
-//            Assertions.assertTrue(personalInfoPageName.isDisplayed());
-//        });
+        step("Potwierdzenie otwarcia podstrony 'Personal info'", ()->{
+            Footer footer = new Footer();
+            Assertions.assertTrue(footer.isPersonalInfoPageOpened());
+        });
 
         step("Home page/Footer - kliknięcie w link 'Orders'", () -> {
             Footer footer = new Footer();
             footer.orders();
         });
 
-//        step("Potwierdzenie otwarcia podstrony 'Orders'", ()->{
-//            By orderHistoryPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
-//                    "/h1[contains(text(),\"Order history\")]");
-//            WebElement orderHistoryPageName = driver.findElement(orderHistoryPageNameLocator);
-//            Assertions.assertTrue(orderHistoryPageName.isDisplayed());
-//        });
+        step("Potwierdzenie otwarcia podstrony 'Orders'", ()->{
+            Footer footer = new Footer();
+            Assertions.assertTrue(footer.isOrdersPageOpened());
+        });
 
         step("Home page/Footer - kliknięcie w link 'Credit slips'", () -> {
             Footer footer = new Footer();
             footer.creditSlips();
         });
 
-//        step("Potwierdzenie otwarcia podstrony 'Credit slips'", ()->{
-//            By creditSlipsPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
-//                    "/h1[contains(text(),\"Credit slips\")]");
-//            WebElement creditSlipsPageName = driver.findElement(creditSlipsPageNameLocator);
-//            Assertions.assertTrue(creditSlipsPageName.isDisplayed());
-//        });
+        step("Potwierdzenie otwarcia podstrony 'Credit slips'", ()->{
+            Footer footer = new Footer();
+            Assertions.assertTrue(footer.isCreditSlipsPageOpened());
+        });
 
         step("Home page/Footer - kliknięcie w link 'Addresses'", () -> {
             Footer footer = new Footer();
             footer.addresses();
         });
 
-//        step("Potwierdzenie otwarcia podstrony 'Addresses'", ()->{
-//            By yourAddressesPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
-//                    "/h1[contains(text(),\"Your addresses\")]");
-//            WebElement yourAddressesPageName = driver.findElement(yourAddressesPageNameLocator);
-//            Assertions.assertTrue(yourAddressesPageName.isDisplayed());
-//        });
+        step("Potwierdzenie otwarcia podstrony 'Addresses'", ()->{
+            Footer footer = new Footer();
+            Assertions.assertTrue(footer.isAddressesPageOpened());
+        });
 
         step("Header - kliknięcie w button 'Sign out'", () -> {
             Header header = new Header();
