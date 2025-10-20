@@ -1,7 +1,6 @@
 package lesson15Homework.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import static lesson15Homework.driver.DriverProvider.getDriver;
 
@@ -29,7 +28,6 @@ public class PasswordReset {
     //asercja - sprawdzenie komunikatu potwierdzającego wysłanie maila
     public boolean isMsgOfSentMsgDisplayed() {
         By sentMsgLocator = By.xpath("//li[@class=\"item\"]/p");
-        WebElement sentMessage = getDriver().findElement(sentMsgLocator);
-        return sentMessage.isDisplayed();
+        return getDriver().findElement(sentMsgLocator).isDisplayed();
     }
 }
