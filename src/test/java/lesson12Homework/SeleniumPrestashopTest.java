@@ -19,7 +19,7 @@ import static io.qameta.allure.Allure.step;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SeleniumPrestashopTest {
 
-    String emailCreateName = "testowianka274@wp.pl";
+    String emailCreateName = "testowianka278@wp.pl";
     static ChromeDriver driver;
     static WebDriverWait wait;
 
@@ -356,7 +356,7 @@ public class SeleniumPrestashopTest {
     private void userSuccessLogout() {
 
         //Kliknięcie w button 'Sign out'
-        By logoutLocator = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
+        By logoutLocator = By.cssSelector(".logout.hidden-sm-down");
         WebElement logoutButton = driver.findElement(logoutLocator);
         logoutButton.click();
 
@@ -410,6 +410,7 @@ public class SeleniumPrestashopTest {
         });
     }
 
+
     @Test  //Login page - zresetowanie zapomnianego hasła
     @Order(8)
     public void loginPasswordRecovery() {
@@ -434,6 +435,7 @@ public class SeleniumPrestashopTest {
             WebElement sentMessage = driver.findElement(sentMsgLocator);
             Assertions.assertTrue(sentMessage.isDisplayed());});
     }
+
 
     @Test     //Poprawne zalogowanie  + zmiana hasła + zalogowanie nowym hasłem
     @Order(9)
@@ -808,8 +810,7 @@ public class SeleniumPrestashopTest {
             proceedToCheckoutButtonInCart.click();});
 
         step("Addresses - kliknięcie w button 'Continue'", ()->{
-            By continueButtonInAddressesFormLocator = By.xpath("//button[@name=\"confirm-addresses\" and " +
-                    "contains(., \"Continue\")]");
+            By continueButtonInAddressesFormLocator = By.name("confirm-addresses");
             WebElement continueButtonInAddressesForm = driver.findElement(continueButtonInAddressesFormLocator);
             continueButtonInAddressesForm.click();});
 
@@ -1134,16 +1135,14 @@ public class SeleniumPrestashopTest {
             WebElement homepageLink = driver.findElement(homepageLinkLocator);
             homepageLink.click();});
 
-        step("Home page - kliknięcie w serduszko dodające do wishlist", ()->{
+        step("Home page - kliknięcie w serduszko dodające do wishlist 'Hummingbird printed t-shirt'", ()->{
             By heartButtonOfHummingbirdLocator = By.xpath(
-                    "//a[contains(text(),\"Hummingbird printed t-shirt\")]" +
-                            "/../../../button[@class=\"wishlist-button-add\"]");
+                    "//a[contains(text(),\"Hummingbird printed t-shirt\")]/../../../button[@class=\"wishlist-button-add\"]");
             WebElement heartButtonOfHummingbird = driver.findElement(heartButtonOfHummingbirdLocator);
             heartButtonOfHummingbird.click();});
 
         step("Popup 'Add to whishlist' - kliknięcie w link 'My wishlist'", ()->{
-            By myWishlistPopupLocator = By.xpath("//div[@class=\"modal-body\"]" +
-                    "/div/ul/li[@class=\"wishlist-list-item\"]");
+            By myWishlistPopupLocator = By.xpath("//div[@class=\"modal-body\"]/div/ul/li[@class=\"wishlist-list-item\"]");
             wait.until(ExpectedConditions.elementToBeClickable(myWishlistPopupLocator));
             WebElement myWishlistPopup = driver.findElement(myWishlistPopupLocator);
             myWishlistPopup.click();});
