@@ -21,7 +21,7 @@ public class RegisteredUser {
     //uzupełnienie pola 'Email'
     public void email() {
         By mailLocator = By.id("field-email");
-        getDriver().findElement(mailLocator).sendKeys("testowianka274@wp.pl");
+        getDriver().findElement(mailLocator).sendKeys("testowianka306@wp.pl");
     }
 
     //uzupełnienie pola 'Password'
@@ -30,15 +30,22 @@ public class RegisteredUser {
         getDriver().findElement(passwordLocator).sendKeys("Password123");
     }
 
-    //uzupełnienie pola 'New password' / nowe hasło
+    //Your personal information - uzupełnienie pola 'New password' / nowe hasło
     public void newPassword() {
         By newPasswordFieldLocator = By.xpath("//input[@name=\"new_password\"]");
         getDriver().findElement(newPasswordFieldLocator).sendKeys("TestTest123");
     }
 
+    //Login page - uzupełnienie nowego hasła w logowaniu
+    public void newLoginPassword() {
+        By passwordLocator = By.id("field-password");
+        getDriver().findElement(passwordLocator).sendKeys("TestTest123");
+    }
+
+
     //uzupełnienie pola 'Address'
     public void address() {
-        By addressFieldLocator = By.id("fieldaddress1");
+        By addressFieldLocator = By.id("field-address1");
         getDriver().findElement(addressFieldLocator).sendKeys("ul. Prosta 11");
     }
 
