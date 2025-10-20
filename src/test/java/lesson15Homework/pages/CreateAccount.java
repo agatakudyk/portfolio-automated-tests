@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 
 import static lesson15Homework.driver.DriverProvider.getDriver;
 
+
 public class CreateAccount {
 
     //kliknięcie w button 'Save'
@@ -15,7 +16,7 @@ public class CreateAccount {
     }
 
     //kliknięcie w checkbox informacji o przetwarzaniu danych osobowych
-    public void customerPrivacyCheckbox(){
+    public void customerPrivacyCheckbox() {
         By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
         getDriver().findElement(policyInfoLocator).click();
     }
@@ -23,7 +24,7 @@ public class CreateAccount {
     //checkbox akceptacji regulaminu i polityki prywatności
     public void termsAndConditionsCheckbox() {
         By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
-       getDriver().findElement(privacyPolicyLocator).click();
+        getDriver().findElement(privacyPolicyLocator).click();
     }
 
     //potwierdzenie pojawienia się komunikatu 'Wypełnij to pole'
