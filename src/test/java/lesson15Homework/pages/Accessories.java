@@ -1,9 +1,10 @@
 package lesson15Homework.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static lesson15Homework.driver.DriverProvider.getDriver;
+import static lesson15Homework.driver.DriverProvider.getWaiter;
 
 
 public class Accessories {
@@ -23,13 +24,13 @@ public class Accessories {
     //wyczyszczenie wybranych filtrów
     public void allFiltersClear() {
         By clearAllFilterLocator = By.xpath("//button[@class=\"btn btn-tertiary js-search-filters-clear-all\"]");
+        getWaiter().until(ExpectedConditions.elementToBeClickable(clearAllFilterLocator));
         getDriver().findElement(clearAllFilterLocator).click();
     }
 
-    //potwierdzenie wyczyszczenia filtrów
+    //asercja - potwierdzenie wyczyszczenia filtrów
     public boolean isFilterClear() {
         By activeFiltersLocator = By.xpath("//p[contains(text(),\"Active filters\")]");
-        WebElement activeFilters = getDriver().findElement(activeFiltersLocator);
-        return activeFilters.isDisplayed();
+        return getDriver().findElement(activeFiltersLocator).isDisplayed();
     }
 }
