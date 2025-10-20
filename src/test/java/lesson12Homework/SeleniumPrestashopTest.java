@@ -792,7 +792,8 @@ public class SeleniumPrestashopTest {
             String totalPriceText = totalPriceElement.getText().replace("zł", "").replace(",", ".").trim();
             double totalPrice = Double.parseDouble(totalPriceText);
             //oczekiwana wartość
-            double expectedTotal = unitPrice * productQuantity;});
+            double expectedTotal = unitPrice * productQuantity;
+            Assertions.assertEquals(totalPrice, expectedTotal);});
     }
 
 
