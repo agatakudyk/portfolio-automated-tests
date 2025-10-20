@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.List;
+
 import static lesson15Homework.driver.DriverProvider.getDriver;
 import static lesson15Homework.driver.DriverProvider.getWaiter;
 
@@ -140,5 +142,11 @@ public class MyWishlists {
         By listRemovedConfirmLocator = By.xpath("//p[contains(text(),\"List has been removed\")]");
         getWaiter().until(ExpectedConditions.elementToBeClickable(listRemovedConfirmLocator));
         return getDriver().findElement(listRemovedConfirmLocator).isDisplayed();
+    }
+
+    public List<WebElement> getWishListElements(){
+        By wishListElementsLocator = By.xpath("//p[@class=\"wishlist-product-title\"]");
+        getWaiter().until(ExpectedConditions.elementToBeClickable(wishListElementsLocator));
+        return getDriver().findElements(wishListElementsLocator);
     }
 }
