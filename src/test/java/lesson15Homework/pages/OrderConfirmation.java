@@ -37,8 +37,7 @@ public class OrderConfirmation {
     //asercja - potwierdzenie pojawienia się komunikatu potwierdzającego 'Your order is confirmed'
     public boolean isMsgThatOrderConfirmed() {
         By confirmationMsgLocator = By.xpath("//h3[@class=\"h1 card-title\"]/i");
-        WebElement confirmationMsg = getDriver().findElement(confirmationMsgLocator);
-        return confirmationMsg.isDisplayed();
+        return getDriver().findElement(confirmationMsgLocator).isDisplayed();
     }
 
     //asercja - potwierdzenie pojawienia się dymka z komunikatem walidacyjnym
