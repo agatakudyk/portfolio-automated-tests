@@ -37,6 +37,7 @@ public class Accessories {
     //asercja - potwierdzenie wyczyszczenia filtrów
     public boolean isFilterClear() {
         By activeFiltersLocator = By.xpath("//p[contains(text(),\"Active filters\")]");
+        getWaiter().until(ExpectedConditions.invisibilityOfElementLocated(activeFiltersLocator));
         return getDriver().findElement(activeFiltersLocator).isDisplayed();
     }
 }
