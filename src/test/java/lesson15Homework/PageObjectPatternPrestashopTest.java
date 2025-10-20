@@ -5,10 +5,15 @@ import lesson15Homework.pages.*;
 import lesson15Homework.users.RegisteredUser;
 import lesson15Homework.users.UnregisteredUserData;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import static io.qameta.allure.Allure.step;
 
@@ -552,18 +557,11 @@ public class PageObjectPatternPrestashopTest {
         step("Accessories page - wybór filtra 'Ceramic'", () -> {
             Accessories accessories = new Accessories();
             accessories.ceramicCompositionFilter();
-
-            //TODO
-//            By ceramicCompositionFilterCheckboxLocator = By.xpath("//a[contains(text(),\"Ceramic\")]/../span/input");
-//            wait.until(ExpectedConditions.elementToBeSelected(ceramicCompositionFilterCheckboxLocator));
         });
 
         step("Accessories page - wybór filtra 'Available'", () -> {
             Accessories accessories = new Accessories();
             accessories.availableFilter();
-
-            //todo By availableFilterCheckboxLocator = By.xpath("//a[contains(text(),\"Available\")]/../span/input");
-            //todo wait.until(ExpectedConditions.elementToBeSelected(availableFilterCheckboxLocator));});
         });
 
         step("Accessories page - wyczyszczenie wybranych filtrów", () -> {
@@ -580,7 +578,7 @@ public class PageObjectPatternPrestashopTest {
 
     @Test    //Podstrona ART - sortowanie
     @Order(11)
-    public void sortArtProducts() throws InterruptedException {
+    public void sortArtProducts() {
 
         step("wejście na podstronę ART", () -> {
             TopMenu top = new TopMenu();
@@ -596,22 +594,21 @@ public class PageObjectPatternPrestashopTest {
             Art art = new Art();
             art.sortByNameAZ();
         });
-        // todo Thread.sleep(1000);});
 
-//        step("strona ART - pobranie z listy elementów i sprawdzenie czy są posortowane", ()->{
-//            By productsListLocator = By.xpath("//div[@class=\"product-description\"]/h2/a");
-//            List<WebElement> productsLists = driver.findElements(productsListLocator);
-//
-//            List<String>productsNames = new ArrayList<>();
-//            for(WebElement product : productsLists){
-//                productsNames.add(product.getText());
-//            }
-//            List<String>productsAlphabeticalOrder = productsNames.stream().sorted().toList();
-//
-//            for(int i=0; i < productsNames.size(); i++){
-//                Assertions.assertEquals(productsNames.get(i), productsAlphabeticalOrder.get(i));
-//            }
-//        });
+
+        step("strona ART - pobranie z listy elementów i sprawdzenie czy są posortowane", () -> {
+            Art art = new Art();
+
+            List<String> productsNames = new ArrayList<>();
+            for (WebElement product : art.getproductsbyDescription()) {
+                productsNames.add(product.getText());
+            }
+            List<String> productsAlphabeticalOrder = productsNames.stream().sorted().toList();
+
+            for (int i = 0; i < productsNames.size(); i++) {
+                Assertions.assertEquals(productsNames.get(i), productsAlphabeticalOrder.get(i));
+            }
+        });
 
         step("strona ART - kliknięcie w pole sortowania", () -> {
             Art art = new Art();
@@ -623,20 +620,18 @@ public class PageObjectPatternPrestashopTest {
             art.sortByPriceAsc();
         });
 
-//        step("Podstrona ART - pobranie z listy elementów i sprawdzenie czy są posortowane", ()->{
-//            By productsListLocator2 = By.xpath("//div[@class=\"product-price-and-shipping\"]/span");
-//            List<WebElement> productsLists2 = driver.findElements(productsListLocator2);
-//
-//            List<String>productsPrices = new ArrayList<>();
-//            for(WebElement product : productsLists2){
-//                productsPrices.add(product.getText());
-//            }
-//            List<String>productsAlphabeticalOrder2 = productsPrices.stream().sorted().toList();
-//
-//            for(int i=0; i < productsPrices.size(); i++){
-//                Assertions.assertEquals(productsPrices.get(i), productsAlphabeticalOrder2.get(i));
-//            }
-//        });
+        step("Podstrona ART - pobranie z listy elementów i sprawdzenie czy są posortowane", () -> {
+            Art art = new Art();
+            List<String> productsPrices = new ArrayList<>();
+            for (WebElement product : art.getProductByPrice()) {
+                productsPrices.add(product.getText());
+            }
+            List<String> productsAlphabeticalOrder2 = productsPrices.stream().sorted().toList();
+
+            for (int i = 0; i < productsPrices.size(); i++) {
+                Assertions.assertEquals(productsPrices.get(i), productsAlphabeticalOrder2.get(i));
+            }
+        });
     }
 
 
@@ -685,35 +680,26 @@ public class PageObjectPatternPrestashopTest {
     @Order(13)
     public void addProductsToCart() {
 
-//        step("Strona produktu - zmiana ilości produktu poprzez wpisanie liczby (wyczyść i wpisz wartość)", ()->{
-//            //zmiana ilości produktu poprzez wpisanie liczby
-//            public void putProductQuantity() {
-//                By putProductQuantityLocator = By.id("quantity_wanted");
-//                getDriver().findElement(putProductQuantityLocator);
-//                putProductQuantity.sendKeys(Keys.CONTROL + "a");
-//                putProductQuantity.sendKeys(Keys.DELETE);
-//                putProductQuantity.sendKeys("4");
-//            }
-//            });
+        step("Strona produktu - zmiana ilości produktu poprzez wpisanie liczby (wyczyść i wpisz wartość)", () -> {
+            //zmiana ilości produktu poprzez wpisanie liczby
+            ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
+            best.putProductQuantityEnterNumber(4);
+        });
 
-//        step("Strona produktu - zmiana ilości produktu poprzez kliknięcie w strzałki", ()->{
-//            By selectQuantityLocator = By.xpath("//i[@class=\"material-icons touchspin-up\"]");
-//            WebElement selectQuantityClick = driver.findElement(selectQuantityLocator);
-//            selectQuantityClick.click();
-//            selectQuantityClick.click();
-//            selectQuantityClick.click();});
+        step("Strona produktu - zmiana ilości produktu poprzez kliknięcie w strzałki", () -> {
+            ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
+            best.putProductQuantityIncreaseArrow(3);
+        });
 
         step("Strona produktu - kliknięcie button 'Add to cart'", () -> {
             ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
             best.addToCartButton();
         });
 
-//        step("Popup - sprawdzenie komunikatu potwierdzającego dodanie do koszyka", ()->{
-//            By addProductPopupLocator = By.xpath("//h4[contains(text(),\"Product successfully added to " +
-//                    "your shopping cart\")]");
-//            wait.until(ExpectedConditions.elementToBeClickable(addProductPopupLocator));
-//            WebElement addProductPopup = driver.findElement(addProductPopupLocator);
-//            Assertions.assertTrue(addProductPopup.isDisplayed());});
+        step("Popup - sprawdzenie komunikatu potwierdzającego dodanie do koszyka", () -> {
+            ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
+            Assertions.assertTrue(best.isProductSuccessfullyAdded());
+        });
     }
 
 
@@ -732,36 +718,29 @@ public class PageObjectPatternPrestashopTest {
         });
 
         step("Shopping cart - porównanie ilości z sekcji produktu i sekcji podsumowania", () -> {
+            Cart cart = new Cart();
             // ilość w sekcji produktu
-            By numberInItemsSectionLocator = By.xpath("//input[@class='js-cart-line-product-quantity form-control']");
-            WebElement numberInItemSection = driver.findElement(numberInItemsSectionLocator);
-            int productQuantity = Integer.parseInt(numberInItemSection.getDomAttribute("value"));
+            int productQuantity = Integer.parseInt(Objects.requireNonNull(cart.getQuantity()));
             // ilość w sekcji podsumowania
-            By numberInPurchaseSummarySectionLocator = By.xpath("//span[@class='label js-subtotal']");
-            WebElement numberInPurchaseSummarySection = driver.findElement(numberInPurchaseSummarySectionLocator);
-            String summaryQuantityText = numberInPurchaseSummarySection.getText();
+            String summaryQuantityText = cart.getQuantitySummary();
             int summaryQuantity = Integer.parseInt(summaryQuantityText.replaceAll("\\D+", ""));
             // porównanie ilości z sekcji produktu i sekcji podsumowania
             Assertions.assertEquals(productQuantity, summaryQuantity);
         });
 
         step("Shopping cart - sprawdzenie wartości całkowitej", () -> {
+            Cart cart = new Cart();
             //cena jednostkowa
-            By unitPriceOfItemLocator = By.xpath("//div[@class=\"product-line-info product-price h5 \"]" + "/div[@class=\"current-price\"]");
-            WebElement unitPriceOfItem = driver.findElement(unitPriceOfItemLocator);
-            String unitPriceText = unitPriceOfItem.getText().replace("zł", "").replace(",", ".").trim();
+            String unitPriceText = cart.getUnitPrice();
             double unitPrice = Double.parseDouble(unitPriceText);
             // ilość w sekcji produktu
-            By numberInItemsSectionLocator = By.xpath("//input[@class='js-cart-line-product-quantity form-control']");
-            WebElement numberInItemSection = driver.findElement(numberInItemsSectionLocator);
-            int productQuantity = Integer.parseInt(numberInItemSection.getDomAttribute("value"));
+            int productQuantity = Integer.parseInt(Objects.requireNonNull(cart.getQuantity()));
             //wartość całkowita z podsumowania
-            By totalPriceLocator = By.xpath("//div[@class='cart-summary-line cart-total']/span[@class='value']");
-            WebElement totalPriceElement = driver.findElement(totalPriceLocator);
-            String totalPriceText = totalPriceElement.getText().replace("zł", "").replace(",", ".").trim();
+            String totalPriceText = cart.getTotal();
             double totalPrice = Double.parseDouble(totalPriceText);
             //oczekiwana wartość
             double expectedTotal = unitPrice * productQuantity;
+            Assertions.assertEquals(totalPrice, expectedTotal);
         });
     }
 
@@ -1117,14 +1096,12 @@ public class PageObjectPatternPrestashopTest {
             myWishlist.myWishlistLink();
         });
 
-//        step("'My wishlist' - sprawdzenie, że produkt jest na liście", ()->{
-//            By wishListElementsLocator = By.xpath(
-//                "//p[@class=\"wishlist-product-title\"]");
-//            wait.until(ExpectedConditions.elementToBeClickable(wishListElementsLocator));
-//            List<WebElement> wishListsElements = driver.findElements(wishListElementsLocator);
-//            List<String> wishListsElementsNames = wishListsElements.stream().map(WebElement::getText).toList();
-//            Assertions.assertTrue(wishListsElementsNames.size()==1 && wishListsElementsNames.getFirst().equals("Hummingbird printed t-shirt"));
-//        });
+        step("'My wishlist' - sprawdzenie, że produkt jest na liście", () -> {
+            MyWishlists myWishlist = new MyWishlists();
+            List<WebElement> wishListsElements = myWishlist.getWishListElements();
+            List<String> wishListsElementsNames = wishListsElements.stream().map(WebElement::getText).toList();
+            Assertions.assertTrue(wishListsElementsNames.size() == 1 && wishListsElementsNames.getFirst().equals("Hummingbird printed t-shirt"));
+        });
     }
 
 
@@ -1182,13 +1159,12 @@ public class PageObjectPatternPrestashopTest {
             myWishlists.ulubioneWishlistLink();
         });
 
-//        step("Ulubione - sprawdzenie, że produkt jest na liście", ()->{
-//            By wishListElementsLocator = By.xpath("//p[@class=\"wishlist-product-title\"]");
-//            wait.until(ExpectedConditions.elementToBeClickable(wishListElementsLocator));
-//            List<WebElement> wishListsElements = driver.findElements(wishListElementsLocator);
-//            List<String> wishListsElementsNames = wishListsElements.stream().map(WebElement::getText).toList();
-//            Assertions.assertTrue(wishListsElementsNames.size()==1 && wishListsElementsNames.getFirst().equals("Mug The adventure begins"));
-//        });
+        step("Ulubione - sprawdzenie, że produkt jest na liście", ()->{
+            MyWishlists myWishlists = new MyWishlists();
+            List<WebElement> wishListsElements = myWishlists.getWishListElements();
+            List<String> wishListsElementsNames = wishListsElements.stream().map(WebElement::getText).toList();
+            Assertions.assertTrue(wishListsElementsNames.size()==1 && wishListsElementsNames.getFirst().equals("Mug The adventure begins"));
+        });
     }
 
 
