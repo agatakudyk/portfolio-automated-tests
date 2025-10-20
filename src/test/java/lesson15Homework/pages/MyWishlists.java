@@ -2,7 +2,10 @@ package lesson15Homework.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import static lesson15Homework.driver.DriverProvider.getDriver;
+import static lesson15Homework.driver.DriverProvider.getWaiter;
 
 
 public class MyWishlists {
@@ -10,6 +13,7 @@ public class MyWishlists {
     //wejście na link listy 'My wishlist'
     public void myWishlistLink() {
         By myWishlistLinkLocator = By.xpath("//p[@class=\"wishlist-list-item-title\"]");
+        getWaiter().until(ExpectedConditions.elementToBeClickable(myWishlistLinkLocator));
         getDriver().findElement(myWishlistLinkLocator).click();
     }
 
@@ -17,6 +21,7 @@ public class MyWishlists {
     public void ulubioneWishlistLink() {
         By ulubioneWishlistLinkLocator = By.xpath("//a[@class=\"wishlist-list-item-link\"]" +
                 "/p[contains(text(),\"Ulubione\")]");
+        getWaiter().until(ExpectedConditions.elementToBeClickable(ulubioneWishlistLinkLocator));
         getDriver().findElement(ulubioneWishlistLinkLocator).click();
     }
 
@@ -30,12 +35,14 @@ public class MyWishlists {
     public void createNewList() {
         By createNewListWishlistLinkLocator = By.xpath("//div[@class=\"wishlist-container-header\"]" +
                 "/a[contains(text(),\"Create new list\")]");
+        getWaiter().until(ExpectedConditions.elementToBeClickable(createNewListWishlistLinkLocator));
         getDriver().findElement(createNewListWishlistLinkLocator).click();
     }
 
     //Popup 'Create wishlist' - wpisanie nazwy nowej listy życzeń
     public void addNameOfNewList() {
         By createNameOfNewListWishlistLocator = By.xpath("//input[@placeholder=\"Add name\"]");
+        getWaiter().until(ExpectedConditions.elementToBeClickable(createNameOfNewListWishlistLocator));
         getDriver().findElement(createNameOfNewListWishlistLocator).sendKeys("Super lista");
     }
 
@@ -49,6 +56,7 @@ public class MyWishlists {
     public void moreActionsButton() {
         By moreActionLocator = By.xpath("//p[contains(text(),\"Super lista\")]" +
                 "/../div[@class=\"wishlist-list-item-right\"]/button[@class=\"wishlist-list-item-actions\"]");
+        getWaiter().until(ExpectedConditions.elementToBeClickable(moreActionLocator));
         getDriver().findElement(moreActionLocator).click();
     }
 
@@ -56,12 +64,13 @@ public class MyWishlists {
     public void renameWishlist() {
         By renameNewCreatedWishlistLocator = By.xpath("//p[contains(text(),\"Super lista\")]" +
                 "/..//div[@class=\"wishlist-list-item-right\"]/div[@class=\"dropdown-menu show\"]/button[contains(text(),\"Rename\")]");
-       getDriver().findElement(renameNewCreatedWishlistLocator).click();
+        getDriver().findElement(renameNewCreatedWishlistLocator).click();
     }
 
     //zmiana nazwy listy życzeń
     public void wishlistRenameField() {
         By changeNameOfListWishlistLocator = By.xpath("//h5[contains(text(),\"Rename wishlist\")]/../..//div/div/input");
+        getWaiter().until(ExpectedConditions.elementToBeClickable(changeNameOfListWishlistLocator));
         WebElement changeNameOfListWishList = getDriver().findElement(changeNameOfListWishlistLocator);
         changeNameOfListWishList.clear();
         changeNameOfListWishList.sendKeys("Lista życzeń");
@@ -101,8 +110,8 @@ public class MyWishlists {
     //asercja - TOAST/'The list has been properly created' - potwierdzenie pojawienia się komunikatu
     public boolean isCreatedMsgDisplayed() {
         By wishlistSuccessCreatedMsgLocator = By.xpath("//p[contains(text(),\"The list has been properly created\")]");
-        WebElement wishlistSuccessCreatedMsg = getDriver().findElement(wishlistSuccessCreatedMsgLocator);
-        return wishlistSuccessCreatedMsg.isDisplayed();
+        getWaiter().until(ExpectedConditions.elementToBeClickable(wishlistSuccessCreatedMsgLocator));
+        return getDriver().findElement(wishlistSuccessCreatedMsgLocator).isDisplayed();
     }
 
     //asercja - potwierdzenie, czy istnieje lista o nazwie 'Super lista'
@@ -116,21 +125,20 @@ public class MyWishlists {
     //TOAST/'List has been renamed' - potwierdzenie pojawienia się komunikatu
     public boolean isRenamedListMsgDisplayed() {
         By successRenamedNewWishlistLocator = By.xpath("//p[@class=\"wishlist-toast-text\"]");
-        WebElement successRenamedNewWishlist = getDriver().findElement(successRenamedNewWishlistLocator);
-        return successRenamedNewWishlist.isDisplayed();
+        getWaiter().until(ExpectedConditions.elementToBeClickable(successRenamedNewWishlistLocator));
+        return getDriver().findElement(successRenamedNewWishlistLocator).isDisplayed();
     }
 
     //TOAST/'Share link copied!' - potwierdzenie pojawienia się komunikatu
     public boolean isCopiedLinkMsgDisplayed() {
         By shareLinkCopiedMsgLocator = By.xpath("//p[@class=\"wishlist-toast-text\"]");
-        WebElement shareLinkCopiedMsg = getDriver().findElement(shareLinkCopiedMsgLocator);
-        return shareLinkCopiedMsg.isDisplayed();
+        return getDriver().findElement(shareLinkCopiedMsgLocator).isDisplayed();
     }
 
     //TOAST/'List has been removed' - potwierdzenie pojawienia się komunikatu
     public boolean isRemovedListMsgDisplayed() {
-        By listRemovedComfirmLocator = By.xpath("//p[contains(text(),\"List has been removed\")]");
-        WebElement listRemovedComfirm = getDriver().findElement(listRemovedComfirmLocator);
-        return listRemovedComfirm.isDisplayed();
+        By listRemovedConfirmLocator = By.xpath("//p[contains(text(),\"List has been removed\")]");
+        getWaiter().until(ExpectedConditions.elementToBeClickable(listRemovedConfirmLocator));
+        return getDriver().findElement(listRemovedConfirmLocator).isDisplayed();
     }
 }
