@@ -1,11 +1,12 @@
 package lesson15Homework.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static lesson15Homework.driver.DriverProvider.getDriver;
+import static lesson15Homework.driver.DriverProvider.getWaiter;
+
 
 public class Home {
 
@@ -17,11 +18,11 @@ public class Home {
 
     //asercja - potwierdzenie pojawienia się popupu z komunikatem walidacyjnym
     public boolean isMsgDisplayedThatLoginRequired() {
-    By loginRequiredMsgLocator = By.xpath("//p[contains(text(),\"You need to be logged in to " +
-            "save products in your wishlist.\")]");
-    WebElement loginRequiredMsg = getDriver().findElement(loginRequiredMsgLocator);
-    return loginRequiredMsg.isDisplayed();
-}
+        By loginRequiredMsgLocator = By.xpath("//p[contains(text(),\"You need to be logged in to " +
+                "save products in your wishlist.\")]");
+        WebElement loginRequiredMsg = getDriver().findElement(loginRequiredMsgLocator);
+        return loginRequiredMsg.isDisplayed();
+    }
 
     //kliknięcie w button 'Cancel' w Popupie
     public void closeWishlistPopupOfUnregisteredUser() {
@@ -44,6 +45,7 @@ public class Home {
     //popup 'Add to whishlist' - kliknięcie w link 'My wishlist'
     public void myWishlistSelection() {
         By myWishlistPopupLocator = By.xpath("//div[@class=\"modal-body\"]" + "/div/ul/li[@class=\"wishlist-list-item\"]");
+        getWaiter().until(ExpectedConditions.elementToBeClickable(myWishlistPopupLocator));
         getDriver().findElement(myWishlistPopupLocator).click();
     }
 
@@ -56,6 +58,7 @@ public class Home {
     //popup - kliknięcie w link 'Create new list'
     public void createNewWishlist() {
         By newWishlistPopupLocator = By.xpath("//a[@class=\"wishlist-add-to-new text-primary\"]");
+        getWaiter().until(ExpectedConditions.elementToBeClickable(newWishlistPopupLocator));
         getDriver().findElement(newWishlistPopupLocator).click();
     }
 
@@ -73,15 +76,16 @@ public class Home {
 
     //wybranie nowo utworzonej listy
     public void ulubioneNewWishlist() {
-        By ulubioneNewWishlistLector = By.xpath("//li[@class=\"wishlist-list-item\"]" + "/p[contains(text(),\"Ulubione\")]");
-        getDriver().findElement(ulubioneNewWishlistLector).click();
+        By ulubioneNewWishlistLocator = By.xpath("//li[@class=\"wishlist-list-item\"]" + "/p[contains(text(),\"Ulubione\")]");
+        getWaiter().until(ExpectedConditions.elementToBeClickable(ulubioneNewWishlistLocator));
+        getDriver().findElement(ulubioneNewWishlistLocator).click();
     }
 
     //TOAST 'Product added' - potwierdzenie pojawienia się komunikatu
     public boolean isAddedMsgDisplayed() {
         By productAddedToWishlistMsgLocator = By.xpath("//div[@class=\"wishlist-toast success\"]" +
                 "/p[@class=\"wishlist-toast-text\"]");
-        WebElement productAddedToWishlistMsg = getDriver().findElement(productAddedToWishlistMsgLocator);
-        return productAddedToWishlistMsg.isDisplayed();
+        getWaiter().until(ExpectedConditions.elementToBeClickable(productAddedToWishlistMsgLocator));
+        return getDriver().findElement(productAddedToWishlistMsgLocator).isDisplayed();
     }
 }
