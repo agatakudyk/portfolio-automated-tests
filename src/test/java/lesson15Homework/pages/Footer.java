@@ -17,8 +17,7 @@ public class Footer {
     //Potwierdzenie otwarcia podstrony 'Prices drop'
     public boolean isPricesDropPageOpened() {
         By pricesDropPageNameLocator = By.id("js-product-list-header");
-        WebElement pricesDropPageName = getDriver().findElement(pricesDropPageNameLocator);
-        return pricesDropPageName.isDisplayed();
+        return getDriver().findElement(pricesDropPageNameLocator).isDisplayed();
     }
 
     //kliknięcie w link 'New products'
@@ -30,8 +29,7 @@ public class Footer {
     //Potwierdzenie otwarcia podstrony 'New products'
     public boolean isNewProductsPageOpened() {
         By newProductsPageNameLocator = By.id("js-product-list-header");
-        WebElement newProductsPageName = getDriver().findElement(newProductsPageNameLocator);
-        return newProductsPageName.isDisplayed();
+        return getDriver().findElement(newProductsPageNameLocator).isDisplayed();
     }
 
     //kliknięcie w link 'Best sellers'
@@ -43,8 +41,7 @@ public class Footer {
     //Potwierdzenie otwarcia podstrony 'Best sellers'
     public boolean isBestSellersPageOpened() {
         By bestSellersPageNameLocator = By.id("js-product-list-header");
-        WebElement bestSellersPageName = getDriver().findElement(bestSellersPageNameLocator);
-        return bestSellersPageName.isDisplayed();
+        return getDriver().findElement(bestSellersPageNameLocator).isDisplayed();
     }
 
     //kliknięcie w link 'Delivery'
@@ -56,8 +53,7 @@ public class Footer {
     //Potwierdzenie otwarcia podstrony 'Delivery'
     public boolean isDeliveryPageOpened() {
         By deliveryPageNameLink = By.xpath("//h1[contains(text(),\"Delivery\")]");
-        WebElement deliveryPageName = getDriver().findElement(deliveryPageNameLink);
-        return deliveryPageName.isDisplayed();
+        return getDriver().findElement(deliveryPageNameLink).isDisplayed();
     }
 
     //kliknięcie w link 'Legal Notice'
@@ -69,8 +65,7 @@ public class Footer {
     //Potwierdzenie otwarcia podstrony 'Legal Notice'
     public boolean isLegalNoticePageOpened() {
         By legalNoticePageNameLocator = By.xpath("//h1[contains(text(),\"Legal Notice\")]");
-        WebElement legalNoticePageName = getDriver().findElement(legalNoticePageNameLocator);
-        return legalNoticePageName.isDisplayed();
+        return getDriver().findElement(legalNoticePageNameLocator).isDisplayed();
     }
 
     //kliknięcie w link 'Terms and conditions of use'
@@ -83,8 +78,7 @@ public class Footer {
     public boolean isTermsAndConditionsPageOpened() {
         By termsAndConditionsOfUsePageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
                 "/h1[contains(text(), " + "\"Terms and conditions of use\")]");
-        WebElement termsAndConditionsOfUsePageName = getDriver().findElement(termsAndConditionsOfUsePageNameLocator);
-        return termsAndConditionsOfUsePageName.isDisplayed();
+        return getDriver().findElement(termsAndConditionsOfUsePageNameLocator).isDisplayed();
     }
 
     //kliknięcie w link 'About us'
@@ -97,8 +91,7 @@ public class Footer {
     public boolean isAboutUsPageOpened() {
         By aboutUsPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1[contains(text(), " +
                 "\"About us\")]");
-        WebElement aboutUsPageName = getDriver().findElement(aboutUsPageNameLocator);
-        return aboutUsPageName.isDisplayed();
+        return getDriver().findElement(aboutUsPageNameLocator).isDisplayed();
     }
 
     //kliknięcie w link 'Secure payment'
@@ -111,8 +104,7 @@ public class Footer {
     public boolean isSecurePaymentPageOpened() {
         By securePaymentPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
                 "/h1[contains(text(),\"Secure payment\")]");
-        WebElement securePaymentPageName = getDriver().findElement(securePaymentPageNameLocator);
-        return securePaymentPageName.isDisplayed();
+        return getDriver().findElement(securePaymentPageNameLocator).isDisplayed();
     }
 
     //kliknięcie w link 'Contact us'
@@ -125,8 +117,7 @@ public class Footer {
     public boolean isContactUsPageOpened() {
         By contactUsPageNameLocator = By.xpath("//div[@class=\"col-md-9 col-md-offset-3\"]" +
                 "/h3[contains(text(),\"Contact us\")]");
-        WebElement contactUsPageName = getDriver().findElement(contactUsPageNameLocator);
-        return contactUsPageName.isDisplayed();
+        return getDriver().findElement(contactUsPageNameLocator).isDisplayed();
     }
 
     //kliknięcie w link 'Sitemap'
@@ -139,8 +130,7 @@ public class Footer {
     public boolean isSitemapPageOpened() {
         By sitemapPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
                 "/h1/span[contains(text(),\"Sitemap\")]");
-        WebElement sitemapPageName = getDriver().findElement(sitemapPageNameLocator);
-        return sitemapPageName.isDisplayed();
+        return getDriver().findElement(sitemapPageNameLocator).isDisplayed();
     }
 
     //kliknięcie w link 'Stores'
@@ -152,8 +142,7 @@ public class Footer {
     //Potwierdzenie otwarcia podstrony 'Stores'
     public boolean isStoresPageOpened() {
         By ourStoresPageNameLocator = By.xpath("//header[@class=\"page-header\"]/h1");
-        WebElement ourStoresPageName = getDriver().findElement(ourStoresPageNameLocator);
-        return ourStoresPageName.isDisplayed();
+        return getDriver().findElement(ourStoresPageNameLocator).isDisplayed();
     }
 
     //kliknięcie w link 'Personal info'
@@ -166,8 +155,7 @@ public class Footer {
     public boolean isPersonalInfoPageOpened() {
         By personalInfoPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
                 "/h1[contains(text(),\"Your personal information\")]");
-        WebElement personalInfoPageName = getDriver().findElement(personalInfoPageNameLocator);
-        return personalInfoPageName.isDisplayed();
+        return getDriver().findElement(personalInfoPageNameLocator).isDisplayed();
     }
 
     //kliknięcie w link 'Orders'
@@ -180,8 +168,7 @@ public class Footer {
     public boolean isOrdersPageOpened() {
         By orderHistoryPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
                 "/h1[contains(text(),\"Order history\")]");
-        WebElement orderHistoryPageName = getDriver().findElement(orderHistoryPageNameLocator);
-        return orderHistoryPageName.isDisplayed();
+        return getDriver().findElement(orderHistoryPageNameLocator).isDisplayed();
     }
 
     //kliknięcie w link 'Credit slips'
@@ -194,21 +181,19 @@ public class Footer {
     public boolean isCreditSlipsPageOpened() {
         By creditSlipsPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
                 "/h1[contains(text(),\"Credit slips\")]");
-        WebElement creditSlipsPageName = getDriver().findElement(creditSlipsPageNameLocator);
-        return creditSlipsPageName.isDisplayed();
+        return getDriver().findElement(creditSlipsPageNameLocator).isDisplayed();
     }
 
     //kliknięcie w link 'Addresses'
     public void addresses() {
-    By addressesLinkLocator = By.xpath("//a[@title=\"Addresses\"]");
-    getDriver().findElement(addressesLinkLocator).click();
-}
+        By addressesLinkLocator = By.xpath("//a[@title=\"Addresses\"]");
+        getDriver().findElement(addressesLinkLocator).click();
+    }
 
     //Potwierdzenie otwarcia podstrony 'Addresses'
     public boolean isAddressesPageOpened() {
         By yourAddressesPageNameLocator = By.xpath("//header[@class=\"page-header\"]" +
                 "/h1[contains(text(),\"Your addresses\")]");
-        WebElement yourAddressesPageName = getDriver().findElement(yourAddressesPageNameLocator);
-        return yourAddressesPageName.isDisplayed();
+        return getDriver().findElement(yourAddressesPageNameLocator).isDisplayed();
     }
 }
