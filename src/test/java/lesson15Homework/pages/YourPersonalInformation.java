@@ -1,14 +1,13 @@
 package lesson15Homework.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import static lesson15Homework.driver.DriverProvider.getDriver;
 
 
 public class YourPersonalInformation {
 
- //Personal Information - checkbox zgody na przetwarzanie danych osobowych
+    //Personal Information - checkbox zgody na przetwarzanie danych osobowych
     public void customerPrivacyCheckbox() {
         By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
         getDriver().findElement(policyInfoLocator).click();
@@ -28,10 +27,9 @@ public class YourPersonalInformation {
     }
 
     //asercja - sprawdzenie pojawienia się komunikatu 'Information successfully updated.'
-public boolean isMsgThatInformationUpdated() {
-    By updatedInformationTextLocator = By.xpath("//ul/li[contains(text()," +
-            "\"Information successfully updated.\")]");
-    WebElement updatedInformationText = getDriver().findElement(updatedInformationTextLocator);
-    return updatedInformationText.isDisplayed();
-}
+    public boolean isMsgThatInformationUpdated() {
+        By updatedInformationTextLocator = By.xpath("//ul/li[contains(text()," +
+                "\"Information successfully updated.\")]");
+        return getDriver().findElement(updatedInformationTextLocator).isDisplayed();
+    }
 }
