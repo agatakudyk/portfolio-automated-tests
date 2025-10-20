@@ -5,7 +5,6 @@ import lesson15Homework.pages.*;
 import lesson15Homework.users.RegisteredUser;
 import lesson15Homework.users.UnregisteredUserData;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -489,7 +488,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Login page - uzupełnienie nowego hasła", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.newPassword();
+            registered.newLoginPassword();
         });
 
         step("Login page - kliknięcie w button 'Sign In'", () -> {
