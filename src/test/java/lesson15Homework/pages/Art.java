@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.List;
+
 import static lesson15Homework.driver.DriverProvider.getDriver;
 import static lesson15Homework.driver.DriverProvider.getWaiter;
 
@@ -34,6 +36,17 @@ public class Art {
     public void theBestPoster() {
         By theBestPosterLocator = By.xpath("//img[@alt=\"The best is yet to come' Framed poster\"]");
         getDriver().findElement(theBestPosterLocator).click();
+    }
+
+    public List<WebElement> getproductsbyDescription(){
+        By productsListLocator = By.xpath("//div[@class=\"product-description\"]/h2/a");
+        getWaiter().until(ExpectedConditions.elementToBeClickable(productsListLocator));
+        return getDriver().findElements(productsListLocator);
+    }
+    public List<WebElement> getProductByPrice(){
+        By productsListLocator = By.xpath("//div[@class=\"product-price-and-shipping\"]/span");
+        getWaiter().until(ExpectedConditions.elementToBeClickable(productsListLocator));
+        return getDriver().findElements(productsListLocator);
     }
 
 
