@@ -1,10 +1,10 @@
 package lesson15Homework.pages;
 
-import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static lesson15Homework.driver.DriverProvider.getDriver;
+import static lesson15Homework.driver.DriverProvider.getWaiter;
 
 
 public class Cart {
@@ -15,19 +15,19 @@ public class Cart {
         getDriver().findElement(trashIconLocator).click();
     }
 
-        //powrót na stronę główną
+    //powrót na stronę główną
     public void homePageLink() {
         By homepageLinkLocator = By.id("_desktop_logo");
         getDriver().findElement(homepageLinkLocator).click();
     }
 
     //kliknięcie w button 'Proceed to checkout'
-        public void proceedToCheckoutButton() {
-            By proceedToCheckoutButtonLocator = By.xpath("//a[contains(text(),\"Proceed to checkout\")]");
-            getDriver().findElement(proceedToCheckoutButtonLocator).click();
-        }
+    public void proceedToCheckoutButton() {
+        By proceedToCheckoutButtonLocator = By.xpath("//a[contains(text(),\"Proceed to checkout\")]");
+        getDriver().findElement(proceedToCheckoutButtonLocator).click();
+    }
 
-        //asercja - sprawdzenie zgodności nazwy produktu w koszyku
+    //asercja - sprawdzenie zgodności nazwy produktu w koszyku
     public boolean isProductInCart() {
         By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]" +
                 "/a[contains(text(),\"Today is a good day Framed poster\")]");
@@ -38,14 +38,13 @@ public class Cart {
     //asercja - potwierdzenie pojawienia się komunikatu, że koszyk jest pusty
     public boolean isMsgThatCartEmpty() {
         By emptyCartMsgLocator = By.xpath("//span[contains(text(),\"There are no more items in your cart\")]");
-        WebElement emptyCartMsg = getDriver().findElement(emptyCartMsgLocator);
-        return emptyCartMsg.isDisplayed();
+        getWaiter().until(ExpectedConditions.elementToBeClickable(emptyCartMsgLocator));
+        return getDriver().findElement(emptyCartMsgLocator).isDisplayed();
     }
 
     //asercja - sprawdzenie nazwy produktu
     public String getProductNameInCart() {
         By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]/a");
-        String productNameInCart = getDriver().findElement(productNameInCartLocator).getText();
-        return productNameInCart;
+        return getDriver().findElement(productNameInCartLocator).getText();
     }
 }
