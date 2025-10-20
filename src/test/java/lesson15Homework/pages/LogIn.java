@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 
 import static lesson15Homework.driver.DriverProvider.getDriver;
 
+
 public class LogIn {
 
     //kliknięcie w link rejestracji
@@ -51,7 +52,6 @@ public class LogIn {
     //asercja - sprawdzenie komunikatu 'Authentication failed.'
     public boolean isMsgAuthenticationFailedDisplayed() {
         By failMsgLocator = By.xpath("//li[@class=\"alert alert-danger\"]");
-        WebElement failMessage = getDriver().findElement(failMsgLocator);
-        return failMessage.isDisplayed();
+        return getDriver().findElement(failMsgLocator).isDisplayed();
     }
 }
