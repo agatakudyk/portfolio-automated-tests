@@ -1,7 +1,7 @@
 package lesson15Homework.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+
 import static lesson15Homework.driver.DriverProvider.getDriver;
 
 
@@ -23,8 +23,7 @@ public class Header {
     public boolean isEnglishLanguageDisplayed() {
         By englishLanguageCheckLocator = By.xpath("//button[@data-toggle=\"dropdown\"]" +
                 "/span[contains(text(),\"English\")]");
-       WebElement englishLanguage = getDriver().findElement(englishLanguageCheckLocator);
-       return englishLanguage.isDisplayed();
+        return getDriver().findElement(englishLanguageCheckLocator).isDisplayed();
     }
 
     //Kliknięcie w button 'Sign out'
@@ -48,14 +47,12 @@ public class Header {
     //asercja -  widoczność przycisku 'Sign out'
     public boolean isButtonSignOutDisplayed() {
         By logoutLocator = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
-        WebElement logoutButton = getDriver().findElement(logoutLocator);
-        return logoutButton.isDisplayed();
+        return getDriver().findElement(logoutLocator).isDisplayed();
     }
 
     //asercja -  widoczność przycisku 'Sign in'
     public boolean isButtonSignInDisplayed() {
         By signInLocator = By.cssSelector(".user-info a");
-        WebElement signInButton = getDriver().findElement(signInLocator);
-        return signInButton.isDisplayed();
+        return getDriver().findElement(signInLocator).isDisplayed();
     }
 }
