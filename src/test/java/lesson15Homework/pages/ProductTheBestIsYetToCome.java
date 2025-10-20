@@ -1,11 +1,10 @@
 package lesson15Homework.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static lesson15Homework.driver.DriverProvider.getDriver;
+import static lesson15Homework.driver.DriverProvider.getWaiter;
 
 
 public class ProductTheBestIsYetToCome {
@@ -13,12 +12,14 @@ public class ProductTheBestIsYetToCome {
     //kliknięcie w button dodania opinii o produkcie
     public void productReviewButton() {
         By reviewButtonLocator = By.xpath("//div[@class=\"product-comment-list-item\"]/button");
+        getWaiter().until(ExpectedConditions.elementToBeClickable(reviewButtonLocator));
         getDriver().findElement(reviewButtonLocator).click();
     }
 
     //popup 'Write your review' - wpisanie tytułu komentarza
     public void reviewTitle() {
         By commentTitleLocator = By.id("comment_title");
+        getWaiter().until(ExpectedConditions.elementToBeClickable(commentTitleLocator));
         getDriver().findElement(commentTitleLocator).sendKeys("Moja ocena produktu");
     }
 
@@ -40,6 +41,7 @@ public class ProductTheBestIsYetToCome {
                 "//div[contains(text(), \"Your comment has been submitted and will be available once " +
                         "approved by a moderator.\")]/../div[@class=\"post-comment-buttons\"]" +
                         "/button[@class=\"btn btn-comment btn-comment-huge\"]");
+        getWaiter().until(ExpectedConditions.elementToBeClickable(okCommentButtonLocator));
         getDriver().findElement(okCommentButtonLocator).click();
     }
 
@@ -58,7 +60,7 @@ public class ProductTheBestIsYetToCome {
     //asercja - potwierdzenie dodania komentarza
     public boolean isCommentAdded() {
         By addCommentPopupLocator = By.id("product-comment-posted-modal-message");
-        WebElement addCommentPopup = getDriver().findElement(addCommentPopupLocator);
-        return addCommentPopup.isDisplayed();
+        getWaiter().until(ExpectedConditions.elementToBeClickable(addCommentPopupLocator));
+        return getDriver().findElement(addCommentPopupLocator).isDisplayed();
     }
 }
