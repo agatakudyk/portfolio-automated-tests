@@ -1,6 +1,8 @@
 package lesson15Homework.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static lesson15Homework.driver.DriverProvider.getDriver;
@@ -62,5 +64,28 @@ public class ProductTheBestIsYetToCome {
         By addCommentPopupLocator = By.id("product-comment-posted-modal-message");
         getWaiter().until(ExpectedConditions.elementToBeClickable(addCommentPopupLocator));
         return getDriver().findElement(addCommentPopupLocator).isDisplayed();
+    }
+
+    public void putProductQuantityEnterNumber(int quantity) {
+        By putProductQuantityLocator = By.id("quantity_wanted");
+        WebElement putProductQuantity = getDriver().findElement(putProductQuantityLocator);
+        putProductQuantity.sendKeys(Keys.CONTROL + "a");
+        putProductQuantity.sendKeys(Keys.DELETE);
+        putProductQuantity.sendKeys(Integer.toString(quantity));
+    }
+
+    public void putProductQuantityIncreaseArrow(int quantity) {
+        By selectQuantityLocator = By.xpath("//i[@class=\"material-icons touchspin-up\"]");
+        WebElement selectQuantityClick = getDriver().findElement(selectQuantityLocator);
+        for (int i = 1; i <= quantity; i++) {
+            selectQuantityClick.click();
+        }
+    }
+
+    public boolean isProductSuccessfullyAdded() {
+        By addProductPopupLocator = By.xpath("//h4[contains(text(),\"Product successfully added to " +
+                "your shopping cart\")]");
+        getWaiter().until(ExpectedConditions.elementToBeClickable(addProductPopupLocator));
+        return getDriver().findElement(addProductPopupLocator).isDisplayed();
     }
 }
