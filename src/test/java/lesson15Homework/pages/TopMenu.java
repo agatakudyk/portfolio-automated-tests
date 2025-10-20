@@ -1,7 +1,10 @@
 package lesson15Homework.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import static lesson15Homework.driver.DriverProvider.getDriver;
+import static lesson15Homework.driver.DriverProvider.getWaiter;
 
 
 public class TopMenu {
@@ -15,6 +18,7 @@ public class TopMenu {
     //wejście na podstronę ART
     public void artPageLink() {
         By artPageLocator = By.id("category-9");
+        getWaiter().until(ExpectedConditions.elementToBeClickable(artPageLocator));
         getDriver().findElement(artPageLocator).click();
     }
 
@@ -23,5 +27,4 @@ public class TopMenu {
         By homepageLinkLocator = By.id("_desktop_logo");
         getDriver().findElement(homepageLinkLocator).click();
     }
-
 }
