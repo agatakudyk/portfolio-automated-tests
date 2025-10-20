@@ -1,7 +1,6 @@
 package lesson15Homework.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import static lesson15Homework.driver.DriverProvider.getDriver;
 
@@ -24,15 +23,13 @@ public class ContactUs {
     public boolean isValidationMsgDisplayed() {
         By validationMsgInContactUsSectionLocator = By.xpath(
                 "//li[contains(text(),\"The message cannot be blank.\")]");
-        WebElement validationMsgInContactUsSection = getDriver().findElement(validationMsgInContactUsSectionLocator);
-        return validationMsgInContactUsSection.isDisplayed();
+        return getDriver().findElement(validationMsgInContactUsSectionLocator).isDisplayed();
     }
 
     //asercja - potwierdzenie komunikatu informacyjnego 'Your message has been successfully sent to our team.'
     public boolean isInformationMsgDisplayed() {
         By successMsgInContactUsSectionLocator = By.xpath("//li[contains(text(),\"Your message has " +
                 "been successfully sent to our team.\")]");
-        WebElement successMsgInContactUsSection = getDriver().findElement(successMsgInContactUsSectionLocator);
-        return successMsgInContactUsSection.isDisplayed();
+        return getDriver().findElement(successMsgInContactUsSectionLocator).isDisplayed();
     }
 }
