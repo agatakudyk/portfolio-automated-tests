@@ -7,7 +7,9 @@ import lesson15Homework.users.UnregisteredUserData;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
+
 import static io.qameta.allure.Allure.step;
 
 
@@ -47,7 +49,7 @@ public class PageObjectPatternPrestashopTest {
     }
 
 
-    @Test     //Użytkownik niezarejestrowany - dodanie produktu do wishlist, dodanie i usunięcie z koszyka
+    @Test     //Użytkownik niezarejestrowany - dodanie produktu do wishlist, dodanie produktu do koszyka i usunięcie
     @Order(2)
     public void addToCartAndDeleteProductByUnregisteredUser() {
 
@@ -79,8 +81,6 @@ public class PageObjectPatternPrestashopTest {
         step("Potwierdzenie pojawienia się popupu z komunikatem potwierdzającym pomyślne dodanie", () -> {
             ProductTodayIsAGoodDayFramedPoster todayIsAGoodDay = new ProductTodayIsAGoodDayFramedPoster();
             Assertions.assertTrue(todayIsAGoodDay.isSuccessPopupDisplayed());
-
-            //TODO            wait.until(ExpectedConditions.elementToBeClickable(addProductPopupLocator));
         });
 
 
@@ -102,8 +102,6 @@ public class PageObjectPatternPrestashopTest {
         step("Shopping cart - potwierdzenie pojawienia się komunikatu, że koszyk jest pusty", () -> {
             Cart cart = new Cart();
             Assertions.assertTrue(cart.isMsgThatCartEmpty());
-
-            //TODO wait.until(ExpectedConditions.elementToBeClickable(emptyCartMsgLocator));
         });
     }
 
@@ -214,7 +212,7 @@ public class PageObjectPatternPrestashopTest {
     }
 
 
-    @Test     //Order confirmation page - uzupełnienie formularza ‘Save time on your next order, sign up now’
+    @Test     //Order confirmation - uzupełnienie formularza ‘Save time on your next order, sign up now’
     @Order(4)
     public void signUpNowFillInFormByUnregisteredUser() {
 
@@ -469,10 +467,10 @@ public class PageObjectPatternPrestashopTest {
             personal.saveButton();
         });
 
-        step("Your personal information - potwierdzenie pojawienia się komunikatu", ()->{
+        step("Your personal information - potwierdzenie pojawienia się komunikatu", () -> {
             YourPersonalInformation personal = new YourPersonalInformation();
             Assertions.assertTrue(personal.isMsgThatInformationUpdated());
-            });
+        });
 
         step("Header/wyloguj się - kliknięcie w button 'Sign out'", () -> {
             Header header = new Header();
@@ -494,7 +492,7 @@ public class PageObjectPatternPrestashopTest {
             login.signInButton();
         });
 
-        step("Sprawdzenie poprawności zalogowania użytkownika - widoczność przycisku 'Sign out'", ()->{
+        step("Sprawdzenie poprawności zalogowania użytkownika - widoczność przycisku 'Sign out'", () -> {
             Header header = new Header();
             Assertions.assertTrue(header.isButtonSignOutDisplayed());
         });
@@ -503,7 +501,7 @@ public class PageObjectPatternPrestashopTest {
     }
 
 
-    private void backToPreviousPassword () {
+    private void backToPreviousPassword() {
 
         step("Header - wejście na profil użytkownika 'Your account'", () -> {
             Header header = new Header();
@@ -542,7 +540,7 @@ public class PageObjectPatternPrestashopTest {
     }
 
 
-    @Test //Podstrona Accessories - filtrowanie
+    @Test       //Podstrona Accessories - filtrowanie
     @Order(10)
     public void clearAccessoriesProductsFiltering() {
 
@@ -571,10 +569,9 @@ public class PageObjectPatternPrestashopTest {
         step("Accessories page - wyczyszczenie wybranych filtrów", () -> {
             Accessories accessories = new Accessories();
             accessories.allFiltersClear();
-            //todo wait.until(ExpectedConditions.invisibilityOf(clearAllFilterClick));});
         });
 
-        step("Accessories page - potwierdzenie wyczyszczenia filtrów", ()->{
+        step("Accessories page - potwierdzenie wyczyszczenia filtrów", () -> {
             Accessories accessories = new Accessories();
             Assertions.assertFalse(accessories.isFilterClear());
         });
@@ -588,7 +585,6 @@ public class PageObjectPatternPrestashopTest {
         step("wejście na podstronę ART", () -> {
             TopMenu top = new TopMenu();
             top.artPageLink();
-            //TODO Thread.sleep(1000);
         });
 
         step("strona ART - kliknięcie w pole sortowania", () -> {
@@ -620,13 +616,11 @@ public class PageObjectPatternPrestashopTest {
         step("strona ART - kliknięcie w pole sortowania", () -> {
             Art art = new Art();
             art.sortByButton();
-            //todo Thread.sleep(1000);});
         });
 
         step("strona ART - posortowanie według ‘Price, low to high’", () -> {
             Art art = new Art();
             art.sortByPriceAsc();
-            //todo Thread.sleep(1000);});
         });
 
 //        step("Podstrona ART - pobranie z listy elementów i sprawdzenie czy są posortowane", ()->{
@@ -650,7 +644,7 @@ public class PageObjectPatternPrestashopTest {
     @Order(12)
     public void successAddPosterReview() {
 
-        step("Podstrona ART - wejście w okno produktu 'The Best Is Yet To Come Framed Poster'", () -> {
+        step("Podstrona ART - wejście na stronę produktu 'The Best Is Yet To Come Framed Poster'", () -> {
             Art art = new Art();
             art.theBestPoster();
         });
@@ -658,15 +652,11 @@ public class PageObjectPatternPrestashopTest {
         step("Strona produktu - kliknięcie w button dodania opinii o produkcie", () -> {
             ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
             best.productReviewButton();
-
-            //todo wait.until(ExpectedConditions.elementToBeClickable(commentButtonLocator));
         });
 
         step("popup 'Write your review' - wpisanie tytułu komentarza", () -> {
             ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
             best.reviewTitle();
-
-            //todo wait.until(ExpectedConditions.elementToBeClickable(commentTitleFillIn));
         });
 
         step("WRITE YOUR REVIEW - wpisanie treści komentarza", () -> {
@@ -679,11 +669,9 @@ public class PageObjectPatternPrestashopTest {
             best.sendReviewButton();
         });
 
-        step("Popup REVIEW SENT - potwierdzenie dodania komentarza", ()->{
+        step("Popup REVIEW SENT - potwierdzenie dodania komentarza", () -> {
             ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
             Assertions.assertTrue(best.isCommentAdded());
-
-            //todo wait.until(ExpectedConditions.elementToBeClickable(addCommentPopupLocator));
         });
 
         step("Popup REVIEW SENT - zamknięcie okna poprzez kliknięcie w button 'OK'", () -> {
@@ -740,7 +728,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Cart - sprawdzenie nazwy produktu", () -> {
             Cart cart = new Cart();
-            Assertions.assertEquals("The best is yet to come' Framed poster",cart.getProductNameInCart());
+            Assertions.assertEquals("The best is yet to come' Framed poster", cart.getProductNameInCart());
         });
 
         step("Shopping cart - porównanie ilości z sekcji produktu i sekcji podsumowania", () -> {
@@ -794,7 +782,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Addresses/tooltip dynamiczny - potwierdzenie pojawienia się komunikatu walidacyjnego", () -> {
             Addresses address = new Addresses();
-            Assertions.assertEquals("Wypełnij to pole.",address.getValidationMsg());
+            Assertions.assertEquals("Wypełnij to pole.", address.getValidationMsg());
         });
 
         step("Addresses - uzupełnienie pola 'Address'", () -> {
@@ -869,7 +857,7 @@ public class PageObjectPatternPrestashopTest {
             pay.placeOrderButton();
         });
 
-        step("Order confirmation page - sprawdzenie pojawienia się komunikatu potwierdzającego", ()->{
+        step("Order confirmation page - sprawdzenie pojawienia się komunikatu potwierdzającego", () -> {
             OrderConfirmation confirmation = new OrderConfirmation();
             Assertions.assertTrue(confirmation.isMsgThatOrderConfirmed());
         });
@@ -890,7 +878,7 @@ public class PageObjectPatternPrestashopTest {
             contact.sendButton();
         });
 
-        step("Contact us - potwierdzenie pojawienia się komunikatu walidacyjnego", ()->{
+        step("Contact us - potwierdzenie pojawienia się komunikatu walidacyjnego", () -> {
             ContactUs contact = new ContactUs();
             Assertions.assertTrue(contact.isValidationMsgDisplayed());
         });
@@ -905,7 +893,7 @@ public class PageObjectPatternPrestashopTest {
             contact.sendButton();
         });
 
-        step("Komunikat informacyjny 'Your message has been successfully sent to our team.'", ()->{
+        step("Komunikat informacyjny 'Your message has been successfully sent to our team.'", () -> {
             ContactUs contact = new ContactUs();
             Assertions.assertTrue(contact.isInformationMsgDisplayed());
         });
@@ -936,7 +924,7 @@ public class PageObjectPatternPrestashopTest {
             details.sendButton();
         });
 
-        step("Potwierdzenie pojawienia się komunikatu walidacji 'The message cannot be blank.'", ()->{
+        step("Potwierdzenie pojawienia się komunikatu walidacji 'The message cannot be blank.'", () -> {
             OrderDetails details = new OrderDetails();
             Assertions.assertTrue(details.isValidationMsgDisplayed());
         });
@@ -951,7 +939,7 @@ public class PageObjectPatternPrestashopTest {
             details.sendButton();
         });
 
-        step("potwierdzenie wysłania wiadomości 'Message successfully sent'", ()->{
+        step("potwierdzenie wysłania wiadomości 'Message successfully sent'", () -> {
             OrderDetails details = new OrderDetails();
             Assertions.assertTrue(details.isInformationMsgDisplayed());
         });
@@ -1007,7 +995,7 @@ public class PageObjectPatternPrestashopTest {
             payment.placeOrderButton();
         });
 
-        step("Order confirmation page - sprawdzenie pojawienia się komunikatu potwierdzającego", ()->{
+        step("Order confirmation page - sprawdzenie pojawienia się komunikatu potwierdzającego", () -> {
             OrderConfirmation confirmation = new OrderConfirmation();
             Assertions.assertTrue(confirmation.isMsgThatOrderConfirmed());
         });
@@ -1053,7 +1041,7 @@ public class PageObjectPatternPrestashopTest {
             newAddress.saveButton();
         });
 
-        step("Your addresses - komunikat potwierdzający dodanie adresu 'Address successfully added!'", ()->{
+        step("Your addresses - komunikat potwierdzający dodanie adresu 'Address successfully added!'", () -> {
             YourAddresses yourAddress = new YourAddresses();
             Assertions.assertTrue(yourAddress.isAddMsgDisplayed());
         });
@@ -1083,7 +1071,7 @@ public class PageObjectPatternPrestashopTest {
             yourAddress.deleteNewAddress();
         });
 
-        step("Your addresses - komunikat potwierdzającego usunięcie 'Address successfully deleted!'", ()->{
+        step("Your addresses - komunikat potwierdzającego usunięcie 'Address successfully deleted!'", () -> {
             YourAddresses yourAddress = new YourAddresses();
             Assertions.assertTrue(yourAddress.isDeleteMsgDisplayed());
         });
@@ -1107,15 +1095,11 @@ public class PageObjectPatternPrestashopTest {
         step("Popup 'Add to whishlist' - kliknięcie w link 'My wishlist'", () -> {
             Home home = new Home();
             home.myWishlistSelection();
-
-            //todo wait.until(ExpectedConditions.elementToBeClickable(myWishlistPopupLocator));
         });
 
-        step("TOAST 'Product added' - potwierdzenie pojawienia się komunikatu", ()->{
+        step("TOAST 'Product added' - potwierdzenie pojawienia się komunikatu", () -> {
             Home home = new Home();
             Assertions.assertTrue(home.isAddedMsgDisplayed());
-
-            //todo  wait.until(ExpectedConditions.elementToBeClickable(productAddedToWishlistMsgLocator));
         });
 
         step("Header - wejście na profil użytkownika 'Your account'", () -> {
@@ -1131,8 +1115,6 @@ public class PageObjectPatternPrestashopTest {
         step("'My wishlists' - wejście na link 'My wishlist'", () -> {
             MyWishlists myWishlist = new MyWishlists();
             myWishlist.myWishlistLink();
-
-            //todo wait.until(ExpectedConditions.elementToBeClickable(myWishlistLinkLocator));
         });
 
 //        step("'My wishlist' - sprawdzenie, że produkt jest na liście", ()->{
@@ -1163,8 +1145,6 @@ public class PageObjectPatternPrestashopTest {
         step("Popup 'Add to whishlist' - kliknięcie w link 'Create new list'", () -> {
             Home home = new Home();
             home.createNewWishlist();
-
-            //todo wait.until(ExpectedConditions.elementToBeClickable(newWishlistPopupLocator));
         });
 
         step("Home page/Popup 'Create wishlist' - wpisanie nazwy nowej listy", () -> {
@@ -1180,15 +1160,11 @@ public class PageObjectPatternPrestashopTest {
         step("Popup 'Add to whishlist' - wybranie nowo utworzonej listy", () -> {
             Home home = new Home();
             home.ulubioneNewWishlist();
-
-            //todo wait.until(ExpectedConditions.elementToBeClickable(ulubioneNewWishlistLector));
         });
 
-        step("Home page/TOAST - potwierdzenie pojawienia się komunikatu 'Product added'", ()->{
+        step("Home page/TOAST - potwierdzenie pojawienia się komunikatu 'Product added'", () -> {
             Home home = new Home();
             Assertions.assertTrue(home.isAddedMsgDisplayed());
-
-            //todo wait.until(ExpectedConditions.elementToBeClickable(productAddedToWishlistMsgLocator));
         });
 
         step("Header - wejście na profil użytkownika 'Your account'", () -> {
@@ -1204,8 +1180,6 @@ public class PageObjectPatternPrestashopTest {
         step("'My wishlists' - wejście na link listy 'Ulubione'", () -> {
             MyWishlists myWishlists = new MyWishlists();
             myWishlists.ulubioneWishlistLink();
-
-            //todo  wait.until(ExpectedConditions.elementToBeClickable(ulubioneWishlistLinkLocator));
         });
 
 //        step("Ulubione - sprawdzenie, że produkt jest na liście", ()->{
@@ -1230,15 +1204,11 @@ public class PageObjectPatternPrestashopTest {
         step("My wishlists - kliknięcie w 'Create new list'", () -> {
             MyWishlists myWishlists = new MyWishlists();
             myWishlists.createNewList();
-
-            //todo wait.until(ExpectedConditions.elementToBeClickable(createNewListWishlistLinkLocator));
         });
 
         step("Popup 'Create wishlist' - wpisanie nazwy nowej listy życzeń", () -> {
             MyWishlists myWishlists = new MyWishlists();
             myWishlists.addNameOfNewList();
-
-            //todo wait.until(ExpectedConditions.elementToBeClickable(createNameOfNewListWishlistLocator));
         });
 
         step("Popup 'Create wishlist' - kliknięcie w button 'Create wishlist'", () -> {
@@ -1246,14 +1216,12 @@ public class PageObjectPatternPrestashopTest {
             myWishlists.createWishlistButton();
         });
 
-        step("TOAST/'The list has been properly created' - potwierdzenie pojawienia się komunikatu", ()->{
+        step("TOAST/'The list has been properly created' - potwierdzenie pojawienia się komunikatu", () -> {
             MyWishlists myWishlists = new MyWishlists();
             Assertions.assertTrue(myWishlists.isCreatedMsgDisplayed());
-
-           //todo  wait.until(ExpectedConditions.elementToBeClickable(wishlistSuccessCreatedMsgLocator));
         });
 
-        step("potwierdzenie, czy istnieje lista o nazwie 'Super lista'", ()->{
+        step("potwierdzenie, czy istnieje lista o nazwie 'Super lista'", () -> {
             MyWishlists myWishlists = new MyWishlists();
             Assertions.assertTrue(myWishlists.isSuperListaDisplayed());
         });
@@ -1271,8 +1239,6 @@ public class PageObjectPatternPrestashopTest {
         step("Popup 'Rename wishlist' - aktualizacja nazwy nowej listy życzeń", () -> {
             MyWishlists myWishlists = new MyWishlists();
             myWishlists.wishlistRenameField();
-
-            //todo wait.until(ExpectedConditions.elementToBeClickable(changeNameOfListWishlistLocator));
         });
 
         step("Popup 'Rename wishlist' - kliknięcie w button 'Rename wishlist'", () -> {
@@ -1280,18 +1246,14 @@ public class PageObjectPatternPrestashopTest {
             myWishlists.renameWishlistButton();
         });
 
-        step("TOAST/'List has been renamed' - potwierdzenie pojawienia się komunikatu", ()->{
+        step("TOAST/'List has been renamed' - potwierdzenie pojawienia się komunikatu", () -> {
             MyWishlists myWishlists = new MyWishlists();
             Assertions.assertTrue(myWishlists.isRenamedListMsgDisplayed());
-
-            //todo wait.until(ExpectedConditions.elementToBeClickable(successRenamedNewWishlistLocator));
         });
 
         step("My wishlists - kliknięcie w trzy kropki", () -> {
             MyWishlists myWishlists = new MyWishlists();
             myWishlists.moreActionsButton();
-
-            //todo wait.until(ExpectedConditions.elementToBeClickable(moreActionLocator));
         });
 
         step("My wishlists - kliknięcie w button 'Share'", () -> {
@@ -1304,7 +1266,7 @@ public class PageObjectPatternPrestashopTest {
             myWishlists.copyTextButton();
         });
 
-        step("TOAST/'Share link copied!' - potwierdzenie pojawienia się komunikatu", ()->{
+        step("TOAST/'Share link copied!' - potwierdzenie pojawienia się komunikatu", () -> {
             MyWishlists myWishlists = new MyWishlists();
             Assertions.assertTrue(myWishlists.isCopiedLinkMsgDisplayed());
         });
@@ -1319,11 +1281,9 @@ public class PageObjectPatternPrestashopTest {
             myWishlists.deleteButton();
         });
 
-        step("TOAST/'List has been removed' - potwierdzenie pojawienia się komunikatu", ()->{
+        step("TOAST/'List has been removed' - potwierdzenie pojawienia się komunikatu", () -> {
             MyWishlists myWishlists = new MyWishlists();
             Assertions.assertTrue(myWishlists.isRemovedListMsgDisplayed());
-
-            //todo wait.until(ExpectedConditions.elementToBeClickable(listRemovedComfirmLocator));
         });
     }
 
@@ -1337,7 +1297,7 @@ public class PageObjectPatternPrestashopTest {
             footer.pricesDrop();
         });
 
-        step("Potwierdzenie otwarcia podstrony 'Prices drop'", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Prices drop'", () -> {
             Footer footer = new Footer();
             Assertions.assertTrue(footer.isPricesDropPageOpened());
         });
@@ -1347,7 +1307,7 @@ public class PageObjectPatternPrestashopTest {
             footer.newProducts();
         });
 
-        step("Potwierdzenie otwarcia podstrony 'New products'", ()->{
+        step("Potwierdzenie otwarcia podstrony 'New products'", () -> {
             Footer footer = new Footer();
             Assertions.assertTrue(footer.isNewProductsPageOpened());
         });
@@ -1357,7 +1317,7 @@ public class PageObjectPatternPrestashopTest {
             footer.bestSellers();
         });
 
-        step("Potwierdzenie otwarcia podstrony 'Best sellers'", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Best sellers'", () -> {
             Footer footer = new Footer();
             Assertions.assertTrue(footer.isBestSellersPageOpened());
         });
@@ -1367,7 +1327,7 @@ public class PageObjectPatternPrestashopTest {
             footer.delivery();
         });
 
-        step("Potwierdzenie otwarcia podstrony 'Delivery'", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Delivery'", () -> {
             Footer footer = new Footer();
             Assertions.assertTrue(footer.isDeliveryPageOpened());
         });
@@ -1377,7 +1337,7 @@ public class PageObjectPatternPrestashopTest {
             footer.legalNotice();
         });
 
-        step("Potwierdzenie otwarcia podstrony 'Legal Notice'", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Legal Notice'", () -> {
             Footer footer = new Footer();
             Assertions.assertTrue(footer.isLegalNoticePageOpened());
         });
@@ -1387,7 +1347,7 @@ public class PageObjectPatternPrestashopTest {
             footer.termsAndConditionsOfUse();
         });
 
-        step("Potwierdzenie otwarcia podstrony 'Terms and conditions of use'", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Terms and conditions of use'", () -> {
             Footer footer = new Footer();
             Assertions.assertTrue(footer.isTermsAndConditionsPageOpened());
         });
@@ -1397,7 +1357,7 @@ public class PageObjectPatternPrestashopTest {
             footer.aboutUs();
         });
 
-        step("Potwierdzenie otwarcia podstrony 'About us'", ()->{
+        step("Potwierdzenie otwarcia podstrony 'About us'", () -> {
             Footer footer = new Footer();
             Assertions.assertTrue(footer.isAboutUsPageOpened());
         });
@@ -1407,7 +1367,7 @@ public class PageObjectPatternPrestashopTest {
             footer.securePayment();
         });
 
-        step("Potwierdzenie otwarcia podstrony 'Secure payment'", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Secure payment'", () -> {
             Footer footer = new Footer();
             Assertions.assertTrue(footer.isSecurePaymentPageOpened());
         });
@@ -1417,7 +1377,7 @@ public class PageObjectPatternPrestashopTest {
             footer.contactUs();
         });
 
-        step("Potwierdzenie otwarcia podstrony 'Contact us'", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Contact us'", () -> {
             Footer footer = new Footer();
             Assertions.assertTrue(footer.isContactUsPageOpened());
         });
@@ -1427,7 +1387,7 @@ public class PageObjectPatternPrestashopTest {
             footer.sitemap();
         });
 
-        step("Potwierdzenie otwarcia podstrony 'Sitemap'", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Sitemap'", () -> {
             Footer footer = new Footer();
             Assertions.assertTrue(footer.isSitemapPageOpened());
         });
@@ -1437,7 +1397,7 @@ public class PageObjectPatternPrestashopTest {
             footer.stores();
         });
 
-        step("Potwierdzenie otwarcia podstrony 'Stores'", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Stores'", () -> {
             Footer footer = new Footer();
             Assertions.assertTrue(footer.isStoresPageOpened());
         });
@@ -1447,7 +1407,7 @@ public class PageObjectPatternPrestashopTest {
             footer.personalInfo();
         });
 
-        step("Potwierdzenie otwarcia podstrony 'Personal info'", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Personal info'", () -> {
             Footer footer = new Footer();
             Assertions.assertTrue(footer.isPersonalInfoPageOpened());
         });
@@ -1457,7 +1417,7 @@ public class PageObjectPatternPrestashopTest {
             footer.orders();
         });
 
-        step("Potwierdzenie otwarcia podstrony 'Orders'", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Orders'", () -> {
             Footer footer = new Footer();
             Assertions.assertTrue(footer.isOrdersPageOpened());
         });
@@ -1467,7 +1427,7 @@ public class PageObjectPatternPrestashopTest {
             footer.creditSlips();
         });
 
-        step("Potwierdzenie otwarcia podstrony 'Credit slips'", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Credit slips'", () -> {
             Footer footer = new Footer();
             Assertions.assertTrue(footer.isCreditSlipsPageOpened());
         });
@@ -1477,7 +1437,7 @@ public class PageObjectPatternPrestashopTest {
             footer.addresses();
         });
 
-        step("Potwierdzenie otwarcia podstrony 'Addresses'", ()->{
+        step("Potwierdzenie otwarcia podstrony 'Addresses'", () -> {
             Footer footer = new Footer();
             Assertions.assertTrue(footer.isAddressesPageOpened());
         });
