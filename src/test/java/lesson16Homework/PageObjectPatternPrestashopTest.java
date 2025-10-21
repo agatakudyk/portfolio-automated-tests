@@ -319,49 +319,61 @@ public class PageObjectPatternPrestashopTest {
         });
     }
 
-
-
-
-
-
-
-
-
-
-
-
     private void backToPreviousPassword() {
 
-        step("Header - wejście na profil użytkownika 'Your account'", () -> new Header().userProfile());
+        step("Header - wejście na profil użytkownika 'Your account'", () -> {
+            new Header().userProfile();
+        });
 
-        step("Wejście w link 'Information'", () -> new YourAccount().informationLink());
+        step("Wejście w link 'Information'", () -> {
+            new YourAccount().informationLink();
+        });
 
-        step("Wpisanie aktualnego hasła logowania", () -> new RegisteredUser().newPassword());
+        step("Wpisanie aktualnego hasła logowania", () -> {
+            new RegisteredUser().newPassword();
+        });
 
-        step("Wpisanie nowego hasła logowania", () -> new RegisteredUser().password());
+        step("Wpisanie nowego hasła logowania", () -> {
+            new RegisteredUser().password();
+        });
 
-        step("Your personal information - checkbox akceptacji regulaminu i polityki prywatności", () -> new YourPersonalInformation().termsAndConditionsCheckbox());
+        step("Your personal information - checkbox akceptacji regulaminu i polityki prywatności", () -> {
+            new YourPersonalInformation().termsAndConditionsCheckbox();
+        });
 
-        step("Your personal information - checkbox zgody na przetwarzanie danych osobowych", () -> new YourPersonalInformation().customerPrivacyCheckbox());
+        step("Your personal information - checkbox zgody na przetwarzanie danych osobowych", () -> {
+            new YourPersonalInformation().customerPrivacyCheckbox();
+        });
 
-        step("Kliknięcie buttona 'Save'", () -> new YourPersonalInformation().saveButton());
+        step("Kliknięcie buttona 'Save'", () -> {
+            new YourPersonalInformation().saveButton();
+        });
     }
 
     @Test       //Podstrona Accessories - filtrowanie
     @Order(10)
     public void clearAccessoriesProductsFiltering() {
 
-        step("Wejście na stronę ACCESSORIES", () -> new TopMenu().accessoriesPageLink());
+        step("Wejście na stronę ACCESSORIES", () -> {
+            new TopMenu().accessoriesPageLink();
+        });
 
-        step("Accessories page - wybór filtra 'Ceramic'", () -> new Accessories().ceramicCompositionFilter());
+        step("Accessories page - wybór filtra 'Ceramic'", () -> {
+            new Accessories().ceramicCompositionFilter();
+        });
 
-        step("Accessories page - wybór filtra 'Available'", () -> new Accessories().availableFilter());
+        step("Accessories page - wybór filtra 'Available'", () -> {
+            new Accessories().availableFilter();
+        });
 
-        step("Accessories page - wyczyszczenie wybranych filtrów", () -> new Accessories().allFiltersClear());
+        step("Accessories page - wyczyszczenie wybranych filtrów", () -> {
+            new Accessories().allFiltersClear();
+        });
 
-        step("Accessories page - potwierdzenie wyczyszczenia filtrów", () -> Assertions.assertFalse(new Accessories().isFilterClear()));
+        step("Accessories page - potwierdzenie wyczyszczenia filtrów", () -> {
+            Assertions.assertFalse(new Accessories().isFilterClear());
+        });
     }
-
 
     @Test    //Podstrona ART - sortowanie
     @Order(11)
