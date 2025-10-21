@@ -375,6 +375,11 @@ public class PageObjectPatternPrestashopTest {
         });
     }
 
+
+
+
+
+
     @Test    //Podstrona ART - sortowanie
     @Order(11)
     public void sortArtProducts() {
@@ -432,71 +437,76 @@ public class PageObjectPatternPrestashopTest {
         });
     }
 
-    @Test   //Podstrona ART - dodanie opinii o produkcie
+
+
+
+
+    @Test   // Podstrona ART - dodanie opinii o produkcie
     @Order(12)
     public void successAddPosterReview() {
 
         step("Podstrona ART - wejście na stronę produktu 'The Best Is Yet To Come Framed Poster'", () -> {
-            Art art = new Art();
-            art.theBestPoster();
+                new Art().theBestPoster();
         });
 
-        step("Strona produktu - kliknięcie w button dodania opinii o produkcie", () -> {
-            ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
-            best.productReviewButton();
+        step("Strona produktu - kliknięcie w button dodania opinii", () -> {
+                new ProductTheBestIsYetToCome().productReviewButton();
         });
 
-        step("popup 'Write your review' - wpisanie tytułu komentarza", () -> {
+        step("Popup 'Write your review' - wpisanie tytułu i treści komentarza", () -> {
             ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
             best.reviewTitle();
-        });
-
-        step("WRITE YOUR REVIEW - wpisanie treści komentarza", () -> {
-            ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
             best.reviewFillIn();
         });
 
-        step("WRITE YOUR REVIEW - kliknięcie w button 'Send'", () -> {
-            ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
-            best.sendReviewButton();
+        step("Popup 'Write your review' - kliknięcie w button 'Send'", () -> {
+                new ProductTheBestIsYetToCome().sendReviewButton();
         });
 
-        step("Popup REVIEW SENT - potwierdzenie dodania komentarza", () -> {
+        step("Popup 'Review sent' - potwierdzenie dodania komentarza", () -> {
             ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
-            assertTrue(best.isCommentAdded());
+            assertTrue(best.isCommentAdded(),
+                    "Komunikat potwierdzający wysłanie opinii nie pojawił się");
         });
 
-        step("Popup REVIEW SENT - zamknięcie okna poprzez kliknięcie w button 'OK'", () -> {
-            ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
-            best.okReviewButton();
+        step("Popup 'Review sent' - zamknięcie okna klikając 'OK'", () -> {
+                new ProductTheBestIsYetToCome().okReviewButton();
         });
     }
 
-    @Test    //Strona produktu - zwiększenie ilości produktu i dodanie do koszyka
+
+
+
+
+
+
+    @Test   // Strona produktu - zwiększenie ilości produktu i dodanie do koszyka
     @Order(13)
     public void addProductsToCart() {
 
-        step("Strona produktu - zmiana ilości produktu poprzez wpisanie liczby (wyczyść i wpisz wartość)", () -> {
-            //zmiana ilości produktu poprzez wpisanie liczby
-            ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
-            best.putProductQuantityEnterNumber(4);
+        step("Strona produktu - zmiana ilości produktu poprzez wpisanie liczby", () -> {
+            new ProductTheBestIsYetToCome().putProductQuantityEnterNumber(4);
         });
 
-        step("Strona produktu - zmiana ilości produktu poprzez kliknięcie w strzałki", () -> {
-            ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
-            best.putProductQuantityIncreaseArrow(3);
+        step("Strona produktu - zwiększenie ilości produktu poprzez kliknięcie w strzałki", () -> {
+            new ProductTheBestIsYetToCome().putProductQuantityIncreaseArrow(3);
         });
 
-        step("Strona produktu - kliknięcie button 'Add to cart'", () -> {
-            ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
-            best.addToCartButton();
+        step("Strona produktu - kliknięcie w button 'Add to cart'", () -> {
+            new ProductTheBestIsYetToCome().addToCartButton();
         });
 
-        step("Popup - sprawdzenie komunikatu potwierdzającego dodanie do koszyka", () -> {
+        step("Popup - potwierdzenie dodania produktu do koszyka", () -> {
             ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
-            assertTrue(best.isProductSuccessfullyAdded());
+            assertTrue(best.isProductSuccessfullyAdded(),"Komunikat potwierdzający dodanie produktu do koszyka nie pojawił się");
         });
     }
+
+
+
+
+
+
 
     @Test  //Koszyk - sprawdzenie zawartości
     @Order(14)
@@ -579,30 +589,36 @@ public class PageObjectPatternPrestashopTest {
         });
     }
 
-    @Test   //Shipping method - wybór formy dostawy
+
+
+
+
+    @Test   // Shipping method - wybór formy dostawy
     @Order(16)
     public void shippingMethodSuccessSelection() {
 
-        step("Shipping method - wybranie formy dostawy 'My carrier'", () -> {
-            ShippingMethod shipping = new ShippingMethod();
-            shipping.prestaShopRadioButton();
+        step("Shipping method - wybór formy dostawy 'PrestaShop'", () -> {
+            new ShippingMethod().prestaShopRadioButton();
         });
 
-        step("Shipping method - wybranie formy dostawy pierwszej/nazwa ustawiana w Dockerze", () -> {
-            ShippingMethod shipping = new ShippingMethod();
-            shipping.myCarrierRadioButton();
+        step("Shipping method - wybór formy dostawy 'My carrier' (pierwsza opcja z Dockera)", () -> {
+            new ShippingMethod().myCarrierRadioButton();
         });
 
         step("Shipping method - dodanie komentarza do zamówienia", () -> {
-            ShippingMethod shipping = new ShippingMethod();
-            shipping.commentToOrder();
+            new ShippingMethod().commentToOrder();
         });
 
         step("Shipping method - kliknięcie w button 'Continue'", () -> {
-            ShippingMethod shipping = new ShippingMethod();
-            shipping.continueButton();
+            new ShippingMethod().continueButton();
         });
     }
+
+
+
+
+
+
 
     @Test
     @Order(17)
