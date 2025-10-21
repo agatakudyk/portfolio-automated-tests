@@ -1,27 +1,26 @@
 package lesson16Homework.pages;
 
-import org.openqa.selenium.By;
-
-import static lesson15Homework.driver.DriverProvider.getDriver;
+import static com.codeborne.selenide.Selenide.$x;
 
 
 public class PersonalInformation {
 
-    //Personal Information - checkbox zgody na przetwarzanie danych osobowych
-    public void customerPrivacyCheckbox() {
-        By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
-        getDriver().findElement(policyInfoLocator).click();
+    // Personal Information - checkbox zgody na przetwarzanie danych osobowych
+    public PersonalInformation clickCustomerPrivacyCheckbox() {
+        $x("//input[@name='customer_privacy']").click();
+        return this;
     }
 
-    //Personal Information - checkbox akceptacji regulaminu i polityki prywatności
-    public void termsAndConditionsCheckbox() {
-        By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
-        getDriver().findElement(privacyPolicyLocator).click();
+    // Personal Information - checkbox akceptacji regulaminu i polityki prywatności
+    public PersonalInformation clickTermsAndConditionsCheckbox() {
+        $x("//input[@name='psgdpr']").click();
+        return this;
     }
 
-    public void continueButton() {
-        By continueButtonLocator = By.xpath("//section[@id=\"checkout-personal-information-step\"]" +
-                "//button[@type=\"submit\"]");
-        getDriver().findElement(continueButtonLocator).click();
+    // Kliknięcie w button 'Continue'
+    public PersonalInformation clickContinueButton() {
+        $x("//section[@id='checkout-personal-information-step']//button[@type='submit']").click();
+        return this;
     }
 }
+

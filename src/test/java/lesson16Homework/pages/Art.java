@@ -1,59 +1,49 @@
 package lesson16Homework.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Condition.visible;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 
-import java.util.List;
-
-import static lesson15Homework.driver.DriverProvider.getDriver;
-import static lesson15Homework.driver.DriverProvider.getWaiter;
 
 public class Art {
 
-    //kliknięcie w pole sortowania
-    public void sortByButton() {
-        By sortByListLocator = By.xpath("//button[@aria-label=\"Sort by selection\"]");
-        getWaiter().until(ExpectedConditions.elementToBeClickable(sortByListLocator));
-        getDriver().findElement(sortByListLocator).click();
+    // kliknięcie w pole sortowania
+    public Art clickSortByButton() {
+        $x("//button[@aria-label='Sort by selection']").click();
+        return this;
     }
 
-    //posortowanie według 'Name, A to Z'
-    public void sortByNameAZ() {
-        By sortByListLocator = By.xpath("//button[@aria-label=\"Sort by selection\"]");
-        WebElement sortBy = getDriver().findElement(sortByListLocator);
-        By sortByNameAZLocator = By.xpath("//div[@class=\"dropdown-menu\"]/a[contains(text(),\"Name, A to Z\")]");
-        getDriver().findElement(sortByNameAZLocator).click();
-        getWaiter().until(ExpectedConditions.stalenessOf(sortBy));
+    // posortowanie według 'Name, A to Z'
+    public Art sortByNameAZ() {
+        SelenideElement sortByButton = $x("//button[@aria-label='Sort by selection']");
+        $x("//div[@class='dropdown-menu']/a[contains(text(),'Name, A to Z')]").click();
+        sortByButton.shouldBe(visible);
+        return this;
     }
 
-    //posortowanie według ‘Price, low to high’
-    public void sortByPriceAsc() {
-        By sortByListLocator = By.xpath("//button[@aria-label=\"Sort by selection\"]");
-        WebElement sortBy = getDriver().findElement(sortByListLocator);
-
-        By sortByPriceAscLocator = By.xpath("//div[@class=\"dropdown-menu\"]" +
-                "/a[contains(text(),\"Price, low to high\")]");
-        getWaiter().until(ExpectedConditions.elementToBeClickable(sortByPriceAscLocator));
-        getDriver().findElement(sortByPriceAscLocator).click();
-        getWaiter().until(ExpectedConditions.stalenessOf(sortBy));
-
+    // posortowanie według 'Price, low to high'
+    public Art sortByPriceAsc() {
+        SelenideElement sortByButton = $x("//button[@aria-label='Sort by selection']");
+        $x("//div[@class='dropdown-menu']/a[contains(text(),'Price, low to high')]").click();
+        sortByButton.shouldBe(visible);
+        return this;
     }
 
-    //wejście w okno produktu 'The Best Is Yet...'
-    public void theBestPoster() {
-        By theBestPosterLocator = By.xpath("//img[@alt=\"The best is yet to come' Framed poster\"]");
-        getDriver().findElement(theBestPosterLocator).click();
+    // wejście w okno produktu 'The Best Is Yet...'
+    public Art openTheBestPoster() {
+        $x("//img[@alt=\"The best is yet to come' Framed poster\"]").click();
+        return this;
     }
 
-    public List<WebElement> getproductsbyDescription(){
-        By productsListLocator = By.xpath("//div[@class=\"product-description\"]/h2/a");
-        return getDriver().findElements(productsListLocator);
-    }
-    public List<WebElement> getProductByPrice(){
-        By productsListLocator = By.xpath("//div[@class=\"product-price-and-shipping\"]/span");
-        return getDriver().findElements(productsListLocator);
+    // pobranie listy produktów po nazwie
+    public ElementsCollection getProductsByDescription() {
+        return $$x("//div[@class='product-description']/h2/a");
     }
 
-
+    // pobranie listy produktów po cenie
+    public ElementsCollection getProductsByPrice() {
+        return $$x("//div[@class='product-price-and-shipping']/span");
+    }
 }
+

@@ -1,58 +1,58 @@
 package lesson16Homework.pages;
 
-import org.openqa.selenium.By;
-
-import static lesson15Homework.driver.DriverProvider.getDriver;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Condition.visible;
 
 
 public class Header {
 
-    //zmiana języka / kliknięcie w dropdown-button
-    public void languageDropdownButton() {
-        By languageDropdownButtonLocator = By.xpath("//button[@data-toggle=\"dropdown\"]");
-        getDriver().findElement(languageDropdownButtonLocator).click();
+    // zmiana języka / kliknięcie w dropdown-button
+    public Header clickLanguageDropdownButton() {
+        $x("//button[@data-toggle='dropdown']").click();
+        return this;
     }
 
-    //wybór opcji 'English' na liście języków
-    public void englishLanguageSelectionFromDropdown() {
-        By englishLanguageSwitchLocator = By.xpath("//a[@data-iso-code=\"en\"]");
-        getDriver().findElement(englishLanguageSwitchLocator).click();
+    // wybór opcji 'English' na liście języków
+    public Header selectEnglishLanguageFromDropdown() {
+        $x("//a[@data-iso-code='en']").click();
+        return this;
     }
 
-    //asercja - potwierdzenie ustawienia języka angielskiego
-    public boolean isEnglishLanguageDisplayed() {
-        By englishLanguageCheckLocator = By.xpath("//button[@data-toggle=\"dropdown\"]" +
-                "/span[contains(text(),\"English\")]");
-        return getDriver().findElement(englishLanguageCheckLocator).isDisplayed();
+    // asercja - potwierdzenie ustawienia języka angielskiego
+    public Header verifyEnglishLanguageDisplayed() {
+        $x("//button[@data-toggle='dropdown']/span[contains(text(),'English')]").shouldBe(visible);
+        return this;
     }
 
-    //Kliknięcie w button 'Sign out'
-    public void signout() {
-        By logoutLocator = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
-        getDriver().findElement(logoutLocator).click();
+    // kliknięcie w button 'Sign out'
+    public Header clickSignOut() {
+        $x("//a[@class='logout hidden-sm-down']").click();
+        return this;
     }
 
-    //kliknięcie w button 'Sign In'
-    public void signIn() {
-        By signInLocator = By.cssSelector(".user-info a");
-        getDriver().findElement(signInLocator).click();
+    // kliknięcie w button 'Sign In'
+    public Header clickSignIn() {
+        $(".user-info a").click();
+        return this;
     }
 
-    //wejście na profil użytkownika
-    public void userProfile() {
-        By userProfileLinkLocator = By.xpath("//a[@class=\"account\"]/span[@class=\"hidden-sm-down\"]");
-        getDriver().findElement(userProfileLinkLocator).click();
+    // wejście na profil użytkownika
+    public Header clickUserProfile() {
+        $x("//a[@class='account']/span[@class='hidden-sm-down']").click();
+        return this;
     }
 
-    //asercja -  widoczność przycisku 'Sign out'
-    public boolean isButtonSignOutDisplayed() {
-        By logoutLocator = By.xpath("//a[@class=\"logout hidden-sm-down\"]");
-        return getDriver().findElement(logoutLocator).isDisplayed();
+    // asercja - widoczność przycisku 'Sign out'
+    public Header verifySignOutButtonDisplayed() {
+        $x("//a[@class='logout hidden-sm-down']").shouldBe(visible);
+        return this;
     }
 
-    //asercja -  widoczność przycisku 'Sign in'
-    public boolean isButtonSignInDisplayed() {
-        By signInLocator = By.cssSelector(".user-info a");
-        return getDriver().findElement(signInLocator).isDisplayed();
+    // asercja - widoczność przycisku 'Sign in'
+    public Header verifySignInButtonDisplayed() {
+        $(".user-info a").shouldBe(visible);
+        return this;
     }
 }
+

@@ -1,30 +1,25 @@
 package lesson16Homework.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import static lesson15Homework.driver.DriverProvider.getDriver;
-import static lesson15Homework.driver.DriverProvider.getWaiter;
+import static com.codeborne.selenide.Selenide.$;
 
 
 public class TopMenu {
 
-    //wejście na stronę ACCESSORIES
-    public void accessoriesPageLink() {
-        By accessoriesPageLocator = By.id("category-6");
-        getDriver().findElement(accessoriesPageLocator).click();
+    // wejście na stronę ACCESSORIES
+    public TopMenu openAccessoriesPage() {
+        $("#category-6").click();
+        return this;
     }
 
-    //wejście na podstronę ART
-    public void artPageLink() {
-        By artPageLocator = By.id("category-9");
-        getWaiter().until(ExpectedConditions.elementToBeClickable(artPageLocator));
-        getDriver().findElement(artPageLocator).click();
+    // wejście na podstronę ART
+    public TopMenu openArtPage() {
+        $("#category-9").click();
+        return this;
     }
 
-    //Przejcie na Home page
-    public void homePageLogo() {
-        By homepageLinkLocator = By.id("_desktop_logo");
-        getDriver().findElement(homepageLinkLocator).click();
+    // przejście na stronę główną (Home Page)
+    public TopMenu openHomePage() {
+        $("#_desktop_logo").click();
+        return this;
     }
 }

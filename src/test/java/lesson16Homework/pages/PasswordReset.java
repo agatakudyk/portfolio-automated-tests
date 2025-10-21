@@ -1,33 +1,33 @@
 package lesson16Homework.pages;
 
-import org.openqa.selenium.By;
-
-import static lesson15Homework.driver.DriverProvider.getDriver;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Condition.visible;
 
 
 public class PasswordReset {
 
-    //uzupełnienie pola 'Email address'
-    public void email() {
-        By recoveryMailLocator = By.xpath("//input[@class=\"form-control\"]");
-        getDriver().findElement(recoveryMailLocator).sendKeys("test.mail@wp.pl");
+    // uzupełnienie pola 'Email address'
+    public PasswordReset enterEmail(String email) {
+        $x("//input[@class='form-control']").setValue(email);
+        return this;
     }
 
-    //kliknięcie w button 'Send reset link'
-    public void sendResetLink() {
-        By passwordRecoveryButtonLocator = By.id("send-reset-link");
-        getDriver().findElement(passwordRecoveryButtonLocator).click();
+    // kliknięcie w button 'Send reset link'
+    public PasswordReset clickSendResetLink() {
+        $("#send-reset-link").click();
+        return this;
     }
 
-    //kliknięcie w link 'Back to Login'
-    public void backToLoginPageLink() {
-        By backToLoginPageLocator = By.xpath("//i[@class=\"material-icons\"]");
-        getDriver().findElement(backToLoginPageLocator).click();
+    // kliknięcie w link 'Back to Login'
+    public PasswordReset clickBackToLoginPage() {
+        $x("//i[@class='material-icons']").click();
+        return this;
     }
 
-    //asercja - sprawdzenie komunikatu potwierdzającego wysłanie maila
-    public boolean isMsgOfSentMsgDisplayed() {
-        By sentMsgLocator = By.xpath("//li[@class=\"item\"]/p");
-        return getDriver().findElement(sentMsgLocator).isDisplayed();
+    // asercja - sprawdzenie komunikatu potwierdzającego wysłanie maila
+    public PasswordReset verifySentMsgDisplayed() {
+        $x("//li[@class='item']/p").shouldBe(visible);
+        return this;
     }
 }

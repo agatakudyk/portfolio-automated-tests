@@ -1,15 +1,13 @@
 package lesson16Homework.pages;
 
-import org.openqa.selenium.By;
-
-import static lesson15Homework.driver.DriverProvider.getDriver;
+import static com.codeborne.selenide.Selenide.$x;
 
 
 public class UpdateYourAddress {
 
-    //kliknięcie w button 'Save'
-    public void saveButton() {
-        By saveButtonLocator = By.xpath("//button[@class=\"btn btn-primary form-control-submit float-xs-right\"]");
-        getDriver().findElement(saveButtonLocator).click();
+    // kliknięcie w button 'Save'
+    public UpdateYourAddress clickSaveButton() {
+        $x("//button[@class='btn btn-primary form-control-submit float-xs-right']").click();
+        return this;
     }
 }

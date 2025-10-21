@@ -1,15 +1,14 @@
 package lesson16Homework.pages;
 
-import org.openqa.selenium.By;
-
-import static lesson15Homework.driver.DriverProvider.getDriver;
+import static com.codeborne.selenide.Selenide.$x;
 
 
 public class OrderHistoryAndDetails {
 
-    //kliknięcie w link 'Details'
-    public void detailsLink() {
-        By orderDetailsLinkLocator = By.xpath("//a[@data-link-action=\"view-order-details\"]");
-        getDriver().findElement(orderDetailsLinkLocator).click();
+    // kliknięcie w link 'Details'
+    public OrderHistoryAndDetails clickDetailsLink() {
+        $x("//a[@data-link-action='view-order-details']").click();
+        return this;
     }
 }
+

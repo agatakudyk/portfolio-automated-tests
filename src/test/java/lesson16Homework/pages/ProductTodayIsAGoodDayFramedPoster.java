@@ -1,32 +1,26 @@
 package lesson16Homework.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import static lesson15Homework.driver.DriverProvider.getDriver;
-import static lesson15Homework.driver.DriverProvider.getWaiter;
+import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Condition.visible;
 
 
 public class ProductTodayIsAGoodDayFramedPoster {
 
-    //kliknięcie w button 'Add to cart'
-    public void addToCartButton() {
-        By addTocCartLocator = By.xpath("//button[@data-button-action=\"add-to-cart\"]");
-        getDriver().findElement(addTocCartLocator).click();
+    // kliknięcie w button 'Add to cart'
+    public ProductTodayIsAGoodDayFramedPoster clickAddToCartButton() {
+        $x("//button[@data-button-action='add-to-cart']").click();
+        return this;
     }
 
-    //Popup w oknie produktu - kliknięcie w button 'Proceed to checkout'
-    public void closeAddToCartPopupLocator() {
-        By closeAddToCartPopupLocator = By.xpath("//a[@class=\"btn btn-primary\"]/i");
-        getDriver().findElement(closeAddToCartPopupLocator).click();
+    // Popup w oknie produktu – kliknięcie w button 'Proceed to checkout'
+    public ProductTodayIsAGoodDayFramedPoster closeAddToCartPopup() {
+        $x("//a[@class='btn btn-primary']/i").click();
+        return this;
     }
 
-    //Potwierdzenie pojawienia się popupu z komunikatem potwierdzającym pomyślne dodanie
-    public boolean isSuccessPopupDisplayed() {
-        By addProductPopupLocator = By.xpath("//h4[contains(text(),\"Product successfully added to " +
-                "your shopping cart\")]");
-        getWaiter().until(ExpectedConditions.elementToBeClickable(addProductPopupLocator));
-        return getDriver().findElement(addProductPopupLocator).isDisplayed();
+    // Potwierdzenie pojawienia się popupu z komunikatem potwierdzającym dodanie produktu
+    public ProductTodayIsAGoodDayFramedPoster verifySuccessPopupDisplayed() {
+        $x("//h4[contains(text(),'Product successfully added to your shopping cart')]").shouldBe(visible);
+        return this;
     }
-
 }

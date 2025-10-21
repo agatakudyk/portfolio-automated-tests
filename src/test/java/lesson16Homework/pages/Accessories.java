@@ -1,43 +1,34 @@
 package lesson16Homework.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import static lesson15Homework.driver.DriverProvider.getDriver;
-import static lesson15Homework.driver.DriverProvider.getWaiter;
+import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Condition.*;
 
 
 public class Accessories {
 
-    //wybór filtra 'Ceramic'
-    public void ceramicCompositionFilter() {
-        By ceramicCompositionFilterLocator = By.xpath("//a[contains(text(),\"Ceramic\")]");
-        getDriver().findElement(ceramicCompositionFilterLocator).click();
-
-        By ceramicCompositionFilterCheckboxLocator = By.xpath("//a[contains(text(),\"Ceramic\")]/../span/input");
-        getWaiter().until(ExpectedConditions.elementToBeSelected(ceramicCompositionFilterCheckboxLocator));
+    // wybór filtra 'Ceramic'
+    public Accessories selectCeramicFilter() {
+        $x("//a[contains(text(),'Ceramic')]").click();
+        $x("//a[contains(text(),'Ceramic')]/../span/input").shouldBe(selected);
+        return this;
     }
 
-    //wybór filtra 'Available'
-    public void availableFilter() {
-        By availableFilterLocator = By.xpath("//a[contains(text(),\"Available\")]");
-        getDriver().findElement(availableFilterLocator).click();
-
-        By availableFilterCheckboxLocator = By.xpath("//a[contains(text(),\"Available\")]/../span/input");
-        getWaiter().until(ExpectedConditions.elementToBeSelected(availableFilterCheckboxLocator));
+    // wybór filtra 'Available'
+    public Accessories selectAvailableFilter() {
+        $x("//a[contains(text(),'Available')]").click();
+        $x("//a[contains(text(),'Available')]/../span/input").shouldBe(selected);
+        return this;
     }
 
-    //wyczyszczenie wybranych filtrów
-    public void allFiltersClear() {
-        By clearAllFilterLocator = By.xpath("//button[@class=\"btn btn-tertiary js-search-filters-clear-all\"]");
-        getWaiter().until(ExpectedConditions.elementToBeClickable(clearAllFilterLocator));
-        getDriver().findElement(clearAllFilterLocator).click();
+    // wyczyszczenie wszystkich filtrów
+    public Accessories clearAllFilters() {
+        $x("//button[@class='btn btn-tertiary js-search-filters-clear-all']").click();
+        return this;
     }
 
-    //asercja - potwierdzenie wyczyszczenia filtrów
-    public boolean isFilterClear() {
-        By activeFiltersLocator = By.xpath("//p[contains(text(),\"Active filters\")]");
-        getWaiter().until(ExpectedConditions.invisibilityOfElementLocated(activeFiltersLocator));
-        return getDriver().findElement(activeFiltersLocator).isDisplayed();
+    // asercja - sprawdzenie, czy filtry zostały wyczyszczone
+    public boolean isFilterCleared() {
+        return $x("//p[contains(text(),'Active filters')]").is(hidden);
     }
 }
+

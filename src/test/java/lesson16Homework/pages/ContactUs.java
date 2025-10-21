@@ -1,35 +1,34 @@
 package lesson16Homework.pages;
 
-import org.openqa.selenium.By;
-
-import static lesson15Homework.driver.DriverProvider.getDriver;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Condition.visible;
 
 
 public class ContactUs {
 
-    //kliknięcie w button 'Send'
-    public void sendButton() {
-        By sendButtonInContactUsSectionLocator = By.xpath("//input[@class=\"btn btn-primary\"]");
-        getDriver().findElement(sendButtonInContactUsSectionLocator).click();
+    // wpisanie treści wiadomości
+    public ContactUs enterMessage(String message) {
+        $("#contactform-message").setValue(message);
+        return this;
     }
 
-    //wpisanie treści wiadomości
-    public void msgFillIn() {
-        By msgFieldInContactUsSectionLocator = By.id("contactform-message");
-        getDriver().findElement(msgFieldInContactUsSectionLocator).sendKeys("Chcę otrzymać FV za zamówienie.");
+    // kliknięcie w button 'Send'
+    public ContactUs clickSendButton() {
+        $x("//input[@class='btn btn-primary']").click();
+        return this;
     }
 
-    //asercja - potwierdzenie pojawienia się komunikatu walidacyjnego
-    public boolean isValidationMsgDisplayed() {
-        By validationMsgInContactUsSectionLocator = By.xpath(
-                "//li[contains(text(),\"The message cannot be blank.\")]");
-        return getDriver().findElement(validationMsgInContactUsSectionLocator).isDisplayed();
+    // asercja - potwierdzenie pojawienia się komunikatu walidacyjnego
+    public ContactUs verifyValidationMsgDisplayed() {
+        $x("//li[contains(text(),'The message cannot be blank.')]").shouldBe(visible);
+        return this;
     }
 
-    //asercja - potwierdzenie komunikatu informacyjnego 'Your message has been successfully sent to our team.'
-    public boolean isInformationMsgDisplayed() {
-        By successMsgInContactUsSectionLocator = By.xpath("//li[contains(text(),\"Your message has " +
-                "been successfully sent to our team.\")]");
-        return getDriver().findElement(successMsgInContactUsSectionLocator).isDisplayed();
+    // asercja - potwierdzenie komunikatu informacyjnego
+    public ContactUs verifyInformationMsgDisplayed() {
+        $x("//li[contains(text(),'Your message has been successfully sent to our team.')]").shouldBe(visible);
+        return this;
     }
 }
+

@@ -1,52 +1,46 @@
 package lesson16Homework.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
-
-import static lesson15Homework.driver.DriverProvider.getDriver;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Condition.visible;
+import com.codeborne.selenide.SelenideElement;
 
 
 public class OrderConfirmation {
 
-    //kliknięcie w button 'Save'
-    public void saveButtonInForm() {
-        By saveButtonLocator = By.xpath("//button[contains(text(),\"Save\")]");
-        getDriver().findElement(saveButtonLocator).click();
+    // kliknięcie w button 'Save'
+    public OrderConfirmation clickSaveButton() {
+        $x("//button[contains(text(),'Save')]").click();
+        return this;
     }
 
-    //checkbox zgody na przetwarzanie danych osobowych
-    public void customerPrivacyCheckbox() {
-        By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
-        getDriver().findElement(policyInfoLocator).click();
+    // checkbox zgody na przetwarzanie danych osobowych
+    public OrderConfirmation clickCustomerPrivacyCheckbox() {
+        $x("//input[@name='customer_privacy']").click();
+        return this;
     }
 
-    //checkbox akceptacji regulaminu i polityki prywatności
-    public void termsAndConditionsCheckbox() {
-        By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
-        getDriver().findElement(privacyPolicyLocator).click();
+    // checkbox akceptacji regulaminu i polityki prywatności
+    public OrderConfirmation clickTermsAndConditionsCheckbox() {
+        $x("//input[@name='psgdpr']").click();
+        return this;
     }
 
-    //kliknięcie w link kontaktu z działem obsługi klienta
-    public void customerServiceDepartmentContact() {
-        By customerServiceDepartmentContactLocator = By.xpath(
-                "//a[contains(text(),\"customer service department.\")]");
-        getDriver().findElement(customerServiceDepartmentContactLocator).click();
+    // kliknięcie w link kontaktu z działem obsługi klienta
+    public OrderConfirmation clickCustomerServiceDepartmentContact() {
+        $x("//a[contains(text(),'customer service department.')]").click();
+        return this;
     }
 
-    //asercja - potwierdzenie pojawienia się komunikatu potwierdzającego 'Your order is confirmed'
-    public boolean isMsgThatOrderConfirmed() {
-        By confirmationMsgLocator = By.xpath("//h3[@class=\"h1 card-title\"]/i");
-        return getDriver().findElement(confirmationMsgLocator).isDisplayed();
+    // asercja - potwierdzenie pojawienia się komunikatu potwierdzającego 'Your order is confirmed'
+    public OrderConfirmation verifyOrderConfirmedMsg() {
+        $x("//h3[@class='h1 card-title']/i").shouldBe(visible);
+        return this;
     }
 
-    //asercja - potwierdzenie pojawienia się dymka z komunikatem walidacyjnym
-    public String getValidationMsg() {
-        By firstNameFieldLocator = By.id("field-firstname");
-        WebElement firstNameField = getDriver().findElement(firstNameFieldLocator);
-
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        String msg = (String) js.executeScript("return arguments[0].validationMessage", firstNameField);
-        return msg;
+    // asercja - pobranie komunikatu walidacyjnego (HTML5 validation)
+    public String getValidationMessage() {
+        SelenideElement firstNameField = $("#field-firstname");
+        return firstNameField.getAttribute("validationMessage");
     }
 }
