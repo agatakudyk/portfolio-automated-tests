@@ -8,14 +8,11 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import static io.qameta.allure.Allure.step;
-
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PageObjectPatternPrestashopTest {
@@ -30,7 +27,6 @@ public class PageObjectPatternPrestashopTest {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         driver.get("http://localhost:8080/pl/");
     }
-
 
     @Test   //Home page - zmiana języka strony z polskiego na angielski
     @Order(1)
@@ -51,7 +47,6 @@ public class PageObjectPatternPrestashopTest {
             Assertions.assertTrue(header.isEnglishLanguageDisplayed());
         });
     }
-
 
     @Test     //Użytkownik niezarejestrowany - dodanie produktu do wishlist, dodanie produktu do koszyka i usunięcie
     @Order(2)
@@ -108,7 +103,6 @@ public class PageObjectPatternPrestashopTest {
             Assertions.assertTrue(cart.isMsgThatCartEmpty());
         });
     }
-
 
     @Test     //Użytkownik niezarejestrowany - dodanie produktu do koszyka i finalizacja zakupu
     @Order(3)
@@ -215,7 +209,6 @@ public class PageObjectPatternPrestashopTest {
         });
     }
 
-
     @Test     //Order confirmation - uzupełnienie formularza ‘Save time on your next order, sign up now’
     @Order(4)
     public void signUpNowFillInFormByUnregisteredUser() {
@@ -266,7 +259,6 @@ public class PageObjectPatternPrestashopTest {
         });
     }
 
-
     @Test  //Niepoprawna rejestracja przy pomocy pustego formularza
     @Order(5)
     public void failSignupWithEmptyFields() {
@@ -286,7 +278,6 @@ public class PageObjectPatternPrestashopTest {
             Assertions.assertEquals("Wypełnij to pole.", create.getValidationMsg());
         });
     }
-
 
     @Test  //Poprawna rejestracja użytkownika
     @Order(6)
@@ -343,7 +334,6 @@ public class PageObjectPatternPrestashopTest {
         });
     }
 
-
     //Niepoprawne logowanie z użyciem pustych pól i błędnych danych
     @Test
     @Order(7)
@@ -385,7 +375,6 @@ public class PageObjectPatternPrestashopTest {
         });
     }
 
-
     @Test  //Login page - zresetowanie zapomnianego hasła
     @Order(8)
     public void loginPasswordReset() {
@@ -410,7 +399,6 @@ public class PageObjectPatternPrestashopTest {
             Assertions.assertTrue(reset.isMsgOfSentMsgDisplayed());
         });
     }
-
 
     @Test     //Poprawne zalogowanie  + zmiana hasła + zalogowanie nowym hasłem
     @Order(9)
@@ -504,7 +492,6 @@ public class PageObjectPatternPrestashopTest {
         step("Metoda prywatna - przywrócenie starego hasła", this::backToPreviousPassword);
     }
 
-
     private void backToPreviousPassword() {
 
         step("Header - wejście na profil użytkownika 'Your account'", () -> {
@@ -543,7 +530,6 @@ public class PageObjectPatternPrestashopTest {
         });
     }
 
-
     @Test       //Podstrona Accessories - filtrowanie
     @Order(10)
     public void clearAccessoriesProductsFiltering() {
@@ -574,7 +560,6 @@ public class PageObjectPatternPrestashopTest {
         });
     }
 
-
     @Test    //Podstrona ART - sortowanie
     @Order(11)
     public void sortArtProducts() {
@@ -593,7 +578,6 @@ public class PageObjectPatternPrestashopTest {
             Art art = new Art();
             art.sortByNameAZ();
         });
-
 
         step("strona ART - pobranie z listy elementów i sprawdzenie czy są posortowane", () -> {
             Art art = new Art();
@@ -632,7 +616,6 @@ public class PageObjectPatternPrestashopTest {
             }
         });
     }
-
 
     @Test   //Podstrona ART - dodanie opinii o produkcie
     @Order(12)
@@ -674,7 +657,6 @@ public class PageObjectPatternPrestashopTest {
         });
     }
 
-
     @Test    //Strona produktu - zwiększenie ilości produktu i dodanie do koszyka
     @Order(13)
     public void addProductsToCart() {
@@ -700,7 +682,6 @@ public class PageObjectPatternPrestashopTest {
             Assertions.assertTrue(best.isProductSuccessfullyAdded());
         });
     }
-
 
     @Test  //Koszyk - sprawdzenie zawartości
     @Order(14)
@@ -743,7 +724,6 @@ public class PageObjectPatternPrestashopTest {
         });
     }
 
-
     @Test    //Zapisanie danych w formularzu adresu
     @Order(15)
     public void addressesFormFailSaveWithEmptyFields() {
@@ -784,7 +764,6 @@ public class PageObjectPatternPrestashopTest {
         });
     }
 
-
     @Test   //Shipping method - wybór formy dostawy
     @Order(16)
     public void shippingMethodSuccessSelection() {
@@ -809,7 +788,6 @@ public class PageObjectPatternPrestashopTest {
             shipping.continueButton();
         });
     }
-
 
     @Test
     @Order(17)
@@ -840,7 +818,6 @@ public class PageObjectPatternPrestashopTest {
             Assertions.assertTrue(confirmation.isMsgThatOrderConfirmed());
         });
     }
-
 
     @Test   //Formularz kontaktowy z działem obsługi klienta
     @Order(18)
@@ -876,7 +853,6 @@ public class PageObjectPatternPrestashopTest {
             Assertions.assertTrue(contact.isInformationMsgDisplayed());
         });
     }
-
 
     @Test    //Details page - dodanie wiadomości
     @Order(19)
@@ -922,7 +898,6 @@ public class PageObjectPatternPrestashopTest {
             Assertions.assertTrue(details.isInformationMsgDisplayed());
         });
     }
-
 
     @Test     //Panel użytkownika/Reorder - ponowne złożenie zamówienia
     @Order(20)
@@ -978,7 +953,6 @@ public class PageObjectPatternPrestashopTest {
             Assertions.assertTrue(confirmation.isMsgThatOrderConfirmed());
         });
     }
-
 
     @Test   //Panel użytkownika/Adres – dodanie nowego adresu, aktualizacja i usunięcie
     @Order(21)
@@ -1055,7 +1029,6 @@ public class PageObjectPatternPrestashopTest {
         });
     }
 
-
     @Test     //Wishlists - dodanie produktów do istniejącej wishlist
     @Order(22)
     public void addItemsToStaticWishlists() {
@@ -1102,7 +1075,6 @@ public class PageObjectPatternPrestashopTest {
             Assertions.assertTrue(wishListsElementsNames.size() == 1 && wishListsElementsNames.getFirst().equals("Hummingbird printed t-shirt"));
         });
     }
-
 
     @Test    //Wishlists - utworzenie nowej wishlisty i dodanie produktu
     @Order(23)
@@ -1165,7 +1137,6 @@ public class PageObjectPatternPrestashopTest {
             Assertions.assertTrue(wishListsElementsNames.size()==1 && wishListsElementsNames.getFirst().equals("Mug The adventure begins"));
         });
     }
-
 
     @Test   //Wishlists - utworzenie listy na podstronie ‘My wishlists’, zmiana nazwy i usunięcie
     @Order(24)
@@ -1261,7 +1232,6 @@ public class PageObjectPatternPrestashopTest {
             Assertions.assertTrue(myWishlists.isRemovedListMsgDisplayed());
         });
     }
-
 
     @Test   //Home page/Footer - sprawdzenie działania linków w stopce
     @Order(25)
@@ -1427,7 +1397,6 @@ public class PageObjectPatternPrestashopTest {
             Assertions.assertTrue(header.isButtonSignInDisplayed());
         });
     }
-
 
     @AfterAll
     public static void tearDownSuite() {
