@@ -23,6 +23,9 @@ public class DaysInMonth {
     public static int daysInMonth(int numerMiesiaca, int rok) {
 
 
+        if(numerMiesiaca < 1 || numerMiesiaca > 12){
+            throw new IllegalArgumentException("Niepoprawny numer miesiąca");
+        }
         boolean isLeapYear = LeapYear.isLeapYear(rok);
 
         int numberOfDays;
