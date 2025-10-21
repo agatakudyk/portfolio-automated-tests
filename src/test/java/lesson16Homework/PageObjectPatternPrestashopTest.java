@@ -5,29 +5,21 @@ import lesson15Homework.pages.*;
 import lesson15Homework.users.RegisteredUser;
 import lesson15Homework.users.UnregisteredUserData;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.codeborne.selenide.Selenide.open;
 import static io.qameta.allure.Allure.step;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PageObjectPatternPrestashopTest {
 
-    static WebDriver driver;
-    static WebDriverWait wait;
-
     @BeforeAll
     public static void beforeAll() {
-
-        driver = DriverProvider.getDriver();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        driver.get("http://localhost:8080/pl/");
+        open("http://localhost:8080/pl/");
     }
 
     @Test   //Home page - zmiana języka strony z polskiego na angielski

@@ -1,47 +1,43 @@
 package lesson16Homework.users;
 
-import org.openqa.selenium.By;
-
-import static lesson15Homework.driver.DriverProvider.getDriver;
+import static com.codeborne.selenide.Selenide.$;
 
 
 public class UnregisteredUserData {
 
-    //uzupełnienie pola 'First name'
-public void firstName() {
-    By firstNameFieldLocator = By.id("field-firstname");
-    getDriver().findElement(firstNameFieldLocator).sendKeys("Tomasz");
-}
+    // uzupełnienie pola 'First name'
+    public void firstName() {
+        $("#field-firstname").setValue("Tomasz");
+    }
 
-//uzupełnienie pola 'Last name'
+    // uzupełnienie pola 'Last name'
     public void lastName() {
-        By lastNameFieldLocator = By.id("field-lastname");
-        getDriver().findElement(lastNameFieldLocator).sendKeys("Kot");
-    }
-    //uzupełnienie pola 'Email'
-    public void email() {
-        By emailFieldLocator = By.id("field-email");
-        getDriver().findElement(emailFieldLocator).sendKeys("kot123@wp.pl");
-    }
-    //uzupełnienie pola 'Password'
-    public void password() {
-        By passwordFieldLocator = By.id("field-password");
-        getDriver().findElement(passwordFieldLocator).sendKeys("Mojehaslo123");
+        $("#field-lastname").setValue("Kot");
     }
 
-    //uzupełnienie pola 'Address'
+    // uzupełnienie pola 'Email'
+    public void email() {
+        $("#field-email").setValue("kot123@wp.pl");
+    }
+
+    // uzupełnienie pola 'Password'
+    public void password() {
+        $("#field-password").setValue("Mojehaslo123");
+    }
+
+    // uzupełnienie pola 'Address'
     public void address() {
-        By addressFieldLocator = By.id("field-address1");
-        getDriver().findElement(addressFieldLocator).sendKeys("ul. Jaskrawa 23");
+        $("#field-address1").setValue("ul. Jaskrawa 23");
     }
-//uzupełnienie pola 'Zip/Postal Code'
+
+    // uzupełnienie pola 'Zip/Postal Code'
     public void postalCode() {
-        By postalCodeFieldLocator = By.id("field-postcode");
-        getDriver().findElement(postalCodeFieldLocator).sendKeys("11-788");
+        $("#field-postcode").setValue("11-788");
     }
-//uzupełnienie pola 'City'
-public void city() {
-    By cityFieldLocator = By.id("field-city");
-    getDriver().findElement(cityFieldLocator).sendKeys("Koszalin");
+
+    // uzupełnienie pola 'City'
+    public void city() {
+        $("#field-city").setValue("Koszalin");
+    }
 }
-}
+
