@@ -13,6 +13,9 @@ import java.util.Objects;
 
 import static com.codeborne.selenide.Selenide.open;
 import static io.qameta.allure.Allure.step;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PageObjectPatternPrestashopTest {
@@ -22,27 +25,27 @@ public class PageObjectPatternPrestashopTest {
         open("http://localhost:8080/pl/");
     }
 
-    @Test   //Home page - zmiana języka strony z polskiego na angielski
+    @Test
     @Order(1)
     public void languageSwitchIntoEnglish() {
 
-        step("Home page - zmiana języka / kliknięcie w dropdown-button", () -> {
+        step("Home page - kliknięcie w dropdown języka", () -> {
             Header header = new Header();
             header.languageDropdownButton();
         });
 
-        step("Home page/dropdown - kliknięcie opcji 'English' na rozwijanej liście języków", () -> {
+        step("Home page - wybór języka 'English' z listy", () -> {
             Header header = new Header();
             header.englishLanguageSelectionFromDropdown();
         });
 
-        step("Home page - potwierdzenie ustawienia języka angielskiego", () -> {
+        step("Home page - weryfikacja, że język został zmieniony na angielski", () -> {
             Header header = new Header();
-            Assertions.assertTrue(header.isEnglishLanguageDisplayed());
+            assertTrue(header.isEnglishLanguageDisplayed(), "Język powinien być ustawiony na angielski");
         });
     }
 
-    @Test     //Użytkownik niezarejestrowany - dodanie produktu do wishlist, dodanie produktu do koszyka i usunięcie
+    @Test
     @Order(2)
     public void addToCartAndDeleteProductByUnregisteredUser() {
 
@@ -53,10 +56,10 @@ public class PageObjectPatternPrestashopTest {
 
         step("Potwierdzenie pojawienia się popupu z komunikatem walidacyjnym", () -> {
             Home home = new Home();
-            Assertions.assertTrue(home.isMsgDisplayedThatLoginRequired());
+            assertTrue(home.isMsgDisplayedThatLoginRequired(), "Powinien pojawić się komunikat wymogu logowania");
         });
 
-        step("Zamknięcie okna z komunikatem - kliknięcie w button 'Cancel'", () -> {
+        step("Zamknięcie okna popup - kliknięcie w button 'Cancel'", () -> {
             Home home = new Home();
             home.closeWishlistPopupOfUnregisteredUser();
         });
@@ -67,24 +70,23 @@ public class PageObjectPatternPrestashopTest {
         });
 
         step("Dodanie produktu do koszyka - kliknięcie w button 'Add to cart'", () -> {
-            ProductTodayIsAGoodDayFramedPoster todayIsAGoodDay = new ProductTodayIsAGoodDayFramedPoster();
-            todayIsAGoodDay.addToCartButton();
+            ProductTodayIsAGoodDayFramedPoster productPage = new ProductTodayIsAGoodDayFramedPoster();
+            productPage.addToCartButton();
         });
 
         step("Potwierdzenie pojawienia się popupu z komunikatem potwierdzającym pomyślne dodanie", () -> {
-            ProductTodayIsAGoodDayFramedPoster todayIsAGoodDay = new ProductTodayIsAGoodDayFramedPoster();
-            Assertions.assertTrue(todayIsAGoodDay.isSuccessPopupDisplayed());
+            ProductTodayIsAGoodDayFramedPoster productPage = new ProductTodayIsAGoodDayFramedPoster();
+            assertTrue(productPage.isSuccessPopupDisplayed(), "Powinien pojawić się popup potwierdzający dodanie produktu");
         });
 
-
-        step("Zamknięcie okna popup - kliknięcie w button 'Proceed to checkout'", () -> {
-            ProductTodayIsAGoodDayFramedPoster page = new ProductTodayIsAGoodDayFramedPoster();
-            page.closeAddToCartPopupLocator();
+        step("Zamknięcie popupu - kliknięcie w button 'Proceed to checkout'", () -> {
+            ProductTodayIsAGoodDayFramedPoster productPage = new ProductTodayIsAGoodDayFramedPoster();
+            productPage.closeAddToCartPopupLocator();
         });
 
         step("Shopping cart - sprawdzenie zgodności nazwy produktu w koszyku", () -> {
             Cart cart = new Cart();
-            Assertions.assertTrue(cart.isProductInCart());
+            assertTrue(cart.isProductInCart(), "Produkt powinien znajdować się w koszyku");
         });
 
         step("Shopping cart - usunięcie produktu z koszyka", () -> {
@@ -92,34 +94,34 @@ public class PageObjectPatternPrestashopTest {
             cart.deleteCartItem();
         });
 
-        step("Shopping cart - potwierdzenie pojawienia się komunikatu, że koszyk jest pusty", () -> {
+        step("Shopping cart - potwierdzenie, że koszyk jest pusty", () -> {
             Cart cart = new Cart();
-            Assertions.assertTrue(cart.isMsgThatCartEmpty());
+            assertTrue(cart.isMsgThatCartEmpty(), "Koszyk powinien być pusty");
         });
     }
 
-    @Test     //Użytkownik niezarejestrowany - dodanie produktu do koszyka i finalizacja zakupu
+    @Test
     @Order(3)
     public void addProductToCartAndCheckoutByUnregisteredUser() {
 
-        step("Shopping cart - przejcie z koszyka na stronę główną", () -> {
+        step("Shopping cart - powrót na stronę główną", () -> {
             Cart cart = new Cart();
             cart.homePageLink();
         });
 
-        step("Home page - wejście w okno produktu 'Today is a good day Framed Poster'", () -> {
+        step("Home page - wejście w produkt 'Today is a good day Framed Poster'", () -> {
             Home home = new Home();
             home.enterProductPageOfTodayIsAGoodDayFramedPoster();
         });
 
         step("Dodanie produktu do koszyka - kliknięcie w button 'Add to cart'", () -> {
-            ProductTodayIsAGoodDayFramedPoster page = new ProductTodayIsAGoodDayFramedPoster();
-            page.addToCartButton();
+            ProductTodayIsAGoodDayFramedPoster productPage = new ProductTodayIsAGoodDayFramedPoster();
+            productPage.addToCartButton();
         });
 
         step("Popup w oknie produktu - kliknięcie w button 'Proceed to checkout'", () -> {
-            ProductTodayIsAGoodDayFramedPoster poster = new ProductTodayIsAGoodDayFramedPoster();
-            poster.closeAddToCartPopupLocator();
+            ProductTodayIsAGoodDayFramedPoster productPage = new ProductTodayIsAGoodDayFramedPoster();
+            productPage.closeAddToCartPopupLocator();
         });
 
         step("Cart - kliknięcie w button 'Proceed to checkout'", () -> {
@@ -127,123 +129,71 @@ public class PageObjectPatternPrestashopTest {
             cart.proceedToCheckoutButton();
         });
 
-        step("Personal Information - uzupełnienie pola 'First name'", () -> {
-            UnregisteredUserData unregisteredUser = new UnregisteredUserData();
-            unregisteredUser.firstName();
-        });
+        step("Personal Information - uzupełnienie danych osobowych", () -> {
+            UnregisteredUserData user = new UnregisteredUserData();
+            user.firstName();
+            user.lastName();
+            user.email();
 
-        step("Personal Information - uzupełnienie pola 'Last name'", () -> {
-            UnregisteredUserData unregisteredUser = new UnregisteredUserData();
-            unregisteredUser.lastName();
-        });
-
-        step("Personal Information - uzupełnienie pola 'Email'", () -> {
-            UnregisteredUserData unregisteredUser = new UnregisteredUserData();
-            unregisteredUser.email();
-        });
-
-        step("Personal Information - checkbox zgody na przetwarzanie danych osobowych", () -> {
             PersonalInformation personal = new PersonalInformation();
             personal.customerPrivacyCheckbox();
-        });
-
-        step("Personal Information - checkbox akceptacji regulaminu i polityki prywatności", () -> {
-            PersonalInformation personal = new PersonalInformation();
             personal.termsAndConditionsCheckbox();
-        });
-
-        step("Personal Information - przejście do 'Addresses' poprzez kliknięcie w button 'Continue'", () -> {
-            PersonalInformation personal = new PersonalInformation();
             personal.continueButton();
         });
 
-        step("Addresses - uzupełnienie pola 'Address'", () -> {
-            UnregisteredUserData unregisteredUser = new UnregisteredUserData();
-            unregisteredUser.address();
-        });
+        step("Addresses - uzupełnienie danych adresowych i przejście do 'Shipping Method'", () -> {
+            UnregisteredUserData user = new UnregisteredUserData();
+            user.address();
+            user.postalCode();
+            user.city();
 
-        step("Addresses - uzupełnienie pola 'Zip/Postal Code'", () -> {
-            UnregisteredUserData unregisteredUser = new UnregisteredUserData();
-            unregisteredUser.postalCode();
-        });
-
-        step("Addresses - uzupełnienie pola 'City'", () -> {
-            UnregisteredUserData unregisteredUser = new UnregisteredUserData();
-            unregisteredUser.city();
-        });
-
-        step("Addresses - przejście do 'Shipping Method' poprzez kliknięcie w button 'Continue'", () -> {
             Addresses addresses = new Addresses();
             addresses.continueButton();
         });
 
-        step("Shipping Method - przejście do 'Payment' poprzez kliknięcie w button 'Continue'", () -> {
+        step("Shipping Method - przejście do 'Payment'", () -> {
             ShippingMethod shipping = new ShippingMethod();
             shipping.continueButton();
         });
 
-        step("Payment - wybór opcji 'Pay by bank wire'", () -> {
+        step("Payment - wybór opcji 'Pay by bank wire', zgoda na warunki i finalizacja zamówienia", () -> {
             Payment payment = new Payment();
             payment.payByBankWire();
-        });
-
-        step("Payment -  wybór checkboxa zgody", () -> {
-            Payment payment = new Payment();
             payment.agreeToTermsCheckbox();
-        });
-
-        step("Payment - przejście na 'Order confirmation page' poprzez kliknięcie w button 'Place Order'", () -> {
-            Payment payment = new Payment();
             payment.placeOrderButton();
         });
 
-        step("Order confirmation - wyświetlenie komunikatu potwierdzającego 'Your order is confirmed'", () -> {
+        step("Order confirmation - potwierdzenie wyświetlenia komunikatu 'Your order is confirmed'", () -> {
             OrderConfirmation confirmation = new OrderConfirmation();
-            Assertions.assertTrue(confirmation.isMsgThatOrderConfirmed());
+            assertTrue(confirmation.isMsgThatOrderConfirmed(), "Powinien pojawić się komunikat potwierdzający zamówienie");
         });
     }
 
-    @Test     //Order confirmation - uzupełnienie formularza ‘Save time on your next order, sign up now’
+    @Test
     @Order(4)
     public void signUpNowFillInFormByUnregisteredUser() {
 
-        step("‘Save time on...' form - kliknięcie w button 'Save'", () -> {
+        step("‘Save time on...' form - kliknięcie w button 'Save' bez uzupełnienia danych", () -> {
             OrderConfirmation confirmation = new OrderConfirmation();
             confirmation.saveButtonInForm();
         });
 
-        step("Tooltip dynamiczny- potwierdzenie pojawienia się dymka z komunikatem walidacyjnym", () -> {
+        step("Tooltip dynamiczny - potwierdzenie pojawienia się komunikatu walidacyjnego", () -> {
             OrderConfirmation confirmation = new OrderConfirmation();
-            Assertions.assertEquals("Wypełnij to pole.", confirmation.getValidationMsg());
+            assertEquals("Wypełnij to pole.", confirmation.getValidationMsg());
         });
 
-        step("‘Save time on...' form - uzupełnienie pola 'First name'", () -> {
+        step("‘Save time on...' form - uzupełnienie danych użytkownika", () -> {
             UnregisteredUserData unregistered = new UnregisteredUserData();
             unregistered.firstName();
-        });
-
-        step("‘Save time on...' form - uzupełnienie pola 'Last name'", () -> {
-            UnregisteredUserData unregistered = new UnregisteredUserData();
             unregistered.lastName();
-        });
-
-        step("‘Save time on...' form - uzupełnienie pola 'Email'", () -> {
-            UnregisteredUserData unregistered = new UnregisteredUserData();
             unregistered.email();
-        });
-
-        step("‘Save time on...' form - uzupełnienie pola 'Password'", () -> {
-            UnregisteredUserData unregistered = new UnregisteredUserData();
             unregistered.password();
         });
 
-        step("‘Save time on...' form - kliknięcie w checkbox zgody na przetwarzanie danych osobowych", () -> {
+        step("‘Save time on...' form - zaznaczenie checkboxów zgody i regulaminu", () -> {
             OrderConfirmation confirmation = new OrderConfirmation();
             confirmation.customerPrivacyCheckbox();
-        });
-
-        step("‘Save time on...' form - kliknięcie w checkbox akceptacji regulaminu i polityki prywatności", () -> {
-            OrderConfirmation confirmation = new OrderConfirmation();
             confirmation.termsAndConditionsCheckbox();
         });
 
@@ -253,306 +203,165 @@ public class PageObjectPatternPrestashopTest {
         });
     }
 
-    @Test  //Niepoprawna rejestracja przy pomocy pustego formularza
+    @Test  // Niepoprawna rejestracja przy pomocy pustego formularza
     @Order(5)
     public void failSignupWithEmptyFields() {
 
         step("Login page - kliknięcie w link rejestracji", () -> {
-            LogIn login = new LogIn();
-            login.signupLink();
+            new LogIn().signupLink();
         });
 
-        step("Create account page - kliknięcie w button 'Save'", () -> {
-            CreateAccount create = new CreateAccount();
-            create.saveButton();
+        step("Create account page - kliknięcie w button 'Save' bez wypełniania pól", () -> {
+            new CreateAccount().saveButton();
         });
 
-        step("Create account page/tooltip dynamiczny - potwierdzenie pojawienia się komunikatu", () -> {
-            CreateAccount create = new CreateAccount();
-            Assertions.assertEquals("Wypełnij to pole.", create.getValidationMsg());
+        step("Create account page/tooltip dynamiczny - potwierdzenie pojawienia się komunikatu walidacyjnego", () -> {
+            assertEquals("Wypełnij to pole.", new CreateAccount().getValidationMsg());
         });
     }
 
-    @Test  //Poprawna rejestracja użytkownika
+    @Test  // Poprawna rejestracja użytkownika
     @Order(6)
     public void userSuccessSignup() {
 
         step("Create account - uzupełnienie pola 'First name'", () -> {
-            RegisteredUser registered = new RegisteredUser();
-            registered.name();
+            new RegisteredUser().name();
         });
 
         step("Create account - uzupełnienie pola 'Last name'", () -> {
-            RegisteredUser registered = new RegisteredUser();
-            registered.lastName();
+            new RegisteredUser().lastName();
         });
 
         step("Create account - uzupełnienie pola 'Email'", () -> {
-            RegisteredUser registered = new RegisteredUser();
-            registered.email();
+            new RegisteredUser().email();
         });
 
-        step("Create Account - uzupełnienie pola 'Password'", () -> {
-            RegisteredUser registered = new RegisteredUser();
-            registered.password();
+        step("Create account - uzupełnienie pola 'Password'", () -> {
+            new RegisteredUser().password();
         });
 
         step("Create Account - kliknięcie w checkbox informacji o przetwarzaniu danych osobowych", () -> {
-            CreateAccount create = new CreateAccount();
-            create.customerPrivacyCheckbox();
+            new CreateAccount().customerPrivacyCheckbox();
         });
 
         step("Create Account - kliknięcie w checkbox akceptacji polityki prywatności", () -> {
-            CreateAccount create = new CreateAccount();
-            create.termsAndConditionsCheckbox();
+            new CreateAccount().termsAndConditionsCheckbox();
         });
 
         step("Create Account - kliknięcie w button 'Save'", () -> {
-            CreateAccount create = new CreateAccount();
-            create.saveButton();
+            new CreateAccount().saveButton();
         });
 
         step("Sprawdzenie pomyślnej rejestracji - widoczność przycisku 'Sign out'", () -> {
-            Header header = new Header();
-            Assertions.assertTrue(header.isButtonSignOutDisplayed());
+            assertTrue(new Header().isButtonSignOutDisplayed());
         });
 
-        step("Header - kliknięcie w button 'Sign out' / wylogowanie użytkownika ", () -> {
-            Header header = new Header();
-            header.signout();
+        step("Header - kliknięcie w button 'Sign out' / wylogowanie użytkownika", () -> {
+            new Header().signout();
         });
 
         step("Sprawdzenie czy wylogowany - widoczność przycisku 'Sign in'", () -> {
-            Header header = new Header();
-            Assertions.assertTrue(header.isButtonSignInDisplayed());
+            assertTrue(new Header().isButtonSignInDisplayed());
         });
     }
 
-    //Niepoprawne logowanie z użyciem pustych pól i błędnych danych
-    @Test
+    @Test  // Niepoprawne logowanie z użyciem pustych pól i błędnych danych
     @Order(7)
     public void failLoginWithIncorrectData() {
 
         step("Header - kliknięcie w button 'Sign In'", () -> {
-            Header header = new Header();
-            header.signIn();
+            new Header().signIn();
         });
 
         step("Login page - kliknięcie w button 'Sign In'", () -> {
-            LogIn login = new LogIn();
-            login.signInButton();
+            new LogIn().signInButton();
         });
 
         step("Tooltip dynamiczny - potwierdzenie pojawienia się komunikatu", () -> {
-            LogIn login = new LogIn();
-            Assertions.assertEquals("Wypełnij to pole.", login.getValidationMsg());
+            assertEquals("Wypełnij to pole.", new LogIn().getValidationMsg());
         });
 
         step("Login page - uzupełnienie pola 'Email'", () -> {
-            LogIn login = new LogIn();
-            login.emailField();
+            new LogIn().emailField();
         });
 
         step("Login page - uzupełnienie pola 'Password'", () -> {
-            LogIn login = new LogIn();
-            login.passwordField();
+            new LogIn().passwordField();
         });
 
         step("Login page - kliknięcie w button 'Sign In'", () -> {
-            LogIn login = new LogIn();
-            login.signInButton();
+            new LogIn().signInButton();
         });
 
         step("Login page - sprawdzenie komunikatu 'Authentication failed.'", () -> {
-            LogIn login = new LogIn();
-            Assertions.assertTrue(login.isMsgAuthenticationFailedDisplayed());
+            assertTrue(new LogIn().isMsgAuthenticationFailedDisplayed());
         });
     }
 
-    @Test  //Login page - zresetowanie zapomnianego hasła
+    @Test  // Login page - zresetowanie zapomnianego hasła
     @Order(8)
     public void loginPasswordReset() {
 
         step("Login page - kliknięcie w link 'Forgot your password?'", () -> {
-            LogIn login = new LogIn();
-            login.passwordRecoveryLink();
+            new LogIn().passwordRecoveryLink();
         });
 
         step("Reset password page - uzupełnienie pola 'Email address'", () -> {
-            PasswordReset reset = new PasswordReset();
-            reset.email();
+            new PasswordReset().email();
         });
 
         step("Reset password page - kliknięcie w button 'Send reset link'", () -> {
-            PasswordReset reset = new PasswordReset();
-            reset.sendResetLink();
+            new PasswordReset().sendResetLink();
         });
 
         step("Reset password page - sprawdzenie komunikatu potwierdzającego wysłanie maila", () -> {
-            PasswordReset reset = new PasswordReset();
-            Assertions.assertTrue(reset.isMsgOfSentMsgDisplayed());
+            assertTrue(new PasswordReset().isMsgOfSentMsgDisplayed());
         });
     }
 
-    @Test     //Poprawne zalogowanie  + zmiana hasła + zalogowanie nowym hasłem
-    @Order(9)
-    public void userSuccessLogin() {
 
-        step("Reset password page - kliknięcie w link 'Back to Login'", () -> {
-            PasswordReset reset = new PasswordReset();
-            reset.backToLoginPageLink();
-        });
 
-        step("Login page - uzupełnienie pola 'Email'", () -> {
-            RegisteredUser registered = new RegisteredUser();
-            registered.email();
-        });
 
-        step("Login page - uzupełnienie pola 'Password'", () -> {
-            RegisteredUser registered = new RegisteredUser();
-            registered.password();
-        });
 
-        step("Login page - kliknięcie w button 'Sign In'", () -> {
-            LogIn login = new LogIn();
-            login.signInButton();
-        });
 
-        step("Sprawdzenie pomyślnego zalogowania - widoczność przycisku 'Sign out'", () -> {
-            Header header = new Header();
-            Assertions.assertTrue(header.isButtonSignOutDisplayed());
-        });
 
-        step("Your account - kliknięcie w link 'Information'", () -> {
-            YourAccount account = new YourAccount();
-            account.informationLink();
-        });
 
-        step("Your personal information - uzupełnienie pola 'Password' / dotychczasowe hasło", () -> {
-            RegisteredUser registered = new RegisteredUser();
-            registered.password();
-        });
 
-        step("Your personal information - uzupełnienie pola 'New password' / nowe hasło", () -> {
-            RegisteredUser registered = new RegisteredUser();
-            registered.newPassword();
-        });
 
-        step("Your personal information - checkbox akceptacji regulaminu i polityki prywatności", () -> {
-            YourPersonalInformation personal = new YourPersonalInformation();
-            personal.termsAndConditionsCheckbox();
-        });
 
-        step("Your personal information - checkbox zgody na przetwarzanie danych osobowych", () -> {
-            YourPersonalInformation personal = new YourPersonalInformation();
-            personal.customerPrivacyCheckbox();
-        });
-
-        step("Your personal information - kliknięcie w button 'Save'", () -> {
-            YourPersonalInformation personal = new YourPersonalInformation();
-            personal.saveButton();
-        });
-
-        step("Your personal information - potwierdzenie pojawienia się komunikatu", () -> {
-            YourPersonalInformation personal = new YourPersonalInformation();
-            Assertions.assertTrue(personal.isMsgThatInformationUpdated());
-        });
-
-        step("Header/wyloguj się - kliknięcie w button 'Sign out'", () -> {
-            Header header = new Header();
-            header.signout();
-        });
-
-        step("Login page - uzupełnienie pola email", () -> {
-            RegisteredUser registered = new RegisteredUser();
-            registered.email();
-        });
-
-        step("Login page - uzupełnienie nowego hasła", () -> {
-            RegisteredUser registered = new RegisteredUser();
-            registered.newLoginPassword();
-        });
-
-        step("Login page - kliknięcie w button 'Sign In'", () -> {
-            LogIn login = new LogIn();
-            login.signInButton();
-        });
-
-        step("Sprawdzenie poprawności zalogowania użytkownika - widoczność przycisku 'Sign out'", () -> {
-            Header header = new Header();
-            Assertions.assertTrue(header.isButtonSignOutDisplayed());
-        });
-
-        step("Metoda prywatna - przywrócenie starego hasła", this::backToPreviousPassword);
-    }
 
     private void backToPreviousPassword() {
 
-        step("Header - wejście na profil użytkownika 'Your account'", () -> {
-            Header header = new Header();
-            header.userProfile();
-        });
+        step("Header - wejście na profil użytkownika 'Your account'", () -> new Header().userProfile());
 
-        step("Wejście w link 'Information'", () -> {
-            YourAccount account = new YourAccount();
-            account.informationLink();
-        });
+        step("Wejście w link 'Information'", () -> new YourAccount().informationLink());
 
-        step("wpisanie aktualnego hasła logowania", () -> {
-            RegisteredUser registered = new RegisteredUser();
-            registered.newPassword();
-        });
+        step("Wpisanie aktualnego hasła logowania", () -> new RegisteredUser().newPassword());
 
-        step("wpisanie nowego hasła logowania", () -> {
-            RegisteredUser registered = new RegisteredUser();
-            registered.password();
-        });
+        step("Wpisanie nowego hasła logowania", () -> new RegisteredUser().password());
 
-        step("Your personal information - checkbox akceptacji regulaminu i polityki prywatności", () -> {
-            YourPersonalInformation personal = new YourPersonalInformation();
-            personal.termsAndConditionsCheckbox();
-        });
+        step("Your personal information - checkbox akceptacji regulaminu i polityki prywatności", () -> new YourPersonalInformation().termsAndConditionsCheckbox());
 
-        step("our personal information - checkbox zgody na przetwarzanie danych osobowych", () -> {
-            YourPersonalInformation personal = new YourPersonalInformation();
-            personal.customerPrivacyCheckbox();
-        });
+        step("Your personal information - checkbox zgody na przetwarzanie danych osobowych", () -> new YourPersonalInformation().customerPrivacyCheckbox());
 
-        step("kliknięcie buttona 'Save'", () -> {
-            YourPersonalInformation personal = new YourPersonalInformation();
-            personal.saveButton();
-        });
+        step("Kliknięcie buttona 'Save'", () -> new YourPersonalInformation().saveButton());
     }
 
     @Test       //Podstrona Accessories - filtrowanie
     @Order(10)
     public void clearAccessoriesProductsFiltering() {
 
-        step("wejście na stronę ACCESSORIES", () -> {
-            TopMenu top = new TopMenu();
-            top.accessoriesPageLink();
-        });
+        step("Wejście na stronę ACCESSORIES", () -> new TopMenu().accessoriesPageLink());
 
-        step("Accessories page - wybór filtra 'Ceramic'", () -> {
-            Accessories accessories = new Accessories();
-            accessories.ceramicCompositionFilter();
-        });
+        step("Accessories page - wybór filtra 'Ceramic'", () -> new Accessories().ceramicCompositionFilter());
 
-        step("Accessories page - wybór filtra 'Available'", () -> {
-            Accessories accessories = new Accessories();
-            accessories.availableFilter();
-        });
+        step("Accessories page - wybór filtra 'Available'", () -> new Accessories().availableFilter());
 
-        step("Accessories page - wyczyszczenie wybranych filtrów", () -> {
-            Accessories accessories = new Accessories();
-            accessories.allFiltersClear();
-        });
+        step("Accessories page - wyczyszczenie wybranych filtrów", () -> new Accessories().allFiltersClear());
 
-        step("Accessories page - potwierdzenie wyczyszczenia filtrów", () -> {
-            Accessories accessories = new Accessories();
-            Assertions.assertFalse(accessories.isFilterClear());
-        });
+        step("Accessories page - potwierdzenie wyczyszczenia filtrów", () -> Assertions.assertFalse(new Accessories().isFilterClear()));
     }
+
 
     @Test    //Podstrona ART - sortowanie
     @Order(11)
@@ -583,7 +392,7 @@ public class PageObjectPatternPrestashopTest {
             List<String> productsAlphabeticalOrder = productsNames.stream().sorted().toList();
 
             for (int i = 0; i < productsNames.size(); i++) {
-                Assertions.assertEquals(productsNames.get(i), productsAlphabeticalOrder.get(i));
+                assertEquals(productsNames.get(i), productsAlphabeticalOrder.get(i));
             }
         });
 
@@ -606,7 +415,7 @@ public class PageObjectPatternPrestashopTest {
             List<String> productsAlphabeticalOrder2 = productsPrices.stream().sorted().toList();
 
             for (int i = 0; i < productsPrices.size(); i++) {
-                Assertions.assertEquals(productsPrices.get(i), productsAlphabeticalOrder2.get(i));
+                assertEquals(productsPrices.get(i), productsAlphabeticalOrder2.get(i));
             }
         });
     }
@@ -642,7 +451,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Popup REVIEW SENT - potwierdzenie dodania komentarza", () -> {
             ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
-            Assertions.assertTrue(best.isCommentAdded());
+            assertTrue(best.isCommentAdded());
         });
 
         step("Popup REVIEW SENT - zamknięcie okna poprzez kliknięcie w button 'OK'", () -> {
@@ -673,7 +482,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Popup - sprawdzenie komunikatu potwierdzającego dodanie do koszyka", () -> {
             ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
-            Assertions.assertTrue(best.isProductSuccessfullyAdded());
+            assertTrue(best.isProductSuccessfullyAdded());
         });
     }
 
@@ -688,7 +497,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Cart - sprawdzenie nazwy produktu", () -> {
             Cart cart = new Cart();
-            Assertions.assertEquals("The best is yet to come' Framed poster", cart.getProductNameInCart());
+            assertEquals("The best is yet to come' Framed poster", cart.getProductNameInCart());
         });
 
         step("Shopping cart - porównanie ilości z sekcji produktu i sekcji podsumowania", () -> {
@@ -699,7 +508,7 @@ public class PageObjectPatternPrestashopTest {
             String summaryQuantityText = cart.getQuantitySummary();
             int summaryQuantity = Integer.parseInt(summaryQuantityText.replaceAll("\\D+", ""));
             // porównanie ilości z sekcji produktu i sekcji podsumowania
-            Assertions.assertEquals(productQuantity, summaryQuantity);
+            assertEquals(productQuantity, summaryQuantity);
         });
 
         step("Shopping cart - sprawdzenie wartości całkowitej", () -> {
@@ -714,7 +523,7 @@ public class PageObjectPatternPrestashopTest {
             double totalPrice = Double.parseDouble(totalPriceText);
             //oczekiwana wartość
             double expectedTotal = unitPrice * productQuantity;
-            Assertions.assertEquals(totalPrice, expectedTotal);
+            assertEquals(totalPrice, expectedTotal);
         });
     }
 
@@ -734,7 +543,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Addresses/tooltip dynamiczny - potwierdzenie pojawienia się komunikatu walidacyjnego", () -> {
             Addresses address = new Addresses();
-            Assertions.assertEquals("Wypełnij to pole.", address.getValidationMsg());
+            assertEquals("Wypełnij to pole.", address.getValidationMsg());
         });
 
         step("Addresses - uzupełnienie pola 'Address'", () -> {
@@ -809,7 +618,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Order confirmation page - sprawdzenie pojawienia się komunikatu potwierdzającego", () -> {
             OrderConfirmation confirmation = new OrderConfirmation();
-            Assertions.assertTrue(confirmation.isMsgThatOrderConfirmed());
+            assertTrue(confirmation.isMsgThatOrderConfirmed());
         });
     }
 
@@ -829,7 +638,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Contact us - potwierdzenie pojawienia się komunikatu walidacyjnego", () -> {
             ContactUs contact = new ContactUs();
-            Assertions.assertTrue(contact.isValidationMsgDisplayed());
+            assertTrue(contact.isValidationMsgDisplayed());
         });
 
         step("Contact us - wpisanie treści wiadomości", () -> {
@@ -844,7 +653,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Komunikat informacyjny 'Your message has been successfully sent to our team.'", () -> {
             ContactUs contact = new ContactUs();
-            Assertions.assertTrue(contact.isInformationMsgDisplayed());
+            assertTrue(contact.isInformationMsgDisplayed());
         });
     }
 
@@ -874,7 +683,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Potwierdzenie pojawienia się komunikatu walidacji 'The message cannot be blank.'", () -> {
             OrderDetails details = new OrderDetails();
-            Assertions.assertTrue(details.isValidationMsgDisplayed());
+            assertTrue(details.isValidationMsgDisplayed());
         });
 
         step("'Order details' - Uzupełnienie treści wiadomości", () -> {
@@ -889,7 +698,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("potwierdzenie wysłania wiadomości 'Message successfully sent'", () -> {
             OrderDetails details = new OrderDetails();
-            Assertions.assertTrue(details.isInformationMsgDisplayed());
+            assertTrue(details.isInformationMsgDisplayed());
         });
     }
 
@@ -944,7 +753,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Order confirmation page - sprawdzenie pojawienia się komunikatu potwierdzającego", () -> {
             OrderConfirmation confirmation = new OrderConfirmation();
-            Assertions.assertTrue(confirmation.isMsgThatOrderConfirmed());
+            assertTrue(confirmation.isMsgThatOrderConfirmed());
         });
     }
 
@@ -989,7 +798,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Your addresses - komunikat potwierdzający dodanie adresu 'Address successfully added!'", () -> {
             YourAddresses yourAddress = new YourAddresses();
-            Assertions.assertTrue(yourAddress.isAddMsgDisplayed());
+            assertTrue(yourAddress.isAddMsgDisplayed());
         });
 
         step("Your addresses - kliknięcie w link 'Update'", () -> {
@@ -1009,7 +818,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Your addresses - komunikat potwierdzający aktualizację 'Address successfully updated!'", () -> {
             YourAddresses yourAddress = new YourAddresses();
-            Assertions.assertTrue(yourAddress.isUpdateMsgDisplayed());
+            assertTrue(yourAddress.isUpdateMsgDisplayed());
         });
 
         step("Your addresses - usunięcie nowego adresu", () -> {
@@ -1019,7 +828,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Your addresses - komunikat potwierdzającego usunięcie 'Address successfully deleted!'", () -> {
             YourAddresses yourAddress = new YourAddresses();
-            Assertions.assertTrue(yourAddress.isDeleteMsgDisplayed());
+            assertTrue(yourAddress.isDeleteMsgDisplayed());
         });
     }
 
@@ -1044,7 +853,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("TOAST 'Product added' - potwierdzenie pojawienia się komunikatu", () -> {
             Home home = new Home();
-            Assertions.assertTrue(home.isAddedMsgDisplayed());
+            assertTrue(home.isAddedMsgDisplayed());
         });
 
         step("Header - wejście na profil użytkownika 'Your account'", () -> {
@@ -1066,7 +875,7 @@ public class PageObjectPatternPrestashopTest {
             MyWishlists myWishlist = new MyWishlists();
             List<WebElement> wishListsElements = myWishlist.getWishListElements();
             List<String> wishListsElementsNames = wishListsElements.stream().map(WebElement::getText).toList();
-            Assertions.assertTrue(wishListsElementsNames.size() == 1 && wishListsElementsNames.getFirst().equals("Hummingbird printed t-shirt"));
+            assertTrue(wishListsElementsNames.size() == 1 && wishListsElementsNames.getFirst().equals("Hummingbird printed t-shirt"));
         });
     }
 
@@ -1106,7 +915,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Home page/TOAST - potwierdzenie pojawienia się komunikatu 'Product added'", () -> {
             Home home = new Home();
-            Assertions.assertTrue(home.isAddedMsgDisplayed());
+            assertTrue(home.isAddedMsgDisplayed());
         });
 
         step("Header - wejście na profil użytkownika 'Your account'", () -> {
@@ -1124,11 +933,11 @@ public class PageObjectPatternPrestashopTest {
             myWishlists.ulubioneWishlistLink();
         });
 
-        step("Ulubione - sprawdzenie, że produkt jest na liście", ()->{
+        step("Ulubione - sprawdzenie, że produkt jest na liście", () -> {
             MyWishlists myWishlists = new MyWishlists();
             List<WebElement> wishListsElements = myWishlists.getWishListElements();
             List<String> wishListsElementsNames = wishListsElements.stream().map(WebElement::getText).toList();
-            Assertions.assertTrue(wishListsElementsNames.size()==1 && wishListsElementsNames.getFirst().equals("Mug The adventure begins"));
+            assertTrue(wishListsElementsNames.size() == 1 && wishListsElementsNames.getFirst().equals("Mug The adventure begins"));
         });
     }
 
@@ -1158,12 +967,12 @@ public class PageObjectPatternPrestashopTest {
 
         step("TOAST/'The list has been properly created' - potwierdzenie pojawienia się komunikatu", () -> {
             MyWishlists myWishlists = new MyWishlists();
-            Assertions.assertTrue(myWishlists.isCreatedMsgDisplayed());
+            assertTrue(myWishlists.isCreatedMsgDisplayed());
         });
 
         step("potwierdzenie, czy istnieje lista o nazwie 'Super lista'", () -> {
             MyWishlists myWishlists = new MyWishlists();
-            Assertions.assertTrue(myWishlists.isSuperListaDisplayed());
+            assertTrue(myWishlists.isSuperListaDisplayed());
         });
 
         step("My wishlists - kliknięcie w trzy kropki", () -> {
@@ -1188,7 +997,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("TOAST/'List has been renamed' - potwierdzenie pojawienia się komunikatu", () -> {
             MyWishlists myWishlists = new MyWishlists();
-            Assertions.assertTrue(myWishlists.isRenamedListMsgDisplayed());
+            assertTrue(myWishlists.isRenamedListMsgDisplayed());
         });
 
         step("My wishlists - kliknięcie w trzy kropki", () -> {
@@ -1208,7 +1017,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("TOAST/'Share link copied!' - potwierdzenie pojawienia się komunikatu", () -> {
             MyWishlists myWishlists = new MyWishlists();
-            Assertions.assertTrue(myWishlists.isCopiedLinkMsgDisplayed());
+            assertTrue(myWishlists.isCopiedLinkMsgDisplayed());
         });
 
         step("My wishlists - usunięcie listy", () -> {
@@ -1223,7 +1032,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("TOAST/'List has been removed' - potwierdzenie pojawienia się komunikatu", () -> {
             MyWishlists myWishlists = new MyWishlists();
-            Assertions.assertTrue(myWishlists.isRemovedListMsgDisplayed());
+            assertTrue(myWishlists.isRemovedListMsgDisplayed());
         });
     }
 
@@ -1238,7 +1047,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Potwierdzenie otwarcia podstrony 'Prices drop'", () -> {
             Footer footer = new Footer();
-            Assertions.assertTrue(footer.isPricesDropPageOpened());
+            assertTrue(footer.isPricesDropPageOpened());
         });
 
         step("Home page/Footer - kliknięcie w link 'New products'", () -> {
@@ -1248,7 +1057,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Potwierdzenie otwarcia podstrony 'New products'", () -> {
             Footer footer = new Footer();
-            Assertions.assertTrue(footer.isNewProductsPageOpened());
+            assertTrue(footer.isNewProductsPageOpened());
         });
 
         step("Home page/Footer - kliknięcie w link 'Best sellers'", () -> {
@@ -1258,7 +1067,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Potwierdzenie otwarcia podstrony 'Best sellers'", () -> {
             Footer footer = new Footer();
-            Assertions.assertTrue(footer.isBestSellersPageOpened());
+            assertTrue(footer.isBestSellersPageOpened());
         });
 
         step("Home page/Footer - kliknięcie w link 'Delivery'", () -> {
@@ -1268,7 +1077,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Potwierdzenie otwarcia podstrony 'Delivery'", () -> {
             Footer footer = new Footer();
-            Assertions.assertTrue(footer.isDeliveryPageOpened());
+            assertTrue(footer.isDeliveryPageOpened());
         });
 
         step("Home page/Footer - kliknięcie w link 'Legal Notice'", () -> {
@@ -1278,7 +1087,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Potwierdzenie otwarcia podstrony 'Legal Notice'", () -> {
             Footer footer = new Footer();
-            Assertions.assertTrue(footer.isLegalNoticePageOpened());
+            assertTrue(footer.isLegalNoticePageOpened());
         });
 
         step("Home page/Footer - kliknięcie w link 'Terms and conditions of use'", () -> {
@@ -1288,7 +1097,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Potwierdzenie otwarcia podstrony 'Terms and conditions of use'", () -> {
             Footer footer = new Footer();
-            Assertions.assertTrue(footer.isTermsAndConditionsPageOpened());
+            assertTrue(footer.isTermsAndConditionsPageOpened());
         });
 
         step("Home page/Footer - kliknięcie w link 'About us'", () -> {
@@ -1298,7 +1107,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Potwierdzenie otwarcia podstrony 'About us'", () -> {
             Footer footer = new Footer();
-            Assertions.assertTrue(footer.isAboutUsPageOpened());
+            assertTrue(footer.isAboutUsPageOpened());
         });
 
         step("Home page/Footer - kliknięcie w link 'Secure payment'", () -> {
@@ -1308,7 +1117,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Potwierdzenie otwarcia podstrony 'Secure payment'", () -> {
             Footer footer = new Footer();
-            Assertions.assertTrue(footer.isSecurePaymentPageOpened());
+            assertTrue(footer.isSecurePaymentPageOpened());
         });
 
         step("Home page/Footer - kliknięcie w link 'Contact us'", () -> {
@@ -1318,7 +1127,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Potwierdzenie otwarcia podstrony 'Contact us'", () -> {
             Footer footer = new Footer();
-            Assertions.assertTrue(footer.isContactUsPageOpened());
+            assertTrue(footer.isContactUsPageOpened());
         });
 
         step("Home page/Footer - kliknięcie w link 'Sitemap'", () -> {
@@ -1328,7 +1137,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Potwierdzenie otwarcia podstrony 'Sitemap'", () -> {
             Footer footer = new Footer();
-            Assertions.assertTrue(footer.isSitemapPageOpened());
+            assertTrue(footer.isSitemapPageOpened());
         });
 
         step("Home page/Footer - kliknięcie w link 'Stores'", () -> {
@@ -1338,7 +1147,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Potwierdzenie otwarcia podstrony 'Stores'", () -> {
             Footer footer = new Footer();
-            Assertions.assertTrue(footer.isStoresPageOpened());
+            assertTrue(footer.isStoresPageOpened());
         });
 
         step("Home page/Footer - kliknięcie w link 'Personal info'", () -> {
@@ -1348,7 +1157,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Potwierdzenie otwarcia podstrony 'Personal info'", () -> {
             Footer footer = new Footer();
-            Assertions.assertTrue(footer.isPersonalInfoPageOpened());
+            assertTrue(footer.isPersonalInfoPageOpened());
         });
 
         step("Home page/Footer - kliknięcie w link 'Orders'", () -> {
@@ -1358,7 +1167,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Potwierdzenie otwarcia podstrony 'Orders'", () -> {
             Footer footer = new Footer();
-            Assertions.assertTrue(footer.isOrdersPageOpened());
+            assertTrue(footer.isOrdersPageOpened());
         });
 
         step("Home page/Footer - kliknięcie w link 'Credit slips'", () -> {
@@ -1368,7 +1177,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Potwierdzenie otwarcia podstrony 'Credit slips'", () -> {
             Footer footer = new Footer();
-            Assertions.assertTrue(footer.isCreditSlipsPageOpened());
+            assertTrue(footer.isCreditSlipsPageOpened());
         });
 
         step("Home page/Footer - kliknięcie w link 'Addresses'", () -> {
@@ -1378,7 +1187,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Potwierdzenie otwarcia podstrony 'Addresses'", () -> {
             Footer footer = new Footer();
-            Assertions.assertTrue(footer.isAddressesPageOpened());
+            assertTrue(footer.isAddressesPageOpened());
         });
 
         step("Header - kliknięcie w button 'Sign out'", () -> {
@@ -1388,7 +1197,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Sprawdzenie pomyślnej rejestracji - widoczność przycisku 'Sign out'", () -> {
             Header header = new Header();
-            Assertions.assertTrue(header.isButtonSignInDisplayed());
+            assertTrue(header.isButtonSignInDisplayed());
         });
     }
 
