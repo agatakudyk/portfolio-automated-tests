@@ -37,7 +37,7 @@ public class SeleniumPrestashopTest {
     public void languageSwitchIntoEnglish() {
 
         step("Home page - kliknięcie w dropdown-button, by rozwinąć listę z językami", ()->{
-            By languageDropdownButtonLocator = By.xpath("//button[@data-toggle=\"dropdown\"]");
+            By languageDropdownButtonLocator = By.cssSelector("button[data-toggle='dropdown']");
             WebElement languageSwitchClick = driver.findElement(languageDropdownButtonLocator);
             languageSwitchClick.click();});
 
