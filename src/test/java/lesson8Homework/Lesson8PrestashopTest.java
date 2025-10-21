@@ -39,7 +39,7 @@ public class Lesson8PrestashopTest {
         driver.get("https://demo.prestashop.com/#/en/front");
 
        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.cssSelector("iframe[id^='framelive']")));
-       wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@aria-label='Search']")));
+       wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[aria-label='Search']")));
 
         driver.findElement(By.xpath("//input[@aria-label=\"Search\"]"))
                 .sendKeys("Mug The adventure begins" + Keys.ENTER);
@@ -50,19 +50,10 @@ public class Lesson8PrestashopTest {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h4[@id=\"myModalLabel\"]")));
         WebElement addTocartElement = driver.findElement(By.xpath("//h4[contains(text(),\"Product successfully added to your shopping cart\")]"));
 
-        String addToCartMessage = getDisplayedText(addTocartElement);
+        String addToCartMessage = addTocartElement.getText();
         assertTrue(addToCartMessage.contains("Product successfully added to your shopping cart"));
     }
 
-    private String getDisplayedText(WebElement addTocartElement) {
-        String text =addTocartElement.getText();
-        List<WebElement> elements = addTocartElement.findElements(By.xpath("./*"));
-        for(WebElement el : elements){
-            text = text.replaceFirst(el.getText(),"");
-        }
-
-        return text;
-    }
 
     @Test
     public void acceptNewsletter() {
