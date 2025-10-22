@@ -7,28 +7,23 @@ import static com.codeborne.selenide.Condition.*;
 public class Accessories {
 
     // wybór filtra 'Ceramic'
-    public Accessories selectCeramicFilter() {
-        $x("//a[contains(text(),'Ceramic')]").click();
-        $x("//a[contains(text(),'Ceramic')]/../span/input").shouldBe(selected);
-        return this;
+    public void ceramicCompositionFilter() {
+        $x("//a[contains(text(),'Ceramic')]").shouldBe(visible).click();
     }
 
     // wybór filtra 'Available'
-    public Accessories selectAvailableFilter() {
-        $x("//a[contains(text(),'Available')]").click();
-        $x("//a[contains(text(),'Available')]/../span/input").shouldBe(selected);
-        return this;
+    public void availableFilter() {
+        $x("//a[contains(text(),'Available')]").shouldBe(visible).click();
     }
 
     // wyczyszczenie wszystkich filtrów
-    public Accessories clearAllFilters() {
-        $x("//button[@class='btn btn-tertiary js-search-filters-clear-all']").click();
-        return this;
+    public void allFiltersClear() {
+        $x("//button[@class='btn btn-tertiary js-search-filters-clear-all']").shouldBe(visible).click();
     }
 
-    // asercja - sprawdzenie, czy filtry zostały wyczyszczone
-    public boolean isFilterCleared() {
-        return $x("//p[contains(text(),'Active filters')]").is(hidden);
+    //asercja - sprawdzenie, czy filtry zostały wyczyszczone
+    public boolean isFilterClear() {
+        return $x("//p[contains(text(),'Active filters')]").shouldBe(visible).isDisplayed();
     }
 }
 
