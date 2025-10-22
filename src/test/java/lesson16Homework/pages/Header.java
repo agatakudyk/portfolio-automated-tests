@@ -8,51 +8,43 @@ import static com.codeborne.selenide.Condition.visible;
 public class Header {
 
     // zmiana języka / kliknięcie w dropdown-button
-    public Header clickLanguageDropdownButton() {
-        $x("//button[@data-toggle='dropdown']").click();
-        return this;
+    public void languageDropdownButton() {
+        $x("//button[@data-toggle='dropdown']").shouldBe(visible).click();
     }
 
     // wybór opcji 'English' na liście języków
-    public Header selectEnglishLanguageFromDropdown() {
-        $x("//a[@data-iso-code='en']").click();
-        return this;
+    public void englishLanguageSelectionFromDropdown() {
+        $x("//a[@data-iso-code='en']").shouldBe(visible).click();
     }
 
     // asercja - potwierdzenie ustawienia języka angielskiego
-    public Header verifyEnglishLanguageDisplayed() {
-        $x("//button[@data-toggle='dropdown']/span[contains(text(),'English')]").shouldBe(visible);
-        return this;
+    public boolean isEnglishLanguageDisplayed() {
+        return $x("//button[@data-toggle='dropdown']/span[contains(text(),'English')]").shouldBe(visible).isDisplayed();
     }
 
     // kliknięcie w button 'Sign out'
-    public Header clickSignOut() {
-        $x("//a[@class='logout hidden-sm-down']").click();
-        return this;
+    public void signout() {
+        $x("//a[@class='logout hidden-sm-down']").shouldBe(visible).click();
     }
 
     // kliknięcie w button 'Sign In'
-    public Header clickSignIn() {
-        $(".user-info a").click();
-        return this;
+    public void SignIn() {
+        $(".user-info a").shouldBe(visible).click();
     }
 
     // wejście na profil użytkownika
-    public Header clickUserProfile() {
-        $x("//a[@class='account']/span[@class='hidden-sm-down']").click();
-        return this;
+    public void userProfile() {
+        $x("//a[@class='account']/span[@class='hidden-sm-down']").shouldBe(visible).click();
     }
 
     // asercja - widoczność przycisku 'Sign out'
-    public Header verifySignOutButtonDisplayed() {
-        $x("//a[@class='logout hidden-sm-down']").shouldBe(visible);
-        return this;
+    public boolean isButtonSignOutDisplayed() {
+        return $x("//a[@class='logout hidden-sm-down']").shouldBe(visible).isDisplayed();
     }
 
     // asercja - widoczność przycisku 'Sign in'
-    public Header verifySignInButtonDisplayed() {
-        $(".user-info a").shouldBe(visible);
-        return this;
+    public boolean isButtonSignInDisplayed() {
+        return $(".user-info a").shouldBe(visible).isDisplayed();
     }
 }
 
