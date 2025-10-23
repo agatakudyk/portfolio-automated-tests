@@ -7,7 +7,7 @@ import static com.codeborne.selenide.Condition.visible;
 public class YourPersonalInformation {
 
     // Personal Information – checkbox zgody na przetwarzanie danych osobowych
-    public YourPersonalInformation customerPrivacyCheckbox() {
+    public void customerPrivacyCheckbox() {
         $x("//input[@name='customer_privacy']").shouldBe(visible).click();
     }
 
