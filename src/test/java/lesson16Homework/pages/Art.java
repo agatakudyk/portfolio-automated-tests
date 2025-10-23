@@ -2,48 +2,42 @@ package lesson16Homework.pages;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.visible;
+
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
 
 
 public class Art {
 
     // kliknięcie w pole sortowania
-    public Art clickSortByButton() {
-        $x("//button[@aria-label='Sort by selection']").click();
-        return this;
+    public void sortByButton() {
+        $x("//button[@aria-label='Sort by selection']").shouldBe(visible).click();
     }
 
-    // posortowanie według 'Name, A to Z'
-    public Art sortByNameAZ() {
-        SelenideElement sortByButton = $x("//button[@aria-label='Sort by selection']");
-        $x("//div[@class='dropdown-menu']/a[contains(text(),'Name, A to Z')]").click();
-        sortByButton.shouldBe(visible);
-        return this;
+    //todo posortowanie według 'Name, A to Z'
+    public void sortByNameAZ() {
+        $x("//button[@aria-label='Sort by selection']").shouldBe(visible).click();
+        $x("//div[@class=\"dropdown-menu\"]/a[contains(text(),\"Name, A to Z\")]").shouldBe(visible).click();
     }
 
-    // posortowanie według 'Price, low to high'
-    public Art sortByPriceAsc() {
-        SelenideElement sortByButton = $x("//button[@aria-label='Sort by selection']");
-        $x("//div[@class='dropdown-menu']/a[contains(text(),'Price, low to high')]").click();
-        sortByButton.shouldBe(visible);
-        return this;
+    //todo posortowanie według 'Price, low to high'
+    public void sortByPriceAsc() {
+        $x("//button[@aria-label='Sort by selection']").shouldBe(visible).click();
+        $x("//div[@class='dropdown-menu']/a[contains(text(),'Price, low to high')]").shouldBe(visible).click();
     }
 
     // wejście w okno produktu 'The Best Is Yet...'
-    public Art openTheBestPoster() {
-        $x("//img[@alt=\"The best is yet to come' Framed poster\"]").click();
-        return this;
+    public void theBestPoster() {
+        $x("//img[@alt=\"The best is yet to come' Framed poster\"]").shouldBe(visible).click();
     }
 
     // pobranie listy produktów po nazwie
     public ElementsCollection getProductsByDescription() {
-        return $$x("//div[@class='product-description']/h2/a");
+        return $$x("//div[@class='product-description']/h2/a").filter(visible);
     }
 
     // pobranie listy produktów po cenie
     public ElementsCollection getProductsByPrice() {
-        return $$x("//div[@class='product-price-and-shipping']/span");
+        return $$x("//div[@class='product-price-and-shipping']/span").filter(visible);
     }
 }
 

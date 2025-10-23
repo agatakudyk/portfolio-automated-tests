@@ -1,34 +1,29 @@
 package lesson16Homework.pages;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
-import com.codeborne.selenide.SelenideElement;
 
 
 public class CreateAccount {
 
-    // kliknięcie w button 'Save'
-    public CreateAccount clickSaveButton() {
-        $(".form-control-submit").click();
-        return this;
+    //kliknięcie w button 'Save'
+    public void saveButton() {
+        $(".form-control-submit").shouldBe(visible).click();
     }
 
-    // kliknięcie w checkbox informacji o przetwarzaniu danych osobowych
-    public CreateAccount clickCustomerPrivacyCheckbox() {
-        $x("//input[@name='customer_privacy']").click();
-        return this;
+    //kliknięcie w checkbox informacji o przetwarzaniu danych osobowych
+    public void customerPrivacyCheckbox() {
+        $x("//input[@name=\"customer_privacy\"]").shouldBe(visible).click();
     }
 
-    // kliknięcie w checkbox akceptacji regulaminu i polityki prywatności
-    public CreateAccount clickTermsAndConditionsCheckbox() {
-        $x("//input[@name='psgdpr']").click();
-        return this;
+    //checkbox akceptacji regulaminu i polityki prywatności
+    public void termsAndConditionsCheckbox() {
+        $x("//input[@name=\"psgdpr\"]").shouldBe(visible).click();
     }
 
-    // pobranie komunikatu walidacyjnego HTML5 'Wypełnij to pole'
-    public String getValidationMessage() {
-        SelenideElement firstNameField = $("#field-firstname");
-        return firstNameField.getAttribute("validationMessage");
+    //potwierdzenie pojawienia się komunikatu 'Wypełnij to pole'
+    public String getValidationMsg() {
+            return $("#field-firstname").shouldBe(visible).getAttribute("validationMessage");
     }
 }
-

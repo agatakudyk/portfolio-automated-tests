@@ -7,44 +7,38 @@ import static com.codeborne.selenide.Condition.visible;
 public class YourAddresses {
 
     // usunięcie nowego adresu
-    public YourAddresses deleteNewAddress() {
-        $x("//address[contains(text(),'Janowiec')]/../..//span[contains(text(),'Delete')]").click();
-        return this;
+    public void deleteNewAddress() {
+        $x("//address[contains(text(),'Janowiec')]/../..//span[contains(text(),'Delete')]")
+                .shouldBe(visible).click();
     }
 
     // wejście w link 'Edit'
-    public YourAddresses editAddress() {
-        $x("//footer[@class='address-footer']/a[@data-link-action='edit-address']").click();
-        return this;
+    public void editAddress() {
+        $x("//footer[@class='address-footer']/a[@data-link-action='edit-address']").shouldBe(visible).click();
     }
 
     // kliknięcie w link 'Create new address'
-    public YourAddresses createNewAddressLink() {
-        $x("//a[@data-link-action='add-address']").click();
-        return this;
+    public void createNewAddressLink() {
+        $x("//a[@data-link-action='add-address']").shouldBe(visible).click();
     }
 
     // kliknięcie w link 'Update'
-    public YourAddresses updateAddress() {
-        $x("//address[contains(text(),'Janowiec')]/../..//span[contains(text(),'Update')]").click();
-        return this;
+    public void updateAddress() {
+        $x("//address[contains(text(),'Janowiec')]/../..//span[contains(text(),'Update')]").shouldBe(visible).click();
     }
 
     // asercja – komunikat potwierdzający dodanie adresu
-    public YourAddresses verifyAddMsgDisplayed() {
-        $x("//li[contains(text(),'Address successfully added!')]").shouldBe(visible);
-        return this;
+    public boolean isAddMsgDisplayed() {
+        return $x("//li[contains(text(),'Address successfully added!')]").shouldBe(visible).isDisplayed();
     }
 
-    // asercja – komunikat potwierdzający aktualizację adresu
-    public YourAddresses verifyUpdateMsgDisplayed() {
-        $x("//li[contains(text(),'Address successfully updated!')]").shouldBe(visible);
-        return this;
+    // asercja – komunikat potwierdzający aktualizację adresu 'Address successfully updated!'
+    public boolean isUpdateMsgDisplayed() {
+        return $x("//li[contains(text(),'Address successfully updated!')]").shouldBe(visible).isDisplayed();
     }
 
-    // asercja – komunikat potwierdzający usunięcie adresu
-    public YourAddresses verifyDeleteMsgDisplayed() {
-        $x("//li[contains(text(),'Address successfully deleted!')]").shouldBe(visible);
-        return this;
+    // asercja – komunikat potwierdzający usunięcie adresu 'Address successfully deleted!'
+    public boolean isDeleteMsgDisplayed() {
+        return $x("//li[contains(text(),'Address successfully deleted!')]").shouldBe(visible).isDisplayed();
     }
 }

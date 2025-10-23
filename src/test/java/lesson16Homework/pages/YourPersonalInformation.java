@@ -8,26 +8,21 @@ public class YourPersonalInformation {
 
     // Personal Information – checkbox zgody na przetwarzanie danych osobowych
     public YourPersonalInformation customerPrivacyCheckbox() {
-        $x("//input[@name='customer_privacy']").click();
-        return this;
+        $x("//input[@name='customer_privacy']").shouldBe(visible).click();
     }
 
     // Personal Information – checkbox akceptacji regulaminu i polityki prywatności
-    public YourPersonalInformation termsAndConditionsCheckbox() {
-        $x("//input[@name='psgdpr']").click();
-        return this;
+    public void termsAndConditionsCheckbox() {
+        $x("//input[@name='psgdpr']").shouldBe(visible).click();
     }
 
     // Kliknięcie w button 'Save'
-    public YourPersonalInformation saveButton() {
-        $x("//button[@class='btn btn-primary form-control-submit float-xs-right']").click();
-        return this;
+    public void saveButton() {
+        $x("//button[@class='btn btn-primary form-control-submit float-xs-right']").shouldBe(visible).click();
     }
 
     // Asercja – sprawdzenie pojawienia się komunikatu 'Information successfully updated.'
     public boolean isMsgThatInformationUpdated() {
-        return $x("//ul/li[contains(text(),'Information successfully updated.')]")
-                .shouldBe(visible)
-                .isDisplayed();
+        return $x("//ul/li[contains(text(),'Information successfully updated.')]").shouldBe(visible).isDisplayed();
     }
 }

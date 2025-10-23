@@ -9,73 +9,65 @@ import static com.codeborne.selenide.Selenide.$x;
 public class ProductTheBestIsYetToCome {
 
     // kliknięcie w button dodania opinii o produkcie
-    public ProductTheBestIsYetToCome clickProductReviewButton() {
-        $x("//div[@class='product-comment-list-item']/button").click();
-        return this;
+    public void productReviewButton() {
+        $x("//div[@class='product-comment-list-item']/button").shouldBe(visible).click();
     }
 
     // popup 'Write your review' - wpisanie tytułu komentarza
-    public ProductTheBestIsYetToCome enterReviewTitle() {
-        $("#comment_title").setValue("Moja ocena produktu");
-        return this;
+    public void reviewTitle() {
+        $("#comment_title").shouldBe(visible).setValue("Moja ocena produktu");
     }
 
     // popup 'Write your review' - wpisanie treści komentarza
-    public ProductTheBestIsYetToCome enterReviewText() {
-        $("#comment_content").setValue("To bardzo dobry produkt.");
-        return this;
+    public void reviewFillIn() {
+        $("#comment_content").shouldBe(visible).setValue("To bardzo dobry produkt.");
     }
 
     // popup 'Write your review' - kliknięcie w button 'Send'
-    public ProductTheBestIsYetToCome clickSendReviewButton() {
-        $x("//button[@class='btn btn-comment btn-comment-big']").click();
-        return this;
+    public void sendReviewButton() {
+        $x("//button[@class='btn btn-comment btn-comment-big']").shouldBe(visible).click();
     }
+
     // review sent popup - kliknięcie w button 'OK'
-    public ProductTheBestIsYetToCome clickOkReviewButton() {
-        $x("//div[contains(text(), 'Your comment has been submitted and will be available once approved by a moderator.')]" +
-                "/../div[@class='post-comment-buttons']/button[@class='btn btn-comment btn-comment-huge']").click();
-        return this;
+    public void okReviewButton() {
+        $x("//div[contains(text(), 'Your comment has been submitted and will be available once " +
+                "approved by a moderator.')]/../div[@class='post-comment-buttons']" +
+                "/button[@class='btn btn-comment btn-comment-huge']").shouldBe(visible).click();
     }
 
     // kliknięcie button 'Add to cart'
-    public ProductTheBestIsYetToCome clickAddToCartButton() {
-        $x("//button[@class='btn btn-primary add-to-cart']").click();
-        return this;
+    public void addToCartButton() {
+        $x("//button[@class='btn btn-primary add-to-cart']").shouldBe(visible).click();
     }
 
     // popup 'Product successfully added...' - kliknięcie 'Proceed to checkout'
-    public ProductTheBestIsYetToCome clickProceedToCheckoutButton() {
-        $x("//a[@class='btn btn-primary']/i").click();
-        return this;
+    public void proceedToCheckoutButton() {
+        $x("//a[@class='btn btn-primary']/i").shouldBe(visible).click();
     }
 
     // asercja - potwierdzenie dodania komentarza
-    public ProductTheBestIsYetToCome verifyCommentAdded() {
-        $x("//div[@id='product-comment-posted-modal-message']").shouldBe(visible);
-        return this;
+    public boolean isCommentAdded() {
+        return $x("//div[@id='product-comment-posted-modal-message']").shouldBe(visible).isDisplayed();
     }
 
     // ustawienie ilości produktu przez wpisanie liczby
-    public ProductTheBestIsYetToCome setProductQuantity(int quantity) {
-        SelenideElement quantityField = $("#quantity_wanted");
+    public void putProductQuantityEnterNumber(int quantity) {
+        SelenideElement quantityField = $("#quantity_wanted").shouldBe(visible);
         quantityField.clear();
         quantityField.setValue(String.valueOf(quantity));
-        return this;
     }
 
     // ustawienie ilości produktu przez strzałkę 'increase'
-    public ProductTheBestIsYetToCome increaseProductQuantityByArrow(int quantity) {
-        SelenideElement increaseArrow = $x("//i[@class='material-icons touchspin-up']");
+    public void putProductQuantityIncreaseArrow(int quantity) {
+        SelenideElement increaseArrow = $x("//i[@class='material-icons touchspin-up']").shouldBe(visible);
         for (int i = 1; i <= quantity; i++) {
             increaseArrow.click();
         }
-        return this;
     }
 
     // asercja - potwierdzenie dodania produktu do koszyka
-    public ProductTheBestIsYetToCome verifyProductSuccessfullyAdded() {
-        $x("//h4[contains(text(),'Product successfully added to your shopping cart')]").shouldBe(visible);
-        return this;
+    public boolean isProductSuccessfullyAdded() {
+        return $x("//h4[contains(text(),'Product successfully added to your shopping cart')]")
+                .shouldBe(visible).isDisplayed();
     }
 }

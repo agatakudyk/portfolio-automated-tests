@@ -8,26 +8,22 @@ import static com.codeborne.selenide.Condition.visible;
 public class PasswordReset {
 
     // uzupełnienie pola 'Email address'
-    public PasswordReset enterEmail(String email) {
-        $x("//input[@class='form-control']").setValue(email);
-        return this;
+    public void email() {
+        $x("//input[@class='form-control']").setValue("test.mail@wp.pl");
     }
 
     // kliknięcie w button 'Send reset link'
-    public PasswordReset clickSendResetLink() {
-        $("#send-reset-link").click();
-        return this;
+    public void sendResetLink() {
+        $("#send-reset-link").shouldBe(visible).click();
     }
 
     // kliknięcie w link 'Back to Login'
-    public PasswordReset clickBackToLoginPage() {
-        $x("//i[@class='material-icons']").click();
-        return this;
+    public void backToLoginPageLink() {
+        $x("//i[@class='material-icons']").shouldBe(visible).click();
     }
 
     // asercja - sprawdzenie komunikatu potwierdzającego wysłanie maila
-    public PasswordReset verifySentMsgDisplayed() {
-        $x("//li[@class='item']/p").shouldBe(visible);
-        return this;
+    public boolean isMsgOfSentMsgDisplayed() {
+        return $x("//li[@class='item']/p").shouldBe(visible).isDisplayed();
     }
 }
