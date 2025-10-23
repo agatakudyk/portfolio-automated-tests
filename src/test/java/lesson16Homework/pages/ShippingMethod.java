@@ -1,31 +1,28 @@
 package lesson16Homework.pages;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
 
 public class ShippingMethod {
 
     // kliknięcie w button 'Continue' (przejście do 'Payment')
-    public ShippingMethod clickContinueButton() {
-        $("button[name='confirmDeliveryOption']").click();
-        return this;
+    public void continueButton() {
+        $("button[name='confirmDeliveryOption']").shouldBe(visible).click();
     }
 
     // wybranie formy dostawy 'My carrier'
-    public ShippingMethod selectPrestaShopDelivery() {
-        $("#delivery_option_2").click();
-        return this;
+    public void prestaShopRadioButton() {
+        $("#delivery_option_2").shouldBe(visible).click();
     }
 
     // wybranie formy dostawy pierwszej (nazwa ustawiana w Dockerze)
-    public ShippingMethod selectMyCarrierDelivery() {
-        $("#delivery_option_1").click();
-        return this;
+    public void myCarrierRadioButton() {
+        $("#delivery_option_1").shouldBe(visible).click();
     }
 
     // dodanie komentarza do zamówienia
-    public ShippingMethod addCommentToOrder() {
-        $("#delivery_message").setValue("Proszę o zostawienie paczki pod drzwiami.");
-        return this;
+    public void commentToOrder() {
+        $("#delivery_message").shouldBe(visible).setValue("Proszę o zostawienie paczki pod drzwiami.");
     }
 }
