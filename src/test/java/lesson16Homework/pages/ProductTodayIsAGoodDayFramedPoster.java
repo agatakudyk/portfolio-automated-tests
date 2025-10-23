@@ -8,12 +8,12 @@ public class ProductTodayIsAGoodDayFramedPoster {
 
     // kliknięcie w button 'Add to cart'
     public void addToCartButton() {
-        $x("//button[@data-button-action='add-to-cart']").click();
+        $x("//button[@data-button-action='add-to-cart']").shouldBe(visible).click();
     }
 
     // Popup w oknie produktu – kliknięcie w button 'Proceed to checkout'
     public void closeAddToCartPopup() {
-        $x("//a[@class='btn btn-primary']/i").click();
+        $x("//a[@class='btn btn-primary']/i").shouldBe(visible).click();
     }
 
     // Potwierdzenie pojawienia się popupu z komunikatem potwierdzającym dodanie produktu
