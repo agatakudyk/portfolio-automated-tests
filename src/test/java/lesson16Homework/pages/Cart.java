@@ -1,12 +1,8 @@
 package lesson16Homework.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
-import static lesson16Homework.driver.DriverProvider.getDriver;
 
 
 public class Cart {
@@ -34,34 +30,31 @@ public class Cart {
 
     //asercja - potwierdzenie pojawienia się komunikatu, że koszyk jest pusty
     public boolean isMsgThatCartEmpty() {
-        return $x("//span[contains(text(),\"There are no more items in your cart\")]").isDisplayed();
+        return $x("//span[contains(text(),\"There are no more items in your cart\")]")
+                .shouldBe(visible).isDisplayed();
     }
 
     //asercja - sprawdzenie nazwy produktu
     public String getProductNameInCart() {
         return $x("//div[@class=\"product-line-info\"]/a").getText();
     }
-    public String getUnitPrice(){
-        By unitPriceOfItemLocator = By.xpath("//div[@class=\"product-line-info product-price h5 \"]" + "/div[@class=\"current-price\"]");
-        WebElement unitPriceOfItem = getDriver().findElement(unitPriceOfItemLocator);
-        return unitPriceOfItem.getText().replace("zł", "").replace(",", ".").trim();
-    }
-    public String getQuantity(){
-        By numberInItemsSectionLocator = By.xpath("//input[@class='js-cart-line-product-quantity form-control']");
-        WebElement numberInItemSection = getDriver().findElement(numberInItemsSectionLocator);
-        return numberInItemSection.getDomAttribute("value");
+
+    public String getUnitPrice() {
+        return $x("//div[@class=\"product-line-info product-price h5 \"]/div[@class=\"current-price\"]")
+                .shouldBe(visible).getText().replace("zł", "").replace(",", ".").trim();
     }
 
-    public String getTotal(){
-        By totalPriceLocator = By.xpath("//div[@class='cart-summary-line cart-total']/span[@class='value']");
-        WebElement totalPriceElement = getDriver().findElement(totalPriceLocator);
-        return  totalPriceElement.getText().replace("zł", "").replace(",", ".").trim();
+    public String getQuantity() {
+        return $x("//input[@class='js-cart-line-product-quantity form-control']")
+                .shouldBe(visible).getDomAttribute("value");
     }
 
-    public String getQuantitySummary(){
-        By numberInPurchaseSummarySectionLocator = By.xpath("//span[@class='label js-subtotal']");
-        WebElement numberInPurchaseSummarySection = getDriver().findElement(numberInPurchaseSummarySectionLocator);
-        return numberInPurchaseSummarySection.getText();
+    public String getTotal() {
+        return $x("//div[@class='cart-summary-line cart-total']/span[@class='value']")
+                .shouldBe(visible).getText().replace("zł", "").replace(",", ".").trim();
     }
 
+    public String getQuantitySummary() {
+        return $x("//span[@class='label js-subtotal']").shouldBe(visible).getText();
+    }
 }
