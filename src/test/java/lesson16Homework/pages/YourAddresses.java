@@ -1,5 +1,6 @@
 package lesson16Homework.pages;
 
+import static com.codeborne.selenide.Condition.interactable;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Condition.visible;
 
@@ -8,7 +9,7 @@ public class YourAddresses {
 
     // usunięcie nowego adresu
     public void deleteNewAddress() {
-        $x("//address[contains(text(),'Janowiec')]/../..//span[contains(text(),'Delete')]")
+        $x("//address[text()[contains(.,\"Janowiec\")]]/../..//span[contains(text(),\"Delete\")]")
                 .shouldBe(visible).click();
     }
 
@@ -24,7 +25,8 @@ public class YourAddresses {
 
     // kliknięcie w link 'Update'
     public void updateAddress() {
-        $x("//address[contains(text(),'Janowiec')]/../..//span[contains(text(),'Update')]").shouldBe(visible).click();
+        $x("//address[text()[contains(.,\"Janowiec\")]]/../..//span[contains(text(),\"Update\")]")
+                .shouldBe(interactable).click();
     }
 
     // asercja – komunikat potwierdzający dodanie adresu

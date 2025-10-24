@@ -1,5 +1,6 @@
 package lesson16Homework.pages;
 
+import static com.codeborne.selenide.Condition.interactable;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
@@ -13,12 +14,12 @@ public class ShippingMethod {
 
     // wybranie formy dostawy 'My carrier'
     public void prestaShopRadioButton() {
-        $("#delivery_option_2").shouldBe(visible).click();
+        $("#delivery_option_2").shouldBe(interactable).click();
     }
 
     // wybranie formy dostawy pierwszej (nazwa ustawiana w Dockerze)
     public void myCarrierRadioButton() {
-        $("#delivery_option_1").shouldBe(visible).click();
+        $("#delivery_option_1").shouldBe(interactable).click();
     }
 
     // dodanie komentarza do zamówienia

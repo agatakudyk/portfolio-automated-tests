@@ -1,5 +1,6 @@
 package lesson16Homework.pages;
 
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 
@@ -41,15 +42,15 @@ public class MyWishlists {
     }
 
     // kliknięcie w trzy kropki
-    public void moreActionsButton() {
-        $x("//p[contains(text(),\\\"Super lista\\\")]\" +\n/../div[@class=\\\"wishlist-list-item-right" +
-                "\\\"]/button[@class=\\\"wishlist-list-item-actions\\\"]").shouldBe(visible).click();
+    public void moreActionsButton(String nazwaListy) {
+        $x("//p[contains(text(),\""+nazwaListy+"\")]/../div[@class=\"wishlist-list-item-right\"]/button[@class=\"wishlist-list-item-actions\"]")
+                .shouldBe(interactable).click();
     }
 
     //kliknięcie w 'Rename'
     public void renameWishlist() {
         $x("//p[contains(text(),\"Super lista\")]/..//div[@class=\"wishlist-list-item-right\"]" +
-                "/div[@class=\"dropdown-menu show\"]/button[contains(text(),\"Rename\")]").shouldBe(visible).click();
+                "/div[@class=\"dropdown-menu show\"]/button[contains(text(),\"Rename\")]").shouldBe(interactable).click();
     }
 
     //zmiana nazwy listy życzeń
@@ -71,13 +72,13 @@ public class MyWishlists {
 
     // kliknięcie w button 'Copy text'
     public void copyTextButton() {
-        $("button:contains('Copy text')").shouldBe(visible).click();
+        $x("//button[contains(text(),'Copy text')]").shouldBe(visible).click();
     }
 
     // usunięcie listy
     public void deleteWishlist() {
-        $x("//p[contains(text(),\\\"Lista życzeń\\\")]/../div[@class=\\\"wishlist-list-item-right\\\"]" +
-                "/button/i[contains(text(),\\\"delete\\\")]").shouldBe(visible).click();
+        $x("//p[contains(text(),\"Lista życzeń\")]/../div[@class=\"wishlist-list-item-right\"]" +
+                "/button/i[contains(text(),\"delete\")]").shouldBe(visible).click();
     }
 
     // kliknięcie w button 'Delete' w popup
@@ -87,7 +88,7 @@ public class MyWishlists {
 
     // asercja - TOAST 'The list has been properly created'
     public boolean isCreatedMsgDisplayed() {
-        return $("p:contains('The list has been properly created')").shouldBe(visible).isDisplayed();
+        return $x("//p[contains(text(),\"The list has been properly created\")]").shouldBe(visible).isDisplayed();
     }
 
     // asercja - lista o nazwie 'Super lista'
@@ -98,22 +99,22 @@ public class MyWishlists {
 
     // TOAST 'List has been renamed'
     public boolean isRenamedListMsgDisplayed() {
-        return $("p.wishlist-toast-text:contains('List has been renamed')").shouldBe(visible).isDisplayed();
+        return $x("//p[contains(text(),'List has been renamed')]").shouldBe(visible).isDisplayed();
     }
 
     // TOAST 'Share link copied!'
     public boolean isCopiedLinkMsgDisplayed() {
-        return $("p.wishlist-toast-text:contains('Share link copied!')").shouldBe(visible).isDisplayed();
+        return $x("//p[contains(text(),'Share link copied!')]").shouldBe(visible).isDisplayed();
     }
 
     // TOAST 'List has been removed'
     public boolean isRemovedListMsgDisplayed() {
-        return $("p:contains('List has been removed')").shouldBe(visible).isDisplayed();
+        return $x("//p[contains(text(),'List has been removed')]").shouldBe(visible).isDisplayed();
     }
 
     // pobranie wszystkich elementów wishlist
     public ElementsCollection getWishListElements() {
-        return $$("p.wishlist-product-title").filter(visible);
+        return $$("p.wishlist-product-title").shouldHave(CollectionCondition.sizeGreaterThan(0));
     }
 }
 

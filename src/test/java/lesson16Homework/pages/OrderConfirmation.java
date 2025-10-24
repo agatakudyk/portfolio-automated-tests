@@ -1,5 +1,6 @@
 package lesson16Homework.pages;
 
+import static com.codeborne.selenide.Condition.interactable;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Condition.visible;
@@ -9,22 +10,22 @@ public class OrderConfirmation {
 
     // kliknięcie w button 'Save'
     public void saveButtonInForm() {
-        $x("//button[contains(text(),'Save')]").shouldBe(visible).click();
+        $x("//button[contains(text(),'Save')]").shouldBe(interactable).click();
     }
 
     // checkbox zgody na przetwarzanie danych osobowych
     public void customerPrivacyCheckbox() {
-        $x("//input[@name='customer_privacy']").shouldBe(visible).click();
+        $x("//input[@name='customer_privacy']").shouldBe(interactable).click();
     }
 
     // checkbox akceptacji regulaminu i polityki prywatności
     public void termsAndConditionsCheckbox() {
-        $x("//input[@name='psgdpr']").shouldBe(visible).click();
+        $x("//input[@name='psgdpr']").shouldBe(interactable).click();
     }
 
     // kliknięcie w link kontaktu z działem obsługi klienta
     public void customerServiceDepartmentContact() {
-        $x("//a[contains(text(),'customer service department.')]").shouldBe(visible).click();
+        $x("//a[contains(text(),'customer service department.')]").shouldBe(interactable).click();
     }
 
     // asercja - potwierdzenie pojawienia się komunikatu potwierdzającego 'Your order is confirmed'
@@ -34,6 +35,6 @@ public class OrderConfirmation {
 
     // asercja - pobranie komunikatu walidacyjnego
     public String getValidationMsg() {
-        return $("#field-firstname").shouldBe(visible).getText();
+        return $("#field-firstname").shouldBe(visible).getAttribute("validationMessage");
     }
 }

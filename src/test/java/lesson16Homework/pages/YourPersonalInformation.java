@@ -2,18 +2,19 @@ package lesson16Homework.pages;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.interactable;
 
 
 public class YourPersonalInformation {
 
     // Personal Information – checkbox zgody na przetwarzanie danych osobowych
     public void customerPrivacyCheckbox() {
-        $x("//input[@name='customer_privacy']").shouldBe(visible).click();
+        $x("//input[@name='customer_privacy']").shouldBe(interactable).click();
     }
 
     // Personal Information – checkbox akceptacji regulaminu i polityki prywatności
     public void termsAndConditionsCheckbox() {
-        $x("//input[@name='psgdpr']").shouldBe(visible).click();
+        $x("//input[@name='psgdpr']").shouldBe(interactable).click();
     }
 
     // Kliknięcie w button 'Save'

@@ -14,7 +14,7 @@ public class Cart {
 
     //powrót na stronę główną
     public void homePageLink() {
-        $("_desktop_logo").shouldBe(visible).click();
+        $("#_desktop_logo").shouldBe(visible).click();
     }
 
     //kliknięcie w button 'Proceed to checkout'
@@ -36,7 +36,7 @@ public class Cart {
 
     //asercja - sprawdzenie nazwy produktu
     public String getProductNameInCart() {
-        return $x("//div[@class=\"product-line-info\"]/a").getText();
+        return $x("//div[@class=\"product-line-info\"]/a").shouldBe(visible).getText();
     }
 
     public String getUnitPrice() {

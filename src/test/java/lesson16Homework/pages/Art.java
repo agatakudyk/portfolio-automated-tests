@@ -1,9 +1,10 @@
 package lesson16Homework.pages;
 
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Condition.visible;
 
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 
 
 public class Art {
@@ -13,16 +14,12 @@ public class Art {
         $x("//button[@aria-label='Sort by selection']").shouldBe(visible).click();
     }
 
-    //todo posortowanie według 'Name, A to Z'
     public void sortByNameAZ() {
-        $x("//button[@aria-label='Sort by selection']").shouldBe(visible).click();
-        $x("//div[@class=\"dropdown-menu\"]/a[contains(text(),\"Name, A to Z\")]").shouldBe(visible).click();
+        $x("//div[@class=\"dropdown-menu\"]/a[contains(text(),\"Name, A to Z\")]").shouldBe(interactable).click();
     }
 
-    //todo posortowanie według 'Price, low to high'
     public void sortByPriceAsc() {
-        $x("//button[@aria-label='Sort by selection']").shouldBe(visible).click();
-        $x("//div[@class='dropdown-menu']/a[contains(text(),'Price, low to high')]").shouldBe(visible).click();
+        $x("//div[@class='dropdown-menu']/a[contains(text(),'Price, low to high')]").shouldBe(interactable).click();
     }
 
     // wejście w okno produktu 'The Best Is Yet...'
@@ -32,12 +29,12 @@ public class Art {
 
     // pobranie listy produktów po nazwie
     public ElementsCollection getProductsByDescription() {
-        return $$x("//div[@class='product-description']/h2/a").filter(visible);
+        return $$x("//div[@class='product-description']/h2/a");
     }
 
     // pobranie listy produktów po cenie
     public ElementsCollection getProductsByPrice() {
-        return $$x("//div[@class='product-price-and-shipping']/span").filter(visible);
+        return $$x("//div[@class='product-price-and-shipping']/span");
     }
 }
 

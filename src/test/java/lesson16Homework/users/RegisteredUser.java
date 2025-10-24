@@ -18,7 +18,7 @@ public class RegisteredUser {
 
     // uzupełnienie pola 'Email'
     public void email() {
-        $("#field-email").setValue("testowianka306@wp.pl");
+        $("#field-email").setValue("testowianka345@p.pl");
     }
 
     // uzupełnienie pola 'Password'

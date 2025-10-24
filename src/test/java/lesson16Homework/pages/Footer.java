@@ -9,7 +9,7 @@ public class Footer {
 
     // kliknięcie w link 'Prices drop'
     public void pricesDrop() {
-        $("#link-product-page-prices-drop-1").click();
+        $("#link-product-page-prices-drop-1").shouldBe(visible).click();
     }
 
     // Potwierdzenie otwarcia podstrony 'Prices drop'

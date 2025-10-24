@@ -34,7 +34,7 @@ public class LogIn {
 
     // asercja - pobranie komunikatu walidacyjnego "Wypełnij pole"
     public String getValidationMessage() {
-        return $("#field-email").shouldBe(visible).getText();
+        return $("#field-email").shouldBe(visible).getAttribute("validationMessage");
     }
 
     // asercja - sprawdzenie komunikatu 'Authentication failed.'

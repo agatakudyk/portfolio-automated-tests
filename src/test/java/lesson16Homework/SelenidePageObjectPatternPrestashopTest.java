@@ -551,7 +551,7 @@ public class SelenidePageObjectPatternPrestashopTest {
             List<String> productsAlphabeticalOrder = productsNames.stream().sorted().toList();
 
             for (int i = 0; i < productsNames.size(); i++) {
-                Assertions.assertEquals(productsNames.get(i), productsAlphabeticalOrder.get(i));
+                Assertions.assertEquals(productsAlphabeticalOrder.get(i), productsNames.get(i));
             }
         });
 
@@ -574,7 +574,7 @@ public class SelenidePageObjectPatternPrestashopTest {
             List<String> productsAlphabeticalOrder2 = productsPrices.stream().sorted().toList();
 
             for (int i = 0; i < productsPrices.size(); i++) {
-                Assertions.assertEquals(productsPrices.get(i), productsAlphabeticalOrder2.get(i));
+                Assertions.assertEquals(productsAlphabeticalOrder2.get(i), productsPrices.get(i));
             }
         });
     }
@@ -1142,7 +1142,7 @@ public class SelenidePageObjectPatternPrestashopTest {
 
         step("My wishlists - kliknięcie w trzy kropki", () -> {
             MyWishlists myWishlists = new MyWishlists();
-            myWishlists.moreActionsButton();
+            myWishlists.moreActionsButton("Super lista");
         });
 
         step("My wishlists - kliknięcie w 'Rename'", () -> {
@@ -1167,7 +1167,7 @@ public class SelenidePageObjectPatternPrestashopTest {
 
         step("My wishlists - kliknięcie w trzy kropki", () -> {
             MyWishlists myWishlists = new MyWishlists();
-            myWishlists.moreActionsButton();
+            myWishlists.moreActionsButton("Lista życzeń");
         });
 
         step("My wishlists - kliknięcie w button 'Share'", () -> {
