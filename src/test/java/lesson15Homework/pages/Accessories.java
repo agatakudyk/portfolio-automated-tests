@@ -11,20 +11,14 @@ public class Accessories {
 
     //wybór filtra 'Ceramic'
     public void ceramicCompositionFilter() {
-        By ceramicCompositionFilterLocator = By.xpath("//a[contains(text(),\"Ceramic\")]");
-        getDriver().findElement(ceramicCompositionFilterLocator).click();
-
-        By ceramicCompositionFilterCheckboxLocator = By.xpath("//a[contains(text(),\"Ceramic\")]/../span/input");
-        getWaiter().until(ExpectedConditions.elementToBeSelected(ceramicCompositionFilterCheckboxLocator));
+        getDriver().findElement(By.xpath("//a[contains(text(),\"Ceramic\")]")).click();
+        getWaiter().until(ExpectedConditions.elementToBeSelected(By.xpath("//a[contains(text(),\"Ceramic\")]/../span/input")));
     }
 
     //wybór filtra 'Available'
     public void availableFilter() {
-        By availableFilterLocator = By.xpath("//a[contains(text(),\"Available\")]");
-        getDriver().findElement(availableFilterLocator).click();
-
-        By availableFilterCheckboxLocator = By.xpath("//a[contains(text(),\"Available\")]/../span/input");
-        getWaiter().until(ExpectedConditions.elementToBeSelected(availableFilterCheckboxLocator));
+        getDriver().findElement(By.xpath("//a[contains(text(),\"Available\")]")).click();
+        getWaiter().until(ExpectedConditions.elementToBeSelected(By.xpath("//a[contains(text(),\"Available\")]/../span/input")));
     }
 
     //wyczyszczenie wybranych filtrów
@@ -36,8 +30,6 @@ public class Accessories {
 
     //asercja - potwierdzenie wyczyszczenia filtrów
     public boolean isFilterClear() {
-        By activeFiltersLocator = By.xpath("//p[contains(text(),\"Active filters\")]");
-        getWaiter().until(ExpectedConditions.invisibilityOfElementLocated(activeFiltersLocator));
-        return getDriver().findElement(activeFiltersLocator).isDisplayed();
+        return getWaiter().until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//p[contains(text(),\"Active filters\")]")));
     }
 }

@@ -9,27 +9,24 @@ public class ContactUs {
 
     //kliknięcie w button 'Send'
     public void sendButton() {
-        By sendButtonInContactUsSectionLocator = By.xpath("//input[@class=\"btn btn-primary\"]");
-        getDriver().findElement(sendButtonInContactUsSectionLocator).click();
+        getDriver().findElement(By.xpath("//input[@class=\"btn btn-primary\"]")).click();
     }
 
     //wpisanie treści wiadomości
-    public void msgFillIn() {
-        By msgFieldInContactUsSectionLocator = By.id("contactform-message");
-        getDriver().findElement(msgFieldInContactUsSectionLocator).sendKeys("Chcę otrzymać FV za zamówienie.");
+    public void msgFillIn(String message) {
+        getDriver().findElement(By.id("contactform-message")).sendKeys(message);
     }
 
     //asercja - potwierdzenie pojawienia się komunikatu walidacyjnego
     public boolean isValidationMsgDisplayed() {
-        By validationMsgInContactUsSectionLocator = By.xpath(
-                "//li[contains(text(),\"The message cannot be blank.\")]");
-        return getDriver().findElement(validationMsgInContactUsSectionLocator).isDisplayed();
+        return getDriver().findElement(By.xpath("//li[contains(text(),\"The message cannot be blank.\")]"))
+                .isDisplayed();
     }
 
     //asercja - potwierdzenie komunikatu informacyjnego 'Your message has been successfully sent to our team.'
     public boolean isInformationMsgDisplayed() {
-        By successMsgInContactUsSectionLocator = By.xpath("//li[contains(text(),\"Your message has " +
-                "been successfully sent to our team.\")]");
-        return getDriver().findElement(successMsgInContactUsSectionLocator).isDisplayed();
+        return getDriver().findElement(By.xpath("//li[contains(text(),\"Your message has " +
+                "been successfully sent to our team.\")]"))
+                .isDisplayed();
     }
 }

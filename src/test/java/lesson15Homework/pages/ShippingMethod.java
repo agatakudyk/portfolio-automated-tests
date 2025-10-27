@@ -9,25 +9,21 @@ public class ShippingMethod {
 
     //kliknięcie w button 'Continue' (przejście do 'Payment')
     public void continueButton() {
-        By continueButtonShippingMethodLocator = By.xpath("//button[@name=\"confirmDeliveryOption\"]");
-        getDriver().findElement(continueButtonShippingMethodLocator).click();
+        getDriver().findElement(By.xpath("//button[@name=\"confirmDeliveryOption\"]")).click();
     }
 
     //wybranie formy dostawy 'My carrier'
     public void prestaShopRadioButton() {
-        By prestaShopRadioButtonLocator = By.id("delivery_option_2");
-        getDriver().findElement(prestaShopRadioButtonLocator).click();
+        getDriver().findElement(By.id("delivery_option_2")).click();
     }
 
     //wybranie formy dostawy pierwszej/nazwa ustawiana w Dockerze
     public void myCarrierRadioButton() {
-        By myCarrierRadioButtonLocator = By.id("delivery_option_1");
-        getDriver().findElement(myCarrierRadioButtonLocator).click();
+        getDriver().findElement(By.id("delivery_option_1")).click();
     }
 
     //dodanie komentarza do zamówienia
-    public void commentToOrder() {
-        By commentToOrderFieldLocator = By.id("delivery_message");
-        getDriver().findElement(commentToOrderFieldLocator).sendKeys("Proszę o zostawienie paczki pod drzwiami.");
+    public void commentToOrder(String orderComment) {
+        getDriver().findElement(By.id("delivery_message")).sendKeys(orderComment);
     }
 }

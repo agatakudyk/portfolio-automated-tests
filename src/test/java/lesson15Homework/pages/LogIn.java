@@ -11,47 +11,39 @@ public class LogIn {
 
     //kliknięcie w link rejestracji
     public void signupLink() {
-        By signupLocator = By.cssSelector("a[data-link-action=\"display-register-form\"]");
-        getDriver().findElement(signupLocator).click();
+        getDriver().findElement(By.cssSelector("a[data-link-action=\"display-register-form\"]")).click();
     }
 
     //kliknięcie w button 'Sign In'
     public void signInButton() {
-        By loginButtonLocator = By.id("submit-login");
-        getDriver().findElement(loginButtonLocator).click();
+        getDriver().findElement(By.id("submit-login")).click();
     }
 
     //uzupełnienie pola 'Email / email nieistniejący w bazie
-    public void emailField() {
-        By emailInputLocator = By.id("field-email");
-        getDriver().findElement(emailInputLocator).sendKeys("blablabla@wp.pl");
+    public void emailField(String emailAddress) {
+        getDriver().findElement(By.id("field-email")).sendKeys(emailAddress);
     }
 
     // uzupełnienie pola 'Password'
     public void passwordField() {
-        By passwordLoginLocator = By.id("field-password");
-        getDriver().findElement(passwordLoginLocator).sendKeys("blepassword");
+        getDriver().findElement(By.id("field-password")).sendKeys("blepassword");
     }
 
     //kliknięcie w link 'Forgot your password?'
     public void passwordRecoveryLink() {
-        By passwordRecoveryLocator = By.xpath(" //div[@class=\"forgot-password\"]/a");
-        getDriver().findElement(passwordRecoveryLocator).click();
+        getDriver().findElement(By.xpath(" //div[@class=\"forgot-password\"]/a")).click();
     }
 
     //asercja - potwierdzenie pojawienia się komunikatu walidacyjnego "Wypełnij pole"
     public String getValidationMsg() {
-        By emailInputLocator = By.id("field-email");
-        WebElement emailInput = getDriver().findElement(emailInputLocator);
+        WebElement emailInput = getDriver().findElement(By.id("field-email"));
 
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        String msg = (String) js.executeScript("return arguments[0].validationMessage", emailInput);
-        return msg;
+        return  (String) js.executeScript("return arguments[0].validationMessage", emailInput);
     }
 
     //asercja - sprawdzenie komunikatu 'Authentication failed.'
     public boolean isMsgAuthenticationFailedDisplayed() {
-        By failMsgLocator = By.xpath("//li[@class=\"alert alert-danger\"]");
-        return getDriver().findElement(failMsgLocator).isDisplayed();
+        return getDriver().findElement(By.xpath("//li[@class=\"alert alert-danger\"]")).isDisplayed();
     }
 }

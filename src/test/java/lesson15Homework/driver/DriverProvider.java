@@ -1,5 +1,6 @@
 package lesson15Homework.driver;
 
+import config.ConfigReader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -12,13 +13,13 @@ public class DriverProvider {
 
     private static WebDriver driver;
     private static WebDriverWait wait;
-    private static String browser = "Chrome";
 
     private DriverProvider() {
     }
 
     public static WebDriver getDriver() {
 
+        String browser = ConfigReader.get("browser");
         if (driver == null) {
             switch (browser) {
                 case "Chrome":
@@ -34,8 +35,8 @@ public class DriverProvider {
                     driver = new ChromeDriver();
             }
 
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-            wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+            wait = new WebDriverWait(driver, Duration.ofSeconds(Integer.parseInt(ConfigReader.get("timeout"))));
         }
         return driver;
     }

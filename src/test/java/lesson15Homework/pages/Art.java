@@ -20,17 +20,14 @@ public class Art {
 
     //posortowanie według 'Name, A to Z'
     public void sortByNameAZ() {
-        By sortByListLocator = By.xpath("//button[@aria-label=\"Sort by selection\"]");
-        WebElement sortBy = getDriver().findElement(sortByListLocator);
-        By sortByNameAZLocator = By.xpath("//div[@class=\"dropdown-menu\"]/a[contains(text(),\"Name, A to Z\")]");
-        getDriver().findElement(sortByNameAZLocator).click();
+        WebElement sortBy = getDriver().findElement(By.xpath("//button[@aria-label=\"Sort by selection\"]"));
+        getDriver().findElement(By.xpath("//div[@class=\"dropdown-menu\"]/a[contains(text(),\"Name, A to Z\")]")).click();
         getWaiter().until(ExpectedConditions.stalenessOf(sortBy));
     }
 
     //posortowanie według ‘Price, low to high’
     public void sortByPriceAsc() {
-        By sortByListLocator = By.xpath("//button[@aria-label=\"Sort by selection\"]");
-        WebElement sortBy = getDriver().findElement(sortByListLocator);
+        WebElement sortBy = getDriver().findElement(By.xpath("//button[@aria-label=\"Sort by selection\"]"));
 
         By sortByPriceAscLocator = By.xpath("//div[@class=\"dropdown-menu\"]" +
                 "/a[contains(text(),\"Price, low to high\")]");
@@ -42,17 +39,14 @@ public class Art {
 
     //wejście w okno produktu 'The Best Is Yet...'
     public void theBestPoster() {
-        By theBestPosterLocator = By.xpath("//img[@alt=\"The best is yet to come' Framed poster\"]");
-        getDriver().findElement(theBestPosterLocator).click();
+        getDriver().findElement(By.xpath("//img[@alt=\"The best is yet to come' Framed poster\"]")).click();
     }
 
-    public List<WebElement> getproductsbyDescription(){
-        By productsListLocator = By.xpath("//div[@class=\"product-description\"]/h2/a");
-        return getDriver().findElements(productsListLocator);
+    public List<WebElement> getProductsbyDescription(){
+        return getDriver().findElements(By.xpath("//div[@class=\"product-description\"]/h2/a"));
     }
     public List<WebElement> getProductByPrice(){
-        By productsListLocator = By.xpath("//div[@class=\"product-price-and-shipping\"]/span");
-        return getDriver().findElements(productsListLocator);
+        return getDriver().findElements(By.cssSelector("span.price[aria-label='Cena']"));
     }
 
 

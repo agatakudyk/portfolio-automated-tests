@@ -9,7 +9,6 @@ public class NewAddress {
 
     //kliknięcie w button 'Save
     public void saveButton() {
-        By saveButtonLocator = By.xpath("//button[@class=\"btn btn-primary form-control-submit float-xs-right\"]");
-        getDriver().findElement(saveButtonLocator).click();
+        getDriver().findElement( By.xpath("//button[@class=\"btn btn-primary form-control-submit float-xs-right\"]")).click();
     }
 }

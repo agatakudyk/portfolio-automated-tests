@@ -11,42 +11,34 @@ public class OrderConfirmation {
 
     //kliknięcie w button 'Save'
     public void saveButtonInForm() {
-        By saveButtonLocator = By.xpath("//button[contains(text(),\"Save\")]");
-        getDriver().findElement(saveButtonLocator).click();
+        getDriver().findElement(By.xpath("//button[contains(text(),\"Save\")]")).click();
     }
 
     //checkbox zgody na przetwarzanie danych osobowych
     public void customerPrivacyCheckbox() {
-        By policyInfoLocator = By.xpath("//input[@name=\"customer_privacy\"]");
-        getDriver().findElement(policyInfoLocator).click();
+        getDriver().findElement(By.xpath("//input[@name=\"customer_privacy\"]")).click();
     }
 
     //checkbox akceptacji regulaminu i polityki prywatności
     public void termsAndConditionsCheckbox() {
-        By privacyPolicyLocator = By.xpath("//input[@name=\"psgdpr\"]");
-        getDriver().findElement(privacyPolicyLocator).click();
+        getDriver().findElement(By.xpath("//input[@name=\"psgdpr\"]")).click();
     }
 
     //kliknięcie w link kontaktu z działem obsługi klienta
     public void customerServiceDepartmentContact() {
-        By customerServiceDepartmentContactLocator = By.xpath(
-                "//a[contains(text(),\"customer service department.\")]");
-        getDriver().findElement(customerServiceDepartmentContactLocator).click();
+        getDriver().findElement(By.xpath("//a[contains(text(),\"customer service department.\")]")).click();
     }
 
     //asercja - potwierdzenie pojawienia się komunikatu potwierdzającego 'Your order is confirmed'
     public boolean isMsgThatOrderConfirmed() {
-        By confirmationMsgLocator = By.xpath("//h3[@class=\"h1 card-title\"]/i");
-        return getDriver().findElement(confirmationMsgLocator).isDisplayed();
+        return getDriver().findElement(By.xpath("//h3[@class=\"h1 card-title\"]/i")).isDisplayed();
     }
 
     //asercja - potwierdzenie pojawienia się dymka z komunikatem walidacyjnym
     public String getValidationMsg() {
-        By firstNameFieldLocator = By.id("field-firstname");
-        WebElement firstNameField = getDriver().findElement(firstNameFieldLocator);
+        WebElement firstNameField = getDriver().findElement(By.id("field-firstname"));
 
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        String msg = (String) js.executeScript("return arguments[0].validationMessage", firstNameField);
-        return msg;
+        return  (String) js.executeScript("return arguments[0].validationMessage", firstNameField);
     }
 }

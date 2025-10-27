@@ -1,5 +1,6 @@
 package lesson15Homework;
 
+import config.ConfigReader;
 import lesson15Homework.driver.DriverProvider;
 import lesson15Homework.pages.*;
 import lesson15Homework.users.RegisteredUser;
@@ -7,25 +8,26 @@ import lesson15Homework.users.UnregisteredUserData;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 import static io.qameta.allure.Allure.step;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PageObjectPatternPrestashopTest {
 
     static WebDriver driver;
-    static WebDriverWait wait;
 
+    private final String mailUsedTotest = "testowianka306@wp.pl";
+    private final String passUsedTotest = "Password123";
+    private final String newPasswordTest = "TestTest123";
     @BeforeAll
     public static void beforeAll() {
 
         driver = DriverProvider.getDriver();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        driver.get("http://localhost:8080/pl/");
+        driver.get(ConfigReader.get("baseUrl"));
     }
 
     @Test   //Home page - zmiana języka strony z polskiego na angielski
@@ -135,17 +137,17 @@ public class PageObjectPatternPrestashopTest {
 
         step("Personal Information - uzupełnienie pola 'First name'", () -> {
             UnregisteredUserData unregisteredUser = new UnregisteredUserData();
-            unregisteredUser.firstName();
+            unregisteredUser.firstName("Tomasz");
         });
 
         step("Personal Information - uzupełnienie pola 'Last name'", () -> {
             UnregisteredUserData unregisteredUser = new UnregisteredUserData();
-            unregisteredUser.lastName();
+            unregisteredUser.lastName("Kot");
         });
 
         step("Personal Information - uzupełnienie pola 'Email'", () -> {
             UnregisteredUserData unregisteredUser = new UnregisteredUserData();
-            unregisteredUser.email();
+            unregisteredUser.email("kot123@wp.pl");
         });
 
         step("Personal Information - checkbox zgody na przetwarzanie danych osobowych", () -> {
@@ -165,17 +167,17 @@ public class PageObjectPatternPrestashopTest {
 
         step("Addresses - uzupełnienie pola 'Address'", () -> {
             UnregisteredUserData unregisteredUser = new UnregisteredUserData();
-            unregisteredUser.address();
+            unregisteredUser.address("ul. Jaskrawa 23");
         });
 
         step("Addresses - uzupełnienie pola 'Zip/Postal Code'", () -> {
             UnregisteredUserData unregisteredUser = new UnregisteredUserData();
-            unregisteredUser.postalCode();
+            unregisteredUser.postalCode("11-788");
         });
 
         step("Addresses - uzupełnienie pola 'City'", () -> {
             UnregisteredUserData unregisteredUser = new UnregisteredUserData();
-            unregisteredUser.city();
+            unregisteredUser.city("Koszalin");
         });
 
         step("Addresses - przejście do 'Shipping Method' poprzez kliknięcie w button 'Continue'", () -> {
@@ -225,22 +227,22 @@ public class PageObjectPatternPrestashopTest {
 
         step("‘Save time on...' form - uzupełnienie pola 'First name'", () -> {
             UnregisteredUserData unregistered = new UnregisteredUserData();
-            unregistered.firstName();
+            unregistered.firstName("Tomasz");
         });
 
         step("‘Save time on...' form - uzupełnienie pola 'Last name'", () -> {
             UnregisteredUserData unregistered = new UnregisteredUserData();
-            unregistered.lastName();
+            unregistered.lastName("Kot");
         });
 
         step("‘Save time on...' form - uzupełnienie pola 'Email'", () -> {
             UnregisteredUserData unregistered = new UnregisteredUserData();
-            unregistered.email();
+            unregistered.email("kot123@wp.pl");
         });
 
         step("‘Save time on...' form - uzupełnienie pola 'Password'", () -> {
             UnregisteredUserData unregistered = new UnregisteredUserData();
-            unregistered.password();
+            unregistered.password("Mojehaslo123");
         });
 
         step("‘Save time on...' form - kliknięcie w checkbox zgody na przetwarzanie danych osobowych", () -> {
@@ -285,22 +287,22 @@ public class PageObjectPatternPrestashopTest {
 
         step("Create account - uzupełnienie pola 'First name'", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.name();
+            registered.name("Anna");
         });
 
         step("Create account - uzupełnienie pola 'Last name'", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.lastName();
+            registered.lastName("Testowianka");
         });
 
         step("Create account - uzupełnienie pola 'Email'", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.email();
+            registered.email(mailUsedTotest);
         });
 
         step("Create Account - uzupełnienie pola 'Password'", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.password();
+            registered.password(passUsedTotest);
         });
 
         step("Create Account - kliknięcie w checkbox informacji o przetwarzaniu danych osobowych", () -> {
@@ -356,7 +358,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Login page - uzupełnienie pola 'Email'", () -> {
             LogIn login = new LogIn();
-            login.emailField();
+            login.emailField("blablabla@wp.pl");
         });
 
         step("Login page - uzupełnienie pola 'Password'", () -> {
@@ -411,12 +413,12 @@ public class PageObjectPatternPrestashopTest {
 
         step("Login page - uzupełnienie pola 'Email'", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.email();
+            registered.email(mailUsedTotest);
         });
 
         step("Login page - uzupełnienie pola 'Password'", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.password();
+            registered.password(passUsedTotest);
         });
 
         step("Login page - kliknięcie w button 'Sign In'", () -> {
@@ -436,12 +438,13 @@ public class PageObjectPatternPrestashopTest {
 
         step("Your personal information - uzupełnienie pola 'Password' / dotychczasowe hasło", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.password();
+            registered.password(passUsedTotest);
         });
+
 
         step("Your personal information - uzupełnienie pola 'New password' / nowe hasło", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.newPassword();
+            registered.newPassword(newPasswordTest);
         });
 
         step("Your personal information - checkbox akceptacji regulaminu i polityki prywatności", () -> {
@@ -471,12 +474,12 @@ public class PageObjectPatternPrestashopTest {
 
         step("Login page - uzupełnienie pola email", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.email();
+            registered.email(mailUsedTotest);
         });
 
         step("Login page - uzupełnienie nowego hasła", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.newLoginPassword();
+            registered.password(newPasswordTest);
         });
 
         step("Login page - kliknięcie w button 'Sign In'", () -> {
@@ -506,12 +509,12 @@ public class PageObjectPatternPrestashopTest {
 
         step("wpisanie aktualnego hasła logowania", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.newPassword();
+            registered.newPassword(newPasswordTest);
         });
 
         step("wpisanie nowego hasła logowania", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.password();
+            registered.password(passUsedTotest);
         });
 
         step("Your personal information - checkbox akceptacji regulaminu i polityki prywatności", () -> {
@@ -556,7 +559,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Accessories page - potwierdzenie wyczyszczenia filtrów", () -> {
             Accessories accessories = new Accessories();
-            Assertions.assertFalse(accessories.isFilterClear());
+            Assertions.assertTrue(accessories.isFilterClear());
         });
     }
 
@@ -583,7 +586,7 @@ public class PageObjectPatternPrestashopTest {
             Art art = new Art();
 
             List<String> productsNames = new ArrayList<>();
-            for (WebElement product : art.getproductsbyDescription()) {
+            for (WebElement product : art.getProductsbyDescription()) {
                 productsNames.add(product.getText());
             }
             List<String> productsAlphabeticalOrder = productsNames.stream().sorted().toList();
@@ -633,12 +636,12 @@ public class PageObjectPatternPrestashopTest {
 
         step("popup 'Write your review' - wpisanie tytułu komentarza", () -> {
             ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
-            best.reviewTitle();
+            best.reviewTitle("Moja ocena produktu");
         });
 
         step("WRITE YOUR REVIEW - wpisanie treści komentarza", () -> {
             ProductTheBestIsYetToCome best = new ProductTheBestIsYetToCome();
-            best.reviewFillIn();
+            best.reviewFillIn("To bardzo dobry produkt.");
         });
 
         step("WRITE YOUR REVIEW - kliknięcie w button 'Send'", () -> {
@@ -745,17 +748,17 @@ public class PageObjectPatternPrestashopTest {
 
         step("Addresses - uzupełnienie pola 'Address'", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.address();
+            registered.address("ul. Prosta 11");
         });
 
         step("Addresses - uzupełnienie pola 'Zip/Postal Code'", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.postalCode();
+            registered.postalCode("11-234");
         });
 
         step("Addresses - uzupełnienie pola 'City'", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.city();
+            registered.city("Warszawa");
         });
 
         step("Addresses - kliknięcie w button 'Continue'", () -> {
@@ -780,7 +783,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Shipping method - dodanie komentarza do zamówienia", () -> {
             ShippingMethod shipping = new ShippingMethod();
-            shipping.commentToOrder();
+            shipping.commentToOrder("Proszę o zostawienie paczki pod drzwiami.");
         });
 
         step("Shipping method - kliknięcie w button 'Continue'", () -> {
@@ -840,7 +843,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Contact us - wpisanie treści wiadomości", () -> {
             ContactUs contact = new ContactUs();
-            contact.msgFillIn();
+            contact.msgFillIn("Chcę otrzymać FV za zamówienie.");
         });
 
         step("Contact us - kliknięcie w button 'Send'", () -> {
@@ -885,7 +888,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("'Order details' - Uzupełnienie treści wiadomości", () -> {
             OrderDetails details = new OrderDetails();
-            details.msgFillIn();
+            details.msgFillIn("Proszę o wysyłkę możliwie najszybciej. Dziękuję.");
         });
 
         step("'Order details' - kliknięcie 'Send'", () -> {
@@ -915,7 +918,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Addresses - zmiana nazwy miasta", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.newCity();
+            registered.city("Opole");
         });
 
         step("Addresses - kliknięcie buttona 'Continue'", () -> {
@@ -975,17 +978,17 @@ public class PageObjectPatternPrestashopTest {
 
         step("New address - uzupełnienie pola 'Address'", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.createNewAddress();
+            registered.address("ul. Kwiatowa 15");
         });
 
         step("New address - uzupełnienie pola 'Zip/Postal Code'", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.createNewZipPostaCode();
+            registered.postalCode("88-111");
         });
 
         step("New address - uzupełnienie pola 'City'", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.createNewCity();
+            registered.city("Janowiec");
         });
 
         step("New address - kliknięcie w button 'Save'", () -> {
@@ -1005,7 +1008,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Update your address - zmiana danych w polu 'Zip/Postal Code'", () -> {
             RegisteredUser registered = new RegisteredUser();
-            registered.replaceNewZipPostaCode();
+            registered.postalCode("02-333");
         });
 
         step("Update your address - kliknięcie w button 'Save'", () -> {
@@ -1097,7 +1100,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Home page/Popup 'Create wishlist' - wpisanie nazwy nowej listy", () -> {
             Home home = new Home();
-            home.wishlistNameFillIn();
+            home.wishlistNameFillIn("Ulubione");
         });
 
         step("Home page/Popup 'Create wishlist' - kliknięcie w button 'Create wishlist'", () -> {
@@ -1130,11 +1133,11 @@ public class PageObjectPatternPrestashopTest {
             myWishlists.ulubioneWishlistLink();
         });
 
-        step("Ulubione - sprawdzenie, że produkt jest na liście", ()->{
+        step("Ulubione - sprawdzenie, że produkt jest na liście", () -> {
             MyWishlists myWishlists = new MyWishlists();
             List<WebElement> wishListsElements = myWishlists.getWishListElements();
             List<String> wishListsElementsNames = wishListsElements.stream().map(WebElement::getText).toList();
-            Assertions.assertTrue(wishListsElementsNames.size()==1 && wishListsElementsNames.getFirst().equals("Mug The adventure begins"));
+            Assertions.assertTrue(wishListsElementsNames.size() == 1 && wishListsElementsNames.getFirst().equals("Mug The adventure begins"));
         });
     }
 
@@ -1154,7 +1157,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Popup 'Create wishlist' - wpisanie nazwy nowej listy życzeń", () -> {
             MyWishlists myWishlists = new MyWishlists();
-            myWishlists.addNameOfNewList();
+            myWishlists.addNameOfNewList("Super lista");
         });
 
         step("Popup 'Create wishlist' - kliknięcie w button 'Create wishlist'", () -> {
@@ -1184,7 +1187,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("Popup 'Rename wishlist' - aktualizacja nazwy nowej listy życzeń", () -> {
             MyWishlists myWishlists = new MyWishlists();
-            myWishlists.wishlistRenameField();
+            myWishlists.wishlistRenameField("Lista życzeń");
         });
 
         step("Popup 'Rename wishlist' - kliknięcie w button 'Rename wishlist'", () -> {
@@ -1219,7 +1222,7 @@ public class PageObjectPatternPrestashopTest {
 
         step("My wishlists - usunięcie listy", () -> {
             MyWishlists myWishlists = new MyWishlists();
-            myWishlists.deleteWishlist();
+            myWishlists.deleteWishlist("Lista życzeń");
         });
 
         step("Popup 'Delete wishlist' - kliknięcie w button 'Delete'", () -> {

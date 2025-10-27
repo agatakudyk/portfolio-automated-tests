@@ -12,27 +12,23 @@ public class Cart {
 
     //usunięcie produktu z koszyka
     public void deleteCartItem() {
-        By trashIconLocator = By.xpath("//a[@class=\"remove-from-cart\"]/i[contains(text(),\"delete\")]");
-        getDriver().findElement(trashIconLocator).click();
+        getDriver().findElement(By.xpath("//a[@class=\"remove-from-cart\"]/i[contains(text(),\"delete\")]")).click();
     }
 
     //powrót na stronę główną
     public void homePageLink() {
-        By homepageLinkLocator = By.id("_desktop_logo");
-        getDriver().findElement(homepageLinkLocator).click();
+        getDriver().findElement( By.id("_desktop_logo")).click();
     }
 
     //kliknięcie w button 'Proceed to checkout'
     public void proceedToCheckoutButton() {
-        By proceedToCheckoutButtonLocator = By.xpath("//a[contains(text(),\"Proceed to checkout\")]");
-        getDriver().findElement(proceedToCheckoutButtonLocator).click();
+        getDriver().findElement(By.xpath("//a[contains(text(),\"Proceed to checkout\")]")).click();
     }
 
     //asercja - sprawdzenie zgodności nazwy produktu w koszyku
     public boolean isProductInCart() {
-        By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]" +
-                "/a[contains(text(),\"Today is a good day Framed poster\")]");
-        String productNameInCart = getDriver().findElement(productNameInCartLocator).getText();
+        String productNameInCart = getDriver().findElement(By.xpath("//div[@class=\"product-line-info\"]" +
+                "/a[contains(text(),\"Today is a good day Framed poster\")]")).getText();
         return "Today is a good day Framed poster".equals(productNameInCart);
     }
 
@@ -45,30 +41,24 @@ public class Cart {
 
     //asercja - sprawdzenie nazwy produktu
     public String getProductNameInCart() {
-        By productNameInCartLocator = By.xpath("//div[@class=\"product-line-info\"]/a");
-        return getDriver().findElement(productNameInCartLocator).getText();
+        return getDriver().findElement(By.xpath("//div[@class=\"product-line-info\"]/a")).getText();
     }
     public String getUnitPrice(){
-        By unitPriceOfItemLocator = By.xpath("//div[@class=\"product-line-info product-price h5 \"]" + "/div[@class=\"current-price\"]");
-        WebElement unitPriceOfItem = getDriver().findElement(unitPriceOfItemLocator);
+        WebElement unitPriceOfItem = getDriver().findElement(By.xpath("//div[@class=\"product-line-info product-price h5 \"]" + "/div[@class=\"current-price\"]"));
         return unitPriceOfItem.getText().replace("zł", "").replace(",", ".").trim();
     }
     public String getQuantity(){
-        By numberInItemsSectionLocator = By.xpath("//input[@class='js-cart-line-product-quantity form-control']");
-        WebElement numberInItemSection = getDriver().findElement(numberInItemsSectionLocator);
+        WebElement numberInItemSection = getDriver().findElement(By.xpath("//input[@class='js-cart-line-product-quantity form-control']"));
         return numberInItemSection.getDomAttribute("value");
     }
 
     public String getTotal(){
-        By totalPriceLocator = By.xpath("//div[@class='cart-summary-line cart-total']/span[@class='value']");
-        WebElement totalPriceElement = getDriver().findElement(totalPriceLocator);
-        return  totalPriceElement.getText().replace("zł", "").replace(",", ".").trim();
+        return getDriver().findElement(By.xpath("//div[@class='cart-summary-line cart-total']/span[@class='value']"))
+                .getText().replace("zł", "").replace(",", ".").trim();
     }
 
     public String getQuantitySummary(){
-        By numberInPurchaseSummarySectionLocator = By.xpath("//span[@class='label js-subtotal']");
-        WebElement numberInPurchaseSummarySection = getDriver().findElement(numberInPurchaseSummarySectionLocator);
-        return numberInPurchaseSummarySection.getText();
+       return getDriver().findElement(By.xpath("//span[@class='label js-subtotal']")).getText();
     }
 
 }

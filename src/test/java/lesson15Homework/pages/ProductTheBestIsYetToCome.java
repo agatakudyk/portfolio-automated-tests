@@ -19,22 +19,20 @@ public class ProductTheBestIsYetToCome {
     }
 
     //popup 'Write your review' - wpisanie tytułu komentarza
-    public void reviewTitle() {
+    public void reviewTitle(String reviewTitle) {
         By commentTitleLocator = By.id("comment_title");
         getWaiter().until(ExpectedConditions.elementToBeClickable(commentTitleLocator));
-        getDriver().findElement(commentTitleLocator).sendKeys("Moja ocena produktu");
+        getDriver().findElement(commentTitleLocator).sendKeys(reviewTitle);
     }
 
     //popup 'Write your review' - wpisanie treści komentarza
-    public void reviewFillIn() {
-        By commentTextLocator = By.id("comment_content");
-        getDriver().findElement(commentTextLocator).sendKeys("To bardzo dobry produkt.");
+    public void reviewFillIn(String reviewContext) {
+        getDriver().findElement(By.id("comment_content")).sendKeys(reviewContext);
     }
 
     //popup 'Write your review' - kliknięcie w button 'Send'
     public void sendReviewButton() {
-        By sendButtonLocator = By.xpath("//button[@class=\"btn btn-comment btn-comment-big\"]");
-        getDriver().findElement(sendButtonLocator).click();
+        getDriver().findElement(By.xpath("//button[@class=\"btn btn-comment btn-comment-big\"]")).click();
     }
 
     //review sent popup - kliknięcie w button 'OK'
@@ -49,14 +47,12 @@ public class ProductTheBestIsYetToCome {
 
     //kliknięcie button 'Add to cart'
     public void addToCartButton() {
-        By addToCartButtonLocator = By.xpath("//button[@class=\"btn btn-primary add-to-cart\"]");
-        getDriver().findElement(addToCartButtonLocator).click();
+        getDriver().findElement(By.xpath("//button[@class=\"btn btn-primary add-to-cart\"]")).click();
     }
 
     //popup 'Product successfully added...' - kliknięcie 'Proceed to checkout'
     public void proceedToCheckoutButton() {
-        By closeAddToCartPopupLocator = By.xpath("//a[@class=\"btn btn-primary\"]/i");
-        getDriver().findElement(closeAddToCartPopupLocator).click();
+        getDriver().findElement(By.xpath("//a[@class=\"btn btn-primary\"]/i")).click();
     }
 
     //asercja - potwierdzenie dodania komentarza
@@ -67,16 +63,14 @@ public class ProductTheBestIsYetToCome {
     }
 
     public void putProductQuantityEnterNumber(int quantity) {
-        By putProductQuantityLocator = By.id("quantity_wanted");
-        WebElement putProductQuantity = getDriver().findElement(putProductQuantityLocator);
+        WebElement putProductQuantity = getDriver().findElement(By.id("quantity_wanted"));
         putProductQuantity.sendKeys(Keys.CONTROL + "a");
         putProductQuantity.sendKeys(Keys.DELETE);
         putProductQuantity.sendKeys(Integer.toString(quantity));
     }
 
     public void putProductQuantityIncreaseArrow(int quantity) {
-        By selectQuantityLocator = By.xpath("//i[@class=\"material-icons touchspin-up\"]");
-        WebElement selectQuantityClick = getDriver().findElement(selectQuantityLocator);
+        WebElement selectQuantityClick = getDriver().findElement(By.xpath("//i[@class=\"material-icons touchspin-up\"]"));
         for (int i = 1; i <= quantity; i++) {
             selectQuantityClick.click();
         }

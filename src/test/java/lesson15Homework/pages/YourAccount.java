@@ -9,25 +9,21 @@ public class YourAccount {
 
     //kliknięcie w link 'Information'
     public void informationLink() {
-        By informationPageLocator = By.xpath("//a[@id=\"identity-link\"]");
-        getDriver().findElement(informationPageLocator).click();
+        getDriver().findElement(By.xpath("//a[@id=\"identity-link\"]")).click();
     }
 
     //kliknięcie w link 'Order history and details'
     public void orderHistoryAndDetails() {
-        By orderHistoryAndDetailsLinkLocator = By.id("history-link");
-        getDriver().findElement(orderHistoryAndDetailsLinkLocator).click();
+        getDriver().findElement(By.id("history-link")).click();
     }
 
     //kliknięcie w link 'Addresses'
     public void addresses() {
-        By addressesPageLink = By.xpath("//a[@id=\"addresses-link\"]/span/i");
-        getDriver().findElement(addressesPageLink).click();
+        getDriver().findElement(By.xpath("//a[@id=\"addresses-link\"]/span/i")).click();
     }
 
     //kliknięcie w link 'My wishlists'
     public void myWishlists() {
-        By myWishlistsPageLocator = By.xpath("//a[@id=\"wishlist-link\"]/span/i");
-        getDriver().findElement(myWishlistsPageLocator).click();
+        getDriver().findElement(By.xpath("//a[@id=\"wishlist-link\"]/span/i")).click();
     }
 }

@@ -9,7 +9,6 @@ public class OrderHistoryAndDetails {
 
     //kliknięcie w link 'Details'
     public void detailsLink() {
-        By orderDetailsLinkLocator = By.xpath("//a[@data-link-action=\"view-order-details\"]");
-        getDriver().findElement(orderDetailsLinkLocator).click();
+        getDriver().findElement(By.xpath("//a[@data-link-action=\"view-order-details\"]")).click();
     }
 }

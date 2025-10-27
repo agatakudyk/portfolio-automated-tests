@@ -11,18 +11,14 @@ public class Addresses {
 
     //kliknięcie w button 'Continue' (przejście do 'Shipping Method')
     public void continueButton() {
-        By addreessContinuseLocator = By.xpath("//section[@id=\"checkout-addresses-step\"]" +
-                "//button[@type=\"submit\"]");
-        getDriver().findElement(addreessContinuseLocator).click();
+        getDriver().findElement(By.xpath("//section[@id=\"checkout-addresses-step\"]" +
+                "//button[@type=\"submit\"]")).click();
     }
 
     //asercja - potwierdzenie pojawienia się komunikatu walidacyjnego
     public String getValidationMsg() {
-        By addressesInputLocator = By.xpath("//input[@name=\"address1\"]");
-        WebElement addressesInput = getDriver().findElement(addressesInputLocator);
-
+        WebElement addressesInput = getDriver().findElement(By.xpath("//input[@name=\"address1\"]"));
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        String msg = (String) js.executeScript("return arguments[0].validationMessage", addressesInput);
-        return msg;
+        return (String) js.executeScript("return arguments[0].validationMessage", addressesInput);
     }
 }
