@@ -521,7 +521,6 @@ public class SelenidePageObjectPatternPrestashopTest {
         });
     }
 
-//TODO
     @Test    //Podstrona ART - sortowanie
     @Order(11)
     public void sortArtProducts() {
@@ -1034,7 +1033,6 @@ public class SelenidePageObjectPatternPrestashopTest {
             myWishlist.myWishlistLink();
         });
 
-        //TODO
         step("'My wishlist' - sprawdzenie, że produkt jest na liście", () -> {
             MyWishlists myWishlist = new MyWishlists();
             List<SelenideElement> wishListsElements = myWishlist.getWishListElements().stream().toList();
@@ -1097,7 +1095,6 @@ public class SelenidePageObjectPatternPrestashopTest {
             myWishlists.ulubioneWishlistLink();
         });
 
-        //TODO
         step("Ulubione - sprawdzenie, że produkt jest na liście", ()->{
             MyWishlists myWishlists = new MyWishlists();
             List<SelenideElement> wishListsElements = myWishlists.getWishListElements().stream().toList();
