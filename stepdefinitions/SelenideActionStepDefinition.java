@@ -40,7 +40,7 @@ public class SelenideActionStepDefinition {
     // Home page - weryfikacja, że język został zmieniony na angielski
     @Then("I should see that the language has been changed to English")
     public void iShouldSeeThatTheLanguageHasBeenChangedToEnglish() {
-        $x("//a[@data-iso-code='en']").shouldBe(visible).click();
+        Assertions.assertTrue($x("//button[@data-toggle='dropdown']/span[contains(text(),'English')]").shouldBe(visible).isDisplayed());
     }
 
 
@@ -155,11 +155,7 @@ public class SelenideActionStepDefinition {
         $x("//input[@name=\"psgdpr\"]").shouldBe(interactable).click();
     }
 
-    // Personal Information - kliknięcie w 'Continue'
-    @And("I click {string}")
-    public void iClick(String buttonName) {
-        $x("//a[contains(text(),'" + buttonName + "')]").shouldBe(visible).click();
-    }
+
 
     //Addresses - uzupełnienie danych adresowych
     @And("I fill in my address information and continue")
@@ -190,11 +186,17 @@ public class SelenideActionStepDefinition {
     }
 
     // Order confirmation - potwierdzenie wyświetlenia komunikatu 'Your order is confirmed'
-    @Then("I should see {string} message")
+    @Then("I should see Your order is confirmed message")
     public void iShouldSeeMessage(String message) {
-        Assertions.assertEquals($x("//h3[@class='h1 card-title']/i").shouldBe(visible).getText(), message);
+        Assertions.assertEquals($x("//h3[@class='h1 card-title']/i").shouldBe(visible).getText(), "Your order is confirmed");
     }
 
+
+    // Login page - sprawdzenie komunikatu 'Authentication failed.'
+    @Then("I should see Authentication failed. message")
+    public void iShouldSeeAuthenticationFailedMessage(String expectedMessage) {
+        Assertions.assertEquals($x("//li[@class='alert alert-danger']").shouldBe(visible).getText(), "Authentication failed.");
+    }
 
     // -4- Użytkownik niezarejestrowany - uzupełnienie formularza ‘Save time on your next order, sign up now’
 
@@ -251,10 +253,10 @@ public class SelenideActionStepDefinition {
         $("#field-password").setValue("Password123");
     }
 
-    // Create Account - kliknięcie w button 'Save'
-    @When("I click {string}")
-    public void iClickButton() {
-    }
+//    // Create Account - kliknięcie w button 'Save'
+//    @When("I click {string}")
+//    public void iClickButton() {
+//    }
 
     // Sprawdzenie pomyślnej rejestracji - widoczność przycisku 'Sign out'
     @When("I should see the {string} button")
@@ -262,17 +264,12 @@ public class SelenideActionStepDefinition {
         Assertions.assertTrue($x("//a[contains(text(),'" + buttonName + "')]").shouldBe(visible).isDisplayed());
     }
 
-    // Header - kliknięcie w button 'Sign out' / wylogowanie użytkownika
-    @And("I click {string}")
-    public void iClickSignOut() {
-        $x("//a[@class='logout hidden-sm-down']").shouldBe(visible).click();
-    }
 
-    // Sprawdzenie czy wylogowany - widoczność przycisku 'Sign in'
-    @Then("I should see the {string} button")
-    public void iShouldSeeButton() {
-        Assertions.assertTrue($(".user-info a").shouldBe(visible).isDisplayed());
-    }
+//    // Sprawdzenie czy wylogowany - widoczność przycisku 'Sign in'
+//    @Then("I should see the {string} button")
+//    public void iShouldSeeButton() {
+//        Assertions.assertTrue($(".user-info a").shouldBe(visible).isDisplayed());
+//    }
 
 
     // -7- Niepoprawne logowanie z użyciem pustych pól i błędnych danych
@@ -296,11 +293,6 @@ public class SelenideActionStepDefinition {
         $("#field-password").shouldBe(visible).setValue("blepassword");
     }
 
-    // Login page - sprawdzenie komunikatu 'Authentication failed.'
-    @Then("I should see {string} message")
-    public void iShouldSeeAuthenticationFailedMessage(String expectedMessage) {
-        Assertions.assertEquals($x("//li[@class='alert alert-danger']").shouldBe(visible).getText(), expectedMessage);
-    }
 
 
     // -8- Login page - zresetowanie zapomnianego hasła
@@ -320,8 +312,20 @@ public class SelenideActionStepDefinition {
     // Reset password page - kliknięcie w button 'Send reset link'
     @And("I click {string}")
     public void iClickLink(String buttonText) {
-        $x("//i[contains(text(),'" + buttonText + "')").shouldBe(visible).click();
+        $x("//a[contains(text(),'" + buttonText + "')").shouldBe(visible).click();
     }
+
+//    // Header - kliknięcie w button 'Sign out' / wylogowanie użytkownika
+//    @And("I click {string}")
+//    public void iClickSignOut() {
+//        $x("//a[@class='logout hidden-sm-down']").shouldBe(visible).click();
+//    }
+//
+//    // Personal Information - kliknięcie w 'Continue'
+//    @And("I click {string}")
+//    public void iClick(String buttonName) {
+//        $x("//a[contains(text(),'" + buttonName + "')]").shouldBe(visible).click();
+//    }
 
     // Reset password page - sprawdzenie komunikatu potwierdzającego wysłanie maila
     @Then("I should see a message confirming that the email is sent")
@@ -851,6 +855,12 @@ public class SelenideActionStepDefinition {
         $x("//a[contains(text(),\"" + pageName + "\")").shouldBe(visible).click();
     }
 
+//    // 'Your account' - przejście na stronę 'My wishlists'
+//    @And("navigates to {string}")
+//    public void navigateToMyWishlists(String page) {
+//        $x("//a[contains(text(),\"" + page + "\")']/span/i").shouldBe(visible).click();
+//    }
+
     // Your addresses - kliknięcie w link 'Create new address'
     @When("clicks the Create new address link")
     public void clickLink() {
@@ -916,11 +926,7 @@ public class SelenideActionStepDefinition {
                 .shouldBe(visible).getText(), expectedMsg);
     }
 
-    // 'Your account' - przejście na stronę 'My wishlists'
-    @And("navigates to {string}")
-    public void navigateToMyWishlists(String page) {
-        $x("//a[contains(text(),\"" + page + "\")']/span/i").shouldBe(visible).click();
-    }
+
 
     // 'My wishlists' - wejście na link 'My wishlist'
     @And("clicks on My wishlist")
