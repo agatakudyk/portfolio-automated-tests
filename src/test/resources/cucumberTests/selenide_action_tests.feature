@@ -14,7 +14,7 @@ Feature: Selenide POP Prestashop Test
 
 # -2- Użytkownik niezarejestrowany – poprawne dodanie i usunięcie produktu z koszyka
   Scenario: Add to cart and delete product as unregistered user
-    When I click the wishlist button of "Today is a good day Framed Poster"
+    When I click the wishlist button of "Today is a good day Framed..."
     Then I should see a popup message that login is required
     When I close the wishlist popup
     And I open the product page for "Today is a good day Framed Poster"
@@ -39,7 +39,7 @@ Feature: Selenide POP Prestashop Test
     And I continue to the shipping method
     And I select shipping method and continue
     And I select payment by bank wire, agree to terms, and place the order
-    Then I should see "Your order is confirmed" message
+    Then I should see Your order is confirmed message
 
  # -4- Użytkownik niezarejestrowany - uzupełnienie formularza ‘Save time on your next order, sign up now’
   Scenario: Fill in "Save time on..." form as unregistered user
@@ -72,7 +72,7 @@ Feature: Selenide POP Prestashop Test
     Then I should see a validation message "Wypełnij to pole."
     When I fill in email and password fields
     And I click "Sign In"
-    Then I should see "Authentication failed." message
+    Then I should see Authentication failed. message
 
 # -8- Reset hasła:
   Scenario: Reset forgotten password
