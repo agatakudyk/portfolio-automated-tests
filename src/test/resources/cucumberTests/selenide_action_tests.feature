@@ -123,14 +123,14 @@ Feature: Selenide POP Prestashop Test
 # -13- Zwiększenie ilości produktu i dodanie do koszyka:
   Scenario: Add products to cart with quantity changes
     When I set product quantity to 4
-    And I increase product quantity by using arrows
+    And I increase product quantity by 4 using arrows
     And I click "Add to cart"
     Then I should see confirmation that the product was added successfully
 
 # -14- Sprawdzenie zawartości koszyka:
   Scenario: Validate cart content
     When I close the popup by clicking 'Proceed to checkout'
-    Then the cart should contain product "The best is yet to come' Framed poster"
+    Then the cart should contain product "The best is yet to come Framed poster"
     And product quantity should match the summary quantity
     And the total price should equal unit price multiplied by quantity
 
@@ -230,8 +230,8 @@ Feature: Selenide POP Prestashop Test
 
 # -24- Wishlist – utworzenie listy na podstronie ‘My wishlists’:
   Scenario: Create, rename, share, and delete wishlist
-    Given the user is on the 'My wishlists' page
-    When the user clicks 'Create new list'
+    Given the user is on the My wishlists page
+    When the user clicks Create new list
     And enters the name of the new wishlist "Super Lista"
     And clicks "Create wishlist"
     Then the toast message "The list has been properly created" should be displayed
