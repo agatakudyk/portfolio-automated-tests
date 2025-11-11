@@ -28,13 +28,13 @@ public class SelenideActionStepDefinition {
     // Home page - kliknięcie w dropdown języka
     @When("I click on the language dropdown in the header")
     public void iClickOnTheLanguageDropdownInTheHeader() {
-        $x("//button[@data-toggle='dropdown']").shouldBe(visible).click();
+        $("button[data-toggle='dropdown']").shouldBe(visible).click();
     }
 
     // Home page - wybór języka 'English' z listy
     @And("I select English from the language list")
     public void iSelectFromTheLanguageList() {
-        $x("//a[@data-iso-code='en']").shouldBe(visible).click();
+        $("a[data-iso-code='en']").shouldBe(visible).click();
     }
 
     // Home page - weryfikacja, że język został zmieniony na angielski
@@ -125,13 +125,13 @@ public class SelenideActionStepDefinition {
     // Dodanie produktu do koszyka - kliknięcie w button 'Add to cart'
     @And("I add the product to the cart")
     public void iAddTheProductToTheCart() {
-        $x("//button[@data-button-action='add-to-cart']").shouldBe(visible).click();
+        $("button[data-button-action='add-to-cart']").shouldBe(visible).click();
     }
 
     // Popup w oknie produktu - kliknięcie w button 'Proceed to checkout'
     @And("I click Proceed to checkout in the popup")
     public void iClickInThePopup() {
-        $x("//button[@data-button-action='add-to-cart']").shouldBe(visible).click();
+        $("#blockcart-modal a.btn.btn-primary").shouldBe(visible).click();
     }
 
     // Cart - kliknięcie w button 'Proceed to checkout'
@@ -151,8 +151,8 @@ public class SelenideActionStepDefinition {
     // Personal Information - zaznaczenie wymaganych checkboxów
     @And("I check the required checkboxes for privacy and terms")
     public void iCheckTheRequiredCheckboxesForPrivacyAndTerms() {
-        $x("//input[@name='customer_privacy']").shouldBe(interactable).click();
-        $x("//input[@name=\"psgdpr\"]").shouldBe(interactable).click();
+        $("input[name='customer_privacy']").shouldBe(interactable).click();
+        $("input[name='psgdpr']").shouldBe(interactable).click();
     }
 
 
@@ -181,21 +181,21 @@ public class SelenideActionStepDefinition {
     @And("I select payment by bank wire, agree to terms, and place the order")
     public void iSelectPaymentByBankWireAgreeToTermsAndPlaceTheOrder() {
         $("#payment-option-2").shouldBe(interactable).click();
-        $x("//input[@name='conditions_to_approve[terms-and-conditions]']").shouldBe(interactable).click();
-        $x("//div[@class='ps-shown-by-js']/button").shouldBe(interactable).click();
+        $("input[name='conditions_to_approve[terms-and-conditions]']").shouldBe(interactable).click();
+        $("div.ps-shown-by-js > button").shouldBe(interactable).click();
     }
 
     // Order confirmation - potwierdzenie wyświetlenia komunikatu 'Your order is confirmed'
     @Then("I should see Your order is confirmed message")
-    public void iShouldSeeMessage(String message) {
-        Assertions.assertEquals($x("//h3[@class='h1 card-title']/i").shouldBe(visible).getText(), "Your order is confirmed");
+    public void iShouldSeeMessage() {
+        Assertions.assertEquals("Your order is confirmed", $("//h3.h1.card-title").shouldBe(visible).getText() );
     }
 
 
     // Login page - sprawdzenie komunikatu 'Authentication failed.'
     @Then("I should see Authentication failed. message")
-    public void iShouldSeeAuthenticationFailedMessage(String expectedMessage) {
-        Assertions.assertEquals($x("//li[@class='alert alert-danger']").shouldBe(visible).getText(), "Authentication failed.");
+    public void iShouldSeeAuthenticationFailedMessage() {
+        Assertions.assertEquals($("li.alert.alert-danger").shouldBe(visible).getText(), "Authentication failed.");
     }
 
     // -4- Użytkownik niezarejestrowany - uzupełnienie formularza ‘Save time on your next order, sign up now’
@@ -253,10 +253,6 @@ public class SelenideActionStepDefinition {
         $("#field-password").setValue("Password123");
     }
 
-//    // Create Account - kliknięcie w button 'Save'
-//    @When("I click {string}")
-//    public void iClickButton() {
-//    }
 
     // Sprawdzenie pomyślnej rejestracji - widoczność przycisku 'Sign out'
     @When("I should see the {string} button")
@@ -265,11 +261,6 @@ public class SelenideActionStepDefinition {
     }
 
 
-//    // Sprawdzenie czy wylogowany - widoczność przycisku 'Sign in'
-//    @Then("I should see the {string} button")
-//    public void iShouldSeeButton() {
-//        Assertions.assertTrue($(".user-info a").shouldBe(visible).isDisplayed());
-//    }
 
 
     // -7- Niepoprawne logowanie z użyciem pustych pól i błędnych danych
@@ -300,32 +291,21 @@ public class SelenideActionStepDefinition {
     // Login page - kliknięcie w link 'Forgot your password?'
     @When("I click Forgot your password? on login page")
     public void iClickForgotYourPasswordOnLoginPage() {
-        $x("//div[@class='forgot-password']/a").shouldBe(visible).click();
+        $("div.forgot-password > a").shouldBe(visible).click();
     }
 
     // Reset password page - uzupełnienie pola 'Email address'
     @And("I fill in my email address")
     public void iFillInMyEmailAddress() {
-        $x("//input[@class='form-control']").setValue("test.mail@wp.pl");
+        $("input.form-control").setValue("test.mail@wp.pl");
     }
 
     // Reset password page - kliknięcie w button 'Send reset link'
     @And("I click {string}")
     public void iClickLink(String buttonText) {
-        $x("//a[contains(text(),'" + buttonText + "')").shouldBe(visible).click();
+        $x("//a[contains(text(),'" + buttonText + "')]").shouldBe(visible).click();
     }
 
-//    // Header - kliknięcie w button 'Sign out' / wylogowanie użytkownika
-//    @And("I click {string}")
-//    public void iClickSignOut() {
-//        $x("//a[@class='logout hidden-sm-down']").shouldBe(visible).click();
-//    }
-//
-//    // Personal Information - kliknięcie w 'Continue'
-//    @And("I click {string}")
-//    public void iClick(String buttonName) {
-//        $x("//a[contains(text(),'" + buttonName + "')]").shouldBe(visible).click();
-//    }
 
     // Reset password page - sprawdzenie komunikatu potwierdzającego wysłanie maila
     @Then("I should see a message confirming that the email is sent")
@@ -352,27 +332,27 @@ public class SelenideActionStepDefinition {
     // Sprawdzenie pomyślnego zalogowania - widoczność przycisku 'Sign out'
     @Then("I should see Sign out button")
     public void iShouldSeeSignOutButton() {
-        Assertions.assertTrue($x("//a[@class='logout hidden-sm-down']").shouldBe(visible).isDisplayed());
+        Assertions.assertTrue($("a.logout.hidden-sm-down").shouldBe(visible).isDisplayed());
     }
 
     // Your account - kliknięcie w link 'Information'
     @When("I navigate to Your account > Information")
     public void iNavigateToYourAccountInformation() {
-        $x("//a[@id='identity-link']").shouldBe(visible).click();
+        $("a#identity-link").shouldBe(visible).click();
     }
 
     // Your personal information - uzupełnienie pola 'Password' i 'New Password'
     @And("I fill in current password and new password")
     public void iFillInCurrentAndNewPassword() {
         $("#field-password").setValue("Password123");
-        $x("//input[@name='new_password']").setValue("TestTest123");
+        $("input[name='new_password']").setValue("TestTest123");
     }
 
     // Your personal information - checkbox akceptacji regulaminu i zgody na przetwarzanie danych
     @And("I check privacy and terms checkboxes")
     public void iCheckPrivacyAndTermsCheckboxes() {
-        $x("//input[@name='customer_privacy']").shouldBe(interactable).click();
-        $x("//input[@name='psgdpr']").shouldBe(interactable).click();
+        $("input[name='customer_privacy']").shouldBe(interactable).click();
+        $("input[name='psgdpr']").shouldBe(interactable).click();
     }
 
     // Your personal information - potwierdzenie pojawienia się komunikatu
@@ -383,21 +363,21 @@ public class SelenideActionStepDefinition {
     // Header - wylogowanie i zalogowanie nowym hasłem
     @When("I log out and login with the new password")
     public void iLogOutAndLoginWithNewPassword() {
-        $x("//a[@class='logout hidden-sm-down']").shouldBe(visible).click();
+        $("a.logout.hidden-sm-down").shouldBe(visible).click();
         $("#field-email").setValue("testowianka345@p.pl");
-        $x("//input[@name='new_password']").setValue("TestTest123");
+        $("input[name='new_password']").setValue("TestTest123");
         $("#submit-login").shouldBe(visible).click();
     }
 
     // proces przywrócenia starego hasła
     @And("I revert to previous password")
     public void iRevertToPreviousPassword() {
-        $x("//a[@class='account']/span[@class='hidden-sm-down']").shouldBe(visible).click();
-        $x("//input[@name='new_password']").setValue("TestTest123");
+        $("a.account > span.hidden-sm-down").shouldBe(visible).click();
+        $("input[name='new_password']").setValue("TestTest123");
         $("#field-password").setValue("Password123");
-        $x("//input[@name='customer_privacy']").shouldBe(interactable).click();
-        $x("//input[@name='psgdpr']").shouldBe(interactable).click();
-        $x("//button[@class='btn btn-primary form-control-submit float-xs-right']").shouldBe(visible).click();
+        $("input[name='customer_privacy']").shouldBe(interactable).click();
+        $("input[name='psgdpr']").shouldBe(interactable).click();
+        $("button.btn.btn-primary.form-control-submit.float-xs-right").shouldBe(visible).click();
     }
 
 
@@ -419,13 +399,13 @@ public class SelenideActionStepDefinition {
     // Accessories page - wyczyszczenie wybranych filtrów
     @And("I clear all filters")
     public void iClearAllFilters() {
-        $x("//button[@class='btn btn-tertiary js-search-filters-clear-all']").shouldBe(visible).click();
+        $("button.btn.btn-tertiary.js-search-filters-clear-all").shouldBe(visible).click();
     }
 
     // Accessories page - potwierdzenie wyczyszczenia filtrów
     @Then("I should see that filters are cleared")
     public void iShouldSeeFiltersCleared() {
-        Assertions.assertTrue($x("//p[contains(text(),'Active filters')]").shouldBe(hidden).isDisplayed());
+        Assertions.assertFalse($x("//p[contains(text(),'Active filters')]").shouldBe(hidden).isDisplayed());
     }
 
 
@@ -467,7 +447,7 @@ public class SelenideActionStepDefinition {
     public void productsShouldBeSortedByAscendingPrice() {
         // strona ART - posortowanie według ‘Price, low to high’
         List<String> productsPrices = new ArrayList<>();
-        for (WebElement product : $$x("//div[@class='product-price-and-shipping']/span")) {
+        for (WebElement product : $$("div.product-price-and-shipping > span")) {
             productsPrices.add(product.getText());
         }
         List<String> productsAlphabeticalOrder2 = productsPrices.stream().sorted().toList();
@@ -507,7 +487,7 @@ public class SelenideActionStepDefinition {
     // Popup REVIEW SENT - potwierdzenie dodania komentarza
     @Then("I should see confirmation that the review was sent")
     public void iShouldSeeConfirmationThatReviewWasSent() {
-        Assertions.assertTrue($x("//div[@id='product-comment-posted-modal-message']").shouldBe(visible).isDisplayed());
+        Assertions.assertTrue($("div#product-comment-posted-modal-message").shouldBe(visible).isDisplayed());
     }
 
     // Popup REVIEW SENT - zamknięcie okna poprzez kliknięcie w button 'OK'
@@ -530,9 +510,9 @@ public class SelenideActionStepDefinition {
     }
 
     // Strona produktu - zmiana ilości produktu poprzez kliknięcie w strzałki
-    @And("I increase product quantity by using arrows")
+    @And("I increase product quantity by {int} using arrows")
     public void iIncreaseProductQuantityByUsingArrows(int quantity) {
-        SelenideElement increaseArrow = $x("//i[@class='material-icons touchspin-up']").shouldBe(visible);
+        SelenideElement increaseArrow = $("i.material-icons.touchspin-up").shouldBe(visible);
         for (int i = 1; i <= quantity; i++) {
             increaseArrow.click();
         }
@@ -541,7 +521,7 @@ public class SelenideActionStepDefinition {
     // Strona produktu - kliknięcie button 'Add to cart'
     @And("I click \"Add to cart\"")
     public void iClickAddToCart() {
-        $x("//button[@class='btn btn-primary add-to-cart']").shouldBe(visible).click();
+        $("button.btn.btn-primary.add-to-cart").shouldBe(visible).click();
     }
 
     // Popup - sprawdzenie komunikatu potwierdzającego dodanie do koszyka
@@ -557,13 +537,13 @@ public class SelenideActionStepDefinition {
     // Popup - zamknięcie okna poprzez kliknięcie 'Proceed to checkout'
     @When("I close the popup by clicking 'Proceed to checkout'")
     public void iCloseThePopupByClickingProceedToCheckout() {
-        $x("//a[@class='btn btn-primary']/i").shouldBe(visible).click();
+        $("a.btn.btn-primary > i").shouldBe(visible).click();
     }
 
     // Cart - sprawdzenie nazwy produktu
     @Then("the cart should contain product {string}")
     public void theCartShouldContainProduct(String expectedName) {
-        Assertions.assertEquals($x("//div[@class=\"product-line-info\"]/a").shouldBe(visible).getText(), expectedName);
+        Assertions.assertEquals($("div.product-line-info > a").shouldBe(visible).getText(), expectedName);
     }
 
     // Shopping cart - porównanie ilości z sekcji produktu i sekcji podsumowania
@@ -571,7 +551,7 @@ public class SelenideActionStepDefinition {
     public void productQuantityShouldMatchSummaryQuantity() {
         // ilość w sekcji produktu
         int productQuantity = Integer.parseInt(Objects.requireNonNull(
-                $x("//input[@class='js-cart-line-product-quantity form-control']")
+                $("input.js-cart-line-product-quantity.form-control")
                         .shouldBe(visible).getDomAttribute("value")));
         // ilość w sekcji podsumowania
         String summaryQuantityText = $x("//span[@class='label js-subtotal']").shouldBe(visible).getText();
@@ -585,15 +565,15 @@ public class SelenideActionStepDefinition {
     public void theTotalPriceShouldEqualUnitPriceMultipliedByQuantity() {
 
         //cena jednostkowa
-        String unitPriceText = $x("//div[@class=\"product-line-info product-price h5 \"]/div[@class=\"current-price\"]")
+        String unitPriceText = $("div.product-line-info.product-price.h5 > div.current-price")
                 .shouldBe(visible).getText().replace("zł", "").replace(",", ".").trim();
         double unitPrice = Double.parseDouble(unitPriceText);
         // ilość w sekcji produktu
         int productQuantity = Integer.parseInt(Objects.requireNonNull(
-                $x("//input[@class='js-cart-line-product-quantity form-control']")
+                $("input.js-cart-line-product-quantity.form-control")
                 .shouldBe(visible).getDomAttribute("value")));
         //wartość całkowita z podsumowania
-        String totalPriceText = $x("//div[@class='cart-summary-line cart-total']/span[@class='value']")
+        String totalPriceText = $("div.cart-summary-line.cart-total > span.value")
                 .shouldBe(visible).getText().replace("zł", "").replace(",", ".").trim();
         double totalPrice = Double.parseDouble(totalPriceText);
         //oczekiwana wartość
@@ -613,7 +593,7 @@ public class SelenideActionStepDefinition {
     // Addresses/tooltip dynamiczny - potwierdzenie pojawienia się komunikatu walidacyjnego
     @Then("I should see validation message {string}")
     public void iShouldSeeValidationMessage(String expectedMsg) {
-        Assertions.assertEquals($x("//input[@name='address1']").shouldBe(visible).getAttribute("validationMessage"), expectedMsg);
+        Assertions.assertEquals($("input[name='address1']").shouldBe(visible).getAttribute("validationMessage"), expectedMsg);
     }
 
     // Addresses - uzupełnienie pola 'Address'
@@ -691,19 +671,19 @@ public class SelenideActionStepDefinition {
     // Payment - wybór checkboxa zgody
     @When("I check the agreement checkbox")
     public void iCheckTheAgreementCheckbox() {
-        $x("//input[@name='conditions_to_approve[terms-and-conditions]']").shouldBe(interactable).click();
+        $("input[name='conditions_to_approve[terms-and-conditions]']").shouldBe(interactable).click();
     }
 
     // Payment - kliknięcie w button 'Place Order'
     @When("I click 'Place Order'")
     public void iClickPlaceOrder() {
-        $x("//div[@class='ps-shown-by-js']/button").shouldBe(interactable).click();
+        $("div.ps-shown-by-js > button").shouldBe(interactable).click();
     }
 
     // Order confirmation page - sprawdzenie pojawienia się komunikatu potwierdzającego
     @Then("I should see a confirmation message that the order was placed successfully")
     public void iShouldSeeOrderConfirmationMessage() {
-        Assertions.assertTrue($x("//h3[@class='h1 card-title']/i").shouldBe(visible).isDisplayed());
+        Assertions.assertTrue($("h3.h1.card-title > i").shouldBe(visible).isDisplayed());
     }
 
 
@@ -718,7 +698,7 @@ public class SelenideActionStepDefinition {
     // Contact us - kliknięcie w button 'Send'
     @When("I click the \"Send\" button on the empty contact form")
     public void iClickSendButtonOnEmptyForm() {
-        $x("//input[@class=\"btn btn-primary\"]").shouldBe(visible).click();
+        $("input.btn.btn-primary").shouldBe(visible).click();
     }
 
     @Then("I should see a validation message on the contact form")
@@ -738,25 +718,25 @@ public class SelenideActionStepDefinition {
     // Header - wejście na profil użytkownika 'Your account'
     @When("I open the user profile from the header")
     public void iOpenUserProfile() {
-        $x("//a[@class='account']/span[@class='hidden-sm-down']").shouldBe(visible).click();
+        $("a.account > span.hidden-sm-down").shouldBe(visible).click();
     }
 
     // Your account - wejście w sekcję 'Order history and details'
     @When("I go to the 'Order history and details' section")
     public void iGoToOrderHistoryAndDetails() {
-        $x("//a[@id='history-link']").shouldBe(visible).click();
+        $("a#history-link").shouldBe(visible).click();
     }
 
     // Kliknięcie w link 'Details'
     @When("I click the 'Details' link for an order")
     public void iClickDetailsLink() {
-        $x("//a[@data-link-action='view-order-details']").shouldBe(visible).click();
+        $("a[data-link-action='view-order-details']").shouldBe(visible).click();
     }
 
     // 'Order details' - kliknięcie 'Send' w pustym formularzu 'ADD A MESSAGE'
     @When("I click the 'Send' button in an empty 'Add a message' form")
     public void iClickSendButtonEmptyForm() {
-        $x("//*[@name='submitMessage']").shouldBe(visible).click();
+        $("[name='submitMessage']").shouldBe(visible).click();
     }
 
     // Potwierdzenie pojawienia się komunikatu walidacji 'The message cannot be blank.'
@@ -768,7 +748,7 @@ public class SelenideActionStepDefinition {
     // 'Order details' - Uzupełnienie treści wiadomości
     @When("I fill in the message content in the \"Add a message\" form")
     public void iFillInAddMessageContent() {
-        $x("//textarea[@name='msgText']").shouldBe(visible).setValue("Proszę o wysyłkę możliwie najszybciej. Dziękuję.");
+        $("textarea[name='msgText']").shouldBe(visible).setValue("Proszę o wysyłkę możliwie najszybciej. Dziękuję.");
     }
 
     // potwierdzenie wysłania wiadomości 'Message successfully sent'
@@ -789,7 +769,7 @@ public class SelenideActionStepDefinition {
     // Addresses - wejście w link 'Edit'
     @When("I click the 'Edit' link in the Addresses section")
     public void iClickEditAddressLink() {
-        $x("//footer[@class='address-footer']/a[@data-link-action='edit-address']").shouldBe(visible).click();
+        $("footer.address-footer > a[data-link-action='edit-address']").shouldBe(visible).click();
     }
 
     // Addresses - zmiana nazwy miasta
@@ -801,7 +781,7 @@ public class SelenideActionStepDefinition {
     // Addresses - kliknięcie buttona 'Continue'
     @When("I click the \"Continue\" button on the Addresses page")
     public void iClickContinueOnAddressesPage() {
-        $x("//section[@id='checkout-addresses-step']//button[@type='submit']").shouldBe(visible).click();
+        $("section#checkout-addresses-step button[type='submit").shouldBe(visible).click();
     }
 
     // Shipping method - wybór radio buttona 'My carrier'
@@ -825,19 +805,19 @@ public class SelenideActionStepDefinition {
     // Payment - wybór checkboxa zgody
     @When("I check the terms and conditions checkbox")
     public void iCheckTermsCheckbox() {
-        $x("//input[@name='conditions_to_approve[terms-and-conditions]']").shouldBe(interactable).click();
+        $("input[name='conditions_to_approve[terms-and-conditions]']").shouldBe(interactable).click();
     }
 
     // Payment - kliknięcie w button 'Place Order'
     @When("I click the \"Place Order\" button")
     public void iClickPlaceOrderButton() {
-        $x("//div[@class='ps-shown-by-js']/button").shouldBe(interactable).click();
+        $("div.ps-shown-by-js > button").shouldBe(interactable).click();
     }
 
     // Order confirmation page - sprawdzenie pojawienia się komunikatu potwierdzającego
     @Then("I should see a confirmation message that the order was successfully placed")
     public void iShouldSeeConfirmationMessage() {
-        Assertions.assertTrue($x("//h3[@class='h1 card-title']/i").shouldBe(visible).isDisplayed());
+        Assertions.assertTrue($("h3.h1.card-title > i").shouldBe(visible).isDisplayed());
     }
 
 
@@ -846,7 +826,7 @@ public class SelenideActionStepDefinition {
     //Order confirmation page - przejście na stronę 'Your account'
     @When("the user goes to Your account")
     public void goToUserProfile() {
-        $x("//a[@class='account']/span[@class='hidden-sm-down']").shouldBe(visible).click();
+        $("a.account > span.hidden-sm-down").shouldBe(visible).click();
     }
 
     // 'Your account' - przejście na stronę 'Addresses'
@@ -855,16 +835,11 @@ public class SelenideActionStepDefinition {
         $x("//a[contains(text(),\"" + pageName + "\")").shouldBe(visible).click();
     }
 
-//    // 'Your account' - przejście na stronę 'My wishlists'
-//    @And("navigates to {string}")
-//    public void navigateToMyWishlists(String page) {
-//        $x("//a[contains(text(),\"" + page + "\")']/span/i").shouldBe(visible).click();
-//    }
 
     // Your addresses - kliknięcie w link 'Create new address'
     @When("clicks the Create new address link")
     public void clickLink() {
-        $x("//a[@data-link-action='add-address']").shouldBe(visible).click();
+        $("a[data-link-action='add-address']").shouldBe(visible).click();
     }
 
     // New address - uzupełnienie pola 'Address', 'Zip/Postal Code' i 'City'
@@ -878,7 +853,7 @@ public class SelenideActionStepDefinition {
     // New address - kliknięcie w button 'Save'
     @When("clicks the Save button")
     public void clickButton() {
-        $x("//button[@class='btn btn-primary form-control-submit float-xs-right']").click();
+        $("button.btn.btn-primary.form-control-submit.float-xs-right").click();
     }
 
     // Your addresses - komunikat potwierdzający dodanie adresu 'Address successfully added!'
@@ -892,7 +867,7 @@ public class SelenideActionStepDefinition {
         $x("//address[text()[contains(.,\"Janowiec\")]]" +
                 "/../..//span[contains(text(),\"Update\")]").shouldBe(visible).click();
         $("#field-postcode").shouldBe(visible).setValue("02-333");
-        $x("//button[@class=\"btn btn-primary form-control-submit float-xs-right\"]").should(visible).click();
+        $("button.btn.btn-primary.form-control-submit.float-xs-right").should(visible).click();
 
     }
 
@@ -922,7 +897,7 @@ public class SelenideActionStepDefinition {
     // TOAST 'Product added' - potwierdzenie pojawienia się komunikatu
     @Then("the toast message {string} should be displayed")
     public void toastMessageDisplayed(String expectedMsg) {
-        Assertions.assertEquals($x("//div[@class='wishlist-toast success']/p[@class='wishlist-toast-text']")
+        Assertions.assertEquals($("div.wishlist-toast.success > p.wishlist-toast-text")
                 .shouldBe(visible).getText(), expectedMsg);
     }
 
@@ -931,7 +906,7 @@ public class SelenideActionStepDefinition {
     // 'My wishlists' - wejście na link 'My wishlist'
     @And("clicks on My wishlist")
     public void clicksOnMyWishlist() {
-        $x("//p[@class='wishlist-list-item-title']").shouldBe(visible).click();
+        $("p.wishlist-list-item-title").shouldBe(visible).click();
     }
 
     // 'My wishlists' - wejście na link listy 'Ulubione'
@@ -962,7 +937,7 @@ public class SelenideActionStepDefinition {
     // Popup 'Add to whishlist' - kliknięcie w link 'Create new list'
     @And("the user clicks Create new list in the popup")
     public void createNewList() {
-        $x("//a[@class='wishlist-add-to-new text-primary']").shouldBe(visible).click();
+        $("a.wishlist-add-to-new.text-primary").shouldBe(visible).click();
     }
 
     // Home page/Popup 'Create wishlist' - kliknięcie w button 'Create wishlist'
@@ -981,13 +956,13 @@ public class SelenideActionStepDefinition {
     // -24- Wishlist – utworzenie listy na podstronie ‘My wishlists’
 
     // Ulubione - przejście na stronę 'My wishlists'
-    @Given("the user is on the 'My wishlists' page")
+    @Given("the user is on the My wishlists page")
     public void userIsOnMyWishlistsPage() {
         $x("//nav[@data-depth='4']//a[contains(., 'My wishlists')]").shouldBe(visible).click();
     }
 
     // My wishlists - kliknięcie w 'Create new list'
-    @When("the user clicks 'Create new list'")
+    @When("the user clicks Create new list")
     public void clickCreateNewList() {
         $x("//div[@class='wishlist-container-header']/a[contains(text(),'Create new list')]")
                 .shouldBe(visible).click();
@@ -996,7 +971,7 @@ public class SelenideActionStepDefinition {
     // Popup 'Create wishlist' - wpisanie nazwy nowej listy życzeń
     @And("enters the name of the new wishlist {string}")
     public void enterNewWishlistName(String listName) {
-        $x("//input[@placeholder='Add name']").setValue(listName);
+        $x("").setValue(listName);
     }
 
     // Popup 'Create wishlist' - kliknięcie w button 'Create wishlist'
@@ -1237,7 +1212,7 @@ public class SelenideActionStepDefinition {
     // Home page/Footer - kliknięcie w link 'Personal info'
     @When("I click \"Personal info\" link in footer")
     public void iClickPersonalInfoInFooter() {
-        $x("//a[@title='Personal info']").click();
+        $("a[title='Personal info']").click();
     }
 
     // Potwierdzenie otwarcia podstrony 'Personal info'
@@ -1250,7 +1225,7 @@ public class SelenideActionStepDefinition {
     // Home page/Footer - kliknięcie w link 'Orders'
     @When("I click \"Orders\" link in footer")
     public void iClickOrdersInFooter() {
-        $x("//a[@title='Orders']").click();
+        $("a[title='Orders']").click();
     }
 
     // Potwierdzenie otwarcia podstrony 'Orders'
@@ -1262,7 +1237,7 @@ public class SelenideActionStepDefinition {
     // Home page/Footer - kliknięcie w link 'Credit slips'
     @When("I click \"Credit slips\" link in footer")
     public void iClickCreditSlipsInFooter() {
-        $x("//a[@title='Credit slips']").click();
+        $("a[title='Credit slips']").click();
     }
 
     // Potwierdzenie otwarcia podstrony 'Credit slips'
@@ -1274,7 +1249,7 @@ public class SelenideActionStepDefinition {
     // Home page/Footer - kliknięcie w link 'Addresses'
     @When("I click \"Addresses\" link in footer")
     public void iClickAddressesInFooter() {
-        $x("//a[@title='Addresses']").click();
+        $("a[title='Addresses']").click();
     }
 
     // Potwierdzenie otwarcia podstrony 'Addresses'
@@ -1286,7 +1261,7 @@ public class SelenideActionStepDefinition {
     // Header - kliknięcie w button 'Sign out'
     @When("I click \"Sign out\" button in header")
     public void iClickSignOutInHeader() {
-        $x("//a[@class='logout hidden-sm-down']").shouldBe(visible).click();
+        $("a.logout.hidden-sm-down").shouldBe(visible).click();
     }
 
     // Sprawdzenie pomyślnej rejestracji - widoczność przycisku 'Sign out'
