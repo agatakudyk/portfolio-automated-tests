@@ -298,7 +298,7 @@ public class SelenidePageObjectPatternPrestashopTest {
 
         step("Header - kliknięcie w button 'Sign In'", () -> {
             Header header = new Header();
-            header.SignIn();
+            header.signIn();
         });
 
         step("Login page - kliknięcie w button 'Sign In'", () -> {
@@ -517,7 +517,7 @@ public class SelenidePageObjectPatternPrestashopTest {
 
         step("Accessories page - potwierdzenie wyczyszczenia filtrów", () -> {
             Accessories accessories = new Accessories();
-            Assertions.assertFalse(accessories.isFilterClear());
+            Assertions.assertTrue(accessories.isFilterClear());
         });
     }
 
@@ -1119,7 +1119,7 @@ public class SelenidePageObjectPatternPrestashopTest {
 
         step("Popup 'Create wishlist' - wpisanie nazwy nowej listy życzeń", () -> {
             MyWishlists myWishlists = new MyWishlists();
-            myWishlists.addNameOfNewList();
+            myWishlists.addNameOfNewList("Super lista");
         });
 
         step("Popup 'Create wishlist' - kliknięcie w button 'Create wishlist'", () -> {

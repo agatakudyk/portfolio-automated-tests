@@ -2,18 +2,19 @@ package lesson16Homework.pages;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$x;
 
 
 public class TopMenu {
 
     // wejście na stronę ACCESSORIES
     public void accessoriesPageLink() {
-        $("#category-6").shouldBe(visible).click();
+        $x("//a[contains(text(),'Accessories']").shouldBe(visible).click();
     }
 
     // wejście na podstronę ART
     public void artPageLink() {
-        $("#category-9").shouldBe(visible).click();
+        $x("//a[contains(text(),'Art']").shouldBe(visible).click();
     }
 
     // przejście na stronę główną (Home Page)

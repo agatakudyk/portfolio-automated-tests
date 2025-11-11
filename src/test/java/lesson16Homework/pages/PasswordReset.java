@@ -9,7 +9,7 @@ public class PasswordReset {
 
     // uzupełnienie pola 'Email address'
     public void email() {
-        $x("//input[@class='form-control']").setValue("test.mail@wp.pl");
+        $x("//input[@class='form-control']").shouldBe(visible).setValue("test.mail@wp.pl");
     }
 
     // kliknięcie w button 'Send reset link'

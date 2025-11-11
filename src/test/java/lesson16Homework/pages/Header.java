@@ -9,7 +9,7 @@ public class Header {
 
     // zmiana języka / kliknięcie w dropdown-button
     public void languageDropdownButton() {
-        $x("//button[@data-toggle='dropdown']").shouldBe(visible).click();
+        $("//button[data-toggle='dropdown']").shouldBe(visible).click();
     }
 
     // wybór opcji 'English' na liście języków
@@ -28,7 +28,7 @@ public class Header {
     }
 
     // kliknięcie w button 'Sign In'
-    public void SignIn() {
+    public void signIn() {
         $(".user-info a").shouldBe(visible).click();
     }
 

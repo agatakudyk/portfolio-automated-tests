@@ -23,7 +23,7 @@ public class Accessories {
 
     //asercja - sprawdzenie, czy filtry zostały wyczyszczone
     public boolean isFilterClear() {
-        return $x("//p[contains(text(),'Active filters')]").shouldBe(hidden).isDisplayed();
+        return !$x("//p[contains(text(),'Active filters')]").shouldBe(hidden).isDisplayed();
     }
 }
 

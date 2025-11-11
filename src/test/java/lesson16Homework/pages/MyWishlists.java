@@ -32,8 +32,8 @@ public class MyWishlists {
     }
 
     //Popup 'Create wishlist' - wpisanie nazwy nowej listy życzeń
-    public void addNameOfNewList() {
-        $x("//input[@placeholder='Add name']").setValue("Super lista");
+    public void addNameOfNewList(String listName) {
+        $x("//input[@placeholder='Add name']").shouldBe(visible).setValue(listName);
     }
 
     //Popup 'Create wishlist' - kliknięcie w button 'Create wishlist'

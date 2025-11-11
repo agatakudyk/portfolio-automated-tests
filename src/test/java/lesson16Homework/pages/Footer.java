@@ -19,7 +19,7 @@ public class Footer {
 
     // kliknięcie w link 'New products'
     public void newProducts() {
-        $("#link-product-page-new-products-1").click();
+        $("#link-product-page-new-products-1").shouldBe(visible).click();
     }
 
     // Potwierdzenie otwarcia podstrony 'New products'
@@ -29,7 +29,7 @@ public class Footer {
 
     // kliknięcie w link 'Best sellers'
     public void bestSellers() {
-        $("#link-product-page-best-sales-1").click();
+        $("#link-product-page-best-sales-1").shouldBe(visible).click();
     }
 
     // Potwierdzenie otwarcia podstrony 'Best sellers'
@@ -39,7 +39,7 @@ public class Footer {
 
     // kliknięcie w link 'Delivery'
     public void delivery() {
-        $("#link-cms-page-1-2").click();
+        $("#link-cms-page-1-2").shouldBe(visible).click();
     }
 
     // Potwierdzenie otwarcia podstrony 'Delivery'
@@ -49,7 +49,7 @@ public class Footer {
 
     // kliknięcie w link 'Legal Notice'
     public void legalNotice() {
-        $("#link-cms-page-2-2").click();
+        $("#link-cms-page-2-2").shouldBe(visible).click();
     }
 
     // Potwierdzenie otwarcia podstrony 'Legal Notice'
@@ -59,7 +59,7 @@ public class Footer {
 
     // kliknięcie w link 'Terms and conditions of use'
     public void termsAndConditionsOfUse() {
-        $("#link-cms-page-3-2").click();
+        $("#link-cms-page-3-2").shouldBe(visible).click();
     }
 
     // Potwierdzenie otwarcia podstrony 'Terms and conditions of use'
@@ -70,7 +70,7 @@ public class Footer {
 
     // kliknięcie w link 'About us'
     public void aboutUs() {
-        $("#link-cms-page-4-2").click();
+        $("#link-cms-page-4-2").shouldBe(visible).click();
     }
 
     // Potwierdzenie otwarcia podstrony 'About us'
@@ -81,7 +81,7 @@ public class Footer {
 
     // kliknięcie w link 'Secure payment'
     public void securePayment() {
-        $("#link-cms-page-5-2").click();
+        $("#link-cms-page-5-2").shouldBe(visible).click();
     }
 
     // Potwierdzenie otwarcia podstrony 'Secure payment'
@@ -92,7 +92,7 @@ public class Footer {
 
     // kliknięcie w link 'Contact us'
     public void contactUs() {
-        $("#link-static-page-contact-2").click();
+        $("#link-static-page-contact-2").shouldBe(visible).click();
     }
 
     // Potwierdzenie otwarcia podstrony 'Contact us'
@@ -103,7 +103,7 @@ public class Footer {
 
     // kliknięcie w link 'Sitemap'
     public void sitemap() {
-        $("#link-static-page-sitemap-2").click();
+        $("#link-static-page-sitemap-2").shouldBe(visible).click();
     }
 
     // Potwierdzenie otwarcia podstrony 'Sitemap'
@@ -114,7 +114,7 @@ public class Footer {
 
     // kliknięcie w link 'Stores'
     public void stores() {
-        $("#link-static-page-stores-2").click();
+        $("#link-static-page-stores-2").shouldBe(visible).click();
     }
 
     // Potwierdzenie otwarcia podstrony 'Stores'
@@ -124,7 +124,7 @@ public class Footer {
 
     // kliknięcie w link 'Personal info'
     public void personalInfo() {
-        $x("//a[@title='Personal info']").click();
+        $x("//a[@title='Personal info']").shouldBe(visible).click();
     }
 
     // Potwierdzenie otwarcia podstrony 'Personal info'
@@ -135,7 +135,7 @@ public class Footer {
 
     // kliknięcie w link 'Orders'
     public void orders() {
-        $x("//a[@title='Orders']").click();
+        $x("//a[@title='Orders']").shouldBe(visible).click();
     }
 
     // Potwierdzenie otwarcia podstrony 'Orders'
@@ -146,7 +146,7 @@ public class Footer {
 
     // kliknięcie w link 'Credit slips'
     public void creditSlips() {
-        $x("//a[@title='Credit slips']").click();
+        $x("//a[@title='Credit slips']").shouldBe(visible).click();
     }
 
     // Potwierdzenie otwarcia podstrony 'Credit slips'
@@ -157,7 +157,7 @@ public class Footer {
 
     // kliknięcie w link 'Addresses'
     public void addresses() {
-        $x("//a[@title='Addresses']").click();
+        $x("//a[@title='Addresses']").shouldBe(visible).click();
     }
 
     // Potwierdzenie otwarcia podstrony 'Addresses'
