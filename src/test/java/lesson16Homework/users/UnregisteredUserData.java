@@ -18,7 +18,8 @@ public class UnregisteredUserData {
 
     // uzupełnienie pola 'Email'
     public void email() {
-        $("#field-email").shouldBe(visible).setValue("kot123@wp.pl");
+        String uniqueEmail = "kot" + System.currentTimeMillis() + "@wp.pl";
+        $("#field-email").shouldBe(visible).setValue(uniqueEmail);
     }
 
     // uzupełnienie pola 'Password'

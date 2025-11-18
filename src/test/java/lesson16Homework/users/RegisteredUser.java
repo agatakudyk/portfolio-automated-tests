@@ -19,7 +19,8 @@ public class RegisteredUser {
 
     // uzupełnienie pola 'Email'
     public void email() {
-        $("#field-email").shouldBe(visible).setValue("testowianka345@p.pl");
+        String uniqueEmail = "testowianka" + System.currentTimeMillis() + "@wp.pl";
+        $("#field-email").shouldBe(visible).setValue(uniqueEmail);
     }
 
     // uzupełnienie pola 'Password'
