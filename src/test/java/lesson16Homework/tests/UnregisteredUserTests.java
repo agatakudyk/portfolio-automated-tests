@@ -8,7 +8,7 @@ import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class UnregisteredUserTests {
+public class UnregisteredUserTests extends BaseTest{
 
     @Test
     @Order(1)

@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class UserAuthenticationTests {
+public class UserAuthenticationTests extends BaseTest{
 
     @Test
     @Order(4)

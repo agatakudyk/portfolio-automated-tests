@@ -8,7 +8,7 @@ import static io.qameta.allure.Allure.step;
 
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class FooterAndNavigationTests {
+public class FooterAndNavigationTests extends BaseTest{
 
     @Test   //Home page/Footer - sprawdzenie działania linków w stopce
     @Order(25)

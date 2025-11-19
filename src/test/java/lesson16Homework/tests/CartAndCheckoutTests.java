@@ -9,7 +9,7 @@ import java.util.Objects;
 import static io.qameta.allure.Allure.step;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class CartAndCheckoutTests {
+public class CartAndCheckoutTests extends BaseTest{
 
     @Test  //Koszyk - sprawdzenie zawartości
     @Order(14)

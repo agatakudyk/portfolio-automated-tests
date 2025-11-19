@@ -7,7 +7,7 @@ import org.junit.jupiter.api.*;
 import static io.qameta.allure.Allure.step;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class UserAddressesTests {
+public class UserAddressesTests extends BaseTest{
 
     @Test   //Panel użytkownika/Adres – dodanie nowego adresu, aktualizacja i usunięcie
     @Order(21)

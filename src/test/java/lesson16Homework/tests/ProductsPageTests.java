@@ -13,7 +13,7 @@ import java.util.List;
 import static io.qameta.allure.Allure.step;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ProductsPageTests {
+public class ProductsPageTests extends BaseTest{
 
     @Test       //Podstrona Accessories - filtrowanie
     @Order(10)

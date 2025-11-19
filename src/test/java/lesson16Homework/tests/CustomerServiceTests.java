@@ -7,7 +7,7 @@ import org.junit.jupiter.api.*;
 import static io.qameta.allure.Allure.step;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class CustomerServiceTests {
+public class CustomerServiceTests extends BaseTest{
 
     @Test   //Formularz kontaktowy z działem obsługi klienta
     @Order(18)
