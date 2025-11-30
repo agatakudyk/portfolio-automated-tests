@@ -1,7 +1,7 @@
 ## Portfolio Testów Automatycznych – PrestaShop
 
 ## Opis projektu
-Projekt służy do automatyzacji testów funkcjonalnych strony e-commerce PrestaShop. 
+Projekt służy do automatyzacji testów funkcjonalnych strony e-commerce PrestaShop (https://demo.prestashop.com/#/en/front). 
 Zawiera testy w różnych podejściach:
 - Selenium WebDriver (Java)
 - Selenium + Page Object Pattern (POP)
@@ -10,13 +10,26 @@ Zawiera testy w różnych podejściach:
   
 Celem projektu jest pokazanie praktycznych umiejętności w automatyzacji testów, stosowaniu dobrych praktyk programistycznych oraz użyciu narzędzi wspierających pracę testera.
 
+## Struktura projektu
+- src/test/java/selenium – testy w Selenium
+- src/test/java/seleniumPageObject – testy w Selenium z Page Object Pattern
+- src/test/java/selenidePageObject – testy w Selenide z Page Object Pattern
+- src/test/java/cucumberSelenide/stepdefinitions – testy Cucumber
+- src/test/java/config/ConfigReader.java – klasa do konfiguracji
+- src/test/resources – plik konfiguracyjny
+- src/test/assets/instructions – dokumentacja przypadków testowych
+- stepdefinitions – kroki testów Cucumber
+- build.gradle – konfiguracja projektu
+- docker-compose.yaml – konfiguracja środowiska testowego
+- .gitignore – pliki ignorowane przez Git
+- README.md – opis projektu
 
 ## Technologie i narzędzia
 - Język programowania: Java
 - IDE: IntelliJ IDEA
 - Frameworki testowe: Selenium WebDriver, Selenide, Cucumber, JUnit
 - Zarządzanie projektem: Gradle
-- Konteneryzacja i środowisko testowe: Docker
+- Środowisko testowe: Docker
 - Wzorce projektowe: Page Object Pattern
 - Kontrola wersji: Git, GitHub
 - Raportowanie wyników: Allure Report
