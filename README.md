@@ -5,7 +5,7 @@ Projekt automatyzuje testy funkcjonalne dla strony e-commerce PrestaShop ([demo.
 Zawiera testy w różnych podejściach:
 - Selenium WebDriver
 - Selenium + Page Object Pattern (POP)
-- Selenide + Page Object Pattern
+- Selenide + POP
 - Cucumber + Selenide
 
 Celem projektu jest pokazanie praktycznych umiejętności w automatyzacji testów webowych, stosowanie dobrych praktyk programistycznych (np. POP, BDD) oraz wykorzystanie narzędzi wspierających pracę testera.
@@ -18,12 +18,12 @@ Celem projektu jest pokazanie praktycznych umiejętności w automatyzacji testó
 
 ## Struktura projektu
 - src/test/java/selenium – testy w Selenium
-- src/test/java/seleniumPageObject – testy w Selenium z Page Object Pattern
-- src/test/java/selenidePageObject – testy w Selenide z Page Object Pattern
-- src/test/java/cucumberSelenide/stepdefinitions – testy Cucumber
+- src/test/java/seleniumPageObject – testy w Selenium z POP
+- src/test/java/selenidePageObject – testy w Selenide z POP
+- src/test/java/cucumberSelenide/stepdefinitions – testy Cucumber z Selenide
 - src/test/java/config/ConfigReader.java – klasa do konfiguracji
 - src/test/resources – plik konfiguracyjny
-- src/test/assets/instructions – dokumentacja przypadków testowych
+- src/test/assets/instructions – lista przypadków testowych
 - stepdefinitions – kroki testów Cucumber
 - build.gradle – konfiguracja projektu
 - docker-compose.yaml – konfiguracja środowiska testowego
