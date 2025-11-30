@@ -1,14 +1,20 @@
-## Portfolio Testów Automatycznych – PrestaShop
+## Portfolio Testów Automatycznych – sklep PrestaShop
 
 ## Opis projektu
-Projekt służy do automatyzacji testów funkcjonalnych strony e-commerce PrestaShop (https://demo.prestashop.com/#/en/front). 
+Projekt automatyzuje testy funkcjonalne dla strony e-commerce PrestaShop ([demo.prestashop.com](https://demo.prestashop.com/#/en/front)). 
 Zawiera testy w różnych podejściach:
-- Selenium WebDriver (Java)
+- Selenium WebDriver
 - Selenium + Page Object Pattern (POP)
 - Selenide + Page Object Pattern
 - Cucumber + Selenide
-  
-Celem projektu jest pokazanie praktycznych umiejętności w automatyzacji testów, stosowaniu dobrych praktyk programistycznych oraz użyciu narzędzi wspierających pracę testera.
+
+Celem projektu jest pokazanie praktycznych umiejętności w automatyzacji testów webowych, stosowanie dobrych praktyk programistycznych (np. POP, BDD) oraz wykorzystanie narzędzi wspierających pracę testera.
+
+## Zakres testów
+- Testy funkcjonalne strony PrestaShop: logowanie, rejestracja, dodawanie produktów do koszyka, składanie zamówienia
+- Testy integracyjne różnych komponentów strony
+- Testy automatyczne w różnych frameworkach i podejściach
+- Wykorzystanie **Page Object Pattern** dla lepszej czytelności i utrzymania kodu
 
 ## Struktura projektu
 - src/test/java/selenium – testy w Selenium
@@ -33,13 +39,3 @@ Celem projektu jest pokazanie praktycznych umiejętności w automatyzacji testó
 - Wzorce projektowe: Page Object Pattern
 - Kontrola wersji: Git, GitHub
 - Raportowanie wyników: Allure Report
-
-## Zawartość testów
-Testy funkcjonalne strony PrestaShop: logowanie, rejestracja, dodawanie produktów do koszyka, składanie zamówienia.
-Pliki z instrukcjami i przypadkami testowymi dostępne w src/test/assets/instructions.
-Testy pokrywają różne poziomy automatyzacji i techniki projektowania testów.
-
-## Cel portfolio
-Zaprezentowanie umiejętności w automatyzacji testów w różnych podejściach.
-Praktyczne zastosowanie wzorców projektowych i narzędzi do testowania.
-Dokumentacja testów i uporządkowana struktura projektu gotowa do wglądu rekrutera.
