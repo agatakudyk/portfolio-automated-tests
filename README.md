@@ -3,7 +3,7 @@
 ## Opis projektu
 Projekt automatyzuje testy funkcjonalne dla strony e-commerce PrestaShop ([demo.prestashop.com](https://demo.prestashop.com/#/en/front)). 
 Zawiera testy w różnych podejściach:
-- Selenium WebDriver
+- Selenium WebDriver (bez wzorców)
 - Selenium + Page Object Pattern (POP)
 - Selenide + POP
 - Cucumber + Selenide
@@ -12,9 +12,8 @@ Celem projektu jest pokazanie praktycznych umiejętności w automatyzacji testó
 
 ## Zakres testów
 - Testy funkcjonalne strony PrestaShop: logowanie, rejestracja, dodawanie produktów do koszyka, składanie zamówienia
-- Testy integracyjne różnych komponentów strony
+- Testy end-to-end (E2E) kluczowych procesów w aplikacji e-commerce 
 - Testy automatyczne w różnych frameworkach i podejściach
-- Wykorzystanie **Page Object Pattern** dla lepszej czytelności i utrzymania kodu
 
 ## Struktura projektu
 - src/test/java/selenium – testy w Selenium
